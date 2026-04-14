@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Privacy Policy — Ghostly</title>
+    <meta name="description" content="Ghostly's privacy policy. Voice transcription runs on-device; we collect no analytics." />
+    <link rel="icon" type="image/svg+xml" href="../assets/ghostly_logo.svg" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui'] },
+            colors: { ink: '#0b0b0f', ghost: '#e8e9ef', accent: '#7c5cff' },
+          },
+        },
+      };
+    </script>
+    <style>
+      body { background: #0b0b0f; color: #e8e9ef; }
+      h1, h2 { color: #fff; }
+      a { color: #a78bfa; }
+      a:hover { color: #c4b5fd; }
+    </style>
+  </head>
+  <body class="font-sans">
+    <div class="max-w-3xl mx-auto px-6 py-16">
+      <a href="/" class="text-sm text-ghost/60 hover:text-ghost">← Back to Ghostly</a>
+
+      <h1 class="mt-6 text-4xl font-bold tracking-tight">Privacy Policy</h1>
+      <p class="mt-2 text-ghost/60 text-sm">Last updated: April 14, 2026</p>
+
+      <div class="mt-10 space-y-8 leading-relaxed text-ghost/90">
+
+        <section>
+          <h2 class="text-xl font-semibold mb-3">The short version</h2>
+          <p>
+            Ghostly transcribes your voice on your device. Your audio never leaves your computer unless you
+            explicitly enable the optional AI Refinement feature, which sends only the <em>transcribed text</em>
+            (not audio) to a third-party language model provider you choose and configure with your own API key.
+            We do not collect analytics, telemetry, usage data, or personal information.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold mb-3">1. What Ghostly does locally</h2>
+          <ul class="list-disc pl-6 space-y-2">
+            <li>
+              <strong>Voice transcription:</strong> Audio is captured from your microphone, processed by a
+              Whisper speech-to-text model, and converted to text — all on your device. Audio is never uploaded.
+            </li>
+            <li>
+              <strong>Transcription history:</strong> Ghostly stores a local history of your transcriptions in
+              your application data directory so you can review, copy, or delete past entries. This data never
+              leaves your device. You can clear it at any time from the History settings.
+            </li>
+            <li>
+              <strong>Settings and preferences:</strong> Your shortcuts, model choice, microphone selection, and
+              other settings are stored locally on your device.
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold mb-3">2. Optional features that use the internet</h2>
+          <p class="mb-4">
+            Some features are off by default and only make network requests when you explicitly turn them on:
+          </p>
+          <ul class="list-disc pl-6 space-y-2">
+            <li>
+              <strong>AI Refinement (Post-Processing):</strong> When enabled, the transcribed <em>text</em> is sent
+              to a language-model provider you choose (for example OpenAI, Anthropic, Apple Intelligence, or a
+              local model) to be cleaned up or rewritten. You supply your own API key. The request is made
+              directly from your device to that provider; Ghostly has no server in the middle, and we do not see
+              or store these requests. The provider's own privacy policy governs how they handle that data.
+            </li>
+            <li>
+              <strong>Model downloads:</strong> The first time you use Ghostly, it downloads a speech-to-text
+              model file from a public mirror. This download contains no personal data; it is the same public
+              file every user receives.
+            </li>
+            <li>
+              <strong>Update checks:</strong> If you leave "Check for updates" enabled, Ghostly periodically
+              contacts a version endpoint to see if a newer release is available. No personal information is
+              included in that request — only the request itself and your public IP address (as with any web
+              request).
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold mb-3">3. What we do <em>not</em> collect</h2>
+          <ul class="list-disc pl-6 space-y-2">
+            <li>We do not collect analytics, telemetry, crash reports, or usage metrics.</li>
+            <li>We do not track you across sessions.</li>
+            <li>We do not sell, rent, or share any data.</li>
+            <li>We do not upload your audio, transcriptions, settings, or history to any server we control.</li>
+            <li>Ghostly has no user accounts, no login, and no centralized servers that receive your data.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold mb-3">4. Permissions Ghostly requests on macOS</h2>
+          <ul class="list-disc pl-6 space-y-2">
+            <li>
+              <strong>Microphone access:</strong> required to record audio for transcription. Recording only
+              happens while your configured shortcut is active.
+            </li>
+            <li>
+              <strong>Accessibility access:</strong> required so Ghostly can paste transcribed text into the
+              active application via a simulated keyboard event.
+            </li>
+          </ul>
+          <p class="mt-3">
+            You can revoke either permission at any time in <em>System Settings → Privacy & Security</em>.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold mb-3">5. Your data, your device</h2>
+          <p>
+            Because all voice data and transcription history stay on your device, you control it entirely.
+            To export or delete your history, use the History settings inside Ghostly. To permanently remove
+            everything, uninstall the app and delete the Ghostly application data directory (accessible from
+            the About settings).
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold mb-3">6. Children</h2>
+          <p>
+            Ghostly is not directed at children under 13 and does not knowingly collect any information from
+            anyone.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold mb-3">7. Changes to this policy</h2>
+          <p>
+            If this policy changes materially, we will update the "Last updated" date above and, where the
+            change affects how the app behaves, reflect it in the End User License Agreement shown when you
+            install or update Ghostly.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold mb-3">8. Contact</h2>
+          <p>
+            Questions about privacy? Email
+            <a href="mailto:support@try-ghostly.com">support@try-ghostly.com</a>.
+          </p>
+        </section>
+
+      </div>
+
+      <p class="mt-16 text-xs text-ghost/40">
+        Ghostly — Jason Bartz, Erie County, New York, USA.
+      </p>
+    </div>
+  </body>
+</html>
