@@ -16,8 +16,12 @@
     <meta property="og:image" content="assets/ghostly_logo.svg" />
     <meta property="og:type" content="website" />
     <link rel="icon" type="image/svg+xml" href="assets/ghostly_logo.svg" />
+    <meta name="theme-color" content="#0b0b0f" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Ghostly — Voice-first typing for macOS" />
+    <meta name="twitter:description" content="Press fn, talk, release. Your words paste into the active app. On-device transcription." />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap"
       rel="stylesheet"
     />
     <script src="https://cdn.tailwindcss.com"></script>
@@ -25,7 +29,10 @@
       tailwind.config = {
         theme: {
           extend: {
-            fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui'] },
+            fontFamily: {
+              sans:  ['Inter', 'ui-sans-serif', 'system-ui'],
+              serif: ['"Instrument Serif"', 'ui-serif', 'Georgia'],
+            },
             colors: { ink: '#0b0b0f', ghost: '#e8e9ef', accent: '#7c5cff' },
           },
         },
@@ -80,11 +87,375 @@
         margin: 0 2px;
         border-radius: 2px;
         background: linear-gradient(to top, #7c5cff, #7dd3fc);
+        transition: height 90ms ease-out, opacity 90ms ease-out;
+      }
+      .slack-win {
+        background: #0f0f17;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 30px 80px -20px rgba(124, 92, 255, 0.25);
+      }
+      .slack-sidebar {
+        background: linear-gradient(180deg, #1a1430 0%, #120d24 100%);
+        border-right: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .slack-channel {
+        color: rgba(232, 233, 239, 0.55);
+        padding: 5px 10px;
+        border-radius: 6px;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .slack-channel.active {
+        background: rgba(124, 92, 255, 0.25);
+        color: #fff;
+      }
+      .avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #7c5cff, #38bdf8);
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-weight: 700;
+        font-size: 13px;
+      }
+      .rec-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #ff5f57;
+        box-shadow: 0 0 0 0 rgba(255, 95, 87, 0.7);
+        animation: pulse 1.4s infinite;
+      }
+      @keyframes pulse {
+        0%   { box-shadow: 0 0 0 0 rgba(255, 95, 87, 0.55); }
+        70%  { box-shadow: 0 0 0 10px rgba(255, 95, 87, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(255, 95, 87, 0); }
+      }
+      .caret::after {
+        content: '';
+        display: inline-block;
+        width: 2px;
+        height: 1em;
+        background: #7c5cff;
+        margin-left: 2px;
+        vertical-align: text-bottom;
+        animation: blink 1s steps(2) infinite;
+      }
+      @keyframes blink { 50% { opacity: 0; } }
+      .msg-enter {
+        animation: msgIn 380ms cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+      @keyframes msgIn {
+        from { opacity: 0; transform: translateY(6px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+      .overlay-pill {
+        background: rgba(10, 10, 16, 0.92);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 999px;
+        backdrop-filter: blur(16px);
+        box-shadow:
+          0 0 0 1px rgba(124, 92, 255, 0.35),
+          0 20px 50px -10px rgba(0, 0, 0, 0.6),
+          0 0 40px rgba(124, 92, 255, 0.25);
+        transition: opacity 260ms ease, transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .caption-bubble {
+        position: relative;
+        background: rgba(15, 15, 23, 0.96);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 14px;
+        backdrop-filter: blur(12px);
+        box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.55);
+        transition: opacity 260ms ease, transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .overlay-hidden { opacity: 0; pointer-events: none; }
+      .mini-wave span {
+        display: inline-block;
+        width: 2px;
+        margin: 0 1px;
+        border-radius: 2px;
+        background: linear-gradient(to top, #7c5cff, #7dd3fc);
+        transition: height 70ms ease-out;
+      }
+      .send-btn {
+        transition: background 160ms ease, transform 120ms ease;
+      }
+      .send-btn.flash {
+        background: rgba(124, 92, 255, 0.9) !important;
+        transform: scale(0.94);
+      }
+      .spin {
+        animation: spin 0.9s linear infinite;
+      }
+      @keyframes spin { to { transform: rotate(360deg); } }
+      #site-header.is-scrolled {
+        border-bottom-color: rgba(255, 255, 255, 0.08);
+        background: rgba(11, 11, 15, 0.85);
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.4), 0 10px 30px -10px rgba(0, 0, 0, 0.35);
+      }
+
+      /* Hero "typing" caret */
+      .hero-caret {
+        display: inline-block;
+        width: 0.06em;
+        height: 0.78em;
+        margin-left: 0.04em;
+        background: #a78bfa;
+        border-radius: 1px;
+        vertical-align: baseline;
+        transform: translateY(0.05em);
+        animation: hero-blink 1s steps(2, end) infinite;
+        box-shadow: 0 0 14px rgba(167, 139, 250, 0.5);
+      }
+      @keyframes hero-blink { 50% { opacity: 0; } }
+
+      /* Serif display accent */
+      .font-display {
+        font-family: 'Instrument Serif', ui-serif, Georgia, serif;
+        font-style: italic;
+        font-weight: 400;
+        letter-spacing: -0.01em;
+      }
+
+      /* Scroll reveal */
+      .reveal {
+        opacity: 0;
+        transform: translateY(22px);
+        transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1), transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+        transition-delay: var(--reveal-delay, 0ms);
+        will-change: opacity, transform;
+      }
+      .reveal.in-view { opacity: 1; transform: translateY(0); }
+      @media (prefers-reduced-motion: reduce) {
+        .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+      }
+
+      /* Feature card: add a gentle accent glow on hover */
+      .feature-card { position: relative; }
+      .feature-card::before {
+        content: '';
+        position: absolute;
+        inset: -1px;
+        border-radius: inherit;
+        background: radial-gradient(120px 120px at var(--mx, 50%) var(--my, 0%), rgba(124, 92, 255, 0.22), transparent 60%);
+        opacity: 0;
+        transition: opacity 300ms ease;
+        pointer-events: none;
+      }
+      .feature-card:hover::before { opacity: 1; }
+
+      /* Animated WPM bars */
+      .wpm-bar {
+        position: relative;
+        height: 14px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.06);
+        overflow: hidden;
+      }
+      .wpm-bar > span {
+        display: block;
+        height: 100%;
+        width: 0;
+        border-radius: inherit;
+        background: linear-gradient(90deg, #7c5cff 0%, #a78bfa 100%);
+        transition: width 1400ms cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .wpm-bar.slow > span { background: linear-gradient(90deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.45) 100%); }
+      .wpm-bar.in-view > span { width: var(--w, 100%); }
+
+      /* App tiles — floating composition */
+      .app-tile {
+        position: absolute;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(10px);
+        font-size: 13px;
+        font-weight: 500;
+        color: rgba(232, 233, 239, 0.85);
+        box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+        animation: floaty var(--dur, 6s) ease-in-out infinite;
+        animation-delay: var(--delay, 0s);
+      }
+      .app-tile .dot {
+        width: 22px; height: 22px; border-radius: 6px;
+        display: inline-flex; align-items: center; justify-content: center;
+        font-size: 11px; font-weight: 700; color: #fff;
+      }
+      .app-tile .app-icon {
+        width: 22px; height: 22px; border-radius: 6px;
+        display: inline-flex; align-items: center; justify-content: center;
+        background: rgba(255, 255, 255, 0.06);
+      }
+      .app-tile .app-icon.on-white {
+        background: #fff;
+      }
+      .app-tile .app-icon img {
+        width: 16px; height: 16px; object-fit: contain;
+      }
+      @keyframes floaty {
+        0%, 100% { transform: translateY(0); }
+        50%      { transform: translateY(-8px); }
+      }
+      .center-pill {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 20px;
+        border-radius: 999px;
+        background: rgba(10, 10, 16, 0.85);
+        border: 1px solid rgba(124, 92, 255, 0.4);
+        box-shadow: 0 0 0 6px rgba(124, 92, 255, 0.08), 0 30px 60px -15px rgba(124, 92, 255, 0.35);
+      }
+      .hero-composer {
+        position: relative;
+        min-width: 340px;
+        max-width: 440px;
+        padding: 12px 16px;
+        border-radius: 14px;
+        background: rgba(15, 15, 23, 0.9);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px);
+        box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.55);
+        font-size: 13.5px;
+        color: rgba(232, 233, 239, 0.9);
+        text-align: left;
+        line-height: 1.4;
+      }
+      .hero-composer::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: -6px;
+        transform: translateX(-50%) rotate(45deg);
+        width: 10px;
+        height: 10px;
+        background: rgba(15, 15, 23, 0.9);
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .hero-composer .hero-label {
+        display: block;
+        font-size: 10px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: rgba(232, 233, 239, 0.4);
+        margin-bottom: 4px;
+      }
+      .hero-composer .hero-text {
+        min-height: 1.4em;
+      }
+      .hero-composer .hero-caret {
+        display: inline-block;
+        width: 2px;
+        height: 1em;
+        background: #7c5cff;
+        vertical-align: text-bottom;
+        margin-left: 1px;
+        animation: blink 1s steps(2) infinite;
+      }
+      .center-pill::before {
+        content: '';
+        position: absolute;
+        inset: -14px;
+        border-radius: 999px;
+        border: 1px solid rgba(124, 92, 255, 0.25);
+        animation: ring 2.6s ease-out infinite;
+      }
+      @keyframes ring {
+        0%   { transform: scale(0.95); opacity: 0.7; }
+        100% { transform: scale(1.25); opacity: 0; }
+      }
+
+      /* Step vignettes */
+      .step-num {
+        font-family: 'Instrument Serif', ui-serif, Georgia, serif;
+        font-style: italic;
+        font-size: 56px;
+        line-height: 1;
+        color: rgba(124, 92, 255, 0.7);
+      }
+      .step-vignette {
+        height: 110px;
+        border-radius: 12px;
+        background: rgba(0, 0, 0, 0.25);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        position: relative;
+      }
+      .step-wave span {
+        display: inline-block;
+        width: 3px;
+        margin: 0 2px;
+        border-radius: 2px;
+        background: linear-gradient(to top, #7c5cff, #7dd3fc);
+        animation: sbar 1.2s ease-in-out infinite;
+      }
+      .step-wave span:nth-child(2) { animation-delay: 0.08s; }
+      .step-wave span:nth-child(3) { animation-delay: 0.16s; }
+      .step-wave span:nth-child(4) { animation-delay: 0.24s; }
+      .step-wave span:nth-child(5) { animation-delay: 0.32s; }
+      .step-wave span:nth-child(6) { animation-delay: 0.40s; }
+      .step-wave span:nth-child(7) { animation-delay: 0.48s; }
+      .step-wave span:nth-child(8) { animation-delay: 0.56s; }
+      .step-wave span:nth-child(9) { animation-delay: 0.64s; }
+      .step-wave span:nth-child(10){ animation-delay: 0.72s; }
+      @keyframes sbar {
+        0%, 100% { height: 10px; }
+        50%      { height: 34px; }
+      }
+      .step-type::after {
+        content: '';
+        display: inline-block;
+        width: 2px;
+        height: 1em;
+        background: #7c5cff;
+        margin-left: 2px;
+        vertical-align: text-bottom;
+        animation: blink 1s steps(2) infinite;
+      }
+      .tech-chip {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 10px;
+        letter-spacing: 0.02em;
+        padding: 2px 7px;
+        border-radius: 999px;
+        background: rgba(124, 92, 255, 0.14);
+        border: 1px solid rgba(124, 92, 255, 0.3);
+        color: #c9bfff;
+      }
+      .tech-chip.green {
+        background: rgba(52, 211, 153, 0.12);
+        border-color: rgba(52, 211, 153, 0.3);
+        color: #6ee7b7;
+      }
+      .tech-chip.amber {
+        background: rgba(251, 191, 36, 0.12);
+        border-color: rgba(251, 191, 36, 0.3);
+        color: #fcd34d;
       }
     </style>
   </head>
   <body class="font-sans antialiased">
-    <header class="sticky top-0 z-50 border-b border-white/5 bg-ink/70 backdrop-blur">
+    <header id="site-header" class="sticky top-0 z-50 border-b border-transparent bg-ink/60 backdrop-blur transition-colors duration-200">
       <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <a href="#" class="flex items-center gap-2">
           <img src="assets/ghostly_logo.svg" alt="" class="h-7 w-7" />
@@ -95,9 +466,8 @@
           <a href="#how" class="hover:text-ghost">How it works</a>
           <a href="#ai" class="hover:text-ghost">AI cleanup</a>
           <a href="#download" class="hover:text-ghost">Download</a>
-          <a href="https://github.com/jason-bartz/ghostly" class="hover:text-ghost" target="_blank" rel="noopener">GitHub</a>
         </nav>
-        <a href="https://github.com/jason-bartz/ghostly/releases/latest" class="btn-primary rounded-lg px-4 py-2 text-sm font-semibold">Download</a>
+        <a href="https://downloads.try-ghostly.com/Ghostly-latest.dmg" class="btn-primary rounded-lg px-4 py-2 text-sm font-semibold">Download</a>
       </div>
     </header>
 
@@ -105,170 +475,476 @@
       <div class="mx-auto max-w-6xl px-6 py-24 md:py-32">
         <div class="mx-auto max-w-3xl text-center">
           <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">On-device transcription · macOS · Open source</span>
-          <h1 class="mt-6 text-5xl font-extrabold tracking-tight md:text-7xl" style="letter-spacing: -0.03em">
-            Voice-first typing<br />
-            <span class="bg-gradient-to-r from-violet-300 via-sky-300 to-emerald-200 bg-clip-text text-transparent">for macOS.</span>
+          <h1 class="mt-6 text-5xl tracking-tight md:text-7xl" style="letter-spacing: -0.03em">
+            <span class="font-display text-ghost" style="font-size: 1.08em">Voice-first</span>
+            <span class="relative inline-block align-baseline"><span class="invisible font-extrabold" style="white-space: pre"> typing</span><span class="absolute left-0 top-0 font-extrabold" style="white-space: pre"><span id="hero-type"> typing</span><span id="hero-caret" class="hero-caret"></span></span></span>
+            <br />
+            <span class="font-display text-violet-200" style="font-size: 1.08em">for</span>
+            <span class="font-extrabold"> macOS.</span>
           </h1>
-          <p class="mx-auto mt-6 max-w-2xl text-lg text-ghost/70 md:text-xl">
-            Ghostly lives in your menu bar. Press a shortcut, talk, and your words land in the active app. Whisper handles transcription locally — audio never leaves the Mac.
+          <p class="mx-auto mt-6 max-w-xl text-lg text-ghost/70 md:text-xl">
+            Press <span class="kbd">fn</span>, talk, release. Your words paste into the active app.
           </p>
           <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
-            <a href="https://github.com/jason-bartz/ghostly/releases/latest" class="btn-primary inline-flex items-center gap-2 rounded-xl px-6 py-3 text-base font-semibold shadow-lg shadow-violet-500/10">
+            <a href="https://downloads.try-ghostly.com/Ghostly-latest.dmg" class="btn-primary inline-flex items-center gap-2 rounded-xl px-6 py-3 text-base font-semibold">
               <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
               Download for macOS
             </a>
-            <a href="https://github.com/jason-bartz/ghostly" class="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-6 py-3 text-base font-semibold text-ghost hover:bg-white/10">
-              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.37.5 0 5.87 0 12.5c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.29-.01-1.04-.02-2.05-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.21.09 1.85 1.24 1.85 1.24 1.07 1.84 2.81 1.31 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 016 0C17.33 4.5 18.34 4.82 18.34 4.82c.66 1.65.25 2.87.12 3.17.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.62-5.49 5.92.43.37.81 1.1.81 2.22 0 1.6-.01 2.89-.01 3.29 0 .32.22.7.83.58C20.57 22.3 24 17.8 24 12.5 24 5.87 18.63.5 12 .5z"/></svg>
-              Source on GitHub
-            </a>
           </div>
-          <p class="mt-6 text-sm text-ghost/50">macOS 10.15+ · Apple Silicon &amp; Intel</p>
         </div>
 
-        <div class="mx-auto mt-16 max-w-4xl">
-          <div class="glass rounded-2xl p-6 md:p-8">
-            <div class="flex items-center gap-2 border-b border-white/5 pb-3">
+        <div class="relative mx-auto mt-16 max-w-4xl">
+          <div class="slack-win">
+            <div class="flex items-center gap-2 border-b border-white/5 bg-black/30 px-4 py-2.5">
               <span class="h-3 w-3 rounded-full bg-red-400/80"></span>
               <span class="h-3 w-3 rounded-full bg-yellow-400/80"></span>
               <span class="h-3 w-3 rounded-full bg-green-400/80"></span>
-              <span class="ml-3 text-xs text-ghost/40">Ghostly — recording</span>
+              <span class="ml-3 text-xs text-ghost/40">Slack · acme-team</span>
             </div>
-            <div class="waveform mt-6 flex items-end justify-center" id="waveform"></div>
-            <div class="mt-6 font-mono text-sm text-ghost/80">
-              <div><span class="text-ghost/40">›</span> Hold <span class="kbd">fn</span> and speak</div>
-              <div class="mt-2 text-violet-300">"email maya, can we push the review to thursday, twenty-five percent of the deck still needs art"</div>
-              <div class="mt-4 rounded-lg border border-white/10 bg-black/30 p-4 text-ghost">
-                Hi Maya — can we push the review to Thursday? 25% of the deck still needs art.
+            <div class="grid grid-cols-[160px_1fr] md:grid-cols-[200px_1fr]" style="min-height: 460px">
+              <aside class="slack-sidebar hidden px-3 py-4 md:block">
+                <div class="mb-3 px-2 text-xs font-semibold uppercase tracking-wider text-ghost/40">acme-team</div>
+                <div class="space-y-0.5">
+                  <div class="slack-channel"># general</div>
+                  <div class="slack-channel"># engineering</div>
+                  <div class="slack-channel active"># design</div>
+                  <div class="slack-channel"># random</div>
+                </div>
+                <div class="mt-5 mb-2 px-2 text-xs font-semibold uppercase tracking-wider text-ghost/40">Direct messages</div>
+                <div class="space-y-0.5">
+                  <div class="slack-channel"><span class="h-2 w-2 rounded-full bg-emerald-400"></span> Maya Chen</div>
+                  <div class="slack-channel"><span class="h-2 w-2 rounded-full bg-ghost/30"></span> Jordan Lee</div>
+                </div>
+              </aside>
+              <div class="relative flex flex-col">
+                <div class="flex items-center justify-between border-b border-white/5 px-5 py-3">
+                  <div>
+                    <div class="text-sm font-semibold text-ghost"># design</div>
+                    <div class="text-[11px] text-ghost/40">Design reviews, critiques, shipping</div>
+                  </div>
+                </div>
+
+                <div id="chat-feed" class="flex-1 space-y-3 overflow-y-auto px-5 py-5" style="max-height: 340px"></div>
+
+                <div id="caption" class="caption-bubble overlay-hidden absolute left-1/2 z-10 w-[86%] max-w-md -translate-x-1/2 px-4 py-3" style="top: 42%; transform: translate(-50%, -50%)">
+                  <div class="flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-wider text-ghost/40">
+                    <span class="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span id="caption-stage">Listening</span>
+                  </div>
+                  <div id="caption-text" class="mt-1 text-sm leading-snug text-ghost/90 caret">&nbsp;</div>
+                </div>
+
+                <div class="px-5 pb-5">
+                  <div class="rounded-lg border border-white/10 bg-black/30 focus-within:border-violet-400/40">
+                    <div id="composer" class="min-h-[40px] px-4 pt-3 pb-1 text-sm text-ghost/90"><span class="text-ghost/30" id="composer-placeholder">Message #design</span></div>
+                    <div class="flex items-center gap-2 border-t border-white/5 px-3 py-2">
+                      <button class="p-1 text-ghost/40 hover:text-ghost/70"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12m6-6H6"/></svg></button>
+                      <button class="p-1 text-ghost/40 hover:text-ghost/70"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.5 6c.83 0 1.5.67 1.5 1.5S16.33 11 15.5 11 14 10.33 14 9.5 14.67 8 15.5 8zm-7 0c.83 0 1.5.67 1.5 1.5S9.33 11 8.5 11 7 10.33 7 9.5 7.67 8 8.5 8zm3.5 10c-2.33 0-4.32-1.45-5.12-3.5h10.24c-.8 2.05-2.79 3.5-5.12 3.5z"/></svg></button>
+                      <button class="p-1 text-ghost/40 hover:text-ghost/70"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/></svg></button>
+                      <div class="ml-auto flex items-center gap-2">
+                        <button id="send-btn" class="send-btn flex items-center gap-1.5 rounded-md bg-white/5 px-3 py-1.5 text-xs font-semibold text-ghost/40">
+                          <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>
+                          Send
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
+            </div>
+          </div>
+
+          <!-- Floating overlay pill, below Slack window -->
+          <div class="mt-3 flex items-center justify-center" style="min-height: 38px">
+            <div id="pill" class="overlay-pill overlay-hidden flex items-center gap-2.5 px-3 py-1.5">
+              <img src="assets/ghostly_logo.svg" alt="" class="h-4 w-4" />
+              <div class="mini-wave flex h-5 w-[72px] items-center justify-center" id="mini-wave"></div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="border-y border-white/5 bg-white/[0.02]">
-      <div class="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-6 py-10 text-center md:grid-cols-4">
-        <div><div class="text-3xl font-bold">On-device</div><div class="text-sm text-ghost/60">Audio stays local</div></div>
-        <div><div class="text-3xl font-bold">Any app</div><div class="text-sm text-ghost/60">Pastes where you type</div></div>
-        <div><div class="text-3xl font-bold">7+</div><div class="text-sm text-ghost/60">AI providers supported</div></div>
-        <div><div class="text-3xl font-bold">Free</div><div class="text-sm text-ghost/60">No subscription</div></div>
+    <section class="border-y border-white/5">
+      <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-8 gap-y-3 px-6 py-6 text-sm text-ghost/55">
+        <span class="inline-flex items-center gap-2">
+          <svg class="h-4 w-4 text-ghost/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Audio never leaves your Mac
+        </span>
+        <span class="hidden h-1 w-1 rounded-full bg-ghost/20 md:inline-block"></span>
+        <span class="inline-flex items-center gap-2">
+          <svg class="h-4 w-4 text-ghost/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Works offline after first model download
+        </span>
+        <span class="hidden h-1 w-1 rounded-full bg-ghost/20 md:inline-block"></span>
+        <span class="inline-flex items-center gap-2">
+          <svg class="h-4 w-4 text-ghost/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Source available on GitHub
+        </span>
       </div>
     </section>
 
     <section id="features" class="mx-auto max-w-6xl px-6 py-24">
-      <div class="mx-auto max-w-2xl text-center">
+      <div class="mx-auto max-w-2xl text-center reveal">
         <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">Features</span>
-        <h2 class="mt-4 text-4xl font-bold tracking-tight md:text-5xl">What Ghostly does</h2>
+        <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
+          <span class="font-display text-ghost/90">What</span>
+          <span class="font-bold"> Ghostly does</span>
+        </h2>
       </div>
 
-      <div class="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div class="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3" data-stagger>
         <div class="feature-card glass rounded-2xl p-6">
-          <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/20 text-violet-300">
+          <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/15 text-violet-300">
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 1v22M5 8v8M19 8v8M8 4v16M16 4v16"/></svg>
           </div>
           <h3 class="text-lg font-semibold">Local Whisper</h3>
-          <p class="mt-2 text-sm text-ghost/60">Transcription runs on-device with GPU acceleration on Apple Silicon. Audio doesn't go to a server.</p>
+          <p class="mt-2 text-sm text-ghost/60">Four model sizes: Small (466 MB), Medium (1.5 GB), Turbo (809 MB), Large-v3 (3.1 GB). GPU-accelerated on Apple Silicon via Metal.</p>
         </div>
 
         <div class="feature-card glass rounded-2xl p-6">
-          <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-sky-500/20 text-sky-300">
+          <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-white/5 text-ghost/80">
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
           </div>
-          <h3 class="text-lg font-semibold">Global shortcut</h3>
-          <p class="mt-2 text-sm text-ghost/60">Hold to talk, release to paste. Works in Slack, VS Code, email, Figma — anywhere the cursor is.</p>
+          <h3 class="text-lg font-semibold">One shortcut, any app</h3>
+          <p class="mt-2 text-sm text-ghost/60">Push-to-talk or toggle. Pastes into whatever has focus — Slack, Xcode, Mail, Figma, Cursor, the URL bar.</p>
         </div>
 
         <div class="feature-card glass rounded-2xl p-6">
-          <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-500/20 text-emerald-300">
+          <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/15 text-violet-300">
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 11a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
           </div>
-          <h3 class="text-lg font-semibold">Optional AI cleanup</h3>
-          <p class="mt-2 text-sm text-ghost/60">Bring a key for OpenAI, Anthropic, Groq, or use Apple Intelligence. Fixes punctuation, formats lists, strips fillers.</p>
+          <h3 class="text-lg font-semibold">Bring-your-own-key cleanup</h3>
+          <p class="mt-2 text-sm text-ghost/60">OpenAI, Anthropic, Groq, OpenRouter, Cerebras, Z.AI, or Apple Intelligence on-device. Only the transcript is sent — never audio.</p>
         </div>
 
         <div class="feature-card glass rounded-2xl p-6">
-          <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-amber-500/20 text-amber-300">
+          <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-white/5 text-ghost/80">
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
           </div>
           <h3 class="text-lg font-semibold">Screenshot + ask</h3>
-          <p class="mt-2 text-sm text-ghost/60">One shortcut grabs the screen, records your question, and pastes the vision model's answer.</p>
+          <p class="mt-2 text-sm text-ghost/60">One shortcut captures the screen, records the question, sends both to a vision model, pastes the answer.</p>
         </div>
 
         <div class="feature-card glass rounded-2xl p-6">
-          <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-rose-500/20 text-rose-300">
+          <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/15 text-violet-300">
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
           </div>
           <h3 class="text-lg font-semibold">Edit last paste</h3>
-          <p class="mt-2 text-sm text-ghost/60">Press the edit shortcut, say "make it shorter" or "change Monday to Tuesday" — the previous output gets rewritten in place.</p>
+          <p class="mt-2 text-sm text-ghost/60">Say <em>"make it shorter"</em> or <em>"change Monday to Tuesday"</em> and the previous output gets rewritten in place. No re-typing.</p>
         </div>
 
         <div class="feature-card glass rounded-2xl p-6">
-          <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-cyan-500/20 text-cyan-300">
+          <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-white/5 text-ghost/80">
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14-7H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V6a2 2 0 00-2-2z"/></svg>
           </div>
           <h3 class="text-lg font-semibold">Per-app profiles</h3>
-          <p class="mt-2 text-sm text-ghost/60">Swaps prompt and vocabulary based on the focused app. Terse for Slack, formal for email, code-aware for your editor.</p>
+          <p class="mt-2 text-sm text-ghost/60">Different system prompt + vocabulary per active app. Terse for Slack, full sentences for Mail, code-aware for your editor.</p>
         </div>
 
         <div class="feature-card glass rounded-2xl p-6">
-          <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-500/20 text-indigo-300">
+          <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/15 text-violet-300">
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
           </div>
           <h3 class="text-lg font-semibold">Voice commands</h3>
-          <p class="mt-2 text-sm text-ghost/60">Map spoken phrases to keystrokes. Say "approve" to send Enter, "reject" for Escape. Pairs well with Cursor and Claude Code.</p>
+          <p class="mt-2 text-sm text-ghost/60">Map spoken phrases to keystrokes. <em>"approve"</em> sends <span class="kbd">⏎</span>, <em>"reject"</em> sends <span class="kbd">⎋</span>. Useful with Cursor and Claude Code.</p>
         </div>
 
         <div class="feature-card glass rounded-2xl p-6">
-          <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-fuchsia-500/20 text-fuchsia-300">
+          <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-white/5 text-ghost/80">
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4h16v16H4z M9 9l6 6m0-6l-6 6"/></svg>
           </div>
           <h3 class="text-lg font-semibold">"Scratch that"</h3>
-          <p class="mt-2 text-sm text-ghost/60">Say it mid-sentence and everything before it drops, so you can self-correct without re-recording. The phrase is configurable.</p>
+          <p class="mt-2 text-sm text-ghost/60">Say it mid-sentence; everything before drops. Configurable trigger phrase so you can self-correct without re-recording.</p>
         </div>
 
         <div class="feature-card glass rounded-2xl p-6">
-          <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-lime-500/20 text-lime-300">
+          <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/15 text-violet-300">
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
           </div>
           <h3 class="text-lg font-semibold">Swappable engines</h3>
-          <p class="mt-2 text-sm text-ghost/60">Whisper ships as default. Parakeet (Nvidia) and Moonshine are there if you want faster inference or English-only streaming.</p>
+          <p class="mt-2 text-sm text-ghost/60">Whisper by default. Swap in Parakeet (Nvidia) for faster inference or Moonshine for English-only streaming. Same UI.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-6xl px-6 py-24">
+      <div class="mx-auto max-w-2xl text-center reveal">
+        <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">Who it's for</span>
+        <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
+          <span class="font-display text-ghost/90">Talking</span>
+          <span class="font-bold"> is faster than typing.</span>
+        </h2>
+        <p class="mt-4 text-lg text-ghost/60">Different jobs, same shortcut. Ghostly adapts to the app in focus.</p>
+      </div>
+
+      <div class="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3" data-stagger>
+        <div class="feature-card glass rounded-2xl p-6">
+          <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-violet-200">
+            <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+            For vibe coders
+          </div>
+          <p class="mt-3 text-sm text-ghost/65">Dictate intent to Cursor and Claude Code at prompt speed. Map <em>"approve"</em> to <span class="kbd">⏎</span> and <em>"reject"</em> to <span class="kbd">⎋</span> so you never touch the keyboard.</p>
+        </div>
+
+        <div class="feature-card glass rounded-2xl p-6">
+          <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-ghost/60">
+            <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+            For project managers
+          </div>
+          <p class="mt-3 text-sm text-ghost/65">Reply to Slack, Linear, and Jira without breaking focus. Per-app profiles keep Slack terse and email paragraphs clean — no re-editing.</p>
+        </div>
+
+        <div class="feature-card glass rounded-2xl p-6">
+          <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-violet-200">
+            <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            For executives
+          </div>
+          <p class="mt-3 text-sm text-ghost/65">Turn hallway thinking into sendable emails. Dictate the gist; AI cleanup shapes it into a paragraph you'd actually send — not a transcript.</p>
+        </div>
+
+        <div class="feature-card glass rounded-2xl p-6">
+          <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-ghost/60">
+            <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+            For writers
+          </div>
+          <p class="mt-3 text-sm text-ghost/65">First drafts at speaking pace. Cleanup fixes punctuation and fillers but keeps your voice — not a ChatGPT rewrite unless you ask for one.</p>
+        </div>
+
+        <div class="feature-card glass rounded-2xl p-6">
+          <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-violet-200">
+            <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+            For sales
+          </div>
+          <p class="mt-3 text-sm text-ghost/65">Dump call notes into HubSpot or Salesforce while it's fresh. Between meetings, not at the end of the day when you've forgotten the details.</p>
+        </div>
+
+        <div class="feature-card glass rounded-2xl p-6">
+          <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-ghost/60">
+            <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
+            For creatives
+          </div>
+          <p class="mt-3 text-sm text-ghost/65">Brainstorm out loud straight into Figma comments, Notion, or your sketch app. Ideas land where you're working without a context-switch to a voice memo app.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-6xl px-6 pb-24">
+      <div class="grid items-center gap-12 lg:grid-cols-[1.1fr_1fr]">
+        <div class="reveal">
+          <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">Speed</span>
+          <h2 class="mt-4 text-5xl tracking-tight md:text-6xl" style="letter-spacing: -0.02em">
+            <span class="font-display text-violet-200" style="font-size: 1.1em">3×</span>
+            <span class="font-bold"> faster than your keyboard.</span>
+          </h2>
+          <p class="mt-5 max-w-md text-lg text-ghost/60">Most people type around 40 WPM. Most people speak around 150. Ghostly narrows the gap between how fast you think and how fast your tools can keep up.</p>
+        </div>
+
+        <div class="reveal space-y-7" style="--reveal-delay: 150ms">
+          <div>
+            <div class="mb-2 flex items-baseline justify-between">
+              <div class="text-sm text-ghost/60">Keyboard</div>
+              <div class="font-mono text-sm text-ghost/70"><span class="text-2xl font-semibold text-ghost">40</span> wpm</div>
+            </div>
+            <div class="wpm-bar slow" data-wpm style="--w: 20%"><span></span></div>
+          </div>
+          <div>
+            <div class="mb-2 flex items-baseline justify-between">
+              <div class="text-sm text-violet-200">Speaking with Ghostly</div>
+              <div class="font-mono text-sm text-violet-200"><span class="text-2xl font-semibold">150</span> wpm</div>
+            </div>
+            <div class="wpm-bar" data-wpm style="--w: 75%"><span></span></div>
+          </div>
+          <div class="border-t border-white/5 pt-5 text-sm text-ghost/50">
+            That's a Slack reply in <span class="text-ghost/80">5 seconds</span> instead of <span class="text-ghost/80">18</span>. Across a day, that stacks up.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="border-y border-white/5">
+      <div class="mx-auto max-w-5xl px-6 py-24">
+        <div class="mx-auto max-w-2xl text-center reveal">
+          <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">How it compares</span>
+          <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
+            <span class="font-display text-violet-200">Local-native,</span>
+            <span class="font-bold"> not cloud-first.</span>
+          </h2>
+          <p class="mt-4 text-lg text-ghost/60">Most AI dictation tools ship your audio to a server. Ghostly doesn't — and it's the only one here with choice of engine, configurable prompts, and no subscription.</p>
+        </div>
+
+        <div class="mt-12 overflow-x-auto">
+          <table class="w-full min-w-[720px] border-separate" style="border-spacing: 0">
+            <thead>
+              <tr class="text-left text-xs uppercase tracking-wider text-ghost/40">
+                <th class="pb-3 pr-4 font-medium"></th>
+                <th class="pb-3 pr-4 font-medium">
+                  <span class="inline-flex items-center gap-1.5 text-violet-200">
+                    <img src="assets/ghostly_logo.svg" alt="" class="h-4 w-4" /> Ghostly
+                  </span>
+                </th>
+                <th class="pb-3 pr-4 font-medium text-ghost/50">Wispr Flow</th>
+                <th class="pb-3 pr-4 font-medium text-ghost/50">Willow Voice</th>
+                <th class="pb-3 font-medium text-ghost/50">macOS Dictation</th>
+              </tr>
+            </thead>
+            <tbody class="text-sm">
+              <tr class="border-t border-white/5"><td class="py-3 pr-4 text-ghost/70">Private by default — audio never sent to a server</td><td class="py-3 pr-4 text-violet-200">Yes</td><td class="py-3 pr-4 text-ghost/40">No — cloud only</td><td class="py-3 pr-4 text-ghost/60">Opt-in mode</td><td class="py-3 text-ghost/60">Yes</td></tr>
+              <tr class="border-t border-white/5"><td class="py-3 pr-4 text-ghost/70">Works offline</td><td class="py-3 pr-4 text-violet-200">Yes</td><td class="py-3 pr-4 text-ghost/40">No</td><td class="py-3 pr-4 text-ghost/60">Opt-in mode</td><td class="py-3 text-ghost/60">Yes</td></tr>
+              <tr class="border-t border-white/5"><td class="py-3 pr-4 text-ghost/70">AI cleanup (punctuation, fillers, formatting)</td><td class="py-3 pr-4 text-violet-200">Yes — BYO key</td><td class="py-3 pr-4 text-ghost/60">Yes — included</td><td class="py-3 pr-4 text-ghost/60">Yes — included</td><td class="py-3 text-ghost/40">No</td></tr>
+              <tr class="border-t border-white/5"><td class="py-3 pr-4 text-ghost/70">Choice of transcription engine</td><td class="py-3 pr-4 text-violet-200">Whisper · Parakeet · Moonshine</td><td class="py-3 pr-4 text-ghost/40">Proprietary</td><td class="py-3 pr-4 text-ghost/40">Proprietary</td><td class="py-3 text-ghost/40">Apple only</td></tr>
+              <tr class="border-t border-white/5"><td class="py-3 pr-4 text-ghost/70">Configurable per-app prompts</td><td class="py-3 pr-4 text-violet-200">Yes</td><td class="py-3 pr-4 text-ghost/60">Auto style</td><td class="py-3 pr-4 text-ghost/60">Auto format</td><td class="py-3 text-ghost/40">No</td></tr>
+              <tr class="border-t border-white/5"><td class="py-3 pr-4 text-ghost/70">Screenshot + ask a vision model</td><td class="py-3 pr-4 text-violet-200">Yes</td><td class="py-3 pr-4 text-ghost/40">No</td><td class="py-3 pr-4 text-ghost/40">No</td><td class="py-3 text-ghost/40">No</td></tr>
+              <tr class="border-t border-white/5"><td class="py-3 pr-4 text-ghost/70">Source available</td><td class="py-3 pr-4 text-violet-200">Yes</td><td class="py-3 pr-4 text-ghost/40">No</td><td class="py-3 pr-4 text-ghost/40">No</td><td class="py-3 text-ghost/40">No</td></tr>
+              <tr class="border-t border-white/5"><td class="py-3 pr-4 text-ghost/70">Price</td><td class="py-3 pr-4 text-violet-200">Free</td><td class="py-3 pr-4 text-ghost/60">$15/mo · free 2k words/wk</td><td class="py-3 pr-4 text-ghost/60">$15/mo · free 2k words/wk</td><td class="py-3 text-ghost/60">Free</td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
 
     <section id="how" class="border-y border-white/5 bg-white/[0.02]">
       <div class="mx-auto max-w-6xl px-6 py-24">
-        <div class="mx-auto max-w-2xl text-center">
+        <div class="mx-auto max-w-2xl text-center reveal">
           <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">How it works</span>
-          <h2 class="mt-4 text-4xl font-bold tracking-tight md:text-5xl">Hold the shortcut, talk, release.</h2>
+          <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
+            <span class="font-bold">Hold the shortcut,</span>
+            <span class="font-display text-violet-200"> talk,</span>
+            <span class="font-bold"> release.</span>
+          </h2>
           <p class="mt-4 text-lg text-ghost/60">The transcript pastes into whatever field the cursor is in. Silences get skipped automatically.</p>
         </div>
 
         <div class="mt-16 grid gap-6 md:grid-cols-3">
-          <div class="glass rounded-2xl p-8">
-            <div class="text-6xl font-extrabold text-violet-300/80">01</div>
-            <h3 class="mt-4 text-xl font-semibold">Press your shortcut</h3>
-            <p class="mt-2 text-sm text-ghost/60">Any keybind, anywhere. Push-to-talk or toggle. Voice activity detection skips the silences.</p>
+          <div class="glass rounded-2xl p-7 reveal" style="--reveal-delay: 0ms">
+            <div class="step-vignette">
+              <div class="flex items-center gap-2">
+                <span class="kbd" style="padding: 8px 14px; font-size: 14px">fn</span>
+                <span class="text-xs text-ghost/40">hold</span>
+              </div>
+              <span class="absolute inset-x-0 bottom-2 text-center text-[10px] uppercase tracking-wider text-ghost/25">push to talk</span>
+            </div>
+            <div class="mt-5 flex items-baseline gap-3">
+              <div class="step-num">01</div>
+              <h3 class="text-lg font-semibold">Press your shortcut</h3>
+            </div>
+            <p class="mt-2 text-sm text-ghost/60">Any key combo. Push-to-talk or toggle. Voice-activity detection skips silences automatically.</p>
           </div>
-          <div class="glass rounded-2xl p-8">
-            <div class="text-6xl font-extrabold text-sky-300/80">02</div>
-            <h3 class="mt-4 text-xl font-semibold">Talk</h3>
-            <p class="mt-2 text-sm text-ghost/60">Whisper transcribes on-device. Self-correct with "scratch that." Say numbers out loud — AI cleanup handles conversion.</p>
+
+          <div class="glass rounded-2xl p-7 reveal" style="--reveal-delay: 120ms">
+            <div class="step-vignette">
+              <div class="step-wave flex items-center">
+                <span style="height: 12px"></span><span style="height: 22px"></span><span style="height: 34px"></span><span style="height: 28px"></span><span style="height: 18px"></span><span style="height: 26px"></span><span style="height: 32px"></span><span style="height: 20px"></span><span style="height: 14px"></span><span style="height: 24px"></span>
+              </div>
+              <span class="absolute inset-x-0 bottom-2 text-center text-[10px] uppercase tracking-wider text-ghost/25">on-device whisper</span>
+            </div>
+            <div class="mt-5 flex items-baseline gap-3">
+              <div class="step-num">02</div>
+              <h3 class="text-lg font-semibold">Talk naturally</h3>
+            </div>
+            <p class="mt-2 text-sm text-ghost/60">Whisper transcribes on-device. Say <em>"scratch that"</em> to self-correct. Numbers get converted by AI cleanup.</p>
           </div>
-          <div class="glass rounded-2xl p-8">
-            <div class="text-6xl font-extrabold text-emerald-300/80">03</div>
-            <h3 class="mt-4 text-xl font-semibold">Release</h3>
-            <p class="mt-2 text-sm text-ghost/60">The cleaned transcript pastes into the active app. No window switch, no copy step.</p>
+
+          <div class="glass rounded-2xl p-7 reveal" style="--reveal-delay: 240ms">
+            <div class="step-vignette">
+              <div class="rounded-md border border-violet-500/30 bg-black/30 px-3 py-2 font-mono text-xs text-ghost/85 step-type">Ship variant B</div>
+              <span class="absolute inset-x-0 bottom-2 text-center text-[10px] uppercase tracking-wider text-ghost/25">pasted into active app</span>
+            </div>
+            <div class="mt-5 flex items-baseline gap-3">
+              <div class="step-num">03</div>
+              <h3 class="text-lg font-semibold">Release</h3>
+            </div>
+            <p class="mt-2 text-sm text-ghost/60">Cleaned transcript pastes where your cursor is. No window switch, no copy step, no second thought.</p>
           </div>
         </div>
       </div>
     </section>
 
+    <section class="mx-auto max-w-6xl px-6 py-24">
+      <div class="mx-auto max-w-2xl text-center reveal">
+        <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">Works in every app</span>
+        <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
+          <span class="font-bold">Wherever your cursor is,</span>
+          <span class="font-display text-violet-200"> Ghostly types there.</span>
+        </h2>
+        <p class="mt-4 text-lg text-ghost/60">No integrations, no extensions, no per-app setup. If you can type into it, you can talk into it.</p>
+      </div>
+
+      <div class="relative mx-auto mt-16 h-[560px] max-w-4xl reveal" style="--reveal-delay: 150ms">
+        <!-- center composer + pill -->
+        <div class="absolute left-1/2 top-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-5">
+          <div class="hero-composer">
+            <span class="hero-label">Active input</span>
+            <div class="hero-text"><span id="hero-typing"></span><span class="hero-caret"></span></div>
+          </div>
+          <div class="center-pill">
+            <img src="assets/ghostly_logo.svg" alt="" class="h-5 w-5" />
+            <span class="text-sm font-semibold tracking-tight text-ghost">Ghostly</span>
+            <div id="hero-wave" class="mini-wave ml-1 flex h-5 w-[84px] items-center justify-center"></div>
+          </div>
+        </div>
+
+        <!-- floating app tiles -->
+        <div class="app-tile" style="top: 2%;  left: 6%;   --delay: 0s;   --dur: 5.2s">
+          <span class="app-icon"><img src="assets/apps/slack.svg" alt="" /></span> Slack
+        </div>
+        <div class="app-tile" style="top: 8%;  right: 4%;  --delay: 0.6s; --dur: 6.0s">
+          <span class="app-icon on-white"><img src="assets/apps/gmail.svg" alt="" /></span> Gmail
+        </div>
+        <div class="app-tile" style="top: 20%; left: 24%;  --delay: 0.4s; --dur: 5.6s">
+          <span class="app-icon on-white"><img src="assets/apps/cursor.svg" alt="" /></span> Cursor
+        </div>
+        <div class="app-tile" style="top: 22%; right: 22%; --delay: 1.2s; --dur: 6.4s">
+          <span class="app-icon"><img src="assets/apps/claude.svg" alt="" /></span> Claude
+        </div>
+        <div class="app-tile" style="top: 32%; left: 0%;   --delay: 1.1s; --dur: 5.5s">
+          <span class="app-icon"><img src="assets/apps/xcode.svg" alt="" /></span> Xcode
+        </div>
+        <div class="app-tile" style="top: 32%; right: 0%;  --delay: 0.3s; --dur: 6.4s">
+          <span class="app-icon"><img src="assets/apps/vscode.svg" alt="" /></span> VS Code
+        </div>
+        <div class="app-tile" style="top: 58%; left: 16%;  --delay: 0.9s; --dur: 5.9s">
+          <span class="app-icon"><img src="assets/apps/chatgpt.svg" alt="" /></span> ChatGPT
+        </div>
+        <div class="app-tile" style="top: 60%; right: 14%; --delay: 0.2s; --dur: 6.1s">
+          <span class="app-icon"><img src="assets/apps/linear.svg" alt="" /></span> Linear
+        </div>
+        <div class="app-tile" style="bottom: 22%; left: 22%;   --delay: 0.8s; --dur: 5.8s">
+          <span class="app-icon on-white"><img src="assets/apps/figma.svg" alt="" /></span> Figma
+        </div>
+        <div class="app-tile" style="bottom: 22%; right: 22%;  --delay: 1.4s; --dur: 6.2s">
+          <span class="app-icon on-white"><img src="assets/apps/notion.svg" alt="" /></span> Notion
+        </div>
+        <div class="app-tile" style="bottom: 4%; left: 6%;   --delay: 0.5s; --dur: 5.4s">
+          <span class="app-icon on-white"><img src="assets/apps/imessage.svg" alt="" /></span> Messages
+        </div>
+        <div class="app-tile" style="bottom: 4%; right: 6%;  --delay: 1.0s; --dur: 6.6s">
+          <span class="app-icon"><img src="assets/apps/jira.svg" alt="" /></span> Jira
+        </div>
+        <div class="app-tile" style="top: 72%; left: 2%;   --delay: 1.3s; --dur: 6.0s">
+          <span class="app-icon on-white"><img src="assets/apps/googlecalendar.svg" alt="" /></span> Calendar
+        </div>
+        <div class="app-tile" style="top: 72%; right: 2%;  --delay: 0.7s; --dur: 5.7s">
+          <span class="app-icon"><img src="assets/apps/discord.svg" alt="" /></span> Discord
+        </div>
+
+        <!-- subtle connecting rings -->
+        <svg class="pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 600 440" fill="none">
+          <circle cx="300" cy="220" r="130" stroke="rgba(124,92,255,0.1)" stroke-dasharray="3 6"/>
+          <circle cx="300" cy="220" r="190" stroke="rgba(124,92,255,0.06)" stroke-dasharray="3 6"/>
+        </svg>
+      </div>
+    </section>
+
     <section id="ai" class="mx-auto max-w-6xl px-6 py-24">
       <div class="grid items-center gap-12 lg:grid-cols-2">
-        <div>
+        <div class="reveal">
           <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">AI cleanup</span>
-          <h2 class="mt-4 text-4xl font-bold tracking-tight md:text-5xl">Bring your own model.</h2>
+          <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
+            <span class="font-bold">Bring</span>
+            <span class="font-display text-violet-200"> your own</span>
+            <span class="font-bold"> model.</span>
+          </h2>
           <p class="mt-4 text-lg text-ghost/60">
             Connect an API key for OpenAI, Anthropic, Groq, OpenRouter, Cerebras, Z.AI, or any OpenAI-compatible endpoint. Ghostly runs the transcript through a model before pasting — fixing punctuation, formatting lists, converting "twenty-five percent" to 25%, stripping fillers.
           </p>
@@ -287,7 +963,7 @@
           </div>
         </div>
 
-        <div class="glass rounded-2xl p-6">
+        <div class="glass rounded-2xl p-6 reveal" style="--reveal-delay: 150ms">
           <div class="mb-4 text-xs uppercase tracking-wider text-ghost/40">Before / after</div>
           <div class="space-y-4 font-mono text-sm">
             <div class="rounded-lg border border-white/10 bg-black/30 p-4">
@@ -342,16 +1018,15 @@
             <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">Download</span>
             <h2 class="mt-4 text-4xl font-bold tracking-tight md:text-5xl">Install Ghostly</h2>
             <p class="mt-4 text-lg text-ghost/60">
-              Grab the latest <span class="kbd">.dmg</span> from releases, drag Ghostly to Applications, launch. It'll ask for microphone and accessibility access. Pick a shortcut in Settings. First run downloads a transcription model (500 MB–1.6 GB depending on which one you pick). After that, dictation works offline.
+              Ghostly is macOS-only right now, Apple Silicon (M1–M4). Grab the latest <span class="kbd">.dmg</span> from releases, drag Ghostly to Applications, launch. It'll ask for microphone and accessibility access. Pick a shortcut in Settings. First run downloads a transcription model (500 MB–1.6 GB depending on which one you pick). After that, dictation works offline.
             </p>
             <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-              <a href="https://github.com/jason-bartz/ghostly/releases/latest" class="btn-primary inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-base font-semibold">
+              <a href="https://downloads.try-ghostly.com/Ghostly-latest.dmg" class="btn-primary inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-base font-semibold">
                 <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
                 Download for macOS
               </a>
               <a href="https://github.com/jason-bartz/ghostly/releases" class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/5 px-6 py-3 text-base font-semibold text-ghost hover:bg-white/10">All releases</a>
             </div>
-            <p class="mt-4 text-sm text-ghost/50">macOS 10.15 Catalina or later · Universal binary</p>
           </div>
 
           <div class="space-y-4">
@@ -366,35 +1041,7 @@
                     <div class="text-xs text-ghost/50">M1, M2, M3, M4</div>
                   </div>
                 </div>
-                <a href="https://github.com/jason-bartz/ghostly/releases/latest" class="rounded-lg bg-white/10 px-4 py-2 text-sm font-medium hover:bg-white/20">.dmg →</a>
-              </div>
-            </div>
-            <div class="rounded-xl border border-white/10 bg-black/30 p-5">
-              <div class="flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                  <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-white/10">
-                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
-                  </div>
-                  <div>
-                    <div class="font-semibold">Intel Mac</div>
-                    <div class="text-xs text-ghost/50">macOS 10.15+</div>
-                  </div>
-                </div>
-                <a href="https://github.com/jason-bartz/ghostly/releases/latest" class="rounded-lg bg-white/10 px-4 py-2 text-sm font-medium hover:bg-white/20">.dmg →</a>
-              </div>
-            </div>
-            <div class="rounded-xl border border-white/10 bg-black/30 p-5">
-              <div class="flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                  <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-white/10">
-                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.37.5 0 5.87 0 12.5c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.29-.01-1.04-.02-2.05-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.21.09 1.85 1.24 1.85 1.24 1.07 1.84 2.81 1.31 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 016 0C17.33 4.5 18.34 4.82 18.34 4.82c.66 1.65.25 2.87.12 3.17.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.62-5.49 5.92.43.37.81 1.1.81 2.22 0 1.6-.01 2.89-.01 3.29 0 .32.22.7.83.58C20.57 22.3 24 17.8 24 12.5 24 5.87 18.63.5 12 .5z"/></svg>
-                  </div>
-                  <div>
-                    <div class="font-semibold">Build from source</div>
-                    <div class="text-xs text-ghost/50">Rust + Bun</div>
-                  </div>
-                </div>
-                <a href="https://github.com/jason-bartz/ghostly" class="rounded-lg bg-white/10 px-4 py-2 text-sm font-medium hover:bg-white/20">GitHub →</a>
+                <a href="https://downloads.try-ghostly.com/Ghostly-latest.dmg" class="rounded-lg bg-white/10 px-4 py-2 text-sm font-medium hover:bg-white/20">.dmg →</a>
               </div>
             </div>
           </div>
@@ -438,41 +1085,410 @@
         <h2 class="text-4xl font-extrabold tracking-tight md:text-6xl">Try it.</h2>
         <p class="mx-auto mt-6 max-w-xl text-lg text-ghost/60">Free. Local. Yours.</p>
         <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
-          <a href="https://github.com/jason-bartz/ghostly/releases/latest" class="btn-primary inline-flex items-center gap-2 rounded-xl px-8 py-4 text-lg font-semibold">Download for macOS</a>
+          <a href="https://downloads.try-ghostly.com/Ghostly-latest.dmg" class="btn-primary inline-flex items-center gap-2 rounded-xl px-8 py-4 text-lg font-semibold">Download for macOS</a>
           <a href="https://github.com/jason-bartz/ghostly" class="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-8 py-4 text-lg font-semibold hover:bg-white/10">View source</a>
         </div>
       </div>
     </section>
 
     <footer class="border-t border-white/5">
-      <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-6 py-10 md:flex-row">
-        <div class="flex items-center gap-2">
-          <img src="assets/ghostly_logo.svg" alt="" class="h-6 w-6" />
-          <span class="text-sm font-semibold">Ghostly</span>
-          <span class="text-sm text-ghost/40">— Voice-first typing for macOS</span>
+      <div class="mx-auto max-w-6xl px-6 py-14">
+        <div class="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+          <div>
+            <div class="flex items-center gap-2">
+              <img src="assets/ghostly_logo.svg" alt="" class="h-6 w-6" />
+              <span class="text-sm font-semibold">Ghostly</span>
+            </div>
+            <p class="mt-3 max-w-xs text-sm text-ghost/55">Voice-first typing for macOS. On-device Whisper with optional AI cleanup.</p>
+            <p class="mt-4 font-mono text-xs text-ghost/40" id="footer-version">v0.9.0 · updated Apr 2026</p>
+          </div>
+
+          <div>
+            <div class="text-xs font-semibold uppercase tracking-wider text-ghost/40">Product</div>
+            <ul class="mt-4 space-y-2 text-sm text-ghost/60">
+              <li><a href="#features" class="hover:text-ghost">Features</a></li>
+              <li><a href="#how" class="hover:text-ghost">How it works</a></li>
+              <li><a href="#ai" class="hover:text-ghost">AI cleanup</a></li>
+              <li><a href="#download" class="hover:text-ghost">Download</a></li>
+              <li><a href="https://github.com/jason-bartz/ghostly/releases" class="hover:text-ghost">Release notes</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <div class="text-xs font-semibold uppercase tracking-wider text-ghost/40">Source</div>
+            <ul class="mt-4 space-y-2 text-sm text-ghost/60">
+              <li><a href="https://github.com/jason-bartz/ghostly" class="hover:text-ghost">GitHub</a></li>
+              <li><a href="https://github.com/jason-bartz/ghostly/issues" class="hover:text-ghost">Issues</a></li>
+              <li><a href="https://github.com/jason-bartz/ghostly/blob/main/NOTICE.md" class="hover:text-ghost">Attribution</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <div class="text-xs font-semibold uppercase tracking-wider text-ghost/40">Contact</div>
+            <ul class="mt-4 space-y-2 text-sm text-ghost/60">
+              <li><a href="/privacy" class="hover:text-ghost">Privacy</a></li>
+              <li><a href="mailto:security@try-ghostly.com" class="hover:text-ghost">Security</a></li>
+              <li><a href="mailto:support@try-ghostly.com" class="hover:text-ghost">Support</a></li>
+            </ul>
+          </div>
         </div>
-        <div class="flex items-center gap-6 text-sm text-ghost/60">
-          <a href="https://github.com/jason-bartz/ghostly" class="hover:text-ghost">GitHub</a>
-          <a href="https://github.com/jason-bartz/ghostly/releases" class="hover:text-ghost">Releases</a>
-          <a href="https://github.com/jason-bartz/ghostly/issues" class="hover:text-ghost">Issues</a>
-          <a href="mailto:support@try-ghostly.com" class="hover:text-ghost">Support</a>
+
+        <div class="mt-12 flex flex-col items-start justify-between gap-3 border-t border-white/5 pt-6 text-xs text-ghost/40 md:flex-row md:items-center">
+          <div>© 2026 Ghostly</div>
+          <div class="flex items-center gap-2">
+            <img src="https://github.com/jason-bartz.png?size=32" alt="" class="h-4 w-4 rounded-full" />
+            <a href="https://github.com/jason-bartz" class="hover:text-ghost/70">By Jason Bartz</a>
+          </div>
         </div>
       </div>
-      <div class="pb-8 text-center text-xs text-ghost/40">© 2025 Ghostly. See <a href="https://github.com/jason-bartz/ghostly/blob/main/NOTICE.md" class="underline">NOTICE</a> for third-party acknowledgments.</div>
     </footer>
 
     <script>
+      // Hero "typing" typewriter animation
       (function () {
-        const el = document.getElementById('waveform');
-        if (!el) return;
-        const n = 56;
-        let html = '';
-        for (let i = 0; i < n; i++) {
-          const h = 6 + Math.abs(Math.sin(i * 0.45) + Math.cos(i * 0.18)) * 30;
-          const op = 0.35 + Math.abs(Math.sin(i * 0.3)) * 0.55;
-          html += `<span style="height:${h.toFixed(1)}px;opacity:${op.toFixed(2)}"></span>`;
+        const typed = document.getElementById('hero-type');
+        if (!typed) return;
+        const prm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prm) return; // keep full text as-is for reduced motion
+        const full = ' typing';
+        typed.textContent = '';
+        let i = 0;
+        const step = () => {
+          if (i > full.length) return;
+          typed.textContent = full.slice(0, i);
+          i++;
+          if (i <= full.length) setTimeout(step, 80 + Math.random() * 55);
+        };
+        setTimeout(step, 480);
+      })();
+
+      // Sticky header: add shadow/border when scrolled
+      (function () {
+        const header = document.getElementById('site-header');
+        if (!header) return;
+        const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 8);
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+      })();
+
+      // Auto-apply .reveal to every feature-card that isn't already hooked up
+      (function () {
+        const prm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        // Stagger children inside [data-stagger] containers — assign per-child delay
+        document.querySelectorAll('[data-stagger]').forEach((grid) => {
+          Array.from(grid.children).forEach((child, i) => {
+            child.classList.add('reveal');
+            child.style.setProperty('--reveal-delay', `${i * 70}ms`);
+          });
+        });
+        if (prm) {
+          document.querySelectorAll('.reveal').forEach((el) => el.classList.add('in-view'));
+          return;
         }
-        el.innerHTML = html;
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add('in-view');
+              io.unobserve(e.target);
+            }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+      })();
+
+      // WPM bars fill when scrolled into view
+      (function () {
+        const bars = document.querySelectorAll('.wpm-bar');
+        if (!bars.length) return;
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add('in-view');
+              io.unobserve(e.target);
+            }
+          });
+        }, { threshold: 0.5 });
+        bars.forEach((b) => io.observe(b));
+      })();
+
+      // Feature-card radial-glow follows pointer
+      (function () {
+        document.querySelectorAll('.feature-card').forEach((card) => {
+          card.addEventListener('pointermove', (e) => {
+            const r = card.getBoundingClientRect();
+            card.style.setProperty('--mx', `${e.clientX - r.left}px`);
+            card.style.setProperty('--my', `${e.clientY - r.top}px`);
+          });
+        });
+      })();
+
+      // Cursor/Ghostly hero composer: cycle random messages, drive waveform
+      (function () {
+        const waveEl = document.getElementById('hero-wave');
+        const textEl = document.getElementById('hero-typing');
+        if (!waveEl || !textEl) return;
+
+        const messages = [
+          "refactor the auth middleware to use the new token service",
+          "yeah ship variant B — eight percent on activation compounds fast",
+          "fix the race condition in the websocket reconnect logic",
+          "push the pricing update to staging and ping the sales team",
+          "map approve to enter and reject to escape in cursor",
+          "close the Linear ticket once the migration completes cleanly",
+          "tell the prospect we can run the pilot at fifty percent for Q2",
+          "add retry logic with exponential backoff to the fetch client",
+          "schedule the demo for Thursday at two and loop in the AE",
+          "replace the mock in the integration tests with a real Postgres",
+          "draft a follow-up summarizing the proposal and next steps",
+          "build is green, tag v2.4.0 and push to the release branch",
+          "add a null check on the response before destructuring the user",
+          "kick off the renewal call with a quick recap of last quarter",
+          "generate the React component for the empty state using Tailwind",
+          "remind me to review the PR from Sam before standup tomorrow",
+          "extract this hook into its own file and add a unit test",
+          "write a cold outreach line referencing their recent Series B",
+          "the bug repros on Safari only, check the IntersectionObserver polyfill",
+          "log the contract value as twelve thousand ARR in Salesforce"
+        ];
+
+        const BARS = 28;
+        const bars = [];
+        for (let i = 0; i < BARS; i++) {
+          const s = document.createElement('span');
+          s.style.height = '3px';
+          waveEl.appendChild(s);
+          bars.push(s);
+        }
+
+        let energy = 0;
+        let lastIdx = -1;
+
+        function tickWave() {
+          for (let i = 0; i < BARS; i++) {
+            const edge = 1 - Math.abs((i - (BARS - 1) / 2) / ((BARS - 1) / 2));
+            const base = 2;
+            const peak = 16 * energy * (0.4 + 0.6 * edge);
+            const h = base + Math.random() * Math.random() * peak;
+            bars[i].style.height = h.toFixed(1) + 'px';
+          }
+        }
+        setInterval(tickWave, 70);
+
+        const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+        function pickMessage() {
+          let idx;
+          do { idx = Math.floor(Math.random() * messages.length); }
+          while (idx === lastIdx && messages.length > 1);
+          lastIdx = idx;
+          return messages[idx];
+        }
+
+        async function typeOut(msg) {
+          textEl.textContent = '';
+          for (let i = 0; i < msg.length; i++) {
+            textEl.textContent = msg.slice(0, i + 1);
+            energy = 0.7 + Math.random() * 0.3;
+            await sleep(22 + Math.random() * 55);
+          }
+        }
+
+        async function clearOut() {
+          const current = textEl.textContent;
+          for (let i = current.length; i > 0; i--) {
+            textEl.textContent = current.slice(0, i - 1);
+            energy = 0.25 + Math.random() * 0.15;
+            await sleep(10 + Math.random() * 18);
+          }
+        }
+
+        async function loop() {
+          while (true) {
+            const msg = pickMessage();
+            energy = 0.9;
+            await typeOut(msg);
+            energy = 0.15;
+            await sleep(1600 + Math.random() * 800);
+            await clearOut();
+            energy = 0.05;
+            await sleep(300);
+          }
+        }
+        loop();
+      })();
+    </script>
+    <script>
+      (function () {
+        const pill          = document.getElementById('pill');
+        const miniWave      = document.getElementById('mini-wave');
+        const caption       = document.getElementById('caption');
+        const captionStage  = document.getElementById('caption-stage');
+        const captionText   = document.getElementById('caption-text');
+        const composer      = document.getElementById('composer');
+        const sendBtn       = document.getElementById('send-btn');
+        const feed          = document.getElementById('chat-feed');
+        if (!pill || !feed) return;
+
+        const BARS = 18;
+        const bars = [];
+        for (let i = 0; i < BARS; i++) {
+          const s = document.createElement('span');
+          s.style.height = '3px';
+          miniWave.appendChild(s);
+          bars.push(s);
+        }
+
+        // Conversation: product launch decision, accessible technical topic,
+        // resolves favorably. Value prop: voice-driven Slack replies that
+        // come out polished enough to ship decisions by.
+        const MAYA = 'assets/demo-maya.png';
+        const ME   = 'assets/demo-user.png';
+        const turns = [
+          {
+            reply: {
+              who: 'Maya Chen', img: MAYA, time: '10:14',
+              text: "the onboarding A/B test just wrapped — variant B is up 8% on activation. ship it?"
+            },
+            raw:     "yeah ship variant b, eight percent on activation compounds — lets roll it to twenty five percent first and watch retention for a week",
+            cleaned: "Yeah, ship variant B. 8% on activation compounds. Roll it to 25% first and watch retention for a week."
+          },
+          {
+            reply: {
+              who: 'Maya Chen', img: MAYA, time: '10:15',
+              text: "rolling to 25% now. what should I watch for?"
+            },
+            raw:     "um, mainly day seven retention, if it holds steady we're good, if it dips more than a point we need to dig in",
+            cleaned: "Mainly D7 retention. If it holds steady we're good; if it dips more than a point, we need to dig in."
+          },
+          {
+            reply: {
+              who: 'Maya Chen', img: MAYA, time: '10:22',
+              text: "D7 is up half a point after 3 days. calling it."
+            },
+            raw:     "perfect, push it to a hundred percent on friday and drop a note in hash launches so the team sees it",
+            cleaned: "Perfect. Push to 100% on Friday and drop a note in #launches so the team sees it."
+          }
+        ];
+
+        let state  = 'idle'; // idle | listening | cleaning
+        let energy = 0;
+
+        function renderWave(t) {
+          const target = state === 'listening' ? (0.6 + 0.4 * Math.abs(Math.sin(t * 0.005))) : 0.05;
+          energy += (target - energy) * 0.14;
+          for (let i = 0; i < BARS; i++) {
+            const n = Math.sin(t * 0.014 + i * 0.42) + Math.cos(t * 0.008 + i * 0.22);
+            const jitter = state === 'listening' ? (Math.random() * 0.55 + 0.5) : 0.4;
+            const h = 2 + Math.abs(n) * 16 * energy * jitter;
+            bars[i].style.height = h.toFixed(1) + 'px';
+          }
+        }
+        function frame(t) { renderWave(t); requestAnimationFrame(frame); }
+        requestAnimationFrame(frame);
+
+        const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+        async function typeInto(node, text, perChar) {
+          for (let i = 0; i <= text.length; i++) {
+            node.textContent = text.slice(0, i);
+            const c = text[i - 1];
+            const extra = (c === ',' || c === '—') ? 140 : (c === '.' || c === '?') ? 220 : 0;
+            await sleep(perChar + Math.random() * 25 + extra);
+          }
+        }
+
+        function showPill()    { pill.classList.remove('overlay-hidden'); }
+        function hidePill()    { pill.classList.add('overlay-hidden'); }
+        function showCaption() { caption.classList.remove('overlay-hidden'); }
+        function hideCaption() { caption.classList.add('overlay-hidden'); }
+
+        function setComposerPlaceholder() {
+          composer.innerHTML = '<span class="text-ghost/30">Message #design</span>';
+        }
+
+        function appendMessage(who, img, time, text, isYou) {
+          const row = document.createElement('div');
+          row.className = 'flex items-start gap-3 msg-enter' + (isYou ? '' : ' opacity-90');
+          row.innerHTML = `
+            <img src="${img}" alt="" class="h-9 w-9 flex-shrink-0 rounded-md object-cover" />
+            <div class="min-w-0 flex-1">
+              <div class="flex items-baseline gap-2">
+                <span class="text-sm font-semibold text-ghost">${who}</span>
+                <span class="text-[11px] text-ghost/40">${time}</span>
+              </div>
+              <div class="mt-0.5 text-sm leading-relaxed ${isYou ? 'text-ghost/90' : 'text-ghost/75'}"></div>
+            </div>`;
+          row.querySelector('.min-w-0 > div:last-child').textContent = text;
+          feed.appendChild(row);
+          feed.scrollTop = feed.scrollHeight;
+        }
+
+        function resetAll() {
+          state = 'idle';
+          hidePill();
+          hideCaption();
+          captionText.textContent = '\u00A0';
+          setComposerPlaceholder();
+          sendBtn.classList.remove('flash', 'text-ghost');
+          sendBtn.classList.add('text-ghost/40');
+          feed.innerHTML = '';
+        }
+
+        async function runTurn(turn) {
+          // 1. Maya's message appears first
+          appendMessage(turn.reply.who, turn.reply.img, turn.reply.time + ' AM', turn.reply.text, false);
+          await sleep(900);
+
+          // 2. Pill + caption bubble appear below Slack — user holds fn
+          state = 'listening';
+          captionStage.textContent = 'Listening';
+          captionText.textContent  = '\u00A0';
+          showPill();
+          showCaption();
+          await sleep(300);
+
+          // 3. Raw transcript streams into caption bubble
+          await typeInto(captionText, turn.raw, 34);
+          await sleep(400);
+
+          // 4. AI cleanup stage
+          state = 'cleaning';
+          captionStage.textContent = 'Cleaning up';
+          await sleep(750);
+
+          // 5. Caption fades; cleaned text is pasted instantly into composer
+          hideCaption();
+          await sleep(220);
+          composer.textContent = turn.cleaned;
+          sendBtn.classList.remove('text-ghost/40');
+          sendBtn.classList.add('text-ghost');
+          await sleep(600);
+
+          // 6. Send — message flushes into the feed
+          sendBtn.classList.add('flash');
+          await sleep(130);
+          sendBtn.classList.remove('flash');
+          setComposerPlaceholder();
+          sendBtn.classList.remove('text-ghost');
+          sendBtn.classList.add('text-ghost/40');
+          appendMessage('You', ME, 'now', turn.cleaned, true);
+
+          state = 'idle';
+          hidePill();
+        }
+
+        async function run() {
+          while (true) {
+            resetAll();
+            await sleep(700);
+            for (const turn of turns) {
+              await runTurn(turn);
+              await sleep(1100);
+            }
+            await sleep(3500); // hold on resolution
+          }
+        }
+        run();
       })();
     </script>
   </body>
