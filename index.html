@@ -3,23 +3,159 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ghostly — Voice-first typing for macOS</title>
+    <title>Ghostly — Voice-first typing for macOS | On-device Whisper dictation</title>
     <meta
       name="description"
-      content="Ghostly lives in your menu bar. Press a shortcut, talk, and your words land in the active app. Transcription runs on-device."
+      content="Ghostly is a menu-bar dictation app for macOS. Press a shortcut, talk, and your words land in the active app. Whisper runs on-device — audio never leaves your Mac. Free and open source."
     />
+    <meta name="keywords" content="macOS dictation, voice typing, speech to text Mac, on-device Whisper, menu bar dictation, voice input, push to talk, Apple Silicon dictation, free dictation app, privacy-first transcription" />
+    <meta name="author" content="Jason Bartz" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <link rel="canonical" href="https://try-ghostly.com/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Ghostly" />
+    <meta property="og:url" content="https://try-ghostly.com/" />
     <meta property="og:title" content="Ghostly — Voice-first typing for macOS" />
     <meta
       property="og:description"
-      content="Press a shortcut, talk, and your words land in the active app. Transcription runs on-device."
+      content="Press a shortcut, talk, and your words land in the active app. On-device Whisper transcription — audio never leaves your Mac."
     />
-    <meta property="og:image" content="assets/ghostly_logo.svg" />
-    <meta property="og:type" content="website" />
-    <link rel="icon" type="image/svg+xml" href="assets/ghostly_logo.svg" />
-    <meta name="theme-color" content="#0b0b0f" />
+    <meta property="og:image" content="https://try-ghostly.com/assets/og-image.png" />
+    <meta property="og:image:secure_url" content="https://try-ghostly.com/assets/og-image.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Ghostly — voice-first typing for macOS. Press. Talk. Your words land." />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@ghostlyapp" />
+    <meta name="twitter:creator" content="@jasonmbartz" />
+    <meta name="twitter:url" content="https://try-ghostly.com/" />
     <meta name="twitter:title" content="Ghostly — Voice-first typing for macOS" />
-    <meta name="twitter:description" content="Press fn, talk, release. Your words paste into the active app. On-device transcription." />
+    <meta name="twitter:description" content="Press fn, talk, release. Your words paste into the active app. On-device Whisper — audio never leaves your Mac." />
+    <meta name="twitter:image" content="https://try-ghostly.com/assets/og-image.png" />
+    <meta name="twitter:image:alt" content="Ghostly — voice-first typing for macOS" />
+
+    <!-- Icons & theme -->
+    <link rel="icon" type="image/svg+xml" href="/assets/ghostly_logo.svg" />
+    <link rel="apple-touch-icon" href="/assets/og-image.png" />
+    <meta name="theme-color" content="#0b0b0f" />
+    <meta name="application-name" content="Ghostly" />
+    <meta name="apple-mobile-web-app-title" content="Ghostly" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <!-- Structured data: SoftwareApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://try-ghostly.com/#app",
+          "name": "Ghostly",
+          "applicationCategory": "ProductivityApplication",
+          "applicationSubCategory": "DictationApplication",
+          "operatingSystem": "macOS 10.15+",
+          "processorRequirements": "Apple Silicon (M1–M4) recommended; Intel supported",
+          "url": "https://try-ghostly.com/",
+          "downloadUrl": "https://downloads.try-ghostly.com/Ghostly-latest.dmg",
+          "installUrl": "https://downloads.try-ghostly.com/Ghostly-latest.dmg",
+          "softwareVersion": "0.9.0",
+          "fileFormat": "application/x-apple-diskimage",
+          "image": "https://try-ghostly.com/assets/og-image.png",
+          "description": "Menu-bar dictation for macOS. Press a shortcut, talk, and your words land in the active app. Transcription runs on-device with Whisper — audio never leaves your Mac.",
+          "featureList": [
+            "On-device Whisper transcription",
+            "Global push-to-talk shortcut",
+            "Pastes into the active app",
+            "Works offline after first-run model download",
+            "Optional AI cleanup (Apple Intelligence, OpenAI, Anthropic)",
+            "Voice Activity Detection (Silero VAD)",
+            "Multiple Whisper model sizes (Small, Medium, Turbo, Large)"
+          ],
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock"
+          },
+          "author": {
+            "@type": "Person",
+            "name": "Jason Bartz",
+            "url": "https://github.com/jason-bartz"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "Ghostly",
+            "url": "https://try-ghostly.com/"
+          },
+          "license": "https://github.com/jason-bartz/ghostly/blob/main/LICENSE",
+          "sameAs": [
+            "https://github.com/jason-bartz/ghostly"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://try-ghostly.com/#website",
+          "url": "https://try-ghostly.com/",
+          "name": "Ghostly",
+          "description": "Voice-first typing for macOS",
+          "publisher": { "@id": "https://try-ghostly.com/#app" },
+          "inLanguage": "en-US"
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://try-ghostly.com/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Does my audio leave my Mac?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. Transcription runs on-device via Whisper. If you enable optional AI cleanup with a cloud provider, only the resulting text is sent — never audio. Apple Intelligence keeps cleanup on-device too."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is Ghostly free?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Ghostly is free to download and use."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What are the system requirements?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "macOS 10.15 Catalina or later. Apple Silicon recommended for GPU-accelerated inference; Intel works. Microphone and accessibility permissions required."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Does Ghostly work offline?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. After the first-run model download, dictation works offline. Optional AI cleanup needs a network connection unless you pick Apple Intelligence."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is Ghostly available on Windows or Linux?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. Ghostly targets macOS only."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap"
       rel="stylesheet"
