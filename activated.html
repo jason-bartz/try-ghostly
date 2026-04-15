@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Activating Ghostly Pro…</title>
+    <meta name="robots" content="noindex" />
+    <link rel="icon" type="image/png" href="/assets/favicon.png" />
+    <style>
+      * { box-sizing: border-box; }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
+        background: #0b0b0e;
+        color: #f2f2f3;
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        line-height: 1.55;
+      }
+      .card {
+        max-width: 520px;
+        width: 100%;
+        background: #16161a;
+        border: 1px solid #26262c;
+        border-radius: 16px;
+        padding: 40px 36px;
+        text-align: center;
+      }
+      h1 { margin: 0 0 8px; font-size: 24px; font-weight: 600; }
+      p { margin: 0 0 16px; color: #bdbdc3; font-size: 15px; }
+      .key {
+        display: inline-block;
+        background: #0b0b0e;
+        border: 1px solid #26262c;
+        border-radius: 8px;
+        padding: 10px 14px;
+        font-family: "SF Mono", ui-monospace, monospace;
+        font-size: 14px;
+        margin-top: 4px;
+        user-select: all;
+      }
+      .spinner {
+        width: 22px; height: 22px;
+        border: 2px solid #2d2d35;
+        border-top-color: #a78bfa;
+        border-radius: 50%;
+        margin: 0 auto 20px;
+        animation: spin 0.8s linear infinite;
+      }
+      @keyframes spin { to { transform: rotate(360deg); } }
+      .btn {
+        display: inline-block;
+        background: #a78bfa;
+        color: #0b0b0e;
+        font-weight: 600;
+        padding: 12px 20px;
+        border-radius: 10px;
+        text-decoration: none;
+        margin-top: 12px;
+        font-size: 14px;
+      }
+      .btn.secondary {
+        background: transparent;
+        color: #bdbdc3;
+        border: 1px solid #3a3a42;
+      }
+      .muted { color: #7a7a82; font-size: 13px; margin-top: 24px; }
+      a { color: #a78bfa; }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="spinner" id="spinner"></div>
+      <h1 id="title">Opening Ghostly…</h1>
+      <p id="body">Finishing activation in the app. If Ghostly doesn't open automatically, click below.</p>
+      <p>
+        <a id="openBtn" class="btn" href="#">Open Ghostly</a>
+      </p>
+      <p class="muted" id="fallback" style="display:none;">
+        Didn't work? Your license key was also emailed to you — paste it in
+        <b>Ghostly → Settings → License</b>.<br />
+        Questions? <a href="mailto:support@try-ghostly.com">support@try-ghostly.com</a>
+      </p>
+    </div>
+    <script>
+      (function () {
+        var params = new URLSearchParams(location.search);
+        var sessionId = params.get("session_id");
+        var deepLink = sessionId
+          ? "ghostly://activate?session_id=" + encodeURIComponent(sessionId)
+          : "ghostly://activate";
+
+        var btn = document.getElementById("openBtn");
+        btn.href = deepLink;
+
+        // Auto-redirect. macOS will prompt to open Ghostly if registered.
+        setTimeout(function () {
+          location.href = deepLink;
+        }, 400);
+
+        // Show fallback text after a few seconds in case the redirect silently fails.
+        setTimeout(function () {
+          document.getElementById("spinner").style.display = "none";
+          document.getElementById("title").textContent = "Thanks for buying Ghostly Pro!";
+          document.getElementById("body").textContent =
+            "Click the button below to finish activation in the app.";
+          document.getElementById("fallback").style.display = "block";
+        }, 4000);
+      })();
+    </script>
+  </body>
+</html>
