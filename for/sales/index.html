@@ -228,6 +228,34 @@
       @media (prefers-reduced-motion: reduce) {
         .marquee-track, .mic-dot, .crm-stage-step.active::after, .crm-note-text .caret { animation: none !important; }
       }
+
+      /* ---- Mobile ---- */
+      @media (max-width: 768px) {
+        .crm-body { grid-template-columns: 1fr; min-height: auto; }
+        .crm-sidebar { display: none; }
+      }
+      @media (max-width: 640px) {
+        .crm-bar { padding: 8px 12px; }
+        .crm-bar .text-xs { font-size: 11px; }
+        .crm-main { padding: 16px 16px; }
+        .crm-deal-title { font-size: 17px; }
+        .crm-deal-sub { font-size: 11.5px; }
+        .crm-logo { width: 42px; height: 42px; font-size: 16px; }
+        .crm-kv { font-size: 12px; gap: 4px 12px; }
+        .crm-note-card { padding: 12px 14px; }
+        .crm-note-text { font-size: 12.5px; min-height: 64px; }
+        .crm-fields-pushed { grid-template-columns: 1fr; gap: 6px; }
+
+        .email-mock .email-body { padding: 16px 18px; font-size: 12.5px; }
+        .email-mock .email-hdr { padding: 10px 14px; }
+        .email-mock .email-foot { padding: 10px 14px; }
+
+        .usecase-row { padding: 14px 14px; gap: 12px; }
+        .usecase-icons { width: 72px; }
+        .usecase-icons .app-ic { width: 36px; height: 36px; }
+
+        .top-tile { padding: 13px 14px; font-size: 13px; }
+      }
     </style>
   </head>
   <body class="font-sans antialiased">

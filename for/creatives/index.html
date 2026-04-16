@@ -282,6 +282,57 @@
         .marquee-track, .orbit-item, .notion-caret, .hero-mic-chip .dot { animation: none !important; }
         .orbit-center::before { animation: none !important; opacity: 0; }
       }
+
+      /* ---- Mobile ---- */
+      @media (max-width: 640px) {
+        .notion-body { padding: 20px 18px 22px; }
+        .notion-title { font-size: 22px; }
+        .notion-block { font-size: 13px; margin-top: 12px; }
+        .notion-bar { padding: 8px 12px; gap: 8px; }
+        .notion-bar .text-xs { font-size: 11px; }
+
+        /* Swap the absolute-positioned orbit for a stacked layout at mobile. */
+        .orbit-wrap {
+          aspect-ratio: auto;
+          max-width: 420px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 14px;
+          padding: 10px 0 4px;
+        }
+        .orbit-wrap::before { display: none; }
+        .orbit-svg { display: none; }
+        .orbit-center {
+          position: static;
+          transform: none;
+          margin: 4px 0 6px;
+        }
+        .orbit-item {
+          position: static;
+          animation: none;
+          font-size: 12.5px;
+          width: 100%;
+          justify-content: flex-start;
+        }
+        .orbit-items-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 8px;
+          width: 100%;
+        }
+        .orbit-items-grid .orbit-item { width: auto; }
+
+        .tone-pill { padding: 7px 11px; font-size: 12px; }
+        .tone-shift-card { padding: 18px 20px; }
+        .tone-shift-card .tone-text { font-size: 13.5px; }
+
+        .usecase-row { padding: 14px 14px; gap: 12px; }
+        .usecase-icons { width: 72px; }
+        .usecase-icons .app-ic { width: 36px; height: 36px; }
+
+        .top-tile { padding: 13px 14px; font-size: 13px; }
+      }
     </style>
   </head>
   <body class="font-sans antialiased">
@@ -459,12 +510,14 @@
                 <span class="orbit-center-label">Ghostly</span>
                 <div class="orbit-wave" id="orbit-wave" aria-hidden="true"></div>
               </div>
-              <div class="orbit-item" style="left:3%; top:8%; --delay:0s"><img src="/assets/apps/notion.png" alt=""/>Newsletter outline</div>
-              <div class="orbit-item" style="right:3%; top:8%; --delay:0.4s"><img src="/assets/apps/drafts.png" alt=""/>3 a.m. idea</div>
-              <div class="orbit-item" style="left:2%; top:46%; --delay:0.8s"><img src="/assets/apps/figma.png" alt=""/>Figma comment</div>
-              <div class="orbit-item" style="right:2%; top:46%; --delay:1.2s"><img src="/assets/apps/obsidian.png" alt=""/>Essay draft</div>
-              <div class="orbit-item" style="left:5%; bottom:8%; --delay:1.6s"><img src="/assets/apps/messages.png" alt=""/>Reply to producer</div>
-              <div class="orbit-item" style="right:5%; bottom:8%; --delay:2s"><img src="/assets/apps/apple-notes.png" alt=""/>Podcast hook</div>
+              <div class="orbit-items-grid">
+                <div class="orbit-item" style="left:3%; top:8%; --delay:0s"><img src="/assets/apps/notion.png" alt=""/>Newsletter outline</div>
+                <div class="orbit-item" style="right:3%; top:8%; --delay:0.4s"><img src="/assets/apps/drafts.png" alt=""/>3 a.m. idea</div>
+                <div class="orbit-item" style="left:2%; top:46%; --delay:0.8s"><img src="/assets/apps/figma.png" alt=""/>Figma comment</div>
+                <div class="orbit-item" style="right:2%; top:46%; --delay:1.2s"><img src="/assets/apps/obsidian.png" alt=""/>Essay draft</div>
+                <div class="orbit-item" style="left:5%; bottom:8%; --delay:1.6s"><img src="/assets/apps/messages.png" alt=""/>Reply to producer</div>
+                <div class="orbit-item" style="right:5%; bottom:8%; --delay:2s"><img src="/assets/apps/apple-notes.png" alt=""/>Podcast hook</div>
+              </div>
             </div>
           </div>
         </div>

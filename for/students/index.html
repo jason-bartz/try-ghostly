@@ -242,6 +242,39 @@
       @media (prefers-reduced-motion: reduce) {
         .marquee-track, .essay-hint .dot, .essay-caret { animation: none !important; }
       }
+
+      /* ---- Mobile ---- */
+      @media (max-width: 640px) {
+        .essay-bar { padding: 8px 12px; gap: 8px; }
+        .essay-bar .text-xs { font-size: 10.5px; }
+        .essay-body { padding: 20px 18px 28px; min-height: 360px; }
+        .essay-title { font-size: 22px; line-height: 1.15; }
+        .essay-class { font-size: 9.5px; }
+        .essay-meta { font-size: 10px; gap: 10px; flex-wrap: wrap; }
+        .essay-p { font-size: 13px; margin-top: 12px; line-height: 1.6; }
+        .essay-hint {
+          position: static;
+          margin-bottom: 12px;
+          align-self: flex-start;
+          font-size: 10px;
+        }
+        .essay-body { display: flex; flex-direction: column; }
+        .essay-progress { left: 18px; right: 18px; bottom: 12px; font-size: 10px; gap: 8px; }
+
+        .annot-callout { flex-wrap: wrap; padding: 10px 12px; font-size: 12px; gap: 8px; }
+        .annot-callout .annot-cmd { font-size: 13.5px; }
+        .annot-callout .annot-kbd { margin-left: 0; font-size: 10px; flex: 1 1 100%; text-align: right; }
+        .edits-text { font-size: 13.5px; line-height: 1.85; }
+
+        .usecase-row { padding: 14px 14px; gap: 12px; }
+        .usecase-icons { width: 72px; }
+        .usecase-icons .app-ic { width: 36px; height: 36px; }
+
+        .top-tile { padding: 13px 14px; font-size: 13px; }
+
+        .student-bonus { padding: 24px 20px 28px !important; }
+        .student-bonus h3 { font-size: 28px; }
+      }
     </style>
   </head>
   <body class="font-sans antialiased">
