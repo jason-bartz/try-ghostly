@@ -1,6 +1,6 @@
 # Ghostly
 
-> Ghostly is a free, open-source voice-first typing app for macOS. It lives in the menu bar: press a shortcut, talk, and your words land in the active app. Speech-to-text runs on-device using Whisper — audio never leaves the Mac. Optional AI cleanup (Apple Intelligence, OpenAI, Anthropic) polishes the transcript; only text is sent, never audio.
+> Ghostly is a voice-first typing app for macOS. It lives in the menu bar: press a shortcut, talk, and your words land in the active app. Speech-to-text runs on-device using Whisper — audio never leaves the Mac. Optional AI cleanup (Apple Intelligence, OpenAI, Anthropic) polishes the transcript; only text is sent, never audio.
 
 Ghostly is macOS-only (10.15+), with Apple Silicon recommended for GPU-accelerated inference. The app is distributed as a signed `.dmg` and requires microphone and accessibility permissions. First launch downloads a Whisper model (500 MB–1.6 GB depending on variant: Small, Medium, Turbo, Large).
 
@@ -9,19 +9,14 @@ Ghostly is macOS-only (10.15+), with Apple Silicon recommended for GPU-accelerat
 - Platform: macOS 10.15+ (Apple Silicon M1–M4 recommended; Intel supported)
 - Price: Free
 - Privacy: On-device transcription. No analytics. No telemetry. Audio never transmitted.
-- License: MIT (source), EULA for the signed binary
-- Source: https://github.com/jason-bartz/ghostly
-- Built on: Whisper (whisper-rs), Silero VAD, Tauri 2, React, Rust
 - Download: https://downloads.try-ghostly.com/Ghostly-latest.dmg
 
 ## Links
 
 - [Homepage](https://try-ghostly.com/): Product overview, features, download
 - [Download (.dmg)](https://downloads.try-ghostly.com/Ghostly-latest.dmg): Latest signed macOS installer
-- [Source on GitHub](https://github.com/jason-bartz/ghostly): Code, issues, releases
-- [Releases](https://github.com/jason-bartz/ghostly/releases): Version history and release notes
+- [Install guide](https://try-ghostly.com/install/): How to install Ghostly on macOS
 - [Privacy policy](https://try-ghostly.com/privacy/): Data handling and permissions
-- [Attribution](https://github.com/jason-bartz/ghostly/blob/main/NOTICE.md): Third-party notices and fork lineage (forked from Handy)
 
 ## How it works
 
