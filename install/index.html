@@ -55,6 +55,11 @@
         color: #0b0b0f;
       }
       .btn-primary:hover { filter: brightness(1.05); }
+      #site-header.is-scrolled {
+        border-bottom-color: rgba(255, 255, 255, 0.08);
+        background: rgba(11, 11, 15, 0.85);
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.4), 0 10px 30px -10px rgba(0, 0, 0, 0.35);
+      }
       .step-card {
         background: rgba(255, 255, 255, 0.03);
         border: 1px solid rgba(255, 255, 255, 0.08);
@@ -167,13 +172,19 @@
     </style>
   </head>
   <body class="font-sans grid-bg min-h-screen">
-    <!-- Nav -->
-    <header class="sticky top-0 z-30 backdrop-blur bg-ink/70 border-b border-white/5">
-      <div class="mx-auto max-w-6xl px-6 py-4 flex items-center justify-between">
+    <header id="site-header" class="sticky top-0 z-50 border-b border-transparent bg-ink/60 backdrop-blur transition-colors duration-200">
+      <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <a href="/" class="flex items-center gap-2">
-          <img src="/assets/ghostly_wordmark.svg" alt="Ghostly" class="h-7" />
+          <img src="/assets/ghostly_logo.svg" alt="" class="h-7 w-7" />
+          <span class="text-lg font-bold tracking-tight">Ghostly</span>
         </a>
-        <a href="/" class="text-sm text-ghost/60 hover:text-ghost">← Back to Ghostly</a>
+        <nav class="hidden items-center gap-8 text-sm text-ghost/70 md:flex">
+          <a href="/#features" class="hover:text-ghost">Features</a>
+          <a href="/#how" class="hover:text-ghost">How it works</a>
+          <a href="/#ai" class="hover:text-ghost">AI cleanup</a>
+          <a href="/#download" class="hover:text-ghost">Download</a>
+        </nav>
+        <a href="/install/" class="btn-primary rounded-lg px-4 py-2 text-sm font-semibold">Download</a>
       </div>
     </header>
 
@@ -279,14 +290,14 @@
           Having trouble?
           <a href="/#faq" class="text-accent hover:underline">Read the FAQ</a>
           or
-          <a href="https://github.com/jason-bartz/ghostly/issues" class="text-accent hover:underline">open an issue</a>.
+          <a href="mailto:support@try-ghostly.com" class="text-accent hover:underline">email support</a>.
         </p>
       </section>
     </main>
 
     <footer class="border-t border-white/5">
       <div class="mx-auto max-w-6xl px-6 py-14">
-        <div class="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+        <div class="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
             <div class="flex items-center gap-2">
               <img src="/assets/ghostly_logo.svg" alt="" class="h-6 w-6" />
@@ -303,16 +314,6 @@
               <li><a href="/#how" class="hover:text-ghost">How it works</a></li>
               <li><a href="/#ai" class="hover:text-ghost">AI cleanup</a></li>
               <li><a href="/#download" class="hover:text-ghost">Download</a></li>
-              <li><a href="https://github.com/jason-bartz/ghostly/releases" class="hover:text-ghost">Release notes</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <div class="text-xs font-semibold uppercase tracking-wider text-ghost/40">Source</div>
-            <ul class="mt-4 space-y-2 text-sm text-ghost/60">
-              <li><a href="https://github.com/jason-bartz/ghostly" class="hover:text-ghost">GitHub</a></li>
-              <li><a href="https://github.com/jason-bartz/ghostly/issues" class="hover:text-ghost">Issues</a></li>
-              <li><a href="https://github.com/jason-bartz/ghostly/blob/main/NOTICE.md" class="hover:text-ghost">Attribution</a></li>
             </ul>
           </div>
 
@@ -326,12 +327,8 @@
           </div>
         </div>
 
-        <div class="mt-12 flex flex-col items-start justify-between gap-3 border-t border-white/5 pt-6 text-xs text-ghost/40 md:flex-row md:items-center">
-          <div>© 2026 Ghostly</div>
-          <div class="flex items-center gap-2">
-            <img src="https://github.com/jason-bartz.png?size=32" alt="" class="h-4 w-4 rounded-full" />
-            <a href="https://github.com/jason-bartz" class="hover:text-ghost/70">By Jason Bartz</a>
-          </div>
+        <div class="mt-12 border-t border-white/5 pt-6 text-xs text-ghost/40">
+          © 2026 Ghostly
         </div>
       </div>
     </footer>
@@ -344,6 +341,14 @@
         a.rel = 'noopener';
         document.body.appendChild(a);
         setTimeout(function () { a.click(); a.remove(); }, 400);
+      })();
+
+      (function () {
+        const header = document.getElementById('site-header');
+        if (!header) return;
+        const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 8);
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
       })();
     </script>
   </body>
