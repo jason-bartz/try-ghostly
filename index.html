@@ -722,7 +722,7 @@
         display: inline-flex;
         align-items: center;
         gap: 10px;
-        padding: 10px 22px;
+        padding: 10px 26px;
         background: rgba(10, 10, 16, 0.7);
         border: 1px solid rgba(124, 92, 255, 0.35);
         border-radius: 999px;
@@ -732,23 +732,8 @@
         color: #e8e9ef;
         box-shadow: 0 0 40px rgba(124, 92, 255, 0.2);
       }
-      .tone-input .mini-wave {
-        display: inline-flex;
-        align-items: center;
-        gap: 1.5px;
-      }
-      .tone-input .mini-wave span {
-        display: inline-block;
-        width: 2px;
-        border-radius: 2px;
-        background: linear-gradient(to top, #7c5cff, #7dd3fc);
-        animation: tonePulse 1.3s ease-in-out infinite;
-        animation-delay: calc(var(--i, 0) * 70ms);
-      }
-      @keyframes tonePulse {
-        0%, 100% { height: 3px; }
-        50%      { height: 14px; }
-      }
+      .tone-caret { display: none; }
+      .tone-caret.active { display: inline-block; }
       .tone-out {
         display: flex;
         flex-direction: column;
@@ -765,6 +750,8 @@
       .tone-out-text {
         font-family: 'Instrument Serif', serif;
         font-size: 22px;
+        line-height: 1.5;
+        min-height: 33px;
         color: rgba(232, 233, 239, 0.92);
       }
       .tone-out-text .accent { color: #f59e0b; font-weight: 500; }
@@ -1373,7 +1360,6 @@
           <div class="relative mx-auto max-w-2xl">
             <div class="flex justify-center">
               <div class="tone-input">
-                <span class="mini-wave flex h-5 w-[52px] items-center justify-center" aria-hidden="true"><span style="--i:0"></span><span style="--i:1"></span><span style="--i:2"></span><span style="--i:3"></span><span style="--i:4"></span><span style="--i:5"></span><span style="--i:6"></span><span style="--i:7"></span><span style="--i:8"></span><span style="--i:9"></span><span style="--i:10"></span><span style="--i:11"></span></span>
                 <span>hey</span>
               </div>
             </div>
@@ -1385,17 +1371,17 @@
             <div class="mt-2 grid grid-cols-3 gap-6">
               <div class="tone-out">
                 <div class="tone-out-icon"><img src="assets/apps/gmail.png" alt="Gmail" /></div>
-                <div class="tone-out-text"><span class="accent">H</span>i,</div>
+                <div class="tone-out-text"><span data-tone="gmail"></span><span class="hero-caret tone-caret" data-caret="gmail"></span></div>
                 <div class="text-xs uppercase tracking-wider text-ghost/40">Gmail</div>
               </div>
               <div class="tone-out">
                 <div class="tone-out-icon"><img src="assets/apps/slack.png" alt="Slack" /></div>
-                <div class="tone-out-text">hey</div>
+                <div class="tone-out-text"><span data-tone="slack"></span><span class="hero-caret tone-caret" data-caret="slack"></span></div>
                 <div class="text-xs uppercase tracking-wider text-ghost/40">Slack</div>
               </div>
               <div class="tone-out">
                 <div class="tone-out-icon"><img src="assets/apps/messages.png" alt="Messages" /></div>
-                <div class="tone-out-text">hey<span class="accent">!</span></div>
+                <div class="tone-out-text"><span data-tone="messages"></span><span class="hero-caret tone-caret" data-caret="messages"></span></div>
                 <div class="text-xs uppercase tracking-wider text-ghost/40">Messages</div>
               </div>
             </div>
@@ -2038,6 +2024,88 @@
           }
         }
         run();
+      })();
+
+      // Per-app tone demo: type each variant in sequence, loop
+      (function () {
+        const outputs = [
+          { id: 'gmail',    chars: [['H', true], ['i', false], [',', false]] },
+          { id: 'slack',    chars: [['h', false], ['e', false], ['y', false]] },
+          { id: 'messages', chars: [['h', false], ['e', false], ['y', false], ['!', true]] }
+        ];
+
+        const typed = {};
+        const carets = {};
+        outputs.forEach(o => {
+          typed[o.id]  = document.querySelector(`[data-tone="${o.id}"]`);
+          carets[o.id] = document.querySelector(`[data-caret="${o.id}"]`);
+        });
+        if (!typed.gmail) return;
+
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReduced) {
+          // Render final state, no animation
+          outputs.forEach(o => {
+            typed[o.id].innerHTML = o.chars.map(([c, a]) =>
+              a ? `<span class="accent">${c}</span>` : c
+            ).join('');
+          });
+          return;
+        }
+
+        const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+        function clearAll() {
+          outputs.forEach(o => {
+            typed[o.id].innerHTML = '';
+            carets[o.id].classList.remove('active');
+          });
+        }
+
+        async function typeOne(o) {
+          carets[o.id].classList.add('active');
+          for (const [c, accent] of o.chars) {
+            if (accent) {
+              const span = document.createElement('span');
+              span.className = 'accent';
+              span.textContent = c;
+              typed[o.id].appendChild(span);
+            } else {
+              typed[o.id].appendChild(document.createTextNode(c));
+            }
+            await sleep(130);
+          }
+          await sleep(260);
+          carets[o.id].classList.remove('active');
+        }
+
+        async function loop() {
+          while (true) {
+            clearAll();
+            await sleep(500);
+            for (const o of outputs) {
+              await typeOne(o);
+              await sleep(550);
+            }
+            await sleep(2600);
+          }
+        }
+
+        const stage = document.querySelector('.tone-stage');
+        if (!stage) { loop(); return; }
+        let started = false;
+        const io = new IntersectionObserver((entries) => {
+          if (started) return;
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              started = true;
+              loop();
+              io.disconnect();
+              return;
+            }
+          }
+        }, { threshold: 0.3 });
+        io.observe(stage);
       })();
     </script>
   </body>
