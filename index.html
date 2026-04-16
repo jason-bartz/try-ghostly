@@ -589,6 +589,186 @@
         border-color: rgba(251, 191, 36, 0.3);
         color: #fcd34d;
       }
+
+      /* ---- Animated AI auto-edits panel ---- */
+      .auto-edit {
+        font-family: 'Instrument Serif', ui-serif, Georgia, serif;
+        font-size: 19px;
+        line-height: 1.75;
+        color: rgba(232, 233, 239, 0.92);
+        letter-spacing: -0.005em;
+      }
+      .auto-edit .hl {
+        display: inline-block;
+        position: relative;
+        color: #f59e0b;
+        font-style: italic;
+        white-space: pre;
+        transform-origin: left center;
+        animation: aeCollapse 11s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        animation-delay: calc(var(--order, 1) * 0.55s + 0.8s);
+      }
+      .auto-edit .hl::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 54%;
+        height: 2px;
+        background: #f59e0b;
+        transform: scaleX(0);
+        transform-origin: left center;
+        animation: aeStrike 11s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        animation-delay: calc(var(--order, 1) * 0.55s + 0.8s);
+      }
+      @keyframes aeStrike {
+        0%, 1%   { transform: scaleX(0); opacity: 1; }
+        5%       { transform: scaleX(1); }
+        11%, 78% { transform: scaleX(1); opacity: 1; }
+        86%, 100%{ transform: scaleX(1); opacity: 0; }
+      }
+      @keyframes aeCollapse {
+        0%, 6%   { max-width: 10em; opacity: 1; padding: 0 2px; }
+        11%      { opacity: 1; }
+        15%      { opacity: 0.35; }
+        19%      { opacity: 0; max-width: 10em; }
+        24%, 82% { opacity: 0; max-width: 0; padding: 0; }
+        88%, 100%{ opacity: 1; max-width: 10em; padding: 0 2px; }
+      }
+      .auto-edit-clean {
+        opacity: 0;
+        transform: translateY(4px);
+        animation: aeCleanIn 11s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      }
+      @keyframes aeCleanIn {
+        0%, 34%  { opacity: 0; transform: translateY(4px); }
+        44%, 80% { opacity: 1; transform: translateY(0); }
+        88%, 100%{ opacity: 0; transform: translateY(4px); }
+      }
+      .auto-edit-badge {
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%) translateY(4px);
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        padding: 3px 10px;
+        border-radius: 999px;
+        background: rgba(245, 158, 11, 0.12);
+        color: #fbbf24;
+        border: 1px solid rgba(245, 158, 11, 0.35);
+        opacity: 0;
+        animation: aeBadge 11s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      }
+      @keyframes aeBadge {
+        0%, 4%   { opacity: 0; transform: translateX(-50%) translateY(4px); }
+        10%, 78% { opacity: 1; transform: translateX(-50%) translateY(0); }
+        84%, 100%{ opacity: 0; transform: translateX(-50%) translateY(4px); }
+      }
+
+      /* ---- Works anywhere marquees ---- */
+      .marquee {
+        overflow: hidden;
+        -webkit-mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+                mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+      }
+      .marquee-track {
+        display: flex;
+        width: max-content;
+        gap: 14px;
+        animation: marqueeScroll 48s linear infinite;
+      }
+      .marquee.reverse .marquee-track {
+        animation-name: marqueeScrollReverse;
+        animation-duration: 42s;
+      }
+      @keyframes marqueeScroll {
+        from { transform: translateX(0); }
+        to   { transform: translateX(-50%); }
+      }
+      @keyframes marqueeScrollReverse {
+        from { transform: translateX(-50%); }
+        to   { transform: translateX(0); }
+      }
+      .marquee-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 16px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 500;
+        color: rgba(232, 233, 239, 0.85);
+        white-space: nowrap;
+        backdrop-filter: blur(10px);
+        flex-shrink: 0;
+      }
+      .marquee-pill img {
+        width: 20px; height: 20px;
+        border-radius: 5px;
+        object-fit: cover;
+      }
+
+      /* ---- Tones-per-app ---- */
+      .tone-stage {
+        position: relative;
+        padding: 40px 20px 20px;
+      }
+      .tone-input {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 22px;
+        background: rgba(10, 10, 16, 0.7);
+        border: 1px solid rgba(124, 92, 255, 0.35);
+        border-radius: 999px;
+        backdrop-filter: blur(12px);
+        font-family: 'Instrument Serif', serif;
+        font-size: 22px;
+        color: #e8e9ef;
+        box-shadow: 0 0 40px rgba(124, 92, 255, 0.2);
+      }
+      .tone-input .mini-wave {
+        display: inline-flex;
+        align-items: center;
+        gap: 1.5px;
+      }
+      .tone-input .mini-wave span {
+        display: inline-block;
+        width: 2px;
+        border-radius: 2px;
+        background: linear-gradient(to top, #7c5cff, #7dd3fc);
+        animation: tonePulse 1.3s ease-in-out infinite;
+        animation-delay: calc(var(--i, 0) * 70ms);
+      }
+      @keyframes tonePulse {
+        0%, 100% { height: 3px; }
+        50%      { height: 14px; }
+      }
+      .tone-out {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+      }
+      .tone-out-icon {
+        width: 56px; height: 56px;
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.6);
+      }
+      .tone-out-icon img { width: 100%; height: 100%; object-fit: cover; }
+      .tone-out-text {
+        font-family: 'Instrument Serif', serif;
+        font-size: 22px;
+        color: rgba(232, 233, 239, 0.92);
+      }
+      .tone-out-text .accent { color: #f59e0b; font-weight: 500; }
+      .tone-connector { color: rgba(232, 233, 239, 0.18); }
     </style>
   </head>
   <body class="font-sans antialiased">
@@ -1146,19 +1326,78 @@
           </div>
         </div>
 
-        <div class="glass rounded-2xl p-6 reveal" style="--reveal-delay: 150ms">
-          <div class="mb-4 text-xs uppercase tracking-wider text-ghost/40">Before / after</div>
-          <div class="space-y-4 font-mono text-sm">
-            <div class="rounded-lg border border-white/10 bg-black/30 p-4">
-              <div class="mb-2 text-xs text-ghost/40">Raw</div>
-              <div class="text-ghost/70">um so i was thinking we could maybe push the launch to like the twenty fifth and then get marketing involved earlier this time uh yeah</div>
+        <div class="glass rounded-2xl p-7 reveal" style="--reveal-delay: 150ms">
+          <div class="mb-5 flex items-center justify-between">
+            <div class="text-xs uppercase tracking-wider text-ghost/40">Live cleanup</div>
+            <div class="flex items-center gap-1.5 text-xs text-ghost/40">
+              <span class="rec-dot" style="width: 6px; height: 6px;"></span>
+              transcribing
+            </div>
+          </div>
+          <div class="space-y-5">
+            <div class="relative rounded-xl border border-white/10 bg-black/30 p-5">
+              <span class="auto-edit-badge">filler removed</span>
+              <p class="auto-edit">
+                <span class="hl" style="--order: 0">um</span>
+                <span>so I was thinking we could </span><span class="hl" style="--order: 1">maybe</span>
+                <span> push the launch to </span><span class="hl" style="--order: 2">like</span>
+                <span> the twenty fifth and then get marketing involved earlier this time</span><span class="hl" style="--order: 3"> uh yeah</span><span>.</span>
+              </p>
             </div>
             <div class="flex justify-center">
               <svg class="h-5 w-5 text-violet-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
             </div>
-            <div class="rounded-lg border border-violet-500/30 bg-violet-500/5 p-4">
-              <div class="mb-2 text-xs text-violet-300">Cleaned</div>
-              <div class="text-ghost">I was thinking we could push the launch to the 25th and get marketing involved earlier this time.</div>
+            <div class="rounded-xl border border-violet-500/30 bg-violet-500/5 p-5">
+              <div class="mb-2 text-xs uppercase tracking-wider text-violet-300">Cleaned</div>
+              <p class="auto-edit-clean" style="font-family: 'Instrument Serif', serif; font-size: 19px; line-height: 1.6; color: #e8e9ef;">
+                I was thinking we could push the launch to the 25th and get marketing involved earlier this time.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="border-t border-white/5">
+      <div class="mx-auto max-w-5xl px-6 py-24">
+        <div class="mx-auto max-w-2xl text-center reveal">
+          <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">Per-app tone</span>
+          <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
+            <span class="font-display text-ghost/90">Different tones</span>
+            <span class="font-bold"> for each app.</span>
+          </h2>
+          <p class="mt-4 text-lg text-ghost/60">Ghostly adapts to whatever's in focus. Same voice input — different punctuation, casing, and tone per destination. Sound like you, not a transcript.</p>
+        </div>
+
+        <div class="tone-stage reveal mt-12" style="--reveal-delay: 120ms">
+          <div class="relative mx-auto max-w-2xl">
+            <div class="flex justify-center">
+              <div class="tone-input">
+                <span class="mini-wave flex h-5 w-[52px] items-center justify-center" aria-hidden="true"><span style="--i:0"></span><span style="--i:1"></span><span style="--i:2"></span><span style="--i:3"></span><span style="--i:4"></span><span style="--i:5"></span><span style="--i:6"></span><span style="--i:7"></span><span style="--i:8"></span><span style="--i:9"></span><span style="--i:10"></span><span style="--i:11"></span></span>
+                <span>hey</span>
+              </div>
+            </div>
+            <svg class="mx-auto mt-1 block h-24 w-full" viewBox="0 0 600 100" fill="none" preserveAspectRatio="none">
+              <path d="M 300 0 C 300 40, 130 50, 130 100" stroke="rgba(232,233,239,0.2)" stroke-width="1.25" stroke-dasharray="3 5" stroke-linecap="round"/>
+              <path d="M 300 0 L 300 100" stroke="rgba(232,233,239,0.2)" stroke-width="1.25" stroke-dasharray="3 5" stroke-linecap="round"/>
+              <path d="M 300 0 C 300 40, 470 50, 470 100" stroke="rgba(232,233,239,0.2)" stroke-width="1.25" stroke-dasharray="3 5" stroke-linecap="round"/>
+            </svg>
+            <div class="mt-2 grid grid-cols-3 gap-6">
+              <div class="tone-out">
+                <div class="tone-out-icon"><img src="assets/apps/gmail.png" alt="Gmail" /></div>
+                <div class="tone-out-text"><span class="accent">H</span>i,</div>
+                <div class="text-xs uppercase tracking-wider text-ghost/40">Gmail</div>
+              </div>
+              <div class="tone-out">
+                <div class="tone-out-icon"><img src="assets/apps/slack.png" alt="Slack" /></div>
+                <div class="tone-out-text">hey</div>
+                <div class="text-xs uppercase tracking-wider text-ghost/40">Slack</div>
+              </div>
+              <div class="tone-out">
+                <div class="tone-out-icon"><img src="assets/apps/messages.png" alt="Messages" /></div>
+                <div class="tone-out-text">hey<span class="accent">!</span></div>
+                <div class="text-xs uppercase tracking-wider text-ghost/40">Messages</div>
+              </div>
             </div>
           </div>
         </div>
@@ -1189,6 +1428,84 @@
             <p class="mt-4 text-lg text-ghost/60">
               Trigger Ghostly from a Raycast script, a Stream Deck macro, or a shell alias. Remote-control flags send to the running instance — no duplicate process.
             </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="border-b border-white/5">
+      <div class="mx-auto max-w-6xl px-6 py-24">
+        <div class="mx-auto max-w-2xl text-center reveal">
+          <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">Works anywhere</span>
+          <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
+            <span class="font-display text-ghost/90">Any app</span>
+            <span class="font-bold"> with a cursor.</span>
+          </h2>
+          <p class="mt-4 text-lg text-ghost/60">Ghostly pastes into whatever's in focus — editors, inboxes, chat, docs, terminals. In 99+ languages, courtesy of Whisper.</p>
+        </div>
+
+        <div class="mt-14 space-y-4" aria-hidden="true">
+          <div class="marquee">
+            <div class="marquee-track">
+              <span class="marquee-pill"><img src="assets/apps/slack.png" alt=""/>Slack</span>
+              <span class="marquee-pill"><img src="assets/apps/gmail.png" alt=""/>Gmail</span>
+              <span class="marquee-pill"><img src="assets/apps/cursor.png" alt=""/>Cursor</span>
+              <span class="marquee-pill"><img src="assets/apps/claude.png" alt=""/>Claude</span>
+              <span class="marquee-pill"><img src="assets/apps/xcode.png" alt=""/>Xcode</span>
+              <span class="marquee-pill"><img src="assets/apps/vscode.png" alt=""/>VS Code</span>
+              <span class="marquee-pill"><img src="assets/apps/chatgpt.png" alt=""/>ChatGPT</span>
+              <span class="marquee-pill"><img src="assets/apps/linear.png" alt=""/>Linear</span>
+              <span class="marquee-pill"><img src="assets/apps/figma.png" alt=""/>Figma</span>
+              <span class="marquee-pill"><img src="assets/apps/notion.png" alt=""/>Notion</span>
+              <span class="marquee-pill"><img src="assets/apps/messages.png" alt=""/>Messages</span>
+              <span class="marquee-pill"><img src="assets/apps/discord.png" alt=""/>Discord</span>
+              <span class="marquee-pill"><img src="assets/apps/terminal.png" alt=""/>Terminal</span>
+              <!-- duplicate for seamless loop -->
+              <span class="marquee-pill"><img src="assets/apps/slack.png" alt=""/>Slack</span>
+              <span class="marquee-pill"><img src="assets/apps/gmail.png" alt=""/>Gmail</span>
+              <span class="marquee-pill"><img src="assets/apps/cursor.png" alt=""/>Cursor</span>
+              <span class="marquee-pill"><img src="assets/apps/claude.png" alt=""/>Claude</span>
+              <span class="marquee-pill"><img src="assets/apps/xcode.png" alt=""/>Xcode</span>
+              <span class="marquee-pill"><img src="assets/apps/vscode.png" alt=""/>VS Code</span>
+              <span class="marquee-pill"><img src="assets/apps/chatgpt.png" alt=""/>ChatGPT</span>
+              <span class="marquee-pill"><img src="assets/apps/linear.png" alt=""/>Linear</span>
+              <span class="marquee-pill"><img src="assets/apps/figma.png" alt=""/>Figma</span>
+              <span class="marquee-pill"><img src="assets/apps/notion.png" alt=""/>Notion</span>
+              <span class="marquee-pill"><img src="assets/apps/messages.png" alt=""/>Messages</span>
+              <span class="marquee-pill"><img src="assets/apps/discord.png" alt=""/>Discord</span>
+              <span class="marquee-pill"><img src="assets/apps/terminal.png" alt=""/>Terminal</span>
+            </div>
+          </div>
+          <div class="marquee reverse">
+            <div class="marquee-track">
+              <span class="marquee-pill"><img src="assets/apps/apple-mail.png" alt=""/>Mail</span>
+              <span class="marquee-pill"><img src="assets/apps/drafts.png" alt=""/>Drafts</span>
+              <span class="marquee-pill"><img src="assets/apps/obsidian.png" alt=""/>Obsidian</span>
+              <span class="marquee-pill"><img src="assets/apps/outlook.png" alt=""/>Outlook</span>
+              <span class="marquee-pill"><img src="assets/apps/perplexity.png" alt=""/>Perplexity</span>
+              <span class="marquee-pill"><img src="assets/apps/things.png" alt=""/>Things</span>
+              <span class="marquee-pill"><img src="assets/apps/whatsapp.png" alt=""/>WhatsApp</span>
+              <span class="marquee-pill"><img src="assets/apps/zed.png" alt=""/>Zed</span>
+              <span class="marquee-pill"><img src="assets/apps/apple-notes.png" alt=""/>Notes</span>
+              <span class="marquee-pill"><img src="assets/apps/superhuman.png" alt=""/>Superhuman</span>
+              <span class="marquee-pill"><img src="assets/apps/replit.png" alt=""/>Replit</span>
+              <span class="marquee-pill"><img src="assets/apps/google-calendar.png" alt=""/>Calendar</span>
+              <span class="marquee-pill"><img src="assets/apps/google-antigravity.png" alt=""/>AntiGravity</span>
+              <!-- duplicate for seamless loop -->
+              <span class="marquee-pill"><img src="assets/apps/apple-mail.png" alt=""/>Mail</span>
+              <span class="marquee-pill"><img src="assets/apps/drafts.png" alt=""/>Drafts</span>
+              <span class="marquee-pill"><img src="assets/apps/obsidian.png" alt=""/>Obsidian</span>
+              <span class="marquee-pill"><img src="assets/apps/outlook.png" alt=""/>Outlook</span>
+              <span class="marquee-pill"><img src="assets/apps/perplexity.png" alt=""/>Perplexity</span>
+              <span class="marquee-pill"><img src="assets/apps/things.png" alt=""/>Things</span>
+              <span class="marquee-pill"><img src="assets/apps/whatsapp.png" alt=""/>WhatsApp</span>
+              <span class="marquee-pill"><img src="assets/apps/zed.png" alt=""/>Zed</span>
+              <span class="marquee-pill"><img src="assets/apps/apple-notes.png" alt=""/>Notes</span>
+              <span class="marquee-pill"><img src="assets/apps/superhuman.png" alt=""/>Superhuman</span>
+              <span class="marquee-pill"><img src="assets/apps/replit.png" alt=""/>Replit</span>
+              <span class="marquee-pill"><img src="assets/apps/google-calendar.png" alt=""/>Calendar</span>
+              <span class="marquee-pill"><img src="assets/apps/google-antigravity.png" alt=""/>AntiGravity</span>
+            </div>
           </div>
         </div>
       </div>
