@@ -2,11 +2,11 @@
 
 > Ghostly is a voice-first typing app for macOS. It lives in the menu bar: press a shortcut, talk, and your words land in the active app. Speech-to-text runs on-device using Whisper — audio never leaves the Mac. Optional AI cleanup (Apple Intelligence, OpenAI, Anthropic) polishes the transcript; only text is sent, never audio.
 
-Ghostly is macOS-only (10.15+), with Apple Silicon recommended for GPU-accelerated inference. The app is distributed as a signed `.dmg` and requires microphone and accessibility permissions. First launch downloads a Whisper model (500 MB–1.6 GB depending on variant: Small, Medium, Turbo, Large).
+Ghostly is Apple Silicon only — macOS 12+ on any Mac with an M1, M2, M3, or M4 chip. Intel Macs are not supported. This is a deliberate decision: Ghostly runs every AI model on-device (Whisper via Metal, optional Apple Intelligence cleanup via the Neural Engine), and real-time local transcription needs the unified memory and ML accelerators that only Apple Silicon has. The app is distributed as a signed `.dmg` and requires microphone and accessibility permissions. First launch downloads a Whisper model (500 MB–1.6 GB depending on variant: Small, Medium, Turbo, Large).
 
 ## Key facts
 
-- Platform: macOS 10.15+ (Apple Silicon M1–M4 recommended; Intel supported)
+- Platform: Apple Silicon only (M1, M2, M3, M4) on macOS 12 or later — Intel Macs not supported
 - Pricing: Free tier has full feature parity (all Whisper models, AI cleanup, per-app prompts, screenshot vision), capped at 30 minutes of transcription per week on one Mac. Pro is a one-time $39 purchase — unlimited transcription, install on up to 3 Macs, lifetime updates. No subscription.
 - Privacy: On-device transcription. No analytics. No telemetry. Audio never transmitted.
 - Download: https://downloads.try-ghostly.com/Ghostly-latest.dmg
@@ -31,5 +31,5 @@ Ghostly is macOS-only (10.15+), with Apple Silicon recommended for GPU-accelerat
 - Does audio leave the Mac? No. Transcription is on-device. AI cleanup only sees text.
 - Is it free? Yes — full feature parity on the free tier (all Whisper models, AI cleanup, every feature), capped at 30 minutes of transcription per week on one Mac. Pro ($39 one-time, no subscription) removes the cap and allows install on up to 3 Macs.
 - Does it work offline? Yes, after first-run model download.
-- Windows or Linux? No — macOS only.
+- Windows, Linux, or Intel Mac? No — Apple Silicon only (M1 or later). The AI models run on-device via Metal and the Neural Engine, and Intel hardware can't keep up without shipping audio off the machine, which defeats the privacy model.
 - Apple Intelligence support? Yes, as an on-device AI cleanup option.
