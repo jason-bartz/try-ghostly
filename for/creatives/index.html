@@ -141,7 +141,7 @@
       .marquee-track { display: flex; gap: 16px; width: max-content; animation: marquee 32s linear infinite; }
       @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
       .app-tile { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 14px; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); font-size: 13px; font-weight: 500; color: rgba(232, 233, 239, 0.85); box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5); }
-      .app-tile img { width: 22px; height: 22px; border-radius: 5px; }
+      .app-tile img { width: 22px; height: 22px; border-radius: 5px; object-fit: contain; background: #ffffff; }
 
       /* ---- Tone-shift demo ---- */
       .tone-shift-card {
@@ -247,7 +247,7 @@
         animation: orbit-float 7s ease-in-out infinite;
         animation-delay: var(--delay, 0s);
       }
-      .orbit-item img { width: 20px; height: 20px; border-radius: 5px; }
+      .orbit-item img { width: 20px; height: 20px; border-radius: 5px; object-fit: contain; background: #ffffff; }
       @keyframes orbit-float {
         0%, 100% { transform: translate(0, 0); }
         50% { transform: translate(0, -10px); }
@@ -267,8 +267,8 @@
       .usecase-row:first-child { border-top: none; }
       .usecase-row:hover { background: rgba(244, 114, 182, 0.04); }
       .usecase-icons { display: inline-flex; flex-shrink: 0; width: 88px; }
-      .usecase-icons .app-ic { width: 42px; height: 42px; border-radius: 10px; overflow: hidden; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 6px 20px -8px rgba(0, 0, 0, 0.5); }
-      .usecase-icons .app-ic img { width: 100%; height: 100%; object-fit: cover; }
+      .usecase-icons .app-ic { width: 42px; height: 42px; border-radius: 10px; overflow: hidden; background: #ffffff; border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 6px 20px -8px rgba(0, 0, 0, 0.5); }
+      .usecase-icons .app-ic img { width: 100%; height: 100%; object-fit: contain; }
       .usecase-icons .app-ic:not(:first-child) { margin-left: -14px; }
 
       /* ---- Top-10 grid ---- */
