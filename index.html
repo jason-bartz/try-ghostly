@@ -432,15 +432,13 @@
         font-size: 11px; font-weight: 700; color: #fff;
       }
       .app-tile .app-icon {
-        width: 22px; height: 22px; border-radius: 6px;
+        width: 22px; height: 22px; border-radius: 5px;
         display: inline-flex; align-items: center; justify-content: center;
-        background: rgba(255, 255, 255, 0.06);
-      }
-      .app-tile .app-icon.on-white {
-        background: #fff;
+        overflow: hidden;
+        flex-shrink: 0;
       }
       .app-tile .app-icon img {
-        width: 16px; height: 16px; object-fit: contain;
+        width: 22px; height: 22px; object-fit: cover; border-radius: 5px;
       }
       @keyframes floaty {
         0%, 100% { transform: translateY(0); }
@@ -603,7 +601,7 @@
           <a href="#ai" class="hover:text-ghost">AI cleanup</a>
           <a href="#download" class="hover:text-ghost">Download</a>
         </nav>
-        <a href="https://downloads.try-ghostly.com/Ghostly-latest.dmg" class="btn-primary rounded-lg px-4 py-2 text-sm font-semibold">Download</a>
+        <a href="/install/" class="btn-primary rounded-lg px-4 py-2 text-sm font-semibold">Download</a>
       </div>
     </header>
 
@@ -622,7 +620,7 @@
             Press <span class="kbd">fn</span>, talk, release. Your words paste into the active app.
           </p>
           <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
-            <a href="https://downloads.try-ghostly.com/Ghostly-latest.dmg" class="btn-primary inline-flex items-center gap-2 rounded-xl px-6 py-3 text-base font-semibold">
+            <a href="/install/" class="btn-primary inline-flex items-center gap-2 rounded-xl px-6 py-3 text-base font-semibold">
               <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
               Download for macOS
             </a>
@@ -1021,47 +1019,101 @@
         </div>
 
         <!-- floating app tiles -->
-        <div class="app-tile" style="top: 2%;  left: 6%;   --delay: 0s;   --dur: 5.2s">
-          <span class="app-icon"><img src="assets/apps/slack.svg" alt="" /></span> Slack
+        <!-- row 1: top edge -->
+        <div class="app-tile" style="top: 1%;  left: 4%;   --delay: 0s;   --dur: 5.2s">
+          <span class="app-icon"><img src="assets/apps/slack.png" alt="" /></span> Slack
         </div>
-        <div class="app-tile" style="top: 8%;  right: 4%;  --delay: 0.6s; --dur: 6.0s">
-          <span class="app-icon on-white"><img src="assets/apps/gmail.svg" alt="" /></span> Gmail
+        <div class="app-tile" style="top: 0%;  left: 32%;  --delay: 0.8s; --dur: 6.1s">
+          <span class="app-icon"><img src="assets/apps/superhuman.png" alt="" /></span> Superhuman
         </div>
-        <div class="app-tile" style="top: 20%; left: 24%;  --delay: 0.4s; --dur: 5.6s">
-          <span class="app-icon on-white"><img src="assets/apps/cursor.svg" alt="" /></span> Cursor
+        <div class="app-tile" style="top: 2%;  right: 30%; --delay: 0.3s; --dur: 5.7s">
+          <span class="app-icon"><img src="assets/apps/perplexity.png" alt="" /></span> Perplexity
         </div>
-        <div class="app-tile" style="top: 22%; right: 22%; --delay: 1.2s; --dur: 6.4s">
-          <span class="app-icon"><img src="assets/apps/claude.svg" alt="" /></span> Claude
+        <div class="app-tile" style="top: 1%;  right: 3%;  --delay: 1.1s; --dur: 6.3s">
+          <span class="app-icon"><img src="assets/apps/gmail.png" alt="" /></span> Gmail
         </div>
-        <div class="app-tile" style="top: 32%; left: 0%;   --delay: 1.1s; --dur: 5.5s">
-          <span class="app-icon"><img src="assets/apps/xcode.svg" alt="" /></span> Xcode
+
+        <!-- row 2 -->
+        <div class="app-tile" style="top: 16%; left: 18%;  --delay: 0.4s; --dur: 5.6s">
+          <span class="app-icon"><img src="assets/apps/cursor.png" alt="" /></span> Cursor
         </div>
-        <div class="app-tile" style="top: 32%; right: 0%;  --delay: 0.3s; --dur: 6.4s">
-          <span class="app-icon"><img src="assets/apps/vscode.svg" alt="" /></span> VS Code
+        <div class="app-tile" style="top: 14%; right: 16%; --delay: 1.2s; --dur: 6.4s">
+          <span class="app-icon"><img src="assets/apps/claude.png" alt="" /></span> Claude
         </div>
-        <div class="app-tile" style="top: 58%; left: 16%;  --delay: 0.9s; --dur: 5.9s">
-          <span class="app-icon"><img src="assets/apps/chatgpt.svg" alt="" /></span> ChatGPT
+
+        <!-- row 3: upper-mid -->
+        <div class="app-tile" style="top: 28%; left: 0%;   --delay: 1.1s; --dur: 5.5s">
+          <span class="app-icon"><img src="assets/apps/xcode.png" alt="" /></span> Xcode
         </div>
-        <div class="app-tile" style="top: 60%; right: 14%; --delay: 0.2s; --dur: 6.1s">
-          <span class="app-icon"><img src="assets/apps/linear.svg" alt="" /></span> Linear
+        <div class="app-tile" style="top: 30%; left: 30%;  --delay: 0.6s; --dur: 6.0s">
+          <span class="app-icon"><img src="assets/apps/github.png" alt="" /></span> GitHub
         </div>
-        <div class="app-tile" style="bottom: 22%; left: 22%;   --delay: 0.8s; --dur: 5.8s">
-          <span class="app-icon on-white"><img src="assets/apps/figma.svg" alt="" /></span> Figma
+        <div class="app-tile" style="top: 30%; right: 28%; --delay: 1.5s; --dur: 5.9s">
+          <span class="app-icon"><img src="assets/apps/obsidian.png" alt="" /></span> Obsidian
         </div>
-        <div class="app-tile" style="bottom: 22%; right: 22%;  --delay: 1.4s; --dur: 6.2s">
-          <span class="app-icon on-white"><img src="assets/apps/notion.svg" alt="" /></span> Notion
+        <div class="app-tile" style="top: 28%; right: 0%;  --delay: 0.3s; --dur: 6.4s">
+          <span class="app-icon"><img src="assets/apps/vscode.png" alt="" /></span> VS Code
         </div>
-        <div class="app-tile" style="bottom: 4%; left: 6%;   --delay: 0.5s; --dur: 5.4s">
-          <span class="app-icon on-white"><img src="assets/apps/imessage.svg" alt="" /></span> Messages
+
+        <!-- row 4: mid -->
+        <div class="app-tile" style="top: 44%; left: 12%;  --delay: 0.9s; --dur: 5.9s">
+          <span class="app-icon"><img src="assets/apps/chatgpt.png" alt="" /></span> ChatGPT
         </div>
-        <div class="app-tile" style="bottom: 4%; right: 6%;  --delay: 1.0s; --dur: 6.6s">
-          <span class="app-icon"><img src="assets/apps/jira.svg" alt="" /></span> Jira
+        <div class="app-tile" style="top: 44%; right: 10%; --delay: 0.2s; --dur: 6.1s">
+          <span class="app-icon"><img src="assets/apps/linear.png" alt="" /></span> Linear
         </div>
-        <div class="app-tile" style="top: 72%; left: 2%;   --delay: 1.3s; --dur: 6.0s">
-          <span class="app-icon on-white"><img src="assets/apps/googlecalendar.svg" alt="" /></span> Calendar
+
+        <!-- row 5: lower-mid -->
+        <div class="app-tile" style="top: 56%; left: 0%;   --delay: 1.3s; --dur: 6.0s">
+          <span class="app-icon"><img src="assets/apps/terminal.png" alt="" /></span> Terminal
         </div>
-        <div class="app-tile" style="top: 72%; right: 2%;  --delay: 0.7s; --dur: 5.7s">
-          <span class="app-icon"><img src="assets/apps/discord.svg" alt="" /></span> Discord
+        <div class="app-tile" style="top: 58%; left: 28%;  --delay: 0.5s; --dur: 5.4s">
+          <span class="app-icon"><img src="assets/apps/drafts.png" alt="" /></span> Drafts
+        </div>
+        <div class="app-tile" style="top: 58%; right: 26%; --delay: 1.0s; --dur: 6.6s">
+          <span class="app-icon"><img src="assets/apps/things.png" alt="" /></span> Things
+        </div>
+        <div class="app-tile" style="top: 56%; right: 0%;  --delay: 0.7s; --dur: 5.7s">
+          <span class="app-icon"><img src="assets/apps/zed.png" alt="" /></span> Zed
+        </div>
+
+        <!-- row 6 -->
+        <div class="app-tile" style="top: 70%; left: 14%;  --delay: 0.8s; --dur: 5.8s">
+          <span class="app-icon"><img src="assets/apps/figma.png" alt="" /></span> Figma
+        </div>
+        <div class="app-tile" style="top: 70%; right: 14%; --delay: 1.4s; --dur: 6.2s">
+          <span class="app-icon"><img src="assets/apps/notion.png" alt="" /></span> Notion
+        </div>
+
+        <!-- row 7: lower -->
+        <div class="app-tile" style="top: 82%; left: 2%;   --delay: 0.6s; --dur: 5.3s">
+          <span class="app-icon"><img src="assets/apps/apple-mail.png" alt="" /></span> Mail
+        </div>
+        <div class="app-tile" style="top: 82%; left: 30%;  --delay: 1.2s; --dur: 6.5s">
+          <span class="app-icon"><img src="assets/apps/replit.png" alt="" /></span> Replit
+        </div>
+        <div class="app-tile" style="top: 82%; right: 28%; --delay: 0.4s; --dur: 5.6s">
+          <span class="app-icon"><img src="assets/apps/outlook.png" alt="" /></span> Outlook
+        </div>
+        <div class="app-tile" style="top: 82%; right: 2%;  --delay: 1.0s; --dur: 6.0s">
+          <span class="app-icon"><img src="assets/apps/discord.png" alt="" /></span> Discord
+        </div>
+
+        <!-- row 8: bottom edge -->
+        <div class="app-tile" style="bottom: 1%; left: 6%;   --delay: 0.5s; --dur: 5.4s">
+          <span class="app-icon"><img src="assets/apps/messages.png" alt="" /></span> Messages
+        </div>
+        <div class="app-tile" style="bottom: 0%; left: 34%;  --delay: 1.3s; --dur: 6.3s">
+          <span class="app-icon"><img src="assets/apps/whatsapp.png" alt="" /></span> WhatsApp
+        </div>
+        <div class="app-tile" style="bottom: 1%; right: 32%; --delay: 0.7s; --dur: 5.8s">
+          <span class="app-icon"><img src="assets/apps/apple-notes.png" alt="" /></span> Notes
+        </div>
+        <div class="app-tile" style="bottom: 0%; right: 4%;  --delay: 1.1s; --dur: 6.1s">
+          <span class="app-icon"><img src="assets/apps/google-calendar.png" alt="" /></span> Calendar
+        </div>
+        <div class="app-tile" style="bottom: 2%; left: 52%; --delay: 0.9s; --dur: 5.5s">
+          <span class="app-icon"><img src="assets/apps/google-antigravity.png" alt="" /></span> AntiGravity
         </div>
 
         <!-- subtle connecting rings -->
@@ -1157,7 +1209,7 @@
               Ghostly is macOS-only right now, Apple Silicon (M1–M4). Grab the latest <span class="kbd">.dmg</span> from releases, drag Ghostly to Applications, launch. It'll ask for microphone and accessibility access. Pick a shortcut in Settings. First run downloads a transcription model (500 MB–1.6 GB depending on which one you pick). After that, dictation works offline.
             </p>
             <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-              <a href="https://downloads.try-ghostly.com/Ghostly-latest.dmg" class="btn-primary inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-base font-semibold">
+              <a href="/install/" class="btn-primary inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-base font-semibold">
                 <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
                 Download for macOS
               </a>
@@ -1177,7 +1229,7 @@
                     <div class="text-xs text-ghost/50">M1, M2, M3, M4</div>
                   </div>
                 </div>
-                <a href="https://downloads.try-ghostly.com/Ghostly-latest.dmg" class="rounded-lg bg-white/10 px-4 py-2 text-sm font-medium hover:bg-white/20">.dmg →</a>
+                <a href="/install/" class="rounded-lg bg-white/10 px-4 py-2 text-sm font-medium hover:bg-white/20">.dmg →</a>
               </div>
             </div>
           </div>
@@ -1221,7 +1273,7 @@
         <h2 class="text-4xl font-extrabold tracking-tight md:text-6xl">Try it.</h2>
         <p class="mx-auto mt-6 max-w-xl text-lg text-ghost/60">Free. Local. Yours.</p>
         <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
-          <a href="https://downloads.try-ghostly.com/Ghostly-latest.dmg" class="btn-primary inline-flex items-center gap-2 rounded-xl px-8 py-4 text-lg font-semibold">Download for macOS</a>
+          <a href="/install/" class="btn-primary inline-flex items-center gap-2 rounded-xl px-8 py-4 text-lg font-semibold">Download for macOS</a>
           <a href="https://github.com/jason-bartz/ghostly" class="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-8 py-4 text-lg font-semibold hover:bg-white/10">View source</a>
         </div>
       </div>

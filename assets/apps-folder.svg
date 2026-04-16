@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 170" fill="none">
+  <defs>
+    <linearGradient id="folder-back" x1="100" y1="12" x2="100" y2="158" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5AAEF8"/>
+      <stop offset="1" stop-color="#1F7AD8"/>
+    </linearGradient>
+    <linearGradient id="folder-front" x1="100" y1="40" x2="100" y2="158" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7EC3FF"/>
+      <stop offset="0.5" stop-color="#4FA1EE"/>
+      <stop offset="1" stop-color="#2E86DF"/>
+    </linearGradient>
+    <linearGradient id="folder-highlight" x1="100" y1="40" x2="100" y2="60" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <!-- back folder with protruding tab -->
+  <path d="M12 24 Q12 12 24 12 L72 12 Q78 12 82 16 L94 28 Q98 32 104 32 L176 32 Q188 32 188 44 L188 146 Q188 158 176 158 L24 158 Q12 158 12 146 Z" fill="url(#folder-back)"/>
+  <!-- front panel -->
+  <rect x="12" y="40" width="176" height="118" rx="12" fill="url(#folder-front)"/>
+  <!-- subtle top highlight on front panel -->
+  <rect x="12" y="40" width="176" height="20" rx="12" fill="url(#folder-highlight)"/>
+  <!-- italic A -->
+  <text x="100" y="132" text-anchor="middle" font-family="'Instrument Serif', 'Hoefler Text', 'Apple Garamond', Georgia, serif" font-size="96" font-style="italic" fill="white" fill-opacity="0.96" font-weight="400">A</text>
+</svg>

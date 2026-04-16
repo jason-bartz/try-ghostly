@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How to install Ghostly</title>
+    <meta name="description" content="Install Ghostly on macOS in three steps. Your download starts automatically." />
+    <meta name="robots" content="noindex, follow" />
+    <link rel="canonical" href="https://try-ghostly.com/install/" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Ghostly" />
+    <meta property="og:url" content="https://try-ghostly.com/install/" />
+    <meta property="og:title" content="How to install Ghostly" />
+    <meta property="og:description" content="Install Ghostly on macOS in three steps." />
+    <meta property="og:image" content="https://try-ghostly.com/assets/og-image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#0b0b0f" />
+    <link rel="icon" type="image/svg+xml" href="/assets/ghostly_logo.svg" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans:  ['Inter', 'ui-sans-serif', 'system-ui'],
+              serif: ['"Instrument Serif"', 'ui-serif', 'Georgia'],
+            },
+            colors: { ink: '#0b0b0f', ghost: '#e8e9ef', accent: '#7c5cff' },
+          },
+        },
+      };
+    </script>
+    <style>
+      html { scroll-behavior: smooth; }
+      body { background: #0b0b0f; color: #e8e9ef; }
+      .grid-bg {
+        background-image:
+          radial-gradient(circle at 20% 10%, rgba(124, 92, 255, 0.22), transparent 40%),
+          radial-gradient(circle at 80% 0%, rgba(56, 189, 248, 0.15), transparent 45%),
+          linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        background-size: auto, auto, 42px 42px, 42px 42px;
+      }
+      .glass {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(8px);
+      }
+      .btn-primary {
+        background: linear-gradient(180deg, #ffffff 0%, #d8d9e3 100%);
+        color: #0b0b0f;
+      }
+      .btn-primary:hover { filter: brightness(1.05); }
+      .step-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 18px;
+        padding: 28px 24px;
+        transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+      }
+      .step-card:hover {
+        transform: translateY(-2px);
+        border-color: rgba(124, 92, 255, 0.4);
+        background: rgba(124, 92, 255, 0.06);
+      }
+      .step-visual {
+        background: #0f0f17;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 12px;
+        aspect-ratio: 4 / 3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        padding: 28px 16px 16px;
+      }
+      .step-num {
+        position: absolute;
+        top: 10px;
+        left: 14px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 11px;
+        color: rgba(232, 233, 239, 0.45);
+        letter-spacing: 0.08em;
+        z-index: 2;
+      }
+      .icon-tile {
+        width: 72px;
+        height: 72px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.6);
+      }
+      .icon-tile img { width: 100%; height: 100%; border-radius: 16px; object-fit: cover; }
+      .icon-tile.folder img { border-radius: 0; box-shadow: none; }
+      .arrow-float {
+        color: rgba(232, 233, 239, 0.5);
+        animation: nudge 1.4s ease-in-out infinite;
+        flex-shrink: 0;
+      }
+      @keyframes nudge {
+        0%, 100% { transform: translateX(0); }
+        50% { transform: translateX(6px); }
+      }
+      .dmg-window {
+        width: 100%;
+        max-width: 260px;
+        background: #14141c;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      .dmg-titlebar {
+        background: linear-gradient(180deg, #2a2a35 0%, #1b1b24 100%);
+        padding: 7px 10px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 10.5px;
+        color: rgba(232, 233, 239, 0.7);
+      }
+      .traffic {
+        width: 9px; height: 9px; border-radius: 50%;
+      }
+      .traffic.r { background: #ff5f57; }
+      .traffic.y { background: #febc2e; }
+      .traffic.g { background: #28c840; }
+      .dmg-body {
+        padding: 18px 12px 16px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-around;
+        gap: 8px;
+      }
+      .dmg-body .icon-tile { width: 58px; height: 58px; border-radius: 13px; }
+      .dmg-body .icon-tile img { border-radius: 13px; }
+      .dock-row {
+        display: flex;
+        align-items: flex-end;
+        gap: 10px;
+        padding: 8px 12px;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(6px);
+      }
+      .dock-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 9px;
+        overflow: hidden;
+        flex-shrink: 0;
+      }
+      .dock-icon img { width: 100%; height: 100%; object-fit: cover; border-radius: 9px; }
+      .highlight-ring {
+        outline: 2px solid #7c5cff;
+        outline-offset: 4px;
+        border-radius: 14px;
+      }
+    </style>
+  </head>
+  <body class="font-sans grid-bg min-h-screen">
+    <!-- Nav -->
+    <header class="sticky top-0 z-30 backdrop-blur bg-ink/70 border-b border-white/5">
+      <div class="mx-auto max-w-6xl px-6 py-4 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-2">
+          <img src="/assets/ghostly_wordmark.svg" alt="Ghostly" class="h-7" />
+        </a>
+        <a href="/" class="text-sm text-ghost/60 hover:text-ghost">← Back to Ghostly</a>
+      </div>
+    </header>
+
+    <main class="mx-auto max-w-6xl px-6 py-16 md:py-24">
+      <div class="text-center max-w-2xl mx-auto">
+        <h1 class="font-serif text-5xl md:text-6xl tracking-tight text-white">How to install Ghostly</h1>
+        <p class="mt-5 text-ghost/70">
+          Your download will begin automatically. If it didn't start,
+          <a id="manual-link" href="https://downloads.try-ghostly.com/Ghostly-latest.dmg" class="text-accent underline decoration-accent/40 hover:decoration-accent">click here to download</a>.
+        </p>
+        <p class="mt-2 text-xs text-ghost/45">macOS 12+ · Apple Silicon (M1–M4)</p>
+      </div>
+
+      <!-- Steps -->
+      <div class="mt-14 grid gap-6 md:grid-cols-3">
+        <!-- Step 1 -->
+        <div class="step-card">
+          <div class="step-visual">
+            <span class="step-num">01</span>
+            <div class="dmg-window">
+              <div class="dmg-titlebar">
+                <span class="traffic r"></span>
+                <span class="traffic y"></span>
+                <span class="traffic g"></span>
+                <span class="ml-2">Ghostly.dmg</span>
+              </div>
+              <div class="dmg-body">
+                <div class="flex flex-col items-center gap-2 highlight-ring">
+                  <div class="icon-tile"><img src="/assets/ghostly_app_icon.png" alt="Ghostly" /></div>
+                  <span class="text-[11px] text-ghost/70">Ghostly.app</span>
+                </div>
+                <div class="flex flex-col items-center gap-2">
+                  <div class="icon-tile folder"><img src="/assets/apps-folder.svg" alt="Applications" /></div>
+                  <span class="text-[11px] text-ghost/70">Applications</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <h3 class="mt-6 text-lg font-semibold text-white">Open the Ghostly installer from Downloads</h3>
+          <p class="mt-2 text-sm text-ghost/60">Double-click <span class="font-mono text-ghost/80">Ghostly.dmg</span> in your Downloads folder to open the installer window.</p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step-card">
+          <div class="step-visual">
+            <span class="step-num">02</span>
+            <div class="flex items-center gap-4">
+              <div class="flex flex-col items-center gap-2">
+                <div class="icon-tile"><img src="/assets/ghostly_app_icon.png" alt="Ghostly" /></div>
+                <span class="text-[11px] text-ghost/70">Ghostly.app</span>
+              </div>
+              <svg class="arrow-float" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+              <div class="flex flex-col items-center gap-2">
+                <div class="icon-tile folder"><img src="/assets/apps-folder.svg" alt="Applications" /></div>
+                <span class="text-[11px] text-ghost/70">Applications</span>
+              </div>
+            </div>
+          </div>
+          <h3 class="mt-6 text-lg font-semibold text-white">Drag Ghostly into Applications</h3>
+          <p class="mt-2 text-sm text-ghost/60">Drag the Ghostly icon onto the Applications folder shortcut in the same window.</p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step-card">
+          <div class="step-visual">
+            <span class="step-num">03</span>
+            <div class="dock-row">
+              <div class="dock-icon"><img src="/assets/apps/apple-mail.png" alt="Mail" /></div>
+              <div class="dock-icon"><img src="/assets/apps/messages.png" alt="Messages" /></div>
+              <div class="dock-icon highlight-ring"><img src="/assets/ghostly_app_icon.png" alt="Ghostly" /></div>
+              <div class="dock-icon"><img src="/assets/apps/apple-notes.png" alt="Notes" /></div>
+              <div class="dock-icon"><img src="/assets/apps/google-calendar.png" alt="Calendar" /></div>
+            </div>
+          </div>
+          <h3 class="mt-6 text-lg font-semibold text-white">Open Ghostly from Applications</h3>
+          <p class="mt-2 text-sm text-ghost/60">Launch Ghostly and grant microphone and accessibility permissions when prompted. It lives in the menu bar.</p>
+        </div>
+      </div>
+
+      <!-- After install -->
+      <section class="mt-20 glass rounded-2xl p-8 md:p-10">
+        <div class="grid md:grid-cols-[1fr_auto] gap-8 items-center">
+          <div>
+            <h2 class="font-serif text-3xl text-white">After you open Ghostly</h2>
+            <ul class="mt-4 space-y-2 text-ghost/70 text-sm">
+              <li>· Pick a push-to-talk shortcut in Settings (the <span class="font-mono">fn</span> key works great).</li>
+              <li>· First launch downloads a Whisper model (500 MB–1.6 GB). After that, dictation works offline.</li>
+              <li>· Press your shortcut anywhere, talk, release — your words paste into the active app.</li>
+            </ul>
+          </div>
+          <a href="/" class="btn-primary inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-base font-semibold whitespace-nowrap">
+            Back to Ghostly
+          </a>
+        </div>
+      </section>
+
+      <!-- Troubleshoot -->
+      <section class="mt-10 text-center text-sm text-ghost/55">
+        <p>
+          Having trouble?
+          <a href="/#faq" class="text-accent hover:underline">Read the FAQ</a>
+          or
+          <a href="https://github.com/jason-bartz/ghostly/issues" class="text-accent hover:underline">open an issue</a>.
+        </p>
+      </section>
+    </main>
+
+    <footer class="border-t border-white/5">
+      <div class="mx-auto max-w-6xl px-6 py-14">
+        <div class="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+          <div>
+            <div class="flex items-center gap-2">
+              <img src="/assets/ghostly_logo.svg" alt="" class="h-6 w-6" />
+              <span class="text-sm font-semibold">Ghostly</span>
+            </div>
+            <p class="mt-3 max-w-xs text-sm text-ghost/55">Voice-first typing for macOS. On-device Whisper with optional AI cleanup.</p>
+            <p class="mt-4 font-mono text-xs text-ghost/40" id="footer-version">v0.9.0 · updated Apr 2026</p>
+          </div>
+
+          <div>
+            <div class="text-xs font-semibold uppercase tracking-wider text-ghost/40">Product</div>
+            <ul class="mt-4 space-y-2 text-sm text-ghost/60">
+              <li><a href="/#features" class="hover:text-ghost">Features</a></li>
+              <li><a href="/#how" class="hover:text-ghost">How it works</a></li>
+              <li><a href="/#ai" class="hover:text-ghost">AI cleanup</a></li>
+              <li><a href="/#download" class="hover:text-ghost">Download</a></li>
+              <li><a href="https://github.com/jason-bartz/ghostly/releases" class="hover:text-ghost">Release notes</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <div class="text-xs font-semibold uppercase tracking-wider text-ghost/40">Source</div>
+            <ul class="mt-4 space-y-2 text-sm text-ghost/60">
+              <li><a href="https://github.com/jason-bartz/ghostly" class="hover:text-ghost">GitHub</a></li>
+              <li><a href="https://github.com/jason-bartz/ghostly/issues" class="hover:text-ghost">Issues</a></li>
+              <li><a href="https://github.com/jason-bartz/ghostly/blob/main/NOTICE.md" class="hover:text-ghost">Attribution</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <div class="text-xs font-semibold uppercase tracking-wider text-ghost/40">Contact</div>
+            <ul class="mt-4 space-y-2 text-sm text-ghost/60">
+              <li><a href="/privacy" class="hover:text-ghost">Privacy</a></li>
+              <li><a href="mailto:security@try-ghostly.com" class="hover:text-ghost">Security</a></li>
+              <li><a href="mailto:support@try-ghostly.com" class="hover:text-ghost">Support</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mt-12 flex flex-col items-start justify-between gap-3 border-t border-white/5 pt-6 text-xs text-ghost/40 md:flex-row md:items-center">
+          <div>© 2026 Ghostly</div>
+          <div class="flex items-center gap-2">
+            <img src="https://github.com/jason-bartz.png?size=32" alt="" class="h-4 w-4 rounded-full" />
+            <a href="https://github.com/jason-bartz" class="hover:text-ghost/70">By Jason Bartz</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        var url = 'https://downloads.try-ghostly.com/Ghostly-latest.dmg';
+        var a = document.createElement('a');
+        a.href = url;
+        a.rel = 'noopener';
+        document.body.appendChild(a);
+        setTimeout(function () { a.click(); a.remove(); }, 400);
+      })();
+    </script>
+  </body>
+</html>
