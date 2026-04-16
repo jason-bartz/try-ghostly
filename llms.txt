@@ -7,7 +7,7 @@ Ghostly is macOS-only (10.15+), with Apple Silicon recommended for GPU-accelerat
 ## Key facts
 
 - Platform: macOS 10.15+ (Apple Silicon M1–M4 recommended; Intel supported)
-- Pricing: Free tier (30 minutes of transcription per week, Small Whisper model). Pro is a one-time $19 purchase — unlimited transcription, all Whisper model sizes, AI cleanup, lifetime updates. No subscription.
+- Pricing: Free tier has full feature parity (all Whisper models, AI cleanup, per-app prompts, screenshot vision), capped at 30 minutes of transcription per week on one Mac. Pro is a one-time $39 purchase — unlimited transcription, install on up to 3 Macs, lifetime updates. No subscription.
 - Privacy: On-device transcription. No analytics. No telemetry. Audio never transmitted.
 - Download: https://downloads.try-ghostly.com/Ghostly-latest.dmg
 
@@ -29,7 +29,7 @@ Ghostly is macOS-only (10.15+), with Apple Silicon recommended for GPU-accelerat
 ## Common questions
 
 - Does audio leave the Mac? No. Transcription is on-device. AI cleanup only sees text.
-- Is it free? Yes — 30 minutes of transcription per week on the free tier. Pro ($19 one-time, no subscription) unlocks unlimited transcription, all Whisper model sizes, and AI cleanup.
+- Is it free? Yes — full feature parity on the free tier (all Whisper models, AI cleanup, every feature), capped at 30 minutes of transcription per week on one Mac. Pro ($39 one-time, no subscription) removes the cap and allows install on up to 3 Macs.
 - Does it work offline? Yes, after first-run model download.
 - Windows or Linux? No — macOS only.
 - Apple Intelligence support? Yes, as an on-device AI cleanup option.
