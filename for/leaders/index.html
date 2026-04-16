@@ -1,0 +1,891 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ghostly for Leaders — Inbox zero without the typing</title>
+    <meta name="description" content="Voice-first dictation for executives and managers. Reply to Slack, email, and draft docs at speaking speed. On-device transcription on macOS — audio never leaves your Mac." />
+    <meta name="keywords" content="executive dictation, voice email reply, manager productivity Mac, inbox zero, voice typing macOS, leader tools" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://try-ghostly.com/for/leaders/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Ghostly" />
+    <meta property="og:url" content="https://try-ghostly.com/for/leaders/" />
+    <meta property="og:title" content="Ghostly for Leaders" />
+    <meta property="og:description" content="Inbox zero without the typing. On-device dictation for every app you live in." />
+    <meta property="og:image" content="https://try-ghostly.com/assets/og-image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Ghostly for Leaders" />
+    <meta name="twitter:description" content="A new superpower for executives who'd rather talk than type." />
+    <meta name="twitter:image" content="https://try-ghostly.com/assets/og-image.png" />
+
+    <link rel="icon" type="image/svg+xml" href="/assets/ghostly_logo.svg" />
+    <meta name="theme-color" content="#0b0b0f" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui'], serif: ['"Instrument Serif"', 'ui-serif', 'Georgia'] },
+            colors: { ink: '#0b0b0f', ghost: '#e8e9ef', accent: '#7c5cff' },
+          },
+        },
+      };
+    </script>
+    <style>
+      html { scroll-behavior: smooth; }
+      body { background: #0b0b0f; color: #e8e9ef; }
+      .grid-bg {
+        background-image:
+          radial-gradient(circle at 50% 0%, rgba(251, 191, 36, 0.20), transparent 45%),
+          radial-gradient(circle at 80% 10%, rgba(124, 92, 255, 0.18), transparent 45%),
+          linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        background-size: auto, auto, 42px 42px, 42px 42px;
+      }
+      .glass { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); backdrop-filter: blur(8px); }
+      .btn-primary { background: linear-gradient(180deg, #ffffff 0%, #d8d9e3 100%); color: #0b0b0f; }
+      .btn-primary:hover { filter: brightness(1.05); }
+      .btn-ghost { background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12); color: #e8e9ef; }
+      .btn-ghost:hover { background: rgba(255, 255, 255, 0.1); }
+      .chip { background: rgba(124, 92, 255, 0.12); border: 1px solid rgba(124, 92, 255, 0.35); color: #c9bfff; }
+      .chip-leader { background: rgba(251, 191, 36, 0.10); border-color: rgba(251, 191, 36, 0.35); color: #fcd34d; }
+      .kbd { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: #15151c; border: 1px solid rgba(255, 255, 255, 0.12); border-bottom-width: 2px; padding: 2px 8px; border-radius: 6px; font-size: 0.85em; }
+      .font-display { font-family: 'Instrument Serif', ui-serif, Georgia, serif; font-style: italic; font-weight: 400; letter-spacing: -0.01em; }
+      #site-header.is-scrolled { border-bottom-color: rgba(255, 255, 255, 0.08); background: rgba(11, 11, 15, 0.85); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.4), 0 10px 30px -10px rgba(0, 0, 0, 0.35); }
+
+      /* Nav dropdown */
+      .nav-dropdown { display: inline-flex; align-items: center; position: relative; }
+      .nav-dropdown::after { content: ""; position: absolute; left: -8px; right: -8px; top: 100%; height: 18px; }
+      .nav-dropdown-trigger { background: transparent; border: none; padding: 8px 0; font: inherit; color: inherit; cursor: pointer; }
+      .nav-dropdown-menu { position: absolute; top: calc(100% + 10px); left: 50%; transform: translate(-50%, -6px); min-width: 320px; padding: 10px; background: rgba(20, 20, 26, 0.96); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(124, 92, 255, 0.08) inset; backdrop-filter: blur(12px); opacity: 0; pointer-events: none; transition: opacity 180ms ease, transform 180ms ease; z-index: 60; }
+      .nav-dropdown:hover .nav-dropdown-menu, .nav-dropdown:focus-within .nav-dropdown-menu { opacity: 1; pointer-events: auto; transform: translate(-50%, 0); }
+      .nav-dropdown:hover .nav-dropdown-trigger svg { transform: rotate(180deg); }
+      .nav-dropdown-menu a { display: flex; align-items: flex-start; gap: 12px; padding: 10px 12px; border-radius: 10px; color: rgba(232, 233, 239, 0.88); transition: background 160ms ease, color 160ms ease; }
+      .nav-dropdown-menu a:hover { background: rgba(124, 92, 255, 0.1); color: #fff; }
+      .nav-dropdown-menu a.is-active { background: rgba(251, 191, 36, 0.12); color: #fff; }
+      .nav-dropdown-icon { flex-shrink: 0; width: 34px; height: 34px; border-radius: 9px; display: inline-flex; align-items: center; justify-content: center; }
+      .nav-dropdown-icon svg { width: 16px; height: 16px; }
+      .nav-dropdown-icon-dev { background: rgba(56, 189, 248, 0.14); color: #7dd3fc; }
+      .nav-dropdown-icon-creative { background: rgba(244, 114, 182, 0.14); color: #f9a8d4; }
+      .nav-dropdown-icon-leader { background: rgba(251, 191, 36, 0.14); color: #fcd34d; }
+      .nav-dropdown-icon-sales { background: rgba(52, 211, 153, 0.14); color: #6ee7b7; }
+      .nav-dropdown-icon-student { background: rgba(167, 139, 250, 0.14); color: #c4b5fd; }
+      .nav-dropdown-label { display: block; font-size: 14px; font-weight: 600; letter-spacing: -0.005em; }
+      .nav-dropdown-sub { display: block; margin-top: 2px; font-size: 12px; color: rgba(232, 233, 239, 0.5); }
+
+      /* Reveal */
+      .reveal { opacity: 0; transform: translateY(22px); transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1), transform 700ms cubic-bezier(0.22, 1, 0.36, 1); transition-delay: var(--reveal-delay, 0ms); }
+      .reveal.in-view { opacity: 1; transform: translateY(0); }
+      @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1 !important; transform: none !important; transition: none !important; } }
+
+      /* ---- Hero: Inbox column burning down ---- */
+      .inbox-win {
+        background: #0f0f17;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 40px 100px -30px rgba(251, 191, 36, 0.22), 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+      }
+      .inbox-bar { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); background: rgba(0, 0, 0, 0.3); }
+      .win-dot { width: 11px; height: 11px; border-radius: 50%; }
+      .win-dot.r { background: #ff5f57; } .win-dot.y { background: #febc2e; } .win-dot.g { background: #28c840; }
+      .inbox-body { display: grid; grid-template-columns: minmax(0, 1fr) 280px; min-height: 400px; }
+      @media (max-width: 768px) { .inbox-body { grid-template-columns: 1fr; min-height: auto; } }
+      .inbox-col { padding: 14px 16px; overflow: hidden; }
+      .inbox-header { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: rgba(232, 233, 239, 0.7); margin-bottom: 12px; }
+      .inbox-count { background: rgba(251, 191, 36, 0.14); color: #fcd34d; border-radius: 999px; padding: 1px 8px; font-size: 11px; }
+      .inbox-count.zero { background: rgba(52, 211, 153, 0.14); color: #6ee7b7; }
+      .inbox-item {
+        display: flex; gap: 10px; padding: 10px 10px;
+        border-radius: 10px;
+        transition: opacity 350ms ease, transform 350ms ease, background 200ms ease;
+      }
+      .inbox-item:hover { background: rgba(255, 255, 255, 0.03); }
+      .inbox-item.done { opacity: 0; transform: translateX(30px); pointer-events: none; }
+      .inbox-ava {
+        width: 30px; height: 30px; border-radius: 50%;
+        flex-shrink: 0;
+        font-size: 11px; font-weight: 600; color: #fff;
+        display: inline-flex; align-items: center; justify-content: center;
+      }
+      .inbox-meta { flex: 1; min-width: 0; }
+      .inbox-from { font-size: 12.5px; font-weight: 600; color: rgba(232, 233, 239, 0.9); display: flex; align-items: center; gap: 6px; }
+      .inbox-subj { font-size: 12px; color: rgba(232, 233, 239, 0.55); margin-top: 2px; line-height: 1.3; }
+      .inbox-app { font-size: 10px; color: rgba(232, 233, 239, 0.35); margin-top: 3px; font-family: ui-monospace, monospace; }
+      .inbox-unread { width: 6px; height: 6px; border-radius: 50%; background: #fcd34d; display: inline-block; }
+      .inbox-item.done .inbox-unread { background: #6ee7b7; }
+      .inbox-preview {
+        background: rgba(0, 0, 0, 0.3);
+        border-left: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 14px 16px;
+        display: flex; flex-direction: column;
+      }
+      @media (max-width: 768px) { .inbox-preview { border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.05); } }
+      .inbox-preview-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(252, 211, 77, 0.7); margin-bottom: 8px; }
+      .inbox-preview-from { font-size: 13px; font-weight: 600; }
+      .inbox-preview-subj { font-size: 12px; color: rgba(232, 233, 239, 0.55); margin-top: 2px; }
+      .inbox-preview-body { margin-top: 10px; font-size: 13px; line-height: 1.5; color: rgba(232, 233, 239, 0.8); min-height: 90px; }
+      .inbox-reply {
+        margin-top: auto;
+        background: #14141c;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        padding: 12px 14px;
+      }
+      .inbox-reply.is-listening { border-color: rgba(251, 191, 36, 0.45); box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.1); }
+      .inbox-reply-text {
+        font-size: 13px; line-height: 1.5;
+        min-height: 64px; color: rgba(232, 233, 239, 0.9);
+      }
+      .inbox-reply-text .caret { display: inline-block; width: 1px; height: 1em; background: #fcd34d; vertical-align: -0.12em; animation: blink 1s steps(2, end) infinite; }
+      @keyframes blink { 50% { opacity: 0; } }
+      .inbox-reply-foot {
+        display: flex; align-items: center; justify-content: space-between;
+        margin-top: 10px;
+        padding-top: 8px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      .inbox-mic { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; color: rgba(252, 211, 77, 0.9); }
+      .mic-dot { width: 7px; height: 7px; border-radius: 50%; background: #fcd34d; box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.5); animation: pulse 1.4s ease-in-out infinite; }
+      @keyframes pulse {
+        0% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.5); }
+        70% { box-shadow: 0 0 0 10px rgba(251, 191, 36, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0); }
+      }
+      .inbox-mic.idle .mic-dot { background: rgba(232, 233, 239, 0.3); animation: none; }
+      .inbox-mic.idle { color: rgba(232, 233, 239, 0.4); }
+      .inbox-send {
+        background: linear-gradient(180deg, #fcd34d, #f59e0b);
+        color: #0b0b0f;
+        font-weight: 600; font-size: 11px;
+        padding: 5px 11px; border-radius: 6px;
+      }
+
+      /* Marquee */
+      .marquee { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent); mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent); }
+      .marquee-track { display: flex; gap: 16px; width: max-content; animation: marquee 32s linear infinite; }
+      @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+      .app-tile { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 14px; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); font-size: 13px; font-weight: 500; color: rgba(232, 233, 239, 0.85); box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5); }
+      .app-tile img { width: 22px; height: 22px; border-radius: 5px; }
+
+      /* Memo feature: brain-dump → executive summary */
+      .memo-stack { position: relative; max-width: 540px; }
+      .memo-card {
+        background: #0f0f17;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 14px;
+        padding: 18px 20px;
+        font-size: 13.5px;
+        line-height: 1.55;
+      }
+      .memo-raw {
+        color: rgba(232, 233, 239, 0.58);
+        font-style: italic;
+        position: relative;
+      }
+      .memo-raw::before {
+        content: "Brain-dump · raw";
+        position: absolute; top: -9px; left: 14px;
+        font-style: normal; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+        padding: 3px 8px; border-radius: 999px;
+        background: #0f0f17;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: rgba(232, 233, 239, 0.5);
+      }
+      .memo-refined {
+        margin-top: 6px;
+        border-color: rgba(251, 191, 36, 0.35);
+        background: linear-gradient(180deg, rgba(251, 191, 36, 0.03), rgba(255, 255, 255, 0.015));
+        color: rgba(232, 233, 239, 0.92);
+      }
+      .memo-refined::before {
+        content: "Executive summary · AI-cleaned";
+        position: absolute; top: -9px; left: 14px;
+        font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+        padding: 3px 8px; border-radius: 999px;
+        background: #0f0f17;
+        border: 1px solid rgba(251, 191, 36, 0.35);
+        color: #fcd34d;
+      }
+      .memo-refined { position: relative; }
+      .memo-refined h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; color: #fff; }
+      .memo-refined ul { margin-top: 10px; }
+      .memo-refined li { display: flex; gap: 8px; padding: 3px 0; font-size: 13px; }
+      .memo-refined li::before { content: "·"; color: #fcd34d; font-weight: bold; }
+      .memo-arrow {
+        display: flex;
+        margin: 6px auto;
+        background: #0b0b0f;
+        border: 1px solid rgba(251, 191, 36, 0.35);
+        border-radius: 999px;
+        width: 36px; height: 36px;
+        align-items: center; justify-content: center;
+        color: #fcd34d;
+        box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.6);
+        z-index: 2;
+      }
+
+      /* Use cases + top tiles */
+      .usecase-row { display: flex; align-items: center; gap: 16px; padding: 18px 20px; border-top: 1px solid rgba(255, 255, 255, 0.06); transition: background 180ms ease; }
+      .usecase-row:first-child { border-top: none; }
+      .usecase-row:hover { background: rgba(251, 191, 36, 0.04); }
+      .usecase-icons { display: inline-flex; flex-shrink: 0; width: 88px; }
+      .usecase-icons .app-ic { width: 42px; height: 42px; border-radius: 10px; overflow: hidden; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 6px 20px -8px rgba(0, 0, 0, 0.5); }
+      .usecase-icons .app-ic img { width: 100%; height: 100%; object-fit: cover; }
+      .usecase-icons .app-ic:not(:first-child) { margin-left: -14px; }
+      .top-tile { display: flex; align-items: center; gap: 12px; padding: 16px 18px; border-radius: 14px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.07); transition: background 160ms ease, border-color 160ms ease, transform 160ms ease; }
+      .top-tile:hover { border-color: rgba(251, 191, 36, 0.35); background: rgba(251, 191, 36, 0.05); transform: translateY(-1px); }
+      .top-tile .top-icon { flex-shrink: 0; width: 32px; height: 32px; border-radius: 8px; background: rgba(251, 191, 36, 0.1); color: #fcd34d; display: inline-flex; align-items: center; justify-content: center; }
+
+      .cta-block { background: radial-gradient(ellipse at center, rgba(251, 191, 36, 0.1), transparent 60%), linear-gradient(180deg, rgba(124, 92, 255, 0.08), transparent); }
+
+      @media (prefers-reduced-motion: reduce) {
+        .marquee-track, .mic-dot, .inbox-reply-text .caret { animation: none !important; }
+      }
+    </style>
+  </head>
+  <body class="font-sans antialiased">
+    <header id="site-header" class="sticky top-0 z-50 border-b border-transparent bg-ink/60 backdrop-blur transition-colors duration-200">
+      <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:px-6 md:py-4">
+        <a href="/" class="flex items-center gap-2">
+          <img src="/assets/ghostly_logo.svg" alt="" class="h-7 w-7" />
+          <span class="text-lg font-bold tracking-tight">Ghostly</span>
+        </a>
+        <nav class="hidden items-center gap-8 text-sm text-ghost/70 md:flex">
+          <a href="/#features" class="hover:text-ghost">Features</a>
+          <div class="nav-dropdown">
+            <button type="button" class="nav-dropdown-trigger inline-flex items-center gap-1 text-ghost hover:text-ghost" aria-haspopup="true" aria-expanded="false">
+              For you
+              <svg class="h-3 w-3 opacity-70 transition-transform" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+            </button>
+            <div class="nav-dropdown-menu" role="menu">
+              <a href="/for/developers/" role="menuitem"><span class="nav-dropdown-icon nav-dropdown-icon-dev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span><span><span class="nav-dropdown-label">Developers</span><span class="nav-dropdown-sub">Dictate prompts, docs, and code</span></span></a>
+              <a href="/for/creatives/" role="menuitem"><span class="nav-dropdown-icon nav-dropdown-icon-creative"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><circle cx="6" cy="6" r="2"/></svg></span><span><span class="nav-dropdown-label">Creatives</span><span class="nav-dropdown-sub">Scripts, posts, and first drafts</span></span></a>
+              <a href="/for/leaders/" class="is-active" role="menuitem"><span class="nav-dropdown-icon nav-dropdown-icon-leader"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></span><span><span class="nav-dropdown-label">Leaders</span><span class="nav-dropdown-sub">Inbox zero without the typing</span></span></a>
+              <a href="/for/sales/" role="menuitem"><span class="nav-dropdown-icon nav-dropdown-icon-sales"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></span><span><span class="nav-dropdown-label">Sales</span><span class="nav-dropdown-sub">CRM notes between calls</span></span></a>
+              <a href="/for/students/" role="menuitem"><span class="nav-dropdown-icon nav-dropdown-icon-student"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span><span><span class="nav-dropdown-label">Students</span><span class="nav-dropdown-sub">Essays at speaking speed</span></span></a>
+            </div>
+          </div>
+          <a href="/#how" class="hover:text-ghost">How it works</a>
+          <a href="/#pricing" class="hover:text-ghost">Pricing</a>
+          <a href="/#download" class="hover:text-ghost">Download</a>
+        </nav>
+        <a href="/install/" class="btn-primary rounded-lg px-3.5 py-2 text-sm font-semibold md:px-4">Download</a>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="grid-bg relative overflow-hidden">
+      <div class="mx-auto max-w-6xl px-6 py-16 md:py-24">
+        <div class="grid items-center gap-12 lg:grid-cols-[1fr_1.15fr]">
+          <div>
+            <span class="chip-leader chip inline-block rounded-full px-3 py-1 text-xs font-medium">Ghostly for leaders</span>
+            <h1 class="mt-5 text-4xl leading-[1.05] tracking-tight md:text-6xl" style="letter-spacing: -0.03em">
+              <span class="font-display text-amber-200" style="font-size: 1.05em">A new</span>
+              <span class="font-bold"> superpower.</span>
+            </h1>
+            <p class="mt-6 max-w-lg text-lg text-ghost/70">Most of your day is Slack, email, and decisions. Ghostly turns the hallway-thinking and the between-meeting minutes into sendable replies, crisp memos, and followed-up decisions — without ever opening a keyboard shortcut cheat sheet.</p>
+            <div class="mt-8 flex flex-wrap items-center gap-3">
+              <a href="/install/" class="btn-primary inline-flex items-center gap-2 rounded-xl px-6 py-3 text-base font-semibold">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+                Download for macOS
+              </a>
+              <a href="#how-leaders-use" class="btn-ghost inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold">How leaders use it →</a>
+            </div>
+            <p class="mt-5 text-xs text-ghost/45">Apple Silicon · M1 or later · macOS 12+</p>
+          </div>
+
+          <!-- Hero demo: Burning-down inbox + dictated reply -->
+          <div class="reveal">
+            <div class="inbox-win">
+              <div class="inbox-bar">
+                <span class="win-dot r"></span><span class="win-dot y"></span><span class="win-dot g"></span>
+                <span class="text-xs text-ghost/55 ml-3">Unified inbox · Gmail · Slack · Mail</span>
+                <span class="ml-auto font-mono text-[10px] text-ghost/40" id="inbox-timer">09:41</span>
+              </div>
+              <div class="inbox-body">
+                <div class="inbox-col">
+                  <div class="inbox-header">Inbox <span class="inbox-count" id="inbox-count">4 unread</span></div>
+                  <div class="inbox-item" data-idx="0">
+                    <span class="inbox-ava" style="background: linear-gradient(135deg, #f87171, #fb923c)">CM</span>
+                    <div class="inbox-meta">
+                      <div class="inbox-from">Caty Moore <span class="inbox-unread"></span></div>
+                      <div class="inbox-subj">Re: Thursday 1:1 — can we push to 4pm?</div>
+                      <div class="inbox-app">gmail · 2m</div>
+                    </div>
+                  </div>
+                  <div class="inbox-item" data-idx="1">
+                    <span class="inbox-ava" style="background: linear-gradient(135deg, #a78bfa, #7c3aed)">RP</span>
+                    <div class="inbox-meta">
+                      <div class="inbox-from">Reid P. <span class="inbox-unread"></span></div>
+                      <div class="inbox-subj">Q2 goals draft — two small asks before we send</div>
+                      <div class="inbox-app">slack · #leadership</div>
+                    </div>
+                  </div>
+                  <div class="inbox-item" data-idx="2">
+                    <span class="inbox-ava" style="background: linear-gradient(135deg, #34d399, #10b981)">KL</span>
+                    <div class="inbox-meta">
+                      <div class="inbox-from">Kim Ly <span class="inbox-unread"></span></div>
+                      <div class="inbox-subj">Board readout draft — your comments?</div>
+                      <div class="inbox-app">gmail · 12m</div>
+                    </div>
+                  </div>
+                  <div class="inbox-item" data-idx="3">
+                    <span class="inbox-ava" style="background: linear-gradient(135deg, #fbbf24, #f59e0b)">JD</span>
+                    <div class="inbox-meta">
+                      <div class="inbox-from">Julia D. <span class="inbox-unread"></span></div>
+                      <div class="inbox-subj">Pricing team sync — quick decision needed</div>
+                      <div class="inbox-app">slack · dm</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="inbox-preview">
+                  <div class="inbox-preview-label">Replying · per-app style: Gmail</div>
+                  <div class="inbox-preview-from" id="prv-from">Caty Moore</div>
+                  <div class="inbox-preview-subj" id="prv-subj">Re: Thursday 1:1 — can we push to 4pm?</div>
+                  <div class="inbox-preview-body" id="prv-body">Hey — something came up on my end. Any chance we could push to 4? Totally fine to keep it at 2 if that's easier, just let me know. Thanks!</div>
+                  <div class="inbox-reply is-listening" id="inbox-reply">
+                    <div class="inbox-reply-text" id="reply-text"></div>
+                    <div class="inbox-reply-foot">
+                      <div class="inbox-mic" id="reply-mic"><span class="mic-dot"></span><span id="reply-mic-text">Listening · fn</span></div>
+                      <button class="inbox-send">Send</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p class="mt-4 text-center text-[11px] font-mono text-ghost/35">Per-app style · Gmail prose · Slack snippets · all in one shortcut</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- App marquee -->
+    <section class="border-y border-white/5 bg-white/[0.015]">
+      <div class="mx-auto max-w-6xl px-6 py-10">
+        <p class="text-center text-xs font-semibold uppercase tracking-[0.15em] text-ghost/40">Inside every tool leaders live in</p>
+        <div class="mt-6 marquee">
+          <div class="marquee-track">
+            <div class="app-tile"><img src="/assets/apps/gmail.png" alt="" /> Gmail</div>
+            <div class="app-tile"><img src="/assets/apps/apple-mail.png" alt="" /> Mail</div>
+            <div class="app-tile"><img src="/assets/apps/outlook.png" alt="" /> Outlook</div>
+            <div class="app-tile"><img src="/assets/apps/slack.png" alt="" /> Slack</div>
+            <div class="app-tile"><img src="/assets/apps/superhuman.png" alt="" /> Superhuman</div>
+            <div class="app-tile"><img src="/assets/apps/linear.png" alt="" /> Linear</div>
+            <div class="app-tile"><img src="/assets/apps/notion.png" alt="" /> Notion</div>
+            <div class="app-tile"><img src="/assets/apps/google-calendar.png" alt="" /> Calendar</div>
+            <div class="app-tile"><img src="/assets/apps/chatgpt.png" alt="" /> ChatGPT</div>
+            <div class="app-tile"><img src="/assets/apps/claude.png" alt="" /> Claude</div>
+            <div class="app-tile"><img src="/assets/apps/messages.png" alt="" /> Messages</div>
+            <!-- dup -->
+            <div class="app-tile"><img src="/assets/apps/gmail.png" alt="" /> Gmail</div>
+            <div class="app-tile"><img src="/assets/apps/apple-mail.png" alt="" /> Mail</div>
+            <div class="app-tile"><img src="/assets/apps/outlook.png" alt="" /> Outlook</div>
+            <div class="app-tile"><img src="/assets/apps/slack.png" alt="" /> Slack</div>
+            <div class="app-tile"><img src="/assets/apps/superhuman.png" alt="" /> Superhuman</div>
+            <div class="app-tile"><img src="/assets/apps/linear.png" alt="" /> Linear</div>
+            <div class="app-tile"><img src="/assets/apps/notion.png" alt="" /> Notion</div>
+            <div class="app-tile"><img src="/assets/apps/google-calendar.png" alt="" /> Calendar</div>
+            <div class="app-tile"><img src="/assets/apps/chatgpt.png" alt="" /> ChatGPT</div>
+            <div class="app-tile"><img src="/assets/apps/claude.png" alt="" /> Claude</div>
+            <div class="app-tile"><img src="/assets/apps/messages.png" alt="" /> Messages</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Intro story -->
+    <section class="mx-auto max-w-6xl px-6 py-16 md:py-24">
+      <div class="mx-auto max-w-2xl text-center reveal">
+        <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">Your inbox shouldn't own you</span>
+        <h2 class="mt-5 text-4xl tracking-tight md:text-5xl">
+          <span class="font-display text-amber-200">Four hours back.</span><br />
+          <span class="font-bold">Every week.</span>
+        </h2>
+        <p class="mt-4 text-lg text-ghost/60">Most of your output is words in someone else's tool. Ghostly doesn't replace your thinking — it removes the keyboard between you and the decision.</p>
+      </div>
+
+      <div class="mt-14 grid items-stretch gap-6 md:grid-cols-3">
+        <div class="glass reveal rounded-2xl p-6">
+          <div class="font-mono text-xs text-amber-300/80">01 · Reply</div>
+          <h3 class="mt-3 text-lg font-semibold">Inbox in 20 minutes</h3>
+          <p class="mt-2 text-sm text-ghost/60">Speak the reply; Ghostly writes the email you'd actually send. Gmail gets paragraphs. Slack gets sentences. Messages gets a line.</p>
+        </div>
+        <div class="glass reveal rounded-2xl p-6" style="--reveal-delay: 120ms">
+          <div class="font-mono text-xs text-amber-300/80">02 · Decide</div>
+          <h3 class="mt-3 text-lg font-semibold">Memos at thinking speed</h3>
+          <p class="mt-2 text-sm text-ghost/60">Brain-dump the Q2 strategy on a walk; cleanup turns it into a structured memo teammates can act on — not a transcript.</p>
+        </div>
+        <div class="glass reveal rounded-2xl p-6" style="--reveal-delay: 240ms">
+          <div class="font-mono text-xs text-amber-300/80">03 · Follow through</div>
+          <h3 class="mt-3 text-lg font-semibold">Never drop the ball</h3>
+          <p class="mt-2 text-sm text-ghost/60">Capture the after-meeting thought into Notion or Linear before it evaporates. You speak; it lands where it needs to.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feature 1: Brain-dump → executive summary -->
+    <section class="border-y border-white/5 bg-white/[0.015]">
+      <div class="mx-auto max-w-6xl px-6 py-16 md:py-24">
+        <div class="grid items-center gap-14 lg:grid-cols-[1fr_1.05fr]">
+          <div class="reveal">
+            <span class="chip-leader chip inline-block rounded-full px-3 py-1 text-xs font-medium">Hallway-thinking → memo</span>
+            <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
+              <span class="font-display text-amber-200">Talk like you think.</span><br />
+              <span class="font-bold">Send it like you'd write it.</span>
+            </h2>
+            <p class="mt-4 max-w-md text-lg text-ghost/65">A per-app prompt tells Ghostly <em>this output goes into an executive memo</em> — and the ramble you just dictated comes back structured, with headings, bullets, and the asks called out at the top.</p>
+            <ul class="mt-6 space-y-3 text-sm text-ghost/70">
+              <li class="flex items-start gap-3"><svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-amber-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Bring-your-own key: OpenAI, Anthropic, Groq — only the text is sent.</li>
+              <li class="flex items-start gap-3"><svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-amber-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg>On-device cleanup via Apple Intelligence for sensitive drafts.</li>
+              <li class="flex items-start gap-3"><svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-amber-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Personal dictionary learns your team, company, and acronyms.</li>
+            </ul>
+          </div>
+
+          <div class="reveal memo-stack" style="--reveal-delay: 180ms">
+            <div class="memo-card memo-raw">
+              ok so the Q2 pricing thing — I don't think we ship the 20% bump in May, too close to the enterprise renewal cycle, but we should move the self-serve tier to the new structure now since that's a different buyer. Caty thinks we can still hit the annual target if we tighten discount approvals. Legal hasn't weighed in on the grandfathering yet. I want a decision by Thursday.
+            </div>
+            <div class="memo-arrow">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+            </div>
+            <div class="memo-card memo-refined">
+              <h4>Q2 Pricing — Decision &amp; next steps</h4>
+              <ul>
+                <li><strong>Enterprise 20% bump:</strong> delay past May due to renewal cycle proximity.</li>
+                <li><strong>Self-serve tier:</strong> move to new structure now — distinct buyer persona.</li>
+                <li><strong>Annual target:</strong> protected if we tighten discount approvals (Caty leading).</li>
+                <li><strong>Open:</strong> Legal review on grandfathering — needed by Thursday.</li>
+              </ul>
+              <p style="margin-top: 10px; font-size: 12px; color: rgba(232,233,239,0.55);"><strong style="color:#fcd34d">Asks:</strong> decision by EOD Thu · Legal to confirm grandfathering language · Kim to draft comms.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feature 2: Cycling emails & replies -->
+    <section class="mx-auto max-w-6xl px-6 py-16 md:py-24">
+      <div class="grid items-center gap-14 lg:grid-cols-[1.15fr_1fr]">
+        <div class="reveal order-2 lg:order-1">
+          <div class="glass rounded-2xl p-6" id="reply-showcase">
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center gap-2 text-xs font-semibold text-amber-300/80">
+                <span id="showcase-app-logo" class="inline-flex h-5 w-5 overflow-hidden rounded"><img src="/assets/apps/gmail.png" alt="" class="h-5 w-5" /></span>
+                <span id="showcase-app-name" class="uppercase tracking-wider">Gmail reply</span>
+              </div>
+              <span class="text-[11px] text-ghost/40 font-mono" id="showcase-style">formal · paragraph</span>
+            </div>
+            <div class="space-y-2">
+              <div class="text-[13px] font-semibold text-ghost/80" id="showcase-from">To: Caty Moore</div>
+              <div class="text-[13px] text-ghost/55" id="showcase-subject">Re: Thursday 1:1 — can we push to 4pm?</div>
+              <div class="mt-4 text-[14px] leading-relaxed text-ghost/90" id="showcase-body" style="min-height: 120px;"></div>
+            </div>
+            <div class="mt-4 flex items-center gap-2 text-[11px] text-ghost/40">
+              <span class="inline-flex h-2 w-2 rounded-full bg-amber-400/70"></span>
+              <span>Same voice input → each app gets its own format</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal order-1 lg:order-2" style="--reveal-delay: 120ms">
+          <span class="chip-leader chip inline-block rounded-full px-3 py-1 text-xs font-medium">Per-app profiles</span>
+          <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
+            <span class="font-display text-amber-200">Gmail gets paragraphs.</span><br />
+            <span class="font-bold">Slack gets sentences.</span>
+          </h2>
+          <p class="mt-4 max-w-md text-lg text-ghost/65">Ghostly knows the app you're in and adjusts tone, length, and formatting. One dictation, four different surfaces — each one sounds native to that tool.</p>
+          <div class="mt-6 grid gap-2">
+            <div class="glass rounded-xl p-3 flex items-center gap-3">
+              <img src="/assets/apps/gmail.png" class="h-6 w-6 rounded" alt="" />
+              <span class="text-sm">Gmail</span>
+              <span class="ml-auto text-xs text-ghost/45">Paragraphs · greeting · sign-off</span>
+            </div>
+            <div class="glass rounded-xl p-3 flex items-center gap-3">
+              <img src="/assets/apps/slack.png" class="h-6 w-6 rounded" alt="" />
+              <span class="text-sm">Slack</span>
+              <span class="ml-auto text-xs text-ghost/45">Short · no greeting · thread-ready</span>
+            </div>
+            <div class="glass rounded-xl p-3 flex items-center gap-3">
+              <img src="/assets/apps/notion.png" class="h-6 w-6 rounded" alt="" />
+              <span class="text-sm">Notion</span>
+              <span class="ml-auto text-xs text-ghost/45">Headings · bullets · action items</span>
+            </div>
+            <div class="glass rounded-xl p-3 flex items-center gap-3">
+              <img src="/assets/apps/messages.png" class="h-6 w-6 rounded" alt="" />
+              <span class="text-sm">Messages</span>
+              <span class="ml-auto text-xs text-ghost/45">One line · casual · punctuation fixed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Use cases -->
+    <section id="how-leaders-use" class="border-y border-white/5 bg-white/[0.015]">
+      <div class="mx-auto max-w-6xl px-6 py-16 md:py-24">
+        <div class="max-w-2xl reveal">
+          <span class="chip-leader chip inline-block rounded-full px-3 py-1 text-xs font-medium">Use cases</span>
+          <h2 class="mt-5 text-4xl tracking-tight md:text-5xl">
+            <span class="font-display text-amber-200">What leaders</span>
+            <span class="font-bold"> do with Ghostly.</span>
+          </h2>
+          <p class="mt-4 text-lg text-ghost/60">The hours that used to live inside your inbox — back.</p>
+        </div>
+        <div class="mt-10 glass rounded-2xl">
+          <div class="usecase-row">
+            <div class="usecase-icons">
+              <span class="app-ic"><img src="/assets/apps/gmail.png" alt="" /></span>
+              <span class="app-ic"><img src="/assets/apps/apple-mail.png" alt="" /></span>
+            </div>
+            <div class="flex-1">
+              <div class="text-base font-semibold">Breeze through email while walking between meetings</div>
+              <div class="mt-1 text-sm text-ghost/55">Per-app profile keeps Gmail professional; punctuation and sign-offs handled.</div>
+            </div>
+          </div>
+          <div class="usecase-row">
+            <div class="usecase-icons">
+              <span class="app-ic"><img src="/assets/apps/slack.png" alt="" /></span>
+              <span class="app-ic"><img src="/assets/apps/messages.png" alt="" /></span>
+            </div>
+            <div class="flex-1">
+              <div class="text-base font-semibold">Reply to Slack and Messages without breaking focus</div>
+              <div class="mt-1 text-sm text-ghost/55">Short, human replies — not the corporate-sounding rewrite you usually get.</div>
+            </div>
+          </div>
+          <div class="usecase-row">
+            <div class="usecase-icons">
+              <span class="app-ic"><img src="/assets/apps/notion.png" alt="" /></span>
+              <span class="app-ic"><img src="/assets/apps/chatgpt.png" alt="" /></span>
+            </div>
+            <div class="flex-1">
+              <div class="text-base font-semibold">Draft memos, board readouts, and decision docs by talking</div>
+              <div class="mt-1 text-sm text-ghost/55">Brain-dump → structured outline with asks at the top. Edit once, send.</div>
+            </div>
+          </div>
+          <div class="usecase-row">
+            <div class="usecase-icons">
+              <span class="app-ic"><img src="/assets/apps/linear.png" alt="" /></span>
+              <span class="app-ic"><img src="/assets/apps/things.png" alt="" /></span>
+            </div>
+            <div class="flex-1">
+              <div class="text-base font-semibold">Capture follow-ups and todos the moment they come up</div>
+              <div class="mt-1 text-sm text-ghost/55">In Linear, Things, or Apple Notes — whatever has focus. Nothing slips through.</div>
+            </div>
+          </div>
+          <div class="usecase-row">
+            <div class="usecase-icons">
+              <span class="app-ic"><img src="/assets/apps/chatgpt.png" alt="" /></span>
+              <span class="app-ic"><img src="/assets/apps/claude.png" alt="" /></span>
+            </div>
+            <div class="flex-1">
+              <div class="text-base font-semibold">Prompt ChatGPT and Claude with full context, verbally</div>
+              <div class="mt-1 text-sm text-ghost/55">Dictate the situation, the constraint, the ask — get output worth using.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Top 10 grid -->
+    <section class="mx-auto max-w-6xl px-6 py-16 md:py-24">
+      <div class="max-w-2xl reveal">
+        <h2 class="text-4xl tracking-tight md:text-5xl"><span class="font-display text-violet-200">Ten ways</span> <span class="font-bold">leaders get time back.</span></h2>
+        <p class="mt-4 text-lg text-ghost/60">The keyboard was the bottleneck. Now it isn't.</p>
+      </div>
+      <div class="mt-10 grid gap-3 md:grid-cols-2" data-stagger>
+        <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span><span>Clearing inbox while walking between meetings</span></div>
+        <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></span><span>Responding to Slack DMs without context-switching</span></div>
+        <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span><span>Drafting board memos and quarterly readouts</span></div>
+        <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><span>Turning a 15-minute walk into a decision doc</span></div>
+        <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span><span>Writing performance reviews and 1:1 notes</span></div>
+        <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6.253v13"/><path d="M12 6.253C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253"/><path d="M12 6.253C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg></span><span>Dictating strategy docs and RFCs hands-free</span></div>
+        <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span><span>Scheduling and rescheduling via voice in Calendar</span></div>
+        <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg></span><span>Capturing podcast/meeting reflections instantly</span></div>
+        <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></span><span>Sending thoughtful congrats and hiring notes fast</span></div>
+        <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11H5a2 2 0 00-2 2v7h18v-7a2 2 0 00-2-2h-4"/><polyline points="9 11 12 8 15 11"/><line x1="12" y1="8" x2="12" y2="20"/></svg></span><span>Replying to investor emails with real substance</span></div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-block">
+      <div class="mx-auto max-w-4xl px-6 py-20 md:py-28 text-center">
+        <h2 class="text-4xl font-extrabold tracking-tight md:text-6xl">Reclaim the day.<br /><span class="font-display text-amber-200">Lead faster.</span></h2>
+        <p class="mx-auto mt-5 max-w-lg text-lg text-ghost/60">Free forever for 30 min/week. Pro is $39 once — installs on up to three Macs.</p>
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
+          <a href="/install/" class="btn-primary inline-flex items-center gap-2 rounded-xl px-8 py-4 text-lg font-semibold">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+            Download for macOS
+          </a>
+          <a href="/#pricing" class="btn-ghost inline-flex items-center gap-2 rounded-xl px-6 py-4 text-base font-semibold">See pricing</a>
+        </div>
+        <p class="mt-6 text-xs text-ghost/40">Apple Silicon · M1 or later · macOS 12+</p>
+      </div>
+    </section>
+
+    <footer class="border-t border-white/5">
+      <div class="mx-auto max-w-6xl px-6 py-14">
+        <div class="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+          <div>
+            <div class="flex items-center gap-2">
+              <img src="/assets/ghostly_logo.svg" alt="" class="h-6 w-6" />
+              <span class="text-sm font-semibold">Ghostly</span>
+            </div>
+            <p class="mt-3 max-w-xs text-sm text-ghost/55">Voice-first typing for macOS. On-device Whisper with optional AI cleanup.</p>
+            <p class="mt-4 font-mono text-xs text-ghost/40">v0.9.0 · updated Apr 2026</p>
+          </div>
+          <div>
+            <div class="text-xs font-semibold uppercase tracking-wider text-ghost/40">Product</div>
+            <ul class="mt-4 space-y-2 text-sm text-ghost/60">
+              <li><a href="/#features" class="hover:text-ghost">Features</a></li>
+              <li><a href="/#how" class="hover:text-ghost">How it works</a></li>
+              <li><a href="/#ai" class="hover:text-ghost">AI cleanup</a></li>
+              <li><a href="/#pricing" class="hover:text-ghost">Pricing</a></li>
+              <li><a href="/#download" class="hover:text-ghost">Download</a></li>
+            </ul>
+          </div>
+          <div>
+            <div class="text-xs font-semibold uppercase tracking-wider text-ghost/40">For you</div>
+            <ul class="mt-4 space-y-2 text-sm text-ghost/60">
+              <li><a href="/for/developers/" class="hover:text-ghost">Developers</a></li>
+              <li><a href="/for/creatives/" class="hover:text-ghost">Creatives</a></li>
+              <li><a href="/for/leaders/" class="text-amber-300">Leaders</a></li>
+              <li><a href="/for/sales/" class="hover:text-ghost">Sales</a></li>
+              <li><a href="/for/students/" class="hover:text-ghost">Students</a></li>
+            </ul>
+          </div>
+          <div>
+            <div class="text-xs font-semibold uppercase tracking-wider text-ghost/40">Contact</div>
+            <ul class="mt-4 space-y-2 text-sm text-ghost/60">
+              <li><a href="/privacy" class="hover:text-ghost">Privacy</a></li>
+              <li><a href="mailto:security@try-ghostly.com" class="hover:text-ghost">Security</a></li>
+              <li><a href="mailto:support@try-ghostly.com" class="hover:text-ghost">Support</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="mt-12 border-t border-white/5 pt-6 text-xs text-ghost/40">© 2026 Ghostly. All rights reserved.</div>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        const header = document.getElementById('site-header');
+        if (!header) return;
+        const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 8);
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+      })();
+
+      (function () {
+        const prm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        document.querySelectorAll('[data-stagger]').forEach((grid) => {
+          Array.from(grid.children).forEach((child, i) => {
+            child.classList.add('reveal');
+            child.style.setProperty('--reveal-delay', `${i * 60}ms`);
+          });
+        });
+        if (prm) { document.querySelectorAll('.reveal').forEach((el) => el.classList.add('in-view')); return; }
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); } });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+      })();
+
+      // Hero: burn-down inbox with dictated replies
+      (function () {
+        const prm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const items = Array.from(document.querySelectorAll('.inbox-item'));
+        const count = document.getElementById('inbox-count');
+        const replyText = document.getElementById('reply-text');
+        const prvFrom = document.getElementById('prv-from');
+        const prvSubj = document.getElementById('prv-subj');
+        const prvBody = document.getElementById('prv-body');
+        const micText = document.getElementById('reply-mic-text');
+        const micWrap = document.getElementById('reply-mic');
+        const inboxReply = document.getElementById('inbox-reply');
+        if (!items.length) return;
+
+        const emails = [
+          {
+            from: 'Caty Moore',
+            subj: 'Re: Thursday 1:1 — can we push to 4pm?',
+            body: 'Hey — something came up on my end. Any chance we could push to 4? Totally fine to keep it at 2 if that\'s easier, just let me know. Thanks!',
+            reply: 'Works for me — let\'s lock 4pm. I\'ll send a fresh invite. Want to start with the hiring update or the pricing decision?'
+          },
+          {
+            from: 'Reid P.',
+            subj: 'Q2 goals draft — two small asks',
+            body: 'Put the goals doc in #leadership. Two small asks before we send: can we quantify the "velocity" target, and do we want Marketing on the distribution list for the board version?',
+            reply: '1) Use shipped-PRs-per-week, baseline 34 → target 48 by end of Q2.\n2) Yes — add Marketing to the board distribution. Caty can take the quick pass.'
+          },
+          {
+            from: 'Kim Ly',
+            subj: 'Board readout draft — your comments?',
+            body: 'Draft attached. Focus areas: NRR narrative, the platform bet, and the hiring slowdown. Anything missing before Friday?',
+            reply: 'Strong. Two edits: lead with NRR (not the platform bet), and push the hiring slowdown into the appendix — the board wants conviction on the bet, not a caveat.'
+          },
+          {
+            from: 'Julia D.',
+            subj: 'Pricing team sync — quick decision',
+            body: 'Two options for the self-serve tier: (a) flat $29 with unlimited seats, (b) $19 + $5/seat. Team split 50/50. Need your call.',
+            reply: 'Go with (a). Simpler story, fewer pricing-page questions, and we can always migrate to seats later with data. Kim to own the rollout comms.'
+          }
+        ];
+
+        if (prm) {
+          replyText.innerHTML = emails[0].reply.replace(/\n/g, '<br/>');
+          return;
+        }
+
+        let idx = 0;
+        const type = (text) => new Promise((resolve) => {
+          const plainText = text;
+          let i = 0;
+          replyText.textContent = '';
+          const caret = document.createElement('span');
+          caret.className = 'caret';
+          const step = () => {
+            i++;
+            replyText.textContent = plainText.slice(0, i);
+            replyText.appendChild(caret);
+            if (i < plainText.length) setTimeout(step, 16 + Math.random() * 24);
+            else resolve();
+          };
+          setTimeout(step, 200);
+        });
+
+        const runOne = async () => {
+          const email = emails[idx % emails.length];
+          // Highlight selected item
+          items.forEach((el) => el.style.background = '');
+          const currentItem = items[idx % items.length];
+          if (currentItem && !currentItem.classList.contains('done')) {
+            currentItem.style.background = 'rgba(251, 191, 36, 0.08)';
+          }
+          prvFrom.textContent = email.from;
+          prvSubj.textContent = email.subj;
+          prvBody.textContent = email.body;
+          micText.textContent = 'Listening · fn';
+          micWrap.classList.remove('idle');
+          inboxReply.classList.add('is-listening');
+
+          await type(email.reply);
+
+          micText.textContent = 'Sent';
+          micWrap.classList.add('idle');
+          inboxReply.classList.remove('is-listening');
+
+          // Mark done
+          await new Promise((r) => setTimeout(r, 900));
+          if (currentItem) {
+            currentItem.classList.add('done');
+            currentItem.style.background = '';
+            const remaining = items.filter((i) => !i.classList.contains('done')).length;
+            if (count) {
+              count.textContent = remaining === 0 ? 'Inbox zero' : `${remaining} unread`;
+              if (remaining === 0) count.classList.add('zero');
+            }
+          }
+          await new Promise((r) => setTimeout(r, 600));
+          idx++;
+
+          // Reset loop when all done
+          if (idx >= emails.length) {
+            await new Promise((r) => setTimeout(r, 1200));
+            items.forEach((el) => el.classList.remove('done'));
+            if (count) {
+              count.textContent = `${emails.length} unread`;
+              count.classList.remove('zero');
+            }
+            idx = 0;
+          }
+
+          runOne();
+        };
+
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) { io.unobserve(e.target); setTimeout(runOne, 500); }
+          });
+        }, { threshold: 0.3 });
+        io.observe(document.querySelector('.inbox-win'));
+      })();
+
+      // Per-app reply showcase (cycles Gmail / Slack / Notion / Messages)
+      (function () {
+        const prm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const logoEl = document.getElementById('showcase-app-logo');
+        const nameEl = document.getElementById('showcase-app-name');
+        const styleEl = document.getElementById('showcase-style');
+        const fromEl = document.getElementById('showcase-from');
+        const subjEl = document.getElementById('showcase-subject');
+        const bodyEl = document.getElementById('showcase-body');
+        if (!bodyEl) return;
+
+        const variants = [
+          {
+            logo: '/assets/apps/gmail.png', name: 'Gmail reply', style: 'formal · paragraph',
+            from: 'To: Caty Moore', subj: 'Re: Thursday 1:1 — can we push to 4pm?',
+            body: 'Hi Caty,\n\n4pm works — I\'ll send a fresh invite. On the agenda, I\'d like to lead with the hiring update so we have time to get into the pricing decision afterwards.\n\nThanks,\nJ'
+          },
+          {
+            logo: '/assets/apps/slack.png', name: 'Slack reply', style: 'short · no greeting',
+            from: 'To: #leadership', subj: 'Thread: Q2 goals draft',
+            body: '4pm ✅ — new invite incoming.\n\nAgenda: hiring first, then pricing.'
+          },
+          {
+            logo: '/assets/apps/notion.png', name: 'Notion note', style: 'headings · bullets',
+            from: 'Doc: Leadership sync — Apr 16', subj: 'Owner: J · Attendees: Caty, Reid, Kim',
+            body: 'Reschedule\n · Moving 1:1 with Caty to 4pm Thursday.\nAgenda\n · Hiring update (lead)\n · Pricing decision (follow)'
+          },
+          {
+            logo: '/assets/apps/messages.png', name: 'Messages reply', style: 'one line · casual',
+            from: 'To: Caty', subj: 'iMessage',
+            body: '4 works — sending a new invite now. Want to start with hiring?'
+          }
+        ];
+
+        if (prm) {
+          const v = variants[0];
+          logoEl.innerHTML = `<img src="${v.logo}" alt="" class="h-5 w-5" />`;
+          nameEl.textContent = v.name;
+          styleEl.textContent = v.style;
+          fromEl.textContent = v.from;
+          subjEl.textContent = v.subj;
+          bodyEl.innerHTML = v.body.replace(/\n/g, '<br/>');
+          return;
+        }
+
+        let i = 0;
+        const apply = () => {
+          const v = variants[i % variants.length];
+          bodyEl.style.opacity = 0;
+          setTimeout(() => {
+            logoEl.innerHTML = `<img src="${v.logo}" alt="" class="h-5 w-5" />`;
+            nameEl.textContent = v.name;
+            styleEl.textContent = v.style;
+            fromEl.textContent = v.from;
+            subjEl.textContent = v.subj;
+            bodyEl.innerHTML = v.body.replace(/\n/g, '<br/>');
+            bodyEl.style.opacity = 1;
+          }, 220);
+          i++;
+        };
+        bodyEl.style.transition = 'opacity 240ms ease';
+        apply();
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) { io.unobserve(e.target); setInterval(apply, 3200); }
+          });
+        }, { threshold: 0.3 });
+        io.observe(document.getElementById('reply-showcase'));
+      })();
+    </script>
+  </body>
+</html>

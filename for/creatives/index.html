@@ -1,0 +1,762 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ghostly for Creatives — Turn thoughts into drafts at speaking speed</title>
+    <meta name="description" content="Voice-first dictation for writers, podcasters, and content creators. Brainstorm scripts, social posts, and first drafts into Notion, Substack, Canva, and more — privately, on-device on macOS." />
+    <meta name="keywords" content="dictation for writers, voice typing for creators, Substack dictation, Notion voice, podcast script dictation, creator workflow Mac" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://try-ghostly.com/for/creatives/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Ghostly" />
+    <meta property="og:url" content="https://try-ghostly.com/for/creatives/" />
+    <meta property="og:title" content="Ghostly for Creatives" />
+    <meta property="og:description" content="Brainstorm scripts, posts, and first drafts at speaking speed. On-device dictation." />
+    <meta property="og:image" content="https://try-ghostly.com/assets/og-image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Ghostly for Creatives" />
+    <meta name="twitter:description" content="Scripts, posts, and first drafts at speaking speed." />
+    <meta name="twitter:image" content="https://try-ghostly.com/assets/og-image.png" />
+
+    <link rel="icon" type="image/svg+xml" href="/assets/ghostly_logo.svg" />
+    <meta name="theme-color" content="#0b0b0f" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans:  ['Inter', 'ui-sans-serif', 'system-ui'],
+              serif: ['"Instrument Serif"', 'ui-serif', 'Georgia'],
+            },
+            colors: { ink: '#0b0b0f', ghost: '#e8e9ef', accent: '#7c5cff' },
+          },
+        },
+      };
+    </script>
+    <style>
+      html { scroll-behavior: smooth; }
+      body { background: #0b0b0f; color: #e8e9ef; }
+      .grid-bg {
+        background-image:
+          radial-gradient(circle at 80% 10%, rgba(244, 114, 182, 0.22), transparent 40%),
+          radial-gradient(circle at 20% 0%, rgba(251, 146, 60, 0.15), transparent 45%),
+          linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        background-size: auto, auto, 42px 42px, 42px 42px;
+      }
+      .glass { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); backdrop-filter: blur(8px); }
+      .btn-primary { background: linear-gradient(180deg, #ffffff 0%, #d8d9e3 100%); color: #0b0b0f; }
+      .btn-primary:hover { filter: brightness(1.05); }
+      .btn-ghost { background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12); color: #e8e9ef; }
+      .btn-ghost:hover { background: rgba(255, 255, 255, 0.1); }
+      .chip { background: rgba(124, 92, 255, 0.12); border: 1px solid rgba(124, 92, 255, 0.35); color: #c9bfff; }
+      .chip-creative { background: rgba(244, 114, 182, 0.12); border-color: rgba(244, 114, 182, 0.35); color: #fbcfe8; }
+      .kbd { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: #15151c; border: 1px solid rgba(255, 255, 255, 0.12); border-bottom-width: 2px; padding: 2px 8px; border-radius: 6px; font-size: 0.85em; }
+      .font-display { font-family: 'Instrument Serif', ui-serif, Georgia, serif; font-style: italic; font-weight: 400; letter-spacing: -0.01em; }
+
+      #site-header.is-scrolled { border-bottom-color: rgba(255, 255, 255, 0.08); background: rgba(11, 11, 15, 0.85); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.4), 0 10px 30px -10px rgba(0, 0, 0, 0.35); }
+
+      /* ---- Nav dropdown ---- */
+      .nav-dropdown { display: inline-flex; align-items: center; position: relative; }
+      .nav-dropdown::after { content: ""; position: absolute; left: -8px; right: -8px; top: 100%; height: 18px; }
+      .nav-dropdown-trigger { background: transparent; border: none; padding: 8px 0; font: inherit; color: inherit; cursor: pointer; }
+      .nav-dropdown-menu { position: absolute; top: calc(100% + 10px); left: 50%; transform: translate(-50%, -6px); min-width: 320px; padding: 10px; background: rgba(20, 20, 26, 0.96); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(124, 92, 255, 0.08) inset; backdrop-filter: blur(12px); opacity: 0; pointer-events: none; transition: opacity 180ms ease, transform 180ms ease; z-index: 60; }
+      .nav-dropdown:hover .nav-dropdown-menu, .nav-dropdown:focus-within .nav-dropdown-menu { opacity: 1; pointer-events: auto; transform: translate(-50%, 0); }
+      .nav-dropdown:hover .nav-dropdown-trigger svg { transform: rotate(180deg); }
+      .nav-dropdown-menu a { display: flex; align-items: flex-start; gap: 12px; padding: 10px 12px; border-radius: 10px; color: rgba(232, 233, 239, 0.88); transition: background 160ms ease, color 160ms ease; }
+      .nav-dropdown-menu a:hover { background: rgba(124, 92, 255, 0.1); color: #fff; }
+      .nav-dropdown-menu a.is-active { background: rgba(244, 114, 182, 0.14); color: #fff; }
+      .nav-dropdown-icon { flex-shrink: 0; width: 34px; height: 34px; border-radius: 9px; display: inline-flex; align-items: center; justify-content: center; background: rgba(124, 92, 255, 0.12); color: #c9bfff; }
+      .nav-dropdown-icon svg { width: 16px; height: 16px; }
+      .nav-dropdown-icon-dev { background: rgba(56, 189, 248, 0.14); color: #7dd3fc; }
+      .nav-dropdown-icon-creative { background: rgba(244, 114, 182, 0.14); color: #f9a8d4; }
+      .nav-dropdown-icon-leader { background: rgba(251, 191, 36, 0.14); color: #fcd34d; }
+      .nav-dropdown-icon-sales { background: rgba(52, 211, 153, 0.14); color: #6ee7b7; }
+      .nav-dropdown-icon-student { background: rgba(167, 139, 250, 0.14); color: #c4b5fd; }
+      .nav-dropdown-label { display: block; font-size: 14px; font-weight: 600; letter-spacing: -0.005em; }
+      .nav-dropdown-sub { display: block; margin-top: 2px; font-size: 12px; color: rgba(232, 233, 239, 0.5); }
+
+      /* ---- Reveal ---- */
+      .reveal { opacity: 0; transform: translateY(22px); transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1), transform 700ms cubic-bezier(0.22, 1, 0.36, 1); transition-delay: var(--reveal-delay, 0ms); }
+      .reveal.in-view { opacity: 1; transform: translateY(0); }
+      @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1 !important; transform: none !important; transition: none !important; } }
+
+      /* ---- Hero: Notion-style editor with expanding outline ---- */
+      .notion-win {
+        background: #0f0f17;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 40px 100px -30px rgba(244, 114, 182, 0.28), 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+      }
+      .notion-bar {
+        display: flex; align-items: center; gap: 10px;
+        padding: 10px 14px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        background: rgba(0, 0, 0, 0.3);
+      }
+      .win-dot { width: 11px; height: 11px; border-radius: 50%; }
+      .win-dot.r { background: #ff5f57; } .win-dot.y { background: #febc2e; } .win-dot.g { background: #28c840; }
+      .notion-body { padding: 24px 28px 28px; }
+      .notion-title {
+        font-family: 'Instrument Serif', ui-serif, Georgia, serif;
+        font-size: 28px; color: rgba(232, 233, 239, 0.95);
+        line-height: 1.15; letter-spacing: -0.01em;
+      }
+      .notion-meta { font-size: 11px; color: rgba(232, 233, 239, 0.35); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 6px; }
+      .notion-block {
+        font-size: 14px; color: rgba(232, 233, 239, 0.82); line-height: 1.6;
+        margin-top: 14px;
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      .notion-block.h3 { font-size: 16px; font-weight: 600; color: rgba(232, 233, 239, 0.95); }
+      .notion-block.bullet::before { content: "•"; color: rgba(244, 114, 182, 0.6); margin-right: 10px; font-weight: bold; }
+      .notion-block.in { opacity: 1; transform: translateY(0); transition: opacity 380ms cubic-bezier(0.22, 1, 0.36, 1), transform 380ms cubic-bezier(0.22, 1, 0.36, 1); }
+      .notion-caret { display: inline-block; width: 1px; height: 1em; background: #f9a8d4; vertical-align: -0.12em; margin-left: 1px; animation: blink 1s steps(2, end) infinite; }
+      @keyframes blink { 50% { opacity: 0; } }
+      .hero-mic-chip {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 6px 12px; border-radius: 999px;
+        background: rgba(244, 114, 182, 0.08);
+        border: 1px solid rgba(244, 114, 182, 0.3);
+        color: #fbcfe8; font-size: 11px;
+      }
+      .hero-mic-chip .dot { width: 7px; height: 7px; border-radius: 50%; background: #f472b6; animation: pulse 1.4s ease-in-out infinite; }
+      @keyframes pulse {
+        0% { box-shadow: 0 0 0 0 rgba(244, 114, 182, 0.5); }
+        70% { box-shadow: 0 0 0 10px rgba(244, 114, 182, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(244, 114, 182, 0); }
+      }
+
+      /* ---- Marquee ---- */
+      .marquee { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent); mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent); }
+      .marquee-track { display: flex; gap: 16px; width: max-content; animation: marquee 32s linear infinite; }
+      @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+      .app-tile { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 14px; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); font-size: 13px; font-weight: 500; color: rgba(232, 233, 239, 0.85); box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5); }
+      .app-tile img { width: 22px; height: 22px; border-radius: 5px; }
+
+      /* ---- Tone-shift demo ---- */
+      .tone-shift-card {
+        background: rgba(0, 0, 0, 0.25);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 14px;
+        padding: 22px 24px;
+        min-height: 150px;
+        position: relative;
+        overflow: hidden;
+      }
+      .tone-shift-card .tone-text {
+        font-size: 14.5px; line-height: 1.55; color: rgba(232, 233, 239, 0.9);
+      }
+      .tone-shift-card .tone-text em {
+        background: linear-gradient(180deg, transparent 60%, rgba(244, 114, 182, 0.35) 60%);
+        font-style: normal; padding: 0 2px;
+      }
+      .tone-pill {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 8px 14px;
+        border-radius: 999px;
+        font-size: 13px; font-weight: 500;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        cursor: pointer;
+        transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+        color: rgba(232, 233, 239, 0.7);
+      }
+      .tone-pill img { width: 16px; height: 16px; border-radius: 3px; }
+      .tone-pill.active {
+        background: rgba(244, 114, 182, 0.14);
+        border-color: rgba(244, 114, 182, 0.4);
+        color: #fbcfe8;
+      }
+
+      /* ---- Brainstorm orbit ---- */
+      .orbit-wrap {
+        position: relative;
+        aspect-ratio: 1/1;
+        max-width: 480px;
+        margin: 0 auto;
+      }
+      .orbit-wrap::before {
+        content: "";
+        position: absolute; inset: 0;
+        background: radial-gradient(ellipse at center, rgba(244, 114, 182, 0.18), transparent 60%);
+        filter: blur(40px);
+        z-index: 0;
+      }
+      .orbit-center {
+        position: absolute; left: 50%; top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 3;
+        display: inline-flex; align-items: center; gap: 10px;
+        padding: 12px 20px;
+        border-radius: 999px;
+        background: rgba(10, 10, 16, 0.92);
+        border: 1px solid rgba(124, 92, 255, 0.4);
+        color: #fff;
+        box-shadow: 0 0 0 6px rgba(124, 92, 255, 0.08), 0 30px 60px -15px rgba(124, 92, 255, 0.35);
+      }
+      .orbit-center-label {
+        font-size: 14px; font-weight: 600; letter-spacing: -0.005em;
+      }
+      .orbit-center::before {
+        content: ''; position: absolute; inset: -14px;
+        border-radius: 999px;
+        border: 1px solid rgba(124, 92, 255, 0.25);
+        animation: orbit-ring 2.6s ease-out infinite;
+        pointer-events: none;
+      }
+      @keyframes orbit-ring {
+        0%   { transform: scale(0.95); opacity: 0.7; }
+        100% { transform: scale(1.25); opacity: 0; }
+      }
+      .orbit-wave {
+        display: inline-flex; align-items: center;
+        height: 20px; width: 70px;
+        margin-left: 2px;
+      }
+      .orbit-wave span {
+        display: inline-block;
+        width: 2px;
+        margin: 0 1px;
+        border-radius: 2px;
+        background: linear-gradient(to top, #7c5cff, #f472b6);
+        transition: height 70ms ease-out;
+      }
+      .orbit-item {
+        position: absolute;
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 9px 14px;
+        border-radius: 14px;
+        background: rgba(20, 20, 26, 0.88);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(12px);
+        font-size: 12.5px; font-weight: 500;
+        color: rgba(232, 233, 239, 0.85);
+        box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.6);
+        white-space: nowrap;
+        z-index: 2;
+        animation: orbit-float 7s ease-in-out infinite;
+        animation-delay: var(--delay, 0s);
+      }
+      .orbit-item img { width: 20px; height: 20px; border-radius: 5px; }
+      @keyframes orbit-float {
+        0%, 100% { transform: translate(0, 0); }
+        50% { transform: translate(0, -10px); }
+      }
+      .orbit-svg {
+        position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1;
+        pointer-events: none;
+      }
+      .orbit-svg path {
+        stroke: rgba(244, 114, 182, 0.3);
+        stroke-dasharray: 4 5;
+        fill: none;
+      }
+
+      /* ---- Use case rows ---- */
+      .usecase-row { display: flex; align-items: center; gap: 16px; padding: 18px 20px; border-top: 1px solid rgba(255, 255, 255, 0.06); transition: background 180ms ease; }
+      .usecase-row:first-child { border-top: none; }
+      .usecase-row:hover { background: rgba(244, 114, 182, 0.04); }
+      .usecase-icons { display: inline-flex; flex-shrink: 0; width: 88px; }
+      .usecase-icons .app-ic { width: 42px; height: 42px; border-radius: 10px; overflow: hidden; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 6px 20px -8px rgba(0, 0, 0, 0.5); }
+      .usecase-icons .app-ic img { width: 100%; height: 100%; object-fit: cover; }
+      .usecase-icons .app-ic:not(:first-child) { margin-left: -14px; }
+
+      /* ---- Top-10 grid ---- */
+      .top-tile { display: flex; align-items: center; gap: 12px; padding: 16px 18px; border-radius: 14px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.07); transition: background 160ms ease, border-color 160ms ease, transform 160ms ease; }
+      .top-tile:hover { border-color: rgba(244, 114, 182, 0.35); background: rgba(244, 114, 182, 0.05); transform: translateY(-1px); }
+      .top-tile .top-icon { flex-shrink: 0; width: 32px; height: 32px; border-radius: 8px; background: rgba(244, 114, 182, 0.1); color: #f9a8d4; display: inline-flex; align-items: center; justify-content: center; }
+
+      .cta-block { background: radial-gradient(ellipse at center, rgba(244, 114, 182, 0.12), transparent 60%), linear-gradient(180deg, rgba(124, 92, 255, 0.08), transparent); }
+
+      @media (prefers-reduced-motion: reduce) {
+        .marquee-track, .orbit-item, .notion-caret, .hero-mic-chip .dot { animation: none !important; }
+        .orbit-center::before { animation: none !important; opacity: 0; }
+      }
+    </style>
+  </head>
+  <body class="font-sans antialiased">
+    <header id="site-header" class="sticky top-0 z-50 border-b border-transparent bg-ink/60 backdrop-blur transition-colors duration-200">
+      <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:px-6 md:py-4">
+        <a href="/" class="flex items-center gap-2">
+          <img src="/assets/ghostly_logo.svg" alt="" class="h-7 w-7" />
+          <span class="text-lg font-bold tracking-tight">Ghostly</span>
+        </a>
+        <nav class="hidden items-center gap-8 text-sm text-ghost/70 md:flex">
+          <a href="/#features" class="hover:text-ghost">Features</a>
+          <div class="nav-dropdown">
+            <button type="button" class="nav-dropdown-trigger inline-flex items-center gap-1 text-ghost hover:text-ghost" aria-haspopup="true" aria-expanded="false">
+              For you
+              <svg class="h-3 w-3 opacity-70 transition-transform" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+            </button>
+            <div class="nav-dropdown-menu" role="menu">
+              <a href="/for/developers/" role="menuitem"><span class="nav-dropdown-icon nav-dropdown-icon-dev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span><span><span class="nav-dropdown-label">Developers</span><span class="nav-dropdown-sub">Dictate prompts, docs, and code</span></span></a>
+              <a href="/for/creatives/" class="is-active" role="menuitem"><span class="nav-dropdown-icon nav-dropdown-icon-creative"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><circle cx="6" cy="6" r="2"/></svg></span><span><span class="nav-dropdown-label">Creatives</span><span class="nav-dropdown-sub">Scripts, posts, and first drafts</span></span></a>
+              <a href="/for/leaders/" role="menuitem"><span class="nav-dropdown-icon nav-dropdown-icon-leader"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></span><span><span class="nav-dropdown-label">Leaders</span><span class="nav-dropdown-sub">Inbox zero without the typing</span></span></a>
+              <a href="/for/sales/" role="menuitem"><span class="nav-dropdown-icon nav-dropdown-icon-sales"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></span><span><span class="nav-dropdown-label">Sales</span><span class="nav-dropdown-sub">CRM notes between calls</span></span></a>
+              <a href="/for/students/" role="menuitem"><span class="nav-dropdown-icon nav-dropdown-icon-student"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span><span><span class="nav-dropdown-label">Students</span><span class="nav-dropdown-sub">Essays at speaking speed</span></span></a>
+            </div>
+          </div>
+          <a href="/#how" class="hover:text-ghost">How it works</a>
+          <a href="/#pricing" class="hover:text-ghost">Pricing</a>
+          <a href="/#download" class="hover:text-ghost">Download</a>
+        </nav>
+        <a href="/install/" class="btn-primary rounded-lg px-3.5 py-2 text-sm font-semibold md:px-4">Download</a>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="grid-bg relative overflow-hidden">
+      <div class="mx-auto max-w-6xl px-6 py-16 md:py-24">
+        <div class="grid items-center gap-12 lg:grid-cols-[1fr_1.1fr]">
+          <div>
+            <span class="chip-creative chip inline-block rounded-full px-3 py-1 text-xs font-medium">Ghostly for creatives</span>
+            <h1 class="mt-5 text-4xl leading-[1.05] tracking-tight md:text-6xl" style="letter-spacing: -0.03em">
+              <span class="font-display text-pink-200" style="font-size: 1.05em">Ideas move</span><br />
+              <span class="font-bold">faster than fingers.</span>
+            </h1>
+            <p class="mt-6 max-w-lg text-lg text-ghost/70">Turn first thoughts into first drafts. Ghostly dictates into Substack, Notion, Medium, Canva, Figma, Instagram — wherever you're making the thing — at 150 words per minute, with punctuation, paragraphs, and tone cleanup.</p>
+            <div class="mt-8 flex flex-wrap items-center gap-3">
+              <a href="/install/" class="btn-primary inline-flex items-center gap-2 rounded-xl px-6 py-3 text-base font-semibold">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+                Download for macOS
+              </a>
+              <a href="#how-creatives-use" class="btn-ghost inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold">How creators use it →</a>
+            </div>
+            <p class="mt-5 text-xs text-ghost/45">Apple Silicon · M1 or later · macOS 12+</p>
+          </div>
+
+          <!-- Hero demo: Notion-style editor filling in live -->
+          <div class="reveal">
+            <div class="notion-win">
+              <div class="notion-bar">
+                <span class="win-dot r"></span><span class="win-dot y"></span><span class="win-dot g"></span>
+                <img src="/assets/apps/notion.png" alt="" class="ml-3 h-4 w-4 rounded" />
+                <span class="text-xs text-ghost/55">Newsletter · April issue</span>
+                <span class="ml-auto hero-mic-chip"><span class="dot"></span><span id="hero-mic-stage">Listening · fn</span></span>
+              </div>
+              <div class="notion-body" id="notion-body">
+                <div class="notion-title" id="notion-title">The quiet art of making less stuff</div>
+                <div class="notion-meta">Draft · Apr 16 · 3 min read</div>
+                <div class="notion-block" id="nb-1">I've been thinking about this ever since I cut my project list in half. It turns out that finishing one thing loudly beats shipping five things quietly — and the only way to get there is to aggressively say no.</div>
+                <div class="notion-block h3" id="nb-2">Three lessons from the cut</div>
+                <div class="notion-block bullet" id="nb-3">Every project you keep on the list is a project you're implicitly saying is more important than the one you cut.</div>
+                <div class="notion-block bullet" id="nb-4">Most "maybe" projects are just procrastination wearing a to-do list costume.</div>
+                <div class="notion-block bullet" id="nb-5">Finishing feels different when there's only one thing left to finish.</div>
+                <div class="notion-block" id="nb-6">If you're stuck on what to cut, try this<span class="notion-caret" id="notion-caret"></span></div>
+              </div>
+            </div>
+            <p class="mt-4 text-center text-[11px] font-mono text-ghost/35">On-device · audio never leaves your Mac · paste-ready prose</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- App marquee -->
+    <section class="border-y border-white/5 bg-white/[0.015]">
+      <div class="mx-auto max-w-6xl px-6 py-10">
+        <p class="text-center text-xs font-semibold uppercase tracking-[0.15em] text-ghost/40">Inside every tool creators live in</p>
+        <div class="mt-6 marquee">
+          <div class="marquee-track">
+            <div class="app-tile"><img src="/assets/apps/notion.png" alt="" /> Notion</div>
+            <div class="app-tile"><img src="/assets/apps/figma.png" alt="" /> Figma</div>
+            <div class="app-tile"><img src="/assets/apps/obsidian.png" alt="" /> Obsidian</div>
+            <div class="app-tile"><img src="/assets/apps/drafts.png" alt="" /> Drafts</div>
+            <div class="app-tile"><img src="/assets/apps/apple-notes.png" alt="" /> Apple Notes</div>
+            <div class="app-tile"><img src="/assets/apps/things.png" alt="" /> Things</div>
+            <div class="app-tile"><img src="/assets/apps/chatgpt.png" alt="" /> ChatGPT</div>
+            <div class="app-tile"><img src="/assets/apps/claude.png" alt="" /> Claude</div>
+            <div class="app-tile"><img src="/assets/apps/messages.png" alt="" /> Messages</div>
+            <div class="app-tile"><img src="/assets/apps/whatsapp.png" alt="" /> WhatsApp</div>
+            <div class="app-tile"><img src="/assets/apps/apple-mail.png" alt="" /> Mail</div>
+            <!-- dup -->
+            <div class="app-tile"><img src="/assets/apps/notion.png" alt="" /> Notion</div>
+            <div class="app-tile"><img src="/assets/apps/figma.png" alt="" /> Figma</div>
+            <div class="app-tile"><img src="/assets/apps/obsidian.png" alt="" /> Obsidian</div>
+            <div class="app-tile"><img src="/assets/apps/drafts.png" alt="" /> Drafts</div>
+            <div class="app-tile"><img src="/assets/apps/apple-notes.png" alt="" /> Apple Notes</div>
+            <div class="app-tile"><img src="/assets/apps/things.png" alt="" /> Things</div>
+            <div class="app-tile"><img src="/assets/apps/chatgpt.png" alt="" /> ChatGPT</div>
+            <div class="app-tile"><img src="/assets/apps/claude.png" alt="" /> Claude</div>
+            <div class="app-tile"><img src="/assets/apps/messages.png" alt="" /> Messages</div>
+            <div class="app-tile"><img src="/assets/apps/whatsapp.png" alt="" /> WhatsApp</div>
+            <div class="app-tile"><img src="/assets/apps/apple-mail.png" alt="" /> Mail</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Intro story -->
+    <section class="mx-auto max-w-6xl px-6 py-16 md:py-24">
+      <div class="mx-auto max-w-2xl text-center reveal">
+        <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">Say goodbye to writers' block</span>
+        <h2 class="mt-5 text-4xl tracking-tight md:text-5xl">
+          <span class="font-display text-pink-200">Talk it out.</span>
+          <span class="font-bold"> Ship it.</span>
+        </h2>
+        <p class="mt-4 text-lg text-ghost/60">The cursor is blinking on a blank page. Ghostly fills it — one thought at a time, in your voice, on whatever app you're already in. No copy-paste, no context switch to a voice-memo app you'll forget about tomorrow.</p>
+      </div>
+
+      <div class="mt-14 grid items-stretch gap-6 md:grid-cols-3">
+        <div class="glass reveal rounded-2xl p-6">
+          <div class="font-mono text-xs text-pink-300/80">01 · Capture</div>
+          <h3 class="mt-3 text-lg font-semibold">The idea at 2 a.m.</h3>
+          <p class="mt-2 text-sm text-ghost/60">Press the shortcut, say the thing, your phone stays in the drawer. Drafts, Apple Notes, Notion — pick the app, Ghostly types into it.</p>
+        </div>
+        <div class="glass reveal rounded-2xl p-6" style="--reveal-delay: 120ms">
+          <div class="font-mono text-xs text-pink-300/80">02 · Shape</div>
+          <h3 class="mt-3 text-lg font-semibold">From brain-dump to outline</h3>
+          <p class="mt-2 text-sm text-ghost/60">Cleanup turns run-ons into paragraphs, fixes punctuation, and keeps your voice. Not a ChatGPT rewrite — unless you ask.</p>
+        </div>
+        <div class="glass reveal rounded-2xl p-6" style="--reveal-delay: 240ms">
+          <div class="font-mono text-xs text-pink-300/80">03 · Ship</div>
+          <h3 class="mt-3 text-lg font-semibold">Post it. Send it. Publish it.</h3>
+          <p class="mt-2 text-sm text-ghost/60">The words land directly in Substack, Medium, Canva caption fields, Figma comments. No clipboard gymnastics.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feature 1: Brainstorm orbit — one voice, every surface -->
+    <section class="border-y border-white/5 bg-white/[0.015]">
+      <div class="mx-auto max-w-6xl px-6 py-16 md:py-24">
+        <div class="grid items-center gap-14 lg:grid-cols-[1fr_1fr]">
+          <div class="reveal">
+            <span class="chip-creative chip inline-block rounded-full px-3 py-1 text-xs font-medium">Works where you work</span>
+            <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
+              <span class="font-display text-pink-200">One voice.</span><br />
+              <span class="font-bold">Every surface.</span>
+            </h2>
+            <p class="mt-4 max-w-md text-lg text-ghost/65">A newsletter opening in Substack. A tweet in the drafts folder. A caption on top of a Canva design. A feedback line in a Figma comment. Same shortcut, same voice — Ghostly routes to whatever has focus.</p>
+            <ul class="mt-6 space-y-3 text-sm text-ghost/70">
+              <li class="flex items-start gap-3"><svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-pink-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Per-app profiles: short &amp; punchy for social, long-form for essays.</li>
+              <li class="flex items-start gap-3"><svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-pink-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg>"Scratch that" mid-sentence drops everything before and lets you restart.</li>
+              <li class="flex items-start gap-3"><svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-pink-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Personal dictionary learns your guest names, brand terms, and hashtags.</li>
+            </ul>
+          </div>
+
+          <div class="reveal" style="--reveal-delay: 180ms">
+            <div class="orbit-wrap">
+              <svg class="orbit-svg" viewBox="0 0 400 400" preserveAspectRatio="none">
+                <!-- Center at (200,200). Each path terminates near its item's center. -->
+                <path d="M 200 200 Q 130 120, 72 76" />
+                <path d="M 200 200 Q 270 120, 328 76" />
+                <path d="M 200 200 Q 110 200, 54 200" />
+                <path d="M 200 200 Q 290 200, 346 200" />
+                <path d="M 200 200 Q 150 290, 84 330" />
+                <path d="M 200 200 Q 250 290, 316 330" />
+              </svg>
+              <div class="orbit-center">
+                <img src="/assets/ghostly_logo.svg" alt="" class="h-5 w-5" />
+                <span class="orbit-center-label">Ghostly</span>
+                <div class="orbit-wave" id="orbit-wave" aria-hidden="true"></div>
+              </div>
+              <div class="orbit-item" style="left:3%; top:8%; --delay:0s"><img src="/assets/apps/notion.png" alt=""/>Newsletter outline</div>
+              <div class="orbit-item" style="right:3%; top:8%; --delay:0.4s"><img src="/assets/apps/drafts.png" alt=""/>3 a.m. idea</div>
+              <div class="orbit-item" style="left:2%; top:46%; --delay:0.8s"><img src="/assets/apps/figma.png" alt=""/>Figma comment</div>
+              <div class="orbit-item" style="right:2%; top:46%; --delay:1.2s"><img src="/assets/apps/obsidian.png" alt=""/>Essay draft</div>
+              <div class="orbit-item" style="left:5%; bottom:8%; --delay:1.6s"><img src="/assets/apps/messages.png" alt=""/>Reply to producer</div>
+              <div class="orbit-item" style="right:5%; bottom:8%; --delay:2s"><img src="/assets/apps/apple-notes.png" alt=""/>Podcast hook</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feature 2: Tone-shift demo — "style-matching" -->
+    <section class="mx-auto max-w-6xl px-6 py-16 md:py-24">
+      <div class="grid items-center gap-14 lg:grid-cols-[1fr_1.1fr]">
+        <div class="reveal">
+          <span class="chip-creative chip inline-block rounded-full px-3 py-1 text-xs font-medium">Style-matching</span>
+          <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
+            <span class="font-display text-pink-200">Same words.</span>
+            <span class="font-bold"> Right tone.</span>
+          </h2>
+          <p class="mt-4 max-w-md text-lg text-ghost/65">Set a per-app style prompt and Ghostly adapts. Playful captions in Instagram. Considered paragraphs in Substack. Concise replies in Messages. You speak once; the output fits the surface.</p>
+          <p class="mt-3 max-w-md text-sm text-ghost/50">Switch tones to see what the same thought sounds like in each voice.</p>
+        </div>
+
+        <div class="reveal" style="--reveal-delay: 120ms">
+          <div class="flex flex-wrap gap-2" id="tone-tabs">
+            <button class="tone-pill active" data-tone="substack"><img src="/assets/apps/drafts.png" alt=""/>Substack</button>
+            <button class="tone-pill" data-tone="instagram"><img src="/assets/apps/perplexity.png" alt=""/>Instagram</button>
+            <button class="tone-pill" data-tone="notion"><img src="/assets/apps/notion.png" alt=""/>Notion</button>
+            <button class="tone-pill" data-tone="messages"><img src="/assets/apps/messages.png" alt=""/>Messages</button>
+          </div>
+          <div class="mt-5 tone-shift-card">
+            <p class="tone-text" id="tone-text">I spent the morning on a long walk thinking about <em>why my best ideas always arrive when I'm not trying</em>. There's something quiet in the act of not-making that seems to make the making possible later — and I don't think it's just mine.</p>
+          </div>
+          <p class="mt-4 text-xs text-ghost/40">Same dictated thought · four different per-app style prompts</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Use cases -->
+    <section id="how-creatives-use" class="border-y border-white/5 bg-white/[0.015]">
+      <div class="mx-auto max-w-6xl px-6 py-16 md:py-24">
+        <div class="max-w-2xl reveal">
+          <span class="chip-creative chip inline-block rounded-full px-3 py-1 text-xs font-medium">Use cases</span>
+          <h2 class="mt-5 text-4xl tracking-tight md:text-5xl">
+            <span class="font-display text-pink-200">What creators</span>
+            <span class="font-bold"> make with Ghostly.</span>
+          </h2>
+          <p class="mt-4 text-lg text-ghost/60">The invisible assist between thinking and publishing.</p>
+        </div>
+
+        <div class="mt-10 glass rounded-2xl">
+          <div class="usecase-row">
+            <div class="usecase-icons">
+              <span class="app-ic"><img src="/assets/apps/notion.png" alt="" /></span>
+              <span class="app-ic"><img src="/assets/apps/drafts.png" alt="" /></span>
+            </div>
+            <div class="flex-1">
+              <div class="text-base font-semibold">Capture fleeting ideas before they vanish</div>
+              <div class="mt-1 text-sm text-ghost/55">Press the shortcut while the thought is still warm — it lands in your notebook, not a voice memo graveyard.</div>
+            </div>
+          </div>
+          <div class="usecase-row">
+            <div class="usecase-icons">
+              <span class="app-ic"><img src="/assets/apps/obsidian.png" alt="" /></span>
+              <span class="app-ic"><img src="/assets/apps/notion.png" alt="" /></span>
+            </div>
+            <div class="flex-1">
+              <div class="text-base font-semibold">Turn a brain-dump into a real essay outline</div>
+              <div class="mt-1 text-sm text-ghost/55">Talk your way through the argument; cleanup shapes it into paragraphs.</div>
+            </div>
+          </div>
+          <div class="usecase-row">
+            <div class="usecase-icons">
+              <span class="app-ic"><img src="/assets/apps/chatgpt.png" alt="" /></span>
+              <span class="app-ic"><img src="/assets/apps/claude.png" alt="" /></span>
+            </div>
+            <div class="flex-1">
+              <div class="text-base font-semibold">Prompt ChatGPT and Claude with full context, hands-free</div>
+              <div class="mt-1 text-sm text-ghost/55">Pace the room, talk the brief — no typing warm-up to slow you down.</div>
+            </div>
+          </div>
+          <div class="usecase-row">
+            <div class="usecase-icons">
+              <span class="app-ic"><img src="/assets/apps/figma.png" alt="" /></span>
+              <span class="app-ic"><img src="/assets/apps/apple-notes.png" alt="" /></span>
+            </div>
+            <div class="flex-1">
+              <div class="text-base font-semibold">Drop design critique into Figma comments mid-review</div>
+              <div class="mt-1 text-sm text-ghost/55">Ideas land right where you're looking — no app-switching, no forgotten feedback.</div>
+            </div>
+          </div>
+          <div class="usecase-row">
+            <div class="usecase-icons">
+              <span class="app-ic"><img src="/assets/apps/messages.png" alt="" /></span>
+              <span class="app-ic"><img src="/assets/apps/whatsapp.png" alt="" /></span>
+            </div>
+            <div class="flex-1">
+              <div class="text-base font-semibold">Reply to collaborators and clients at the speed of thought</div>
+              <div class="mt-1 text-sm text-ghost/55">Per-app profile keeps replies casual, punctuation polished, emoji untouched.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Top 10 grid -->
+    <section class="mx-auto max-w-6xl px-6 py-16 md:py-24">
+      <div class="max-w-2xl reveal">
+        <h2 class="text-4xl tracking-tight md:text-5xl"><span class="font-display text-violet-200">Ten ways</span> <span class="font-bold">creators flow.</span></h2>
+        <p class="mt-4 text-lg text-ghost/60">From blank page to shipped — without the keyboard tax.</p>
+      </div>
+      <div class="mt-10 grid gap-3 md:grid-cols-2" data-stagger>
+        <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg></span><span>Brainstorming hooks, titles, and newsletter ideas</span></div>
+        <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v4H3zM3 10h18v4H3zM3 17h18v4H3z"/></svg></span><span>Drafting long-form scripts, essays, and show notes</span></div>
+        <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 16l5-5 4 4 4-4 5 5"/></svg></span><span>Captioning Canva designs and Instagram posts</span></div>
+        <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></span><span>Capturing rough memos during a commute or walk</span></div>
+        <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09a1.65 1.65 0 001.51-1"/></svg></span><span>Rewriting a draft in three different tones</span></div>
+        <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></span><span>Responding to collaborator messages without breaking flow</span></div>
+        <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></span><span>Narrating a YouTube script into Google Docs</span></div>
+        <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg></span><span>Journaling a day's work into Obsidian or Apple Notes</span></div>
+        <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span><span>Prompting ChatGPT and Claude to generate variations</span></div>
+        <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></span><span>Writing heartfelt replies to your audience &amp; readers</span></div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-block">
+      <div class="mx-auto max-w-4xl px-6 py-20 md:py-28 text-center">
+        <h2 class="text-4xl font-extrabold tracking-tight md:text-6xl">Make more.<br /><span class="font-display text-pink-200">Type less.</span></h2>
+        <p class="mx-auto mt-5 max-w-lg text-lg text-ghost/60">Free forever for 30 min/week. Pro removes the cap — $39, one time.</p>
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
+          <a href="/install/" class="btn-primary inline-flex items-center gap-2 rounded-xl px-8 py-4 text-lg font-semibold">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+            Download for macOS
+          </a>
+          <a href="/#pricing" class="btn-ghost inline-flex items-center gap-2 rounded-xl px-6 py-4 text-base font-semibold">See pricing</a>
+        </div>
+        <p class="mt-6 text-xs text-ghost/40">Apple Silicon · M1 or later · macOS 12+</p>
+      </div>
+    </section>
+
+    <footer class="border-t border-white/5">
+      <div class="mx-auto max-w-6xl px-6 py-14">
+        <div class="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+          <div>
+            <div class="flex items-center gap-2">
+              <img src="/assets/ghostly_logo.svg" alt="" class="h-6 w-6" />
+              <span class="text-sm font-semibold">Ghostly</span>
+            </div>
+            <p class="mt-3 max-w-xs text-sm text-ghost/55">Voice-first typing for macOS. On-device Whisper with optional AI cleanup.</p>
+            <p class="mt-4 font-mono text-xs text-ghost/40">v0.9.0 · updated Apr 2026</p>
+          </div>
+          <div>
+            <div class="text-xs font-semibold uppercase tracking-wider text-ghost/40">Product</div>
+            <ul class="mt-4 space-y-2 text-sm text-ghost/60">
+              <li><a href="/#features" class="hover:text-ghost">Features</a></li>
+              <li><a href="/#how" class="hover:text-ghost">How it works</a></li>
+              <li><a href="/#ai" class="hover:text-ghost">AI cleanup</a></li>
+              <li><a href="/#pricing" class="hover:text-ghost">Pricing</a></li>
+              <li><a href="/#download" class="hover:text-ghost">Download</a></li>
+            </ul>
+          </div>
+          <div>
+            <div class="text-xs font-semibold uppercase tracking-wider text-ghost/40">For you</div>
+            <ul class="mt-4 space-y-2 text-sm text-ghost/60">
+              <li><a href="/for/developers/" class="hover:text-ghost">Developers</a></li>
+              <li><a href="/for/creatives/" class="text-pink-300">Creatives</a></li>
+              <li><a href="/for/leaders/" class="hover:text-ghost">Leaders</a></li>
+              <li><a href="/for/sales/" class="hover:text-ghost">Sales</a></li>
+              <li><a href="/for/students/" class="hover:text-ghost">Students</a></li>
+            </ul>
+          </div>
+          <div>
+            <div class="text-xs font-semibold uppercase tracking-wider text-ghost/40">Contact</div>
+            <ul class="mt-4 space-y-2 text-sm text-ghost/60">
+              <li><a href="/privacy" class="hover:text-ghost">Privacy</a></li>
+              <li><a href="mailto:security@try-ghostly.com" class="hover:text-ghost">Security</a></li>
+              <li><a href="mailto:support@try-ghostly.com" class="hover:text-ghost">Support</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="mt-12 border-t border-white/5 pt-6 text-xs text-ghost/40">© 2026 Ghostly. All rights reserved.</div>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        const header = document.getElementById('site-header');
+        if (!header) return;
+        const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 8);
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+      })();
+
+      (function () {
+        const prm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        document.querySelectorAll('[data-stagger]').forEach((grid) => {
+          Array.from(grid.children).forEach((child, i) => {
+            child.classList.add('reveal');
+            child.style.setProperty('--reveal-delay', `${i * 60}ms`);
+          });
+        });
+        if (prm) {
+          document.querySelectorAll('.reveal').forEach((el) => el.classList.add('in-view'));
+          return;
+        }
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+      })();
+
+      // Hero: reveal notion blocks sequentially, mic stage changes
+      (function () {
+        const prm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const blocks = ['nb-1','nb-2','nb-3','nb-4','nb-5','nb-6'].map((id) => document.getElementById(id));
+        const stage = document.getElementById('hero-mic-stage');
+        if (!blocks[0]) return;
+
+        if (prm) { blocks.forEach((b) => b && b.classList.add('in')); return; }
+
+        let started = false;
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((e) => {
+            if (!e.isIntersecting || started) return;
+            started = true;
+            io.unobserve(e.target);
+            const delays = [300, 700, 1000, 1300, 1600, 1900];
+            blocks.forEach((b, i) => {
+              setTimeout(() => b && b.classList.add('in'), delays[i]);
+            });
+            setTimeout(() => { if (stage) stage.textContent = 'Pasted · Notion'; }, 2400);
+          });
+        }, { threshold: 0.25 });
+        io.observe(blocks[0].parentElement);
+      })();
+
+      // Orbit center waveform
+      (function () {
+        const el = document.getElementById('orbit-wave');
+        if (!el) return;
+        const prm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const BARS = 20;
+        const bars = [];
+        for (let i = 0; i < BARS; i++) {
+          const s = document.createElement('span');
+          s.style.height = '3px';
+          el.appendChild(s);
+          bars.push(s);
+        }
+        if (prm) { bars.forEach((b) => b.style.height = '4px'); return; }
+        let energy = 0.75;
+        function tick() {
+          for (let i = 0; i < BARS; i++) {
+            const edge = 1 - Math.abs((i - (BARS - 1) / 2) / ((BARS - 1) / 2));
+            const base = 2;
+            const peak = 14 * energy * (0.4 + 0.6 * edge);
+            const h = base + Math.random() * Math.random() * peak;
+            bars[i].style.height = h.toFixed(1) + 'px';
+          }
+          // slowly breathe the energy so it looks alive
+          energy = 0.5 + Math.abs(Math.sin(Date.now() / 900)) * 0.5;
+        }
+        setInterval(tick, 75);
+      })();
+
+      // Tone-shift switcher
+      (function () {
+        const tabs = document.querySelectorAll('#tone-tabs .tone-pill');
+        const textEl = document.getElementById('tone-text');
+        if (!tabs.length) return;
+
+        const data = {
+          substack:  { html: 'I spent the morning on a long walk thinking about <em>why my best ideas always arrive when I\'m not trying</em>. There\'s something quiet in the act of not-making that seems to make the making possible later — and I don\'t think it\'s just mine.' },
+          instagram: { html: 'the best ideas show up <em>when you stop chasing them</em> 🌿 walk, rest, notice. the work fills in quietly when you do.' },
+          notion:    { html: '<strong>Thesis:</strong> <em>best ideas arrive during deliberate unproductivity</em>.<br/>Evidence: this morning\'s walk. Possible implication: build rest into the creative process on purpose, not as a failure mode.' },
+          messages:  { html: 'thought you\'d like this — <em>my best ideas always show up when I stop pushing for them</em>. walked two hours and three of them just landed. might write about it.' }
+        };
+
+        tabs.forEach((t) => {
+          t.addEventListener('click', () => {
+            tabs.forEach((x) => x.classList.remove('active'));
+            t.classList.add('active');
+            const d = data[t.dataset.tone];
+            if (!d) return;
+            textEl.style.opacity = 0;
+            setTimeout(() => {
+              textEl.innerHTML = d.html;
+              textEl.style.opacity = 1;
+            }, 150);
+          });
+        });
+        textEl.style.transition = 'opacity 220ms ease';
+      })();
+    </script>
+  </body>
+</html>

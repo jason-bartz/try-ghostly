@@ -667,6 +667,132 @@
         84%, 100%{ opacity: 0; transform: translateX(-50%) translateY(4px); }
       }
 
+      /* ---- Comparison table ---- */
+      .compare-wrap {
+        border-radius: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(255, 255, 255, 0.02);
+        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 20px 60px -30px rgba(0, 0, 0, 0.6);
+      }
+      .compare-table {
+        width: 100%;
+        min-width: 860px;
+        border-collapse: separate;
+        border-spacing: 0;
+        font-size: 14px;
+        color: rgba(232, 233, 239, 0.82);
+      }
+      .compare-table thead th {
+        text-align: left;
+        font-weight: 600;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: rgba(232, 233, 239, 0.55);
+        padding: 18px 18px;
+        background: rgba(255, 255, 255, 0.035);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        white-space: nowrap;
+      }
+      .compare-table thead th.compare-label-col {
+        width: 30%;
+        min-width: 220px;
+      }
+      .compare-table thead th.compare-col-ghostly {
+        color: #c9bfff;
+        background: rgba(124, 92, 255, 0.14);
+        border-bottom-color: rgba(124, 92, 255, 0.45);
+      }
+      .compare-table tbody td {
+        padding: 14px 18px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        vertical-align: middle;
+      }
+      .compare-table tbody tr:last-child td { border-bottom: none; }
+      .compare-table tbody tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.015);
+      }
+      .compare-table tbody tr:hover td {
+        background: rgba(255, 255, 255, 0.035);
+      }
+      .compare-table td.compare-label {
+        color: rgba(232, 233, 239, 0.7);
+        font-weight: 500;
+      }
+      .compare-table td.compare-col-ghostly {
+        background: rgba(124, 92, 255, 0.08) !important;
+        color: #d5ccff;
+        font-weight: 500;
+        border-left: 1px solid rgba(124, 92, 255, 0.18);
+        border-right: 1px solid rgba(124, 92, 255, 0.18);
+      }
+      .compare-table tbody tr:hover td.compare-col-ghostly {
+        background: rgba(124, 92, 255, 0.14) !important;
+      }
+      .compare-table tbody tr:last-child td.compare-col-ghostly {
+        border-bottom: 1px solid rgba(124, 92, 255, 0.18);
+      }
+      .compare-yes { color: #d5ccff; }
+      .compare-no  { color: rgba(232, 233, 239, 0.38); }
+      .compare-meh { color: rgba(232, 233, 239, 0.7); }
+      .compare-price-row td { padding-top: 12px; padding-bottom: 12px; }
+      .compare-price {
+        display: table-cell;
+      }
+      .compare-price .compare-price-value {
+        display: block;
+        font-size: 17px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        color: rgba(232, 233, 239, 0.95);
+        line-height: 1.1;
+      }
+      .compare-col-ghostly .compare-price-value { color: #e6dfff; }
+      .compare-price .compare-price-accent { color: #c9bfff; }
+      .compare-price .compare-price-muted  { color: rgba(232, 233, 239, 0.3); font-weight: 500; }
+      .compare-price .compare-price-sub {
+        display: block;
+        margin-top: 2px;
+        font-size: 11px;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: rgba(232, 233, 239, 0.4);
+      }
+
+      /* ---- Languages squiggle wave ---- */
+      .lang-wave {
+        position: relative;
+        width: 100%;
+        -webkit-mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+                mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+      }
+      .lang-wave::before {
+        content: "";
+        position: absolute;
+        inset: 20% 20% 20% 20%;
+        background: radial-gradient(ellipse at center, rgba(124, 92, 255, 0.14), transparent 70%);
+        filter: blur(40px);
+        pointer-events: none;
+        z-index: 0;
+      }
+      .lang-wave-svg {
+        display: block;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1400 / 260;
+        overflow: visible;
+        position: relative;
+        z-index: 1;
+      }
+      .lang-wave-svg .lang-flags text {
+        font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+        filter: drop-shadow(0 4px 14px rgba(124, 92, 255, 0.35));
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .lang-wave-svg .lang-flags animateMotion { display: none; }
+      }
+
       /* ---- Works anywhere marquees ---- */
       .marquee {
         overflow: hidden;
@@ -764,6 +890,95 @@
       }
       .tone-out-text .accent { color: #f59e0b; font-weight: 500; }
       .tone-connector { color: rgba(232, 233, 239, 0.18); }
+
+      /* ---- Header "For you" dropdown ---- */
+      .nav-dropdown { display: inline-flex; align-items: center; position: relative; }
+      /* Invisible hover-bridge that keeps :hover alive while the cursor crosses
+         the gap between the trigger and the menu. Always rendered — not gated
+         on the menu's pointer-events. */
+      .nav-dropdown::after {
+        content: "";
+        position: absolute;
+        left: -8px; right: -8px;
+        top: 100%;
+        height: 18px;
+      }
+      .nav-dropdown-trigger {
+        background: transparent;
+        border: none;
+        padding: 8px 0;
+        font: inherit;
+        color: inherit;
+        cursor: pointer;
+      }
+      .nav-dropdown-menu {
+        position: absolute;
+        top: calc(100% + 10px);
+        left: 50%;
+        transform: translate(-50%, -6px);
+        min-width: 320px;
+        padding: 10px;
+        background: rgba(20, 20, 26, 0.96);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(124, 92, 255, 0.08) inset;
+        backdrop-filter: blur(12px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 180ms ease, transform 180ms ease;
+        z-index: 60;
+      }
+      .nav-dropdown:hover .nav-dropdown-menu,
+      .nav-dropdown:focus-within .nav-dropdown-menu,
+      .nav-dropdown.is-open .nav-dropdown-menu {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translate(-50%, 0);
+      }
+      .nav-dropdown:hover .nav-dropdown-trigger svg,
+      .nav-dropdown.is-open .nav-dropdown-trigger svg { transform: rotate(180deg); }
+      .nav-dropdown-menu a {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 10px 12px;
+        border-radius: 10px;
+        color: rgba(232, 233, 239, 0.88);
+        transition: background 160ms ease, color 160ms ease;
+      }
+      .nav-dropdown-menu a:hover {
+        background: rgba(124, 92, 255, 0.1);
+        color: #fff;
+      }
+      .nav-dropdown-icon {
+        flex-shrink: 0;
+        width: 34px;
+        height: 34px;
+        border-radius: 9px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(124, 92, 255, 0.12);
+        color: #c9bfff;
+      }
+      .nav-dropdown-icon svg { width: 16px; height: 16px; }
+      .nav-dropdown-icon-dev { background: rgba(56, 189, 248, 0.14); color: #7dd3fc; }
+      .nav-dropdown-icon-creative { background: rgba(244, 114, 182, 0.14); color: #f9a8d4; }
+      .nav-dropdown-icon-leader { background: rgba(251, 191, 36, 0.14); color: #fcd34d; }
+      .nav-dropdown-icon-sales { background: rgba(52, 211, 153, 0.14); color: #6ee7b7; }
+      .nav-dropdown-icon-student { background: rgba(167, 139, 250, 0.14); color: #c4b5fd; }
+      .nav-dropdown-label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: -0.005em;
+      }
+      .nav-dropdown-sub {
+        display: block;
+        margin-top: 2px;
+        font-size: 12px;
+        color: rgba(232, 233, 239, 0.5);
+      }
     </style>
   </head>
   <body class="font-sans antialiased">
@@ -775,8 +990,20 @@
         </a>
         <nav class="hidden items-center gap-8 text-sm text-ghost/70 md:flex">
           <a href="#features" class="hover:text-ghost">Features</a>
+          <div class="nav-dropdown relative">
+            <button type="button" class="nav-dropdown-trigger inline-flex items-center gap-1 hover:text-ghost" aria-haspopup="true" aria-expanded="false">
+              For you
+              <svg class="h-3 w-3 opacity-70 transition-transform" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+            </button>
+            <div class="nav-dropdown-menu" role="menu">
+              <a href="/for/developers/" role="menuitem"><span class="nav-dropdown-icon nav-dropdown-icon-dev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span><span><span class="nav-dropdown-label">Developers</span><span class="nav-dropdown-sub">Dictate prompts, docs, and code</span></span></a>
+              <a href="/for/creatives/" role="menuitem"><span class="nav-dropdown-icon nav-dropdown-icon-creative"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><circle cx="6" cy="6" r="2"/></svg></span><span><span class="nav-dropdown-label">Creatives</span><span class="nav-dropdown-sub">Scripts, posts, and first drafts</span></span></a>
+              <a href="/for/leaders/" role="menuitem"><span class="nav-dropdown-icon nav-dropdown-icon-leader"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></span><span><span class="nav-dropdown-label">Leaders</span><span class="nav-dropdown-sub">Inbox zero without the typing</span></span></a>
+              <a href="/for/sales/" role="menuitem"><span class="nav-dropdown-icon nav-dropdown-icon-sales"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></span><span><span class="nav-dropdown-label">Sales</span><span class="nav-dropdown-sub">CRM notes between calls</span></span></a>
+              <a href="/for/students/" role="menuitem"><span class="nav-dropdown-icon nav-dropdown-icon-student"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span><span><span class="nav-dropdown-label">Students</span><span class="nav-dropdown-sub">Essays at speaking speed</span></span></a>
+            </div>
+          </div>
           <a href="#how" class="hover:text-ghost">How it works</a>
-          <a href="#ai" class="hover:text-ghost">AI cleanup</a>
           <a href="#pricing" class="hover:text-ghost">Pricing</a>
           <a href="#download" class="hover:text-ghost">Download</a>
         </nav>
@@ -1071,43 +1298,156 @@
     </section>
 
     <section class="border-y border-white/5">
-      <div class="mx-auto max-w-5xl px-6 py-16 md:py-24">
+      <div class="mx-auto max-w-6xl px-6 py-16 md:py-24">
         <div class="mx-auto max-w-2xl text-center reveal">
           <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">How it compares</span>
           <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
             <span class="font-display text-violet-200">Local-native,</span>
             <span class="font-bold"> not cloud-first.</span>
           </h2>
-          <p class="mt-4 text-lg text-ghost/60">Most AI dictation tools ship your audio to a server. Ghostly doesn't — and it's the only one here with choice of engine, configurable prompts, and no subscription.</p>
+          <p class="mt-4 text-lg text-ghost/60">Most AI dictation tools ship your audio to a server and bill you monthly. Ghostly does neither — on-device transcription, choice of engine, and a one-time price.</p>
         </div>
 
         <p class="mt-10 text-center text-xs text-ghost/40 md:hidden">Scroll horizontally to compare →</p>
-        <div class="mt-4 overflow-x-auto md:mt-12">
-          <table class="w-full min-w-[720px] border-separate" style="border-spacing: 0">
-            <thead>
-              <tr class="text-left text-xs uppercase tracking-wider text-ghost/40">
-                <th class="pb-3 pr-4 font-medium"></th>
-                <th class="pb-3 pr-4 font-medium">
-                  <span class="inline-flex items-center gap-1.5 text-violet-200">
-                    <img src="assets/ghostly_logo.svg" alt="" class="h-4 w-4" /> Ghostly
-                  </span>
-                </th>
-                <th class="pb-3 pr-4 font-medium text-ghost/50">Wispr Flow</th>
-                <th class="pb-3 pr-4 font-medium text-ghost/50">Willow Voice</th>
-                <th class="pb-3 font-medium text-ghost/50">macOS Dictation</th>
-              </tr>
-            </thead>
-            <tbody class="text-sm">
-              <tr class="border-t border-white/5"><td class="py-3 pr-4 text-ghost/70">Private by default — audio never sent to a server</td><td class="py-3 pr-4 text-violet-200">Yes</td><td class="py-3 pr-4 text-ghost/40">No — cloud only</td><td class="py-3 pr-4 text-ghost/60">Opt-in mode</td><td class="py-3 text-ghost/60">Yes</td></tr>
-              <tr class="border-t border-white/5"><td class="py-3 pr-4 text-ghost/70">Works offline</td><td class="py-3 pr-4 text-violet-200">Yes</td><td class="py-3 pr-4 text-ghost/40">No</td><td class="py-3 pr-4 text-ghost/60">Opt-in mode</td><td class="py-3 text-ghost/60">Yes</td></tr>
-              <tr class="border-t border-white/5"><td class="py-3 pr-4 text-ghost/70">AI cleanup (punctuation, fillers, formatting)</td><td class="py-3 pr-4 text-violet-200">Yes — BYO key</td><td class="py-3 pr-4 text-ghost/60">Yes — included</td><td class="py-3 pr-4 text-ghost/60">Yes — included</td><td class="py-3 text-ghost/40">No</td></tr>
-              <tr class="border-t border-white/5"><td class="py-3 pr-4 text-ghost/70">Choice of transcription engine</td><td class="py-3 pr-4 text-violet-200">Whisper · Parakeet · Moonshine</td><td class="py-3 pr-4 text-ghost/40">Proprietary</td><td class="py-3 pr-4 text-ghost/40">Proprietary</td><td class="py-3 text-ghost/40">Apple only</td></tr>
-              <tr class="border-t border-white/5"><td class="py-3 pr-4 text-ghost/70">Configurable per-app prompts</td><td class="py-3 pr-4 text-violet-200">Yes</td><td class="py-3 pr-4 text-ghost/60">Auto style</td><td class="py-3 pr-4 text-ghost/60">Auto format</td><td class="py-3 text-ghost/40">No</td></tr>
-              <tr class="border-t border-white/5"><td class="py-3 pr-4 text-ghost/70">Screenshot + ask a vision model</td><td class="py-3 pr-4 text-violet-200">Yes</td><td class="py-3 pr-4 text-ghost/40">No</td><td class="py-3 pr-4 text-ghost/40">No</td><td class="py-3 text-ghost/40">No</td></tr>
-              <tr class="border-t border-white/5"><td class="py-3 pr-4 text-ghost/70">Price</td><td class="py-3 pr-4 text-violet-200">Free · Pro $39 one-time</td><td class="py-3 pr-4 text-ghost/60">$15/mo · free 2k words/wk</td><td class="py-3 pr-4 text-ghost/60">$15/mo · free 2k words/wk</td><td class="py-3 text-ghost/60">Free</td></tr>
-            </tbody>
-          </table>
+        <div class="mt-4 md:mt-12 reveal">
+          <div class="compare-wrap overflow-x-auto">
+            <table class="compare-table">
+              <thead>
+                <tr>
+                  <th class="compare-label-col"></th>
+                  <th class="compare-col-ghostly">
+                    <span class="inline-flex items-center gap-1.5">
+                      <img src="assets/ghostly_logo.svg" alt="" class="h-4 w-4" /> Ghostly
+                    </span>
+                  </th>
+                  <th>Wispr Flow</th>
+                  <th>Willow Voice</th>
+                  <th>Voicy</th>
+                  <th>macOS Dictation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="compare-label">Private by default — audio never sent to a server</td>
+                  <td class="compare-col-ghostly compare-yes">Yes</td>
+                  <td class="compare-no">No — cloud only</td>
+                  <td class="compare-meh">Opt-in mode</td>
+                  <td class="compare-no">No — cloud only</td>
+                  <td class="compare-yes">Yes</td>
+                </tr>
+                <tr>
+                  <td class="compare-label">Works offline</td>
+                  <td class="compare-col-ghostly compare-yes">Yes</td>
+                  <td class="compare-no">No</td>
+                  <td class="compare-meh">Opt-in mode</td>
+                  <td class="compare-no">No</td>
+                  <td class="compare-yes">Yes</td>
+                </tr>
+                <tr>
+                  <td class="compare-label">AI cleanup (punctuation, fillers, formatting)</td>
+                  <td class="compare-col-ghostly compare-yes">Yes — BYO key</td>
+                  <td class="compare-meh">Yes — included</td>
+                  <td class="compare-meh">Yes — included</td>
+                  <td class="compare-meh">Auto punctuation</td>
+                  <td class="compare-no">No</td>
+                </tr>
+                <tr>
+                  <td class="compare-label">Choice of transcription engine</td>
+                  <td class="compare-col-ghostly compare-yes">Whisper · Parakeet · Moonshine</td>
+                  <td class="compare-no">Proprietary</td>
+                  <td class="compare-no">Proprietary</td>
+                  <td class="compare-no">Proprietary</td>
+                  <td class="compare-no">Apple only</td>
+                </tr>
+                <tr>
+                  <td class="compare-label">Configurable per-app prompts</td>
+                  <td class="compare-col-ghostly compare-yes">Yes</td>
+                  <td class="compare-meh">Auto style</td>
+                  <td class="compare-meh">Auto format</td>
+                  <td class="compare-meh">Auto format</td>
+                  <td class="compare-no">No</td>
+                </tr>
+                <tr>
+                  <td class="compare-label">Screenshot + ask a vision model</td>
+                  <td class="compare-col-ghostly compare-yes">Yes</td>
+                  <td class="compare-no">No</td>
+                  <td class="compare-no">No</td>
+                  <td class="compare-no">No</td>
+                  <td class="compare-no">No</td>
+                </tr>
+                <tr class="compare-price-row">
+                  <td class="compare-label">Monthly subscription</td>
+                  <td class="compare-col-ghostly compare-price"><span class="compare-price-value">None</span><span class="compare-price-sub">no subscription</span></td>
+                  <td class="compare-price"><span class="compare-price-value">$15</span><span class="compare-price-sub">/ month</span></td>
+                  <td class="compare-price"><span class="compare-price-value">$15</span><span class="compare-price-sub">/ month</span></td>
+                  <td class="compare-price"><span class="compare-price-value">$8.49</span><span class="compare-price-sub">/ month</span></td>
+                  <td class="compare-price"><span class="compare-price-value">Free</span><span class="compare-price-sub">built-in</span></td>
+                </tr>
+                <tr class="compare-price-row">
+                  <td class="compare-label">One-time / lifetime</td>
+                  <td class="compare-col-ghostly compare-price"><span class="compare-price-value compare-price-accent">$39</span><span class="compare-price-sub">one-time</span></td>
+                  <td class="compare-price"><span class="compare-price-value compare-price-muted">—</span><span class="compare-price-sub">not offered</span></td>
+                  <td class="compare-price"><span class="compare-price-value compare-price-muted">—</span><span class="compare-price-sub">not offered</span></td>
+                  <td class="compare-price"><span class="compare-price-value">$220</span><span class="compare-price-sub">lifetime</span></td>
+                  <td class="compare-price"><span class="compare-price-value compare-price-muted">—</span><span class="compare-price-sub">n/a</span></td>
+                </tr>
+                <tr class="compare-price-row">
+                  <td class="compare-label">Free tier</td>
+                  <td class="compare-col-ghostly compare-price"><span class="compare-price-value">30 min / wk</span><span class="compare-price-sub">all features</span></td>
+                  <td class="compare-price"><span class="compare-price-value">2k words / wk</span><span class="compare-price-sub">capped</span></td>
+                  <td class="compare-price"><span class="compare-price-value">2k words / wk</span><span class="compare-price-sub">capped</span></td>
+                  <td class="compare-price"><span class="compare-price-value">40 min trial</span><span class="compare-price-sub">one-time</span></td>
+                  <td class="compare-price"><span class="compare-price-value">Unlimited</span><span class="compare-price-sub">built-in</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
+      </div>
+    </section>
+
+    <section class="border-b border-white/5">
+      <div class="mx-auto max-w-6xl px-6 py-20 md:py-28">
+        <div class="mx-auto max-w-2xl text-center reveal">
+          <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">Language support</span>
+          <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
+            <span class="font-bold">Speaks</span>
+            <span class="font-display text-violet-200"> your language.</span>
+          </h2>
+          <p class="mt-4 text-lg text-ghost/60">Whisper transcribes English, Spanish, French, German, Italian, Portuguese, Russian, Japanese, Mandarin, Arabic, Hindi — and plenty more — all on-device.</p>
+        </div>
+
+        <div class="lang-wave mt-16 reveal" aria-hidden="true">
+          <svg class="lang-wave-svg" viewBox="0 0 1400 260" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <path id="whisper-path" d="M -60 140 C 180 -10, 320 290, 520 140 S 860 -10, 1030 140 S 1340 290, 1460 140" fill="none" />
+              <linearGradient id="whisper-grad" x1="0" x2="1" y1="0" y2="0">
+                <stop offset="0"    stop-color="rgba(199,187,255,0)"    />
+                <stop offset="0.12" stop-color="rgba(199,187,255,0.35)" />
+                <stop offset="0.88" stop-color="rgba(199,187,255,0.35)" />
+                <stop offset="1"    stop-color="rgba(199,187,255,0)"    />
+              </linearGradient>
+            </defs>
+            <use href="#whisper-path" stroke="url(#whisper-grad)" stroke-width="1" stroke-dasharray="3 10" fill="none" />
+            <g class="lang-flags" font-size="58" text-anchor="middle" dominant-baseline="central">
+              <text>🇺🇸<animateMotion dur="34s" repeatCount="indefinite" rotate="0" begin="0s"><mpath href="#whisper-path"/></animateMotion></text>
+              <text>🇪🇸<animateMotion dur="34s" repeatCount="indefinite" rotate="0" begin="-2.6s"><mpath href="#whisper-path"/></animateMotion></text>
+              <text>🇫🇷<animateMotion dur="34s" repeatCount="indefinite" rotate="0" begin="-5.2s"><mpath href="#whisper-path"/></animateMotion></text>
+              <text>🇩🇪<animateMotion dur="34s" repeatCount="indefinite" rotate="0" begin="-7.9s"><mpath href="#whisper-path"/></animateMotion></text>
+              <text>🇷🇺<animateMotion dur="34s" repeatCount="indefinite" rotate="0" begin="-10.5s"><mpath href="#whisper-path"/></animateMotion></text>
+              <text>🇯🇵<animateMotion dur="34s" repeatCount="indefinite" rotate="0" begin="-13.1s"><mpath href="#whisper-path"/></animateMotion></text>
+              <text>🇨🇳<animateMotion dur="34s" repeatCount="indefinite" rotate="0" begin="-15.7s"><mpath href="#whisper-path"/></animateMotion></text>
+              <text>🇮🇹<animateMotion dur="34s" repeatCount="indefinite" rotate="0" begin="-18.4s"><mpath href="#whisper-path"/></animateMotion></text>
+              <text>🇵🇹<animateMotion dur="34s" repeatCount="indefinite" rotate="0" begin="-21s"><mpath href="#whisper-path"/></animateMotion></text>
+              <text>🇰🇷<animateMotion dur="34s" repeatCount="indefinite" rotate="0" begin="-23.6s"><mpath href="#whisper-path"/></animateMotion></text>
+              <text>🇦🇪<animateMotion dur="34s" repeatCount="indefinite" rotate="0" begin="-26.2s"><mpath href="#whisper-path"/></animateMotion></text>
+              <text>🇮🇳<animateMotion dur="34s" repeatCount="indefinite" rotate="0" begin="-28.9s"><mpath href="#whisper-path"/></animateMotion></text>
+              <text>🇹🇷<animateMotion dur="34s" repeatCount="indefinite" rotate="0" begin="-31.5s"><mpath href="#whisper-path"/></animateMotion></text>
+            </g>
+          </svg>
+        </div>
+
+        <p class="mt-8 text-center text-xs uppercase tracking-wider text-ghost/40">On-device. No cloud round-trip. No per-language setup.</p>
       </div>
     </section>
 
@@ -1165,164 +1505,6 @@
             <p class="mt-2 text-sm text-ghost/60">Cleaned transcript pastes where your cursor is. No window switch, no copy step, no second thought.</p>
           </div>
         </div>
-      </div>
-    </section>
-
-    <section class="mx-auto max-w-6xl px-6 py-16 md:py-24">
-      <div class="mx-auto max-w-2xl text-center reveal">
-        <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">Works in every app</span>
-        <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
-          <span class="font-bold">Wherever your cursor is,</span>
-          <span class="font-display text-violet-200"> Ghostly types there.</span>
-        </h2>
-        <p class="mt-4 text-lg text-ghost/60">No integrations, no extensions, no per-app setup. If you can type into it, you can talk into it.</p>
-      </div>
-
-      <!-- Mobile layout: simple grid, no absolute positioning -->
-      <div class="mt-12 md:hidden reveal" style="--reveal-delay: 150ms">
-        <div class="flex flex-col items-center gap-5">
-          <div class="hero-composer">
-            <span class="hero-label">Active input</span>
-            <div class="hero-text"><span id="hero-typing-m"></span><span class="hero-caret"></span></div>
-          </div>
-          <div class="center-pill">
-            <img src="assets/ghostly_logo.svg" alt="" class="h-5 w-5" />
-            <span class="text-sm font-semibold tracking-tight text-ghost">Ghostly</span>
-            <div id="hero-wave-m" class="mini-wave ml-1 flex h-5 w-[84px] items-center justify-center"></div>
-          </div>
-        </div>
-        <div class="mt-8 grid grid-cols-3 gap-2 text-[11px] sm:text-xs">
-          <span class="marquee-pill justify-center !px-2 !py-2"><img src="assets/apps/slack.png" alt="" loading="lazy" decoding="async" />Slack</span>
-          <span class="marquee-pill justify-center !px-2 !py-2"><img src="assets/apps/gmail.png" alt="" loading="lazy" decoding="async" />Gmail</span>
-          <span class="marquee-pill justify-center !px-2 !py-2"><img src="assets/apps/cursor.png" alt="" loading="lazy" decoding="async" />Cursor</span>
-          <span class="marquee-pill justify-center !px-2 !py-2"><img src="assets/apps/claude.png" alt="" loading="lazy" decoding="async" />Claude</span>
-          <span class="marquee-pill justify-center !px-2 !py-2"><img src="assets/apps/xcode.png" alt="" loading="lazy" decoding="async" />Xcode</span>
-          <span class="marquee-pill justify-center !px-2 !py-2"><img src="assets/apps/vscode.png" alt="" loading="lazy" decoding="async" />VS Code</span>
-          <span class="marquee-pill justify-center !px-2 !py-2"><img src="assets/apps/chatgpt.png" alt="" loading="lazy" decoding="async" />ChatGPT</span>
-          <span class="marquee-pill justify-center !px-2 !py-2"><img src="assets/apps/linear.png" alt="" loading="lazy" decoding="async" />Linear</span>
-          <span class="marquee-pill justify-center !px-2 !py-2"><img src="assets/apps/figma.png" alt="" loading="lazy" decoding="async" />Figma</span>
-          <span class="marquee-pill justify-center !px-2 !py-2"><img src="assets/apps/notion.png" alt="" loading="lazy" decoding="async" />Notion</span>
-          <span class="marquee-pill justify-center !px-2 !py-2"><img src="assets/apps/apple-mail.png" alt="" loading="lazy" decoding="async" />Mail</span>
-          <span class="marquee-pill justify-center !px-2 !py-2"><img src="assets/apps/messages.png" alt="" loading="lazy" decoding="async" />Messages</span>
-        </div>
-        <p class="mt-4 text-center text-xs text-ghost/40">…and every other app with a text field.</p>
-      </div>
-
-      <!-- Desktop layout: floating tiles -->
-      <div class="relative mx-auto mt-16 hidden h-[560px] max-w-4xl reveal md:block" style="--reveal-delay: 150ms">
-        <!-- center composer + pill -->
-        <div class="absolute left-1/2 top-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-5">
-          <div class="hero-composer">
-            <span class="hero-label">Active input</span>
-            <div class="hero-text"><span id="hero-typing"></span><span class="hero-caret"></span></div>
-          </div>
-          <div class="center-pill">
-            <img src="assets/ghostly_logo.svg" alt="" class="h-5 w-5" />
-            <span class="text-sm font-semibold tracking-tight text-ghost">Ghostly</span>
-            <div id="hero-wave" class="mini-wave ml-1 flex h-5 w-[84px] items-center justify-center"></div>
-          </div>
-        </div>
-
-        <!-- floating app tiles -->
-        <!-- row 1: top edge -->
-        <div class="app-tile" style="top: 1%;  left: 4%;   --delay: 0s;   --dur: 5.2s">
-          <span class="app-icon"><img src="assets/apps/slack.png" alt="" loading="lazy" decoding="async" /></span> Slack
-        </div>
-        <div class="app-tile" style="top: 0%;  left: 32%;  --delay: 0.8s; --dur: 6.1s">
-          <span class="app-icon"><img src="assets/apps/superhuman.png" alt="" loading="lazy" decoding="async" /></span> Superhuman
-        </div>
-        <div class="app-tile" style="top: 2%;  right: 30%; --delay: 0.3s; --dur: 5.7s">
-          <span class="app-icon"><img src="assets/apps/perplexity.png" alt="" loading="lazy" decoding="async" /></span> Perplexity
-        </div>
-        <div class="app-tile" style="top: 1%;  right: 3%;  --delay: 1.1s; --dur: 6.3s">
-          <span class="app-icon"><img src="assets/apps/gmail.png" alt="" loading="lazy" decoding="async" /></span> Gmail
-        </div>
-
-        <!-- row 2 -->
-        <div class="app-tile" style="top: 16%; left: 18%;  --delay: 0.4s; --dur: 5.6s">
-          <span class="app-icon"><img src="assets/apps/cursor.png" alt="" loading="lazy" decoding="async" /></span> Cursor
-        </div>
-        <div class="app-tile" style="top: 14%; right: 16%; --delay: 1.2s; --dur: 6.4s">
-          <span class="app-icon"><img src="assets/apps/claude.png" alt="" loading="lazy" decoding="async" /></span> Claude
-        </div>
-
-        <!-- row 3: upper-mid -->
-        <div class="app-tile" style="top: 28%; left: 0%;   --delay: 1.1s; --dur: 5.5s">
-          <span class="app-icon"><img src="assets/apps/xcode.png" alt="" loading="lazy" decoding="async" /></span> Xcode
-        </div>
-        <div class="app-tile" style="top: 30%; left: 30%;  --delay: 0.9s; --dur: 5.5s">
-          <span class="app-icon"><img src="assets/apps/google-antigravity.png" alt="" loading="lazy" decoding="async" /></span> AntiGravity
-        </div>
-        <div class="app-tile" style="top: 30%; right: 28%; --delay: 1.5s; --dur: 5.9s">
-          <span class="app-icon"><img src="assets/apps/obsidian.png" alt="" loading="lazy" decoding="async" /></span> Obsidian
-        </div>
-        <div class="app-tile" style="top: 28%; right: 0%;  --delay: 0.3s; --dur: 6.4s">
-          <span class="app-icon"><img src="assets/apps/vscode.png" alt="" loading="lazy" decoding="async" /></span> VS Code
-        </div>
-
-        <!-- row 4: mid -->
-        <div class="app-tile" style="top: 44%; left: 12%;  --delay: 0.9s; --dur: 5.9s">
-          <span class="app-icon"><img src="assets/apps/chatgpt.png" alt="" loading="lazy" decoding="async" /></span> ChatGPT
-        </div>
-        <div class="app-tile" style="top: 44%; right: 10%; --delay: 0.2s; --dur: 6.1s">
-          <span class="app-icon"><img src="assets/apps/linear.png" alt="" loading="lazy" decoding="async" /></span> Linear
-        </div>
-
-        <!-- row 5: lower-mid -->
-        <div class="app-tile" style="top: 56%; left: 0%;   --delay: 1.3s; --dur: 6.0s">
-          <span class="app-icon"><img src="assets/apps/terminal.png" alt="" loading="lazy" decoding="async" /></span> Terminal
-        </div>
-        <div class="app-tile" style="top: 58%; left: 28%;  --delay: 0.5s; --dur: 5.4s">
-          <span class="app-icon"><img src="assets/apps/drafts.png" alt="" loading="lazy" decoding="async" /></span> Drafts
-        </div>
-        <div class="app-tile" style="top: 58%; right: 26%; --delay: 1.0s; --dur: 6.6s">
-          <span class="app-icon"><img src="assets/apps/things.png" alt="" loading="lazy" decoding="async" /></span> Things
-        </div>
-        <div class="app-tile" style="top: 56%; right: 0%;  --delay: 0.7s; --dur: 5.7s">
-          <span class="app-icon"><img src="assets/apps/zed.png" alt="" loading="lazy" decoding="async" /></span> Zed
-        </div>
-
-        <!-- row 6 -->
-        <div class="app-tile" style="top: 70%; left: 14%;  --delay: 0.8s; --dur: 5.8s">
-          <span class="app-icon"><img src="assets/apps/figma.png" alt="" loading="lazy" decoding="async" /></span> Figma
-        </div>
-        <div class="app-tile" style="top: 70%; right: 14%; --delay: 1.4s; --dur: 6.2s">
-          <span class="app-icon"><img src="assets/apps/notion.png" alt="" loading="lazy" decoding="async" /></span> Notion
-        </div>
-
-        <!-- row 7: lower -->
-        <div class="app-tile" style="top: 82%; left: 2%;   --delay: 0.6s; --dur: 5.3s">
-          <span class="app-icon"><img src="assets/apps/apple-mail.png" alt="" loading="lazy" decoding="async" /></span> Mail
-        </div>
-        <div class="app-tile" style="top: 82%; left: 30%;  --delay: 1.2s; --dur: 6.5s">
-          <span class="app-icon"><img src="assets/apps/replit.png" alt="" loading="lazy" decoding="async" /></span> Replit
-        </div>
-        <div class="app-tile" style="top: 82%; right: 28%; --delay: 0.4s; --dur: 5.6s">
-          <span class="app-icon"><img src="assets/apps/outlook.png" alt="" loading="lazy" decoding="async" /></span> Outlook
-        </div>
-        <div class="app-tile" style="top: 82%; right: 2%;  --delay: 1.0s; --dur: 6.0s">
-          <span class="app-icon"><img src="assets/apps/discord.png" alt="" loading="lazy" decoding="async" /></span> Discord
-        </div>
-
-        <!-- row 8: bottom edge -->
-        <div class="app-tile" style="bottom: 1%; left: 6%;   --delay: 0.5s; --dur: 5.4s">
-          <span class="app-icon"><img src="assets/apps/messages.png" alt="" loading="lazy" decoding="async" /></span> Messages
-        </div>
-        <div class="app-tile" style="bottom: 0%; left: 34%;  --delay: 1.3s; --dur: 6.3s">
-          <span class="app-icon"><img src="assets/apps/whatsapp.png" alt="" loading="lazy" decoding="async" /></span> WhatsApp
-        </div>
-        <div class="app-tile" style="bottom: 1%; right: 32%; --delay: 0.7s; --dur: 5.8s">
-          <span class="app-icon"><img src="assets/apps/apple-notes.png" alt="" loading="lazy" decoding="async" /></span> Notes
-        </div>
-        <div class="app-tile" style="bottom: 0%; right: 4%;  --delay: 1.1s; --dur: 6.1s">
-          <span class="app-icon"><img src="assets/apps/google-calendar.png" alt="" loading="lazy" decoding="async" /></span> Calendar
-        </div>
-
-        <!-- subtle connecting rings -->
-        <svg class="pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 600 440" fill="none">
-          <circle cx="300" cy="220" r="130" stroke="rgba(124,92,255,0.1)" stroke-dasharray="3 6"/>
-          <circle cx="300" cy="220" r="190" stroke="rgba(124,92,255,0.06)" stroke-dasharray="3 6"/>
-        </svg>
       </div>
     </section>
 
@@ -1467,10 +1649,22 @@
             <span class="font-display text-ghost/90">Any app</span>
             <span class="font-bold"> with a cursor.</span>
           </h2>
-          <p class="mt-4 text-lg text-ghost/60">Ghostly pastes into whatever's in focus — editors, inboxes, chat, docs, terminals. In 99+ languages, courtesy of Whisper.</p>
+          <p class="mt-4 text-lg text-ghost/60">Ghostly pastes into whatever's in focus — editors, inboxes, chat, docs, terminals. Wherever your cursor lands.</p>
         </div>
 
-        <div class="mt-14 space-y-4" aria-hidden="true">
+        <div class="mt-12 flex flex-col items-center gap-5 reveal" style="--reveal-delay: 100ms">
+          <div class="hero-composer">
+            <span class="hero-label">Active input</span>
+            <div class="hero-text"><span id="hero-typing"></span><span class="hero-caret"></span></div>
+          </div>
+          <div class="center-pill">
+            <img src="assets/ghostly_logo.svg" alt="" class="h-5 w-5" />
+            <span class="text-sm font-semibold tracking-tight text-ghost">Ghostly</span>
+            <div id="hero-wave" class="mini-wave ml-1 flex h-5 w-[84px] items-center justify-center"></div>
+          </div>
+        </div>
+
+        <div class="mt-10 space-y-4" aria-hidden="true">
           <div class="marquee">
             <div class="marquee-track">
               <span class="marquee-pill"><img src="assets/apps/slack.png" alt="" loading="lazy" decoding="async"/>Slack</span>
@@ -1681,7 +1875,7 @@
 
     <footer class="border-t border-white/5">
       <div class="mx-auto max-w-6xl px-6 py-14">
-        <div class="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
+        <div class="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
             <div class="flex items-center gap-2">
               <img src="assets/ghostly_logo.svg" alt="" class="h-6 w-6" />
@@ -1699,6 +1893,17 @@
               <li><a href="#ai" class="hover:text-ghost">AI cleanup</a></li>
               <li><a href="#pricing" class="hover:text-ghost">Pricing</a></li>
               <li><a href="#download" class="hover:text-ghost">Download</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <div class="text-xs font-semibold uppercase tracking-wider text-ghost/40">For you</div>
+            <ul class="mt-4 space-y-2 text-sm text-ghost/60">
+              <li><a href="/for/developers/" class="hover:text-ghost">Developers</a></li>
+              <li><a href="/for/creatives/" class="hover:text-ghost">Creatives</a></li>
+              <li><a href="/for/leaders/" class="hover:text-ghost">Leaders</a></li>
+              <li><a href="/for/sales/" class="hover:text-ghost">Sales</a></li>
+              <li><a href="/for/students/" class="hover:text-ghost">Students</a></li>
             </ul>
           </div>
 
@@ -1799,10 +2004,8 @@
 
       // Cursor/Ghostly hero composer: cycle random messages, drive waveform
       (function () {
-        // Pick whichever variant is visible — desktop floating layout or mobile grid layout
-        const mq = window.matchMedia('(min-width: 768px)');
-        const waveEl = mq.matches ? document.getElementById('hero-wave')   : document.getElementById('hero-wave-m');
-        const textEl = mq.matches ? document.getElementById('hero-typing') : document.getElementById('hero-typing-m');
+        const waveEl = document.getElementById('hero-wave');
+        const textEl = document.getElementById('hero-typing');
         if (!waveEl || !textEl) return;
 
         const messages = [

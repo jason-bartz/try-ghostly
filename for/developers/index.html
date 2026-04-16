@@ -1,0 +1,1161 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ghostly for Developers — Dictate code, prompts, and docs</title>
+    <meta name="description" content="Syntax-smart dictation built for engineers. Dictate Cursor prompts, code comments, PRs, and docs at speaking speed — privately, on-device on macOS." />
+    <meta name="keywords" content="voice coding, dictation for developers, Cursor dictation, voice typing IDE, Claude Code voice, speech to code, developer dictation Mac" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://try-ghostly.com/for/developers/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Ghostly" />
+    <meta property="og:url" content="https://try-ghostly.com/for/developers/" />
+    <meta property="og:title" content="Ghostly for Developers" />
+    <meta property="og:description" content="Syntax-smart dictation built for engineers. Cursor, Claude, GitHub — at speaking speed." />
+    <meta property="og:image" content="https://try-ghostly.com/assets/og-image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Ghostly for Developers" />
+    <meta name="twitter:description" content="Dictate prompts, code, and docs at speaking speed — privately, on-device." />
+    <meta name="twitter:image" content="https://try-ghostly.com/assets/og-image.png" />
+
+    <link rel="icon" type="image/svg+xml" href="/assets/ghostly_logo.svg" />
+    <meta name="theme-color" content="#0b0b0f" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans:  ['Inter', 'ui-sans-serif', 'system-ui'],
+              serif: ['"Instrument Serif"', 'ui-serif', 'Georgia'],
+              mono:  ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+            },
+            colors: { ink: '#0b0b0f', ghost: '#e8e9ef', accent: '#7c5cff' },
+          },
+        },
+      };
+    </script>
+    <style>
+      html { scroll-behavior: smooth; }
+      body { background: #0b0b0f; color: #e8e9ef; }
+      .grid-bg {
+        background-image:
+          radial-gradient(circle at 20% 10%, rgba(124, 92, 255, 0.22), transparent 40%),
+          radial-gradient(circle at 80% 0%, rgba(56, 189, 248, 0.15), transparent 45%),
+          linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        background-size: auto, auto, 42px 42px, 42px 42px;
+      }
+      .glass {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(8px);
+      }
+      .btn-primary {
+        background: linear-gradient(180deg, #ffffff 0%, #d8d9e3 100%);
+        color: #0b0b0f;
+      }
+      .btn-primary:hover { filter: brightness(1.05); }
+      .btn-ghost {
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: #e8e9ef;
+      }
+      .btn-ghost:hover { background: rgba(255, 255, 255, 0.1); }
+      .chip {
+        background: rgba(124, 92, 255, 0.12);
+        border: 1px solid rgba(124, 92, 255, 0.35);
+        color: #c9bfff;
+      }
+      .chip-dev { background: rgba(56, 189, 248, 0.12); border-color: rgba(56, 189, 248, 0.35); color: #7dd3fc; }
+      .kbd {
+        font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+        background: #15151c;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-bottom-width: 2px;
+        padding: 2px 8px;
+        border-radius: 6px;
+        font-size: 0.85em;
+      }
+      .font-display {
+        font-family: 'Instrument Serif', ui-serif, Georgia, serif;
+        font-style: italic;
+        font-weight: 400;
+        letter-spacing: -0.01em;
+      }
+
+      #site-header.is-scrolled {
+        border-bottom-color: rgba(255, 255, 255, 0.08);
+        background: rgba(11, 11, 15, 0.85);
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.4), 0 10px 30px -10px rgba(0, 0, 0, 0.35);
+      }
+
+      /* ---- Header "For you" dropdown ---- */
+      .nav-dropdown { display: inline-flex; align-items: center; position: relative; }
+      .nav-dropdown::after {
+        content: ""; position: absolute; left: -8px; right: -8px; top: 100%; height: 18px;
+      }
+      .nav-dropdown-trigger {
+        background: transparent; border: none; padding: 8px 0; font: inherit; color: inherit; cursor: pointer;
+      }
+      .nav-dropdown-menu {
+        position: absolute;
+        top: calc(100% + 10px);
+        left: 50%;
+        transform: translate(-50%, -6px);
+        min-width: 320px;
+        padding: 10px;
+        background: rgba(20, 20, 26, 0.96);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(124, 92, 255, 0.08) inset;
+        backdrop-filter: blur(12px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 180ms ease, transform 180ms ease;
+        z-index: 60;
+      }
+      .nav-dropdown:hover .nav-dropdown-menu,
+      .nav-dropdown:focus-within .nav-dropdown-menu {
+        opacity: 1; pointer-events: auto; transform: translate(-50%, 0);
+      }
+      .nav-dropdown:hover .nav-dropdown-trigger svg { transform: rotate(180deg); }
+      .nav-dropdown-menu a {
+        display: flex; align-items: flex-start; gap: 12px; padding: 10px 12px; border-radius: 10px;
+        color: rgba(232, 233, 239, 0.88);
+        transition: background 160ms ease, color 160ms ease;
+      }
+      .nav-dropdown-menu a:hover { background: rgba(124, 92, 255, 0.1); color: #fff; }
+      .nav-dropdown-menu a.is-active { background: rgba(124, 92, 255, 0.14); color: #fff; }
+      .nav-dropdown-icon {
+        flex-shrink: 0; width: 34px; height: 34px; border-radius: 9px;
+        display: inline-flex; align-items: center; justify-content: center;
+        background: rgba(124, 92, 255, 0.12); color: #c9bfff;
+      }
+      .nav-dropdown-icon svg { width: 16px; height: 16px; }
+      .nav-dropdown-icon-dev { background: rgba(56, 189, 248, 0.14); color: #7dd3fc; }
+      .nav-dropdown-icon-creative { background: rgba(244, 114, 182, 0.14); color: #f9a8d4; }
+      .nav-dropdown-icon-leader { background: rgba(251, 191, 36, 0.14); color: #fcd34d; }
+      .nav-dropdown-icon-sales { background: rgba(52, 211, 153, 0.14); color: #6ee7b7; }
+      .nav-dropdown-icon-student { background: rgba(167, 139, 250, 0.14); color: #c4b5fd; }
+      .nav-dropdown-label { display: block; font-size: 14px; font-weight: 600; letter-spacing: -0.005em; }
+      .nav-dropdown-sub { display: block; margin-top: 2px; font-size: 12px; color: rgba(232, 233, 239, 0.5); }
+
+      /* ---- Scroll reveal ---- */
+      .reveal {
+        opacity: 0; transform: translateY(22px);
+        transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1), transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+        transition-delay: var(--reveal-delay, 0ms);
+      }
+      .reveal.in-view { opacity: 1; transform: translateY(0); }
+      @media (prefers-reduced-motion: reduce) {
+        .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+      }
+
+      /* ---- Floating app tile ---- */
+      .app-tile {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 10px 14px; border-radius: 14px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(10px);
+        font-size: 13px; font-weight: 500; color: rgba(232, 233, 239, 0.85);
+        box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+      }
+      .app-tile img { width: 22px; height: 22px; border-radius: 5px; }
+      @keyframes floaty {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-8px); }
+      }
+      .app-float { animation: floaty var(--dur, 6s) ease-in-out infinite; animation-delay: var(--delay, 0s); }
+
+      /* ---- Cursor window (hero demo) ---- */
+      .cursor-win {
+        background: #0f0f17;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 40px 100px -30px rgba(56, 189, 248, 0.25), 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+      }
+      .cursor-tabs {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        background: rgba(0, 0, 0, 0.3);
+      }
+      .cursor-dot { width: 11px; height: 11px; border-radius: 50%; }
+      .cursor-dot.r { background: #ff5f57; }
+      .cursor-dot.y { background: #febc2e; }
+      .cursor-dot.g { background: #28c840; }
+      .cursor-tab {
+        font-size: 11px; color: rgba(232, 233, 239, 0.55);
+        padding: 4px 10px; border-radius: 6px;
+        display: inline-flex; align-items: center; gap: 6px;
+      }
+      .cursor-tab.active {
+        background: rgba(56, 189, 248, 0.1);
+        color: #7dd3fc;
+      }
+      .cursor-body {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 320px;
+        min-height: 360px;
+      }
+      @media (max-width: 768px) {
+        .cursor-body { grid-template-columns: 1fr; min-height: auto; }
+      }
+      .cursor-code {
+        padding: 16px 18px;
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-size: 12.5px;
+        line-height: 1.7;
+        color: rgba(232, 233, 239, 0.85);
+        overflow: hidden;
+      }
+      .cursor-code .ln {
+        display: flex; gap: 14px;
+        opacity: 0;
+        animation: code-line-in 400ms cubic-bezier(0.22,1,0.36,1) forwards;
+        animation-delay: var(--d, 0s);
+      }
+      @keyframes code-line-in {
+        from { opacity: 0; transform: translateX(-6px); }
+        to { opacity: 1; transform: translateX(0); }
+      }
+      .cursor-code .num { color: rgba(232, 233, 239, 0.25); text-align: right; width: 18px; flex-shrink: 0; }
+      .tok-k { color: #c084fc; }
+      .tok-f { color: #7dd3fc; }
+      .tok-s { color: #a5f3fc; }
+      .tok-n { color: #fbbf24; }
+      .tok-c { color: rgba(232, 233, 239, 0.4); font-style: italic; }
+      .cursor-chat {
+        border-left: 1px solid rgba(255, 255, 255, 0.05);
+        background: rgba(0, 0, 0, 0.18);
+        display: flex; flex-direction: column;
+        padding: 16px;
+      }
+      @media (max-width: 768px) {
+        .cursor-chat { border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+      }
+      .cursor-chat-label {
+        font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+        color: rgba(125, 211, 252, 0.7);
+        margin-bottom: 10px;
+      }
+      .cursor-composer {
+        margin-top: auto;
+        background: #14141c;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        padding: 12px 14px;
+        min-height: 140px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .cursor-composer.is-listening { border-color: rgba(56, 189, 248, 0.4); box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.1); }
+      .cursor-prompt {
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-size: 13px; line-height: 1.55; min-height: 68px;
+        color: rgba(232, 233, 239, 0.92);
+      }
+      .cursor-prompt .ident { color: #7dd3fc; font-weight: 500; }
+      .cursor-prompt .fname { color: #c4b5fd; background: rgba(124, 92, 255, 0.12); border: 1px solid rgba(124, 92, 255, 0.25); border-radius: 4px; padding: 1px 6px; font-size: 12px; }
+      .cursor-prompt .caret {
+        display: inline-block; width: 0.55ch; height: 1.1em; background: #7dd3fc;
+        vertical-align: text-bottom; margin-left: 1px;
+        animation: blink 1s steps(2, end) infinite;
+      }
+      @keyframes blink { 50% { opacity: 0; } }
+      .cursor-toolbar {
+        display: flex; align-items: center; justify-content: space-between;
+        padding-top: 8px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      .cursor-mic {
+        display: inline-flex; align-items: center; gap: 8px;
+        font-size: 11px; color: rgba(125, 211, 252, 0.9);
+      }
+      .mic-dot { width: 7px; height: 7px; border-radius: 50%; background: #38bdf8; box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.5); animation: pulse 1.4s ease-in-out infinite; }
+      @keyframes pulse {
+        0% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.5); }
+        70% { box-shadow: 0 0 0 10px rgba(56, 189, 248, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); }
+      }
+      .cursor-mic.idle .mic-dot { background: rgba(232, 233, 239, 0.3); animation: none; box-shadow: none; }
+      .cursor-mic.idle { color: rgba(232, 233, 239, 0.4); }
+      .cursor-send {
+        background: linear-gradient(180deg, #38bdf8, #0ea5e9);
+        color: #0b0b0f;
+        font-weight: 600; font-size: 11px;
+        padding: 5px 11px; border-radius: 6px;
+      }
+
+      /* ---- Approve/reject voice commands demo ---- */
+      .diff-win {
+        background: #0f0f17;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 14px;
+        overflow: hidden;
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-size: 12px;
+      }
+      .diff-hdr {
+        padding: 10px 14px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        background: rgba(0, 0, 0, 0.3);
+        color: rgba(232, 233, 239, 0.55);
+        font-size: 11px;
+        display: flex; align-items: center; justify-content: space-between;
+      }
+      .diff-row { padding: 4px 14px; display: flex; gap: 12px; white-space: pre; }
+      .diff-row.add { background: rgba(52, 211, 153, 0.08); color: #6ee7b7; }
+      .diff-row.del { background: rgba(239, 68, 68, 0.08); color: #fca5a5; }
+      .diff-row.ctx { color: rgba(232, 233, 239, 0.55); }
+      .diff-sign { width: 10px; color: inherit; flex-shrink: 0; opacity: 0.8; }
+      .diff-foot {
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 10px 14px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.2);
+      }
+      .diff-btn {
+        font-family: Inter, sans-serif;
+        font-size: 12px;
+        padding: 5px 12px;
+        border-radius: 7px;
+        font-weight: 600;
+        position: relative;
+        transition: box-shadow 120ms ease, transform 120ms ease;
+      }
+      .diff-btn.approve {
+        background: rgba(52, 211, 153, 0.15);
+        border: 1px solid rgba(52, 211, 153, 0.35);
+        color: #6ee7b7;
+      }
+      .diff-btn.reject {
+        background: rgba(239, 68, 68, 0.12);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        color: #fca5a5;
+      }
+      .diff-btn.is-trigger {
+        box-shadow: 0 0 0 3px rgba(125, 211, 252, 0.4);
+        transform: scale(1.04);
+      }
+      .voice-chip {
+        display: inline-flex; align-items: center; gap: 8px;
+        margin-left: auto;
+        padding: 5px 11px;
+        border-radius: 999px;
+        font-family: Inter, sans-serif;
+        font-size: 11px;
+        color: #7dd3fc;
+        background: rgba(56, 189, 248, 0.08);
+        border: 1px solid rgba(56, 189, 248, 0.25);
+      }
+      .voice-chip .dot { width: 6px; height: 6px; border-radius: 50%; background: #38bdf8; animation: pulse 1.4s ease-in-out infinite; }
+
+      /* ---- Spoken-to-camelCase demo ---- */
+      .xform-card {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 14px;
+        padding: 18px 20px;
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        min-height: 64px;
+      }
+      .xform-tag {
+        font-family: Inter, sans-serif;
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 3px 8px;
+        border-radius: 999px;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+      .xform-tag.in { background: rgba(255, 255, 255, 0.06); color: rgba(232, 233, 239, 0.55); }
+      .xform-tag.out { background: rgba(56, 189, 248, 0.12); color: #7dd3fc; }
+      .xform-arrow { color: rgba(232, 233, 239, 0.3); }
+      .xform-out { color: #7dd3fc; }
+
+      /* ---- Language pills marquee ---- */
+      .marquee {
+        overflow: hidden;
+        -webkit-mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+                mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+      }
+      .marquee-track {
+        display: flex;
+        gap: 16px;
+        width: max-content;
+        animation: marquee 32s linear infinite;
+      }
+      @keyframes marquee {
+        from { transform: translateX(0); }
+        to   { transform: translateX(-50%); }
+      }
+      .lang-pill {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 10px 16px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-size: 13px;
+        color: rgba(232, 233, 239, 0.85);
+      }
+      .lang-pill .dot { width: 8px; height: 8px; border-radius: 50%; }
+
+      /* ---- Use-case row ---- */
+      .usecase-row {
+        display: flex; align-items: center; gap: 16px;
+        padding: 18px 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        transition: background 180ms ease;
+      }
+      .usecase-row:first-child { border-top: none; }
+      .usecase-row:hover { background: rgba(124, 92, 255, 0.04); }
+      .usecase-icons {
+        display: inline-flex; gap: -10px;
+        flex-shrink: 0;
+        width: 88px;
+      }
+      .usecase-icons .app-ic {
+        width: 42px; height: 42px; border-radius: 10px; overflow: hidden;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 6px 20px -8px rgba(0, 0, 0, 0.5);
+      }
+      .usecase-icons .app-ic img { width: 100%; height: 100%; object-fit: cover; }
+      .usecase-icons .app-ic:not(:first-child) { margin-left: -14px; }
+
+      /* ---- Top-10 grid ---- */
+      .top-tile {
+        display: flex; align-items: center; gap: 12px;
+        padding: 16px 18px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+      }
+      .top-tile:hover {
+        border-color: rgba(56, 189, 248, 0.35);
+        background: rgba(56, 189, 248, 0.05);
+        transform: translateY(-1px);
+      }
+      .top-tile .top-icon {
+        flex-shrink: 0;
+        width: 32px; height: 32px; border-radius: 8px;
+        background: rgba(56, 189, 248, 0.1);
+        color: #7dd3fc;
+        display: inline-flex; align-items: center; justify-content: center;
+      }
+
+      /* ---- CTA block ---- */
+      .cta-block {
+        background: radial-gradient(ellipse at center, rgba(56, 189, 248, 0.12), transparent 60%),
+                    linear-gradient(180deg, rgba(124, 92, 255, 0.08), transparent);
+      }
+
+      /* ---- Disable animations if reduced-motion ---- */
+      @media (prefers-reduced-motion: reduce) {
+        .app-float, .mic-dot, .voice-chip .dot, .marquee-track, .cursor-prompt .caret,
+        .cursor-code .ln { animation: none !important; }
+        .cursor-code .ln { opacity: 1; }
+      }
+    </style>
+  </head>
+  <body class="font-sans antialiased">
+    <!-- Shared header -->
+    <header id="site-header" class="sticky top-0 z-50 border-b border-transparent bg-ink/60 backdrop-blur transition-colors duration-200">
+      <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:px-6 md:py-4">
+        <a href="/" class="flex items-center gap-2">
+          <img src="/assets/ghostly_logo.svg" alt="" class="h-7 w-7" />
+          <span class="text-lg font-bold tracking-tight">Ghostly</span>
+        </a>
+        <nav class="hidden items-center gap-8 text-sm text-ghost/70 md:flex">
+          <a href="/#features" class="hover:text-ghost">Features</a>
+          <div class="nav-dropdown">
+            <button type="button" class="nav-dropdown-trigger inline-flex items-center gap-1 text-ghost hover:text-ghost" aria-haspopup="true" aria-expanded="false">
+              For you
+              <svg class="h-3 w-3 opacity-70 transition-transform" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+            </button>
+            <div class="nav-dropdown-menu" role="menu">
+              <a href="/for/developers/" class="is-active" role="menuitem"><span class="nav-dropdown-icon nav-dropdown-icon-dev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span><span><span class="nav-dropdown-label">Developers</span><span class="nav-dropdown-sub">Dictate prompts, docs, and code</span></span></a>
+              <a href="/for/creatives/" role="menuitem"><span class="nav-dropdown-icon nav-dropdown-icon-creative"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><circle cx="6" cy="6" r="2"/></svg></span><span><span class="nav-dropdown-label">Creatives</span><span class="nav-dropdown-sub">Scripts, posts, and first drafts</span></span></a>
+              <a href="/for/leaders/" role="menuitem"><span class="nav-dropdown-icon nav-dropdown-icon-leader"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></span><span><span class="nav-dropdown-label">Leaders</span><span class="nav-dropdown-sub">Inbox zero without the typing</span></span></a>
+              <a href="/for/sales/" role="menuitem"><span class="nav-dropdown-icon nav-dropdown-icon-sales"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></span><span><span class="nav-dropdown-label">Sales</span><span class="nav-dropdown-sub">CRM notes between calls</span></span></a>
+              <a href="/for/students/" role="menuitem"><span class="nav-dropdown-icon nav-dropdown-icon-student"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span><span><span class="nav-dropdown-label">Students</span><span class="nav-dropdown-sub">Essays at speaking speed</span></span></a>
+            </div>
+          </div>
+          <a href="/#how" class="hover:text-ghost">How it works</a>
+          <a href="/#pricing" class="hover:text-ghost">Pricing</a>
+          <a href="/#download" class="hover:text-ghost">Download</a>
+        </nav>
+        <a href="/install/" class="btn-primary rounded-lg px-3.5 py-2 text-sm font-semibold md:px-4">Download</a>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="grid-bg relative overflow-hidden">
+      <div class="mx-auto max-w-6xl px-6 py-16 md:py-24">
+        <div class="grid items-center gap-12 lg:grid-cols-[1.05fr_1fr]">
+          <div>
+            <span class="chip-dev chip inline-block rounded-full px-3 py-1 text-xs font-medium">Ghostly for developers</span>
+            <h1 class="mt-5 text-4xl leading-[1.05] tracking-tight md:text-6xl" style="letter-spacing: -0.03em">
+              <span class="font-display text-sky-200" style="font-size: 1.05em">Dictate code,</span><br />
+              <span class="font-bold">not keystrokes.</span>
+            </h1>
+            <p class="mt-6 max-w-lg text-lg text-ghost/70">Prompt Cursor, Claude Code, and ChatGPT at speaking speed. Ghostly transcribes on-device, handles <code class="font-mono text-sky-300/90">camelCase</code>, <code class="font-mono text-sky-300/90">kebab-case</code>, and <code class="font-mono text-sky-300/90">@file.ts</code> references, then pastes into whatever has focus.</p>
+            <div class="mt-8 flex flex-wrap items-center gap-3">
+              <a href="/install/" class="btn-primary inline-flex items-center gap-2 rounded-xl px-6 py-3 text-base font-semibold">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+                Download for macOS
+              </a>
+              <a href="#how-devs-use" class="btn-ghost inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold">See how it works →</a>
+            </div>
+            <p class="mt-5 text-xs text-ghost/45">Apple Silicon only · M1 or later · macOS 12+</p>
+          </div>
+
+          <!-- Hero demo: Cursor editor + composer -->
+          <div class="reveal">
+            <div class="cursor-win">
+              <div class="cursor-tabs">
+                <span class="cursor-dot r"></span><span class="cursor-dot y"></span><span class="cursor-dot g"></span>
+                <span class="cursor-tab active ml-3"><svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/></svg>api.ts</span>
+                <span class="cursor-tab">helper.swift</span>
+                <span class="cursor-tab">README.md</span>
+                <span class="ml-auto text-[10px] text-ghost/30 font-mono">cursor</span>
+              </div>
+              <div class="cursor-body">
+                <div class="cursor-code">
+                  <div class="ln" style="--d: 0.1s"><span class="num">1</span><span><span class="tok-k">export async function</span> <span class="tok-f">fetchUser</span>(<span class="tok-n">id</span>: <span class="tok-k">string</span>) &#123;</span></div>
+                  <div class="ln" style="--d: 0.25s"><span class="num">2</span><span>&nbsp;&nbsp;<span class="tok-k">const</span> res = <span class="tok-k">await</span> <span class="tok-f">fetch</span>(<span class="tok-s">`/api/users/$&#123;id&#125;`</span>);</span></div>
+                  <div class="ln" style="--d: 0.4s"><span class="num">3</span><span>&nbsp;&nbsp;<span class="tok-k">if</span> (!res.ok) <span class="tok-k">throw new</span> <span class="tok-f">ApiError</span>(res.status);</span></div>
+                  <div class="ln" style="--d: 0.55s"><span class="num">4</span><span>&nbsp;&nbsp;<span class="tok-k">return</span> res.<span class="tok-f">json</span>();</span></div>
+                  <div class="ln" style="--d: 0.7s"><span class="num">5</span><span>&#125;</span></div>
+                  <div class="ln" style="--d: 0.9s"><span class="num">6</span><span></span></div>
+                  <div class="ln" style="--d: 1.05s"><span class="num">7</span><span><span class="tok-c">// TODO: add retry + exponential backoff</span></span></div>
+                  <div class="ln" style="--d: 1.2s"><span class="num">8</span><span><span class="tok-k">export async function</span> <span class="tok-f">retryFetch</span>() &#123;</span></div>
+                  <div class="ln" style="--d: 1.35s"><span class="num">9</span><span>&nbsp;&nbsp;<span class="tok-c">// …</span></span></div>
+                  <div class="ln" style="--d: 1.5s"><span class="num">10</span><span>&#125;</span></div>
+                </div>
+                <aside class="cursor-chat">
+                  <div class="cursor-chat-label">Ghostly composer · Cursor</div>
+                  <div class="cursor-composer is-listening" id="dev-hero-composer">
+                    <div class="cursor-prompt" id="dev-hero-prompt"></div>
+                    <div class="cursor-toolbar">
+                      <div class="cursor-mic" id="dev-hero-mic"><span class="mic-dot"></span><span id="dev-hero-mic-text">Listening · fn</span></div>
+                      <button class="cursor-send">⏎ Send</button>
+                    </div>
+                  </div>
+                </aside>
+              </div>
+            </div>
+            <p class="mt-4 text-center text-[11px] font-mono text-ghost/35">Live demo · on-device transcription · no audio leaves your Mac</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Logo/apps band -->
+    <section class="border-y border-white/5 bg-white/[0.015]">
+      <div class="mx-auto max-w-6xl px-6 py-10">
+        <p class="text-center text-xs font-semibold uppercase tracking-[0.15em] text-ghost/40">Speaks fluent developer across the stack</p>
+        <div class="mt-6 marquee">
+          <div class="marquee-track">
+            <div class="app-tile"><img src="/assets/apps/cursor.png" alt="" /> Cursor</div>
+            <div class="app-tile"><img src="/assets/apps/claude.png" alt="" /> Claude Code</div>
+            <div class="app-tile"><img src="/assets/apps/vscode.png" alt="" /> VS Code</div>
+            <div class="app-tile"><img src="/assets/apps/xcode.png" alt="" /> Xcode</div>
+            <div class="app-tile"><img src="/assets/apps/zed.png" alt="" /> Zed</div>
+            <div class="app-tile"><img src="/assets/apps/replit.png" alt="" /> Replit</div>
+            <div class="app-tile"><img src="/assets/apps/terminal.png" alt="" /> Terminal</div>
+            <div class="app-tile"><img src="/assets/apps/chatgpt.png" alt="" /> ChatGPT</div>
+            <div class="app-tile"><img src="/assets/apps/perplexity.png" alt="" /> Perplexity</div>
+            <div class="app-tile"><img src="/assets/apps/linear.png" alt="" /> Linear</div>
+            <div class="app-tile"><img src="/assets/apps/google-antigravity.png" alt="" /> AntiGravity</div>
+            <!-- duplicated for seamless loop -->
+            <div class="app-tile"><img src="/assets/apps/cursor.png" alt="" /> Cursor</div>
+            <div class="app-tile"><img src="/assets/apps/claude.png" alt="" /> Claude Code</div>
+            <div class="app-tile"><img src="/assets/apps/vscode.png" alt="" /> VS Code</div>
+            <div class="app-tile"><img src="/assets/apps/xcode.png" alt="" /> Xcode</div>
+            <div class="app-tile"><img src="/assets/apps/zed.png" alt="" /> Zed</div>
+            <div class="app-tile"><img src="/assets/apps/replit.png" alt="" /> Replit</div>
+            <div class="app-tile"><img src="/assets/apps/terminal.png" alt="" /> Terminal</div>
+            <div class="app-tile"><img src="/assets/apps/chatgpt.png" alt="" /> ChatGPT</div>
+            <div class="app-tile"><img src="/assets/apps/perplexity.png" alt="" /> Perplexity</div>
+            <div class="app-tile"><img src="/assets/apps/linear.png" alt="" /> Linear</div>
+            <div class="app-tile"><img src="/assets/apps/google-antigravity.png" alt="" /> AntiGravity</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: Typing slows down shipping -->
+    <section class="mx-auto max-w-6xl px-6 py-16 md:py-24">
+      <div class="mx-auto max-w-2xl text-center reveal">
+        <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">Typing is the bottleneck</span>
+        <h2 class="mt-5 text-4xl tracking-tight md:text-5xl">
+          <span class="font-display text-violet-200">Your keyboard</span>
+          <span class="font-bold"> is the slowest thing in your stack.</span>
+        </h2>
+        <p class="mt-4 text-lg text-ghost/60">Your LLM drafts in seconds. Your build runs in seconds. The prompt you're typing takes thirty. Ghostly closes that gap — you speak, it lands correctly formatted in the active app.</p>
+      </div>
+
+      <div class="mt-14 grid items-stretch gap-6 md:grid-cols-3">
+        <div class="glass reveal rounded-2xl p-6">
+          <div class="font-mono text-xs text-sky-300/80">01 · Prompting</div>
+          <h3 class="mt-3 text-lg font-semibold">Cursor, Claude, v0, Windsurf</h3>
+          <p class="mt-2 text-sm text-ghost/60">You type five words, backspace three, re-word, send. Ghostly lets you say the whole thought in one breath — punctuated and paragraph-formatted on paste.</p>
+        </div>
+        <div class="glass reveal rounded-2xl p-6" style="--reveal-delay: 120ms">
+          <div class="font-mono text-xs text-sky-300/80">02 · Reviewing</div>
+          <h3 class="mt-3 text-lg font-semibold">PR comments &amp; diff approvals</h3>
+          <p class="mt-2 text-sm text-ghost/60">Voice-command <em>approve</em> and <em>reject</em> to blaze through Cursor diffs. Dictate review comments that sound like you, not a Jira ticket.</p>
+        </div>
+        <div class="glass reveal rounded-2xl p-6" style="--reveal-delay: 240ms">
+          <div class="font-mono text-xs text-sky-300/80">03 · Shipping</div>
+          <h3 class="mt-3 text-lg font-semibold">Release notes, Linear, docs</h3>
+          <p class="mt-2 text-sm text-ghost/60">Write the commit message, the Linear comment, and the changelog by talking to your Mac. Per-app prompts keep each output in the right tone.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feature 1: Better prompts → better code -->
+    <section class="border-y border-white/5 bg-white/[0.015]">
+      <div class="mx-auto max-w-6xl px-6 py-16 md:py-24">
+        <div class="grid items-center gap-14 lg:grid-cols-[1fr_1.05fr]">
+          <div class="reveal">
+            <span class="chip-dev chip inline-block rounded-full px-3 py-1 text-xs font-medium">Syntax-smart</span>
+            <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
+              <span class="font-display text-sky-200">Better prompts,</span><br />
+              <span class="font-bold">better code.</span>
+            </h2>
+            <p class="mt-4 max-w-md text-lg text-ghost/65">Ghostly understands the words developers actually say. Handles <span class="font-mono text-sky-300/90">camelCase</span>, <span class="font-mono text-sky-300/90">snake_case</span>, and <span class="font-mono text-sky-300/90">kebab-case</span>. Recognizes <span class="font-mono text-sky-300/90">Supabase</span>, <span class="font-mono text-sky-300/90">Postgres</span>, <span class="font-mono text-sky-300/90">JWT</span>. Converts <em>"at helper dot swift"</em> into a proper <span class="font-mono text-sky-300/90">@helper.swift</span> tag.</p>
+            <ul class="mt-6 space-y-3 text-sm text-ghost/70">
+              <li class="flex items-start gap-3"><svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-sky-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Per-app profile for Cursor keeps prompts terse, no niceties.</li>
+              <li class="flex items-start gap-3"><svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-sky-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Personal dictionary learns your service names, acronyms, teammates.</li>
+              <li class="flex items-start gap-3"><svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-sky-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Works inside agent chats — ChatGPT, Claude, Perplexity, v0.</li>
+            </ul>
+          </div>
+
+          <div class="reveal space-y-3" style="--reveal-delay: 180ms">
+            <div class="xform-card" data-xform>
+              <span class="xform-tag in">You said</span>
+              <span>"fetch user by I D, camel case"</span>
+              <span class="xform-arrow">→</span>
+              <span class="xform-out xform-val" data-out="fetchUserById">fetchUserById</span>
+              <span class="xform-tag out ml-auto">Paste</span>
+            </div>
+            <div class="xform-card" data-xform>
+              <span class="xform-tag in">You said</span>
+              <span>"at helper dot swift"</span>
+              <span class="xform-arrow">→</span>
+              <span class="xform-out xform-val" data-out="@helper.swift">@helper.swift</span>
+              <span class="xform-tag out ml-auto">Paste</span>
+            </div>
+            <div class="xform-card" data-xform>
+              <span class="xform-tag in">You said</span>
+              <span>"call super base, kebab"</span>
+              <span class="xform-arrow">→</span>
+              <span class="xform-out xform-val" data-out="call-supabase">call-supabase</span>
+              <span class="xform-tag out ml-auto">Paste</span>
+            </div>
+            <div class="xform-card" data-xform>
+              <span class="xform-tag in">You said</span>
+              <span>"J W T token store, snake"</span>
+              <span class="xform-arrow">→</span>
+              <span class="xform-out xform-val" data-out="jwt_token_store">jwt_token_store</span>
+              <span class="xform-tag out ml-auto">Paste</span>
+            </div>
+            <div class="xform-card" data-xform>
+              <span class="xform-tag in">You said</span>
+              <span>"env file dot local"</span>
+              <span class="xform-arrow">→</span>
+              <span class="xform-out xform-val" data-out=".env.local">.env.local</span>
+              <span class="xform-tag out ml-auto">Paste</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feature 2: Voice commands for diff approvals -->
+    <section class="mx-auto max-w-6xl px-6 py-16 md:py-24">
+      <div class="grid items-center gap-14 lg:grid-cols-[1.05fr_1fr]">
+        <div class="reveal order-2 lg:order-1">
+          <div class="diff-win">
+            <div class="diff-hdr">
+              <span>src/api/fetchUser.ts · Cursor agent diff</span>
+              <span class="voice-chip" id="diff-voice-chip"><span class="dot"></span><span id="diff-voice-label">Listening</span></span>
+            </div>
+            <div class="diff-row ctx"><span class="diff-sign">&nbsp;</span><span>export async function fetchUser(id: string) &#123;</span></div>
+            <div class="diff-row del"><span class="diff-sign">-</span><span>  const res = await fetch(`/api/users/$&#123;id&#125;`);</span></div>
+            <div class="diff-row add"><span class="diff-sign">+</span><span>  const res = await fetchWithRetry(`/api/users/$&#123;id&#125;`, &#123; retries: 3 &#125;);</span></div>
+            <div class="diff-row ctx"><span class="diff-sign">&nbsp;</span><span>  if (!res.ok) throw new ApiError(res.status);</span></div>
+            <div class="diff-row ctx"><span class="diff-sign">&nbsp;</span><span>  return res.json();</span></div>
+            <div class="diff-row ctx"><span class="diff-sign">&nbsp;</span><span>&#125;</span></div>
+            <div class="diff-foot">
+              <button class="diff-btn reject" id="diff-reject">Reject (⎋)</button>
+              <button class="diff-btn approve" id="diff-approve">Approve (⏎)</button>
+              <span class="ml-auto text-[11px] text-ghost/40 font-mono" id="diff-status">say "approve" or "reject"</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal order-1 lg:order-2" style="--reveal-delay: 120ms">
+          <span class="chip-dev chip inline-block rounded-full px-3 py-1 text-xs font-medium">Voice commands</span>
+          <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
+            <span class="font-display text-sky-200">Approve,</span>
+            <span class="font-bold"> without touching the keyboard.</span>
+          </h2>
+          <p class="mt-4 max-w-md text-lg text-ghost/65">Map spoken phrases to keystrokes. Cursor, Claude Code, Windsurf, and any app with a keyboard shortcut becomes voice-controlled.</p>
+          <div class="mt-6 grid gap-3">
+            <div class="glass rounded-xl p-4 flex items-center gap-4">
+              <span class="font-mono text-sky-300 text-sm">"approve"</span>
+              <span class="text-ghost/30">→</span>
+              <span class="kbd">⏎</span>
+              <span class="ml-auto text-xs text-ghost/45">Accept diff</span>
+            </div>
+            <div class="glass rounded-xl p-4 flex items-center gap-4">
+              <span class="font-mono text-sky-300 text-sm">"reject"</span>
+              <span class="text-ghost/30">→</span>
+              <span class="kbd">⎋</span>
+              <span class="ml-auto text-xs text-ghost/45">Discard</span>
+            </div>
+            <div class="glass rounded-xl p-4 flex items-center gap-4">
+              <span class="font-mono text-sky-300 text-sm">"commit it"</span>
+              <span class="text-ghost/30">→</span>
+              <span class="kbd">⌘</span><span class="kbd">⏎</span>
+              <span class="ml-auto text-xs text-ghost/45">Submit</span>
+            </div>
+            <div class="glass rounded-xl p-4 flex items-center gap-4">
+              <span class="font-mono text-sky-300 text-sm">"next file"</span>
+              <span class="text-ghost/30">→</span>
+              <span class="kbd">⌘</span><span class="kbd">]</span>
+              <span class="ml-auto text-xs text-ghost/45">Navigate</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feature 3: Languages + privacy -->
+    <section class="border-y border-white/5 bg-white/[0.015]">
+      <div class="mx-auto max-w-6xl px-6 py-16 md:py-24">
+        <div class="grid items-center gap-14 lg:grid-cols-[1fr_1.1fr]">
+          <div class="reveal">
+            <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">Private by default</span>
+            <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
+              <span class="font-display text-violet-200">Your code</span>
+              <span class="font-bold"> doesn't leave your machine.</span>
+            </h2>
+            <p class="mt-4 max-w-md text-lg text-ghost/65">Transcription runs on-device with Whisper, Parakeet, or Moonshine. If you enable AI cleanup, only the resulting text is sent — never audio, never your screen. Apple Intelligence keeps cleanup local too.</p>
+            <div class="mt-6 space-y-2.5 text-sm text-ghost/70">
+              <div class="flex items-start gap-3"><svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Whisper, Parakeet (Nvidia), Moonshine (streaming)</div>
+              <div class="flex items-start gap-3"><svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Bring your own key: OpenAI, Anthropic, Groq, Z.AI</div>
+              <div class="flex items-start gap-3"><svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Or 100% on-device with Apple Intelligence</div>
+              <div class="flex items-start gap-3"><svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Works offline after first-run model download</div>
+            </div>
+          </div>
+
+          <div class="reveal" style="--reveal-delay: 160ms">
+            <p class="mb-4 text-xs font-semibold uppercase tracking-[0.15em] text-ghost/40">Dictates in the languages your repo is written in</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="lang-pill"><span class="dot" style="background:#3178c6"></span>TypeScript</span>
+              <span class="lang-pill"><span class="dot" style="background:#f7df1e"></span>JavaScript</span>
+              <span class="lang-pill"><span class="dot" style="background:#3572a5"></span>Python</span>
+              <span class="lang-pill"><span class="dot" style="background:#dea584"></span>Rust</span>
+              <span class="lang-pill"><span class="dot" style="background:#00add8"></span>Go</span>
+              <span class="lang-pill"><span class="dot" style="background:#f05138"></span>Swift</span>
+              <span class="lang-pill"><span class="dot" style="background:#a97bff"></span>Kotlin</span>
+              <span class="lang-pill"><span class="dot" style="background:#b07219"></span>Java</span>
+              <span class="lang-pill"><span class="dot" style="background:#ffac45"></span>Elixir</span>
+              <span class="lang-pill"><span class="dot" style="background:#cc342d"></span>Ruby</span>
+              <span class="lang-pill"><span class="dot" style="background:#4f5d95"></span>PHP</span>
+              <span class="lang-pill"><span class="dot" style="background:#00599c"></span>C++</span>
+              <span class="lang-pill"><span class="dot" style="background:#239120"></span>C#</span>
+              <span class="lang-pill"><span class="dot" style="background:#ff3e00"></span>Svelte</span>
+              <span class="lang-pill"><span class="dot" style="background:#61dafb"></span>React</span>
+              <span class="lang-pill"><span class="dot" style="background:#38bdf8"></span>Tailwind</span>
+              <span class="lang-pill"><span class="dot" style="background:#22c55e"></span>SQL</span>
+              <span class="lang-pill"><span class="dot" style="background:#fbbf24"></span>GraphQL</span>
+              <span class="lang-pill"><span class="dot" style="background:#f38020"></span>YAML</span>
+              <span class="lang-pill"><span class="dot" style="background:#94a3b8"></span>bash</span>
+            </div>
+            <p class="mt-5 text-xs text-ghost/40">100+ supported languages via Whisper. Code-aware prompts keep technical vocabulary spelled right.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How developers use Ghostly (use-case list) -->
+    <section id="how-devs-use" class="mx-auto max-w-6xl px-6 py-16 md:py-24">
+      <div class="max-w-2xl reveal">
+        <span class="chip-dev chip inline-block rounded-full px-3 py-1 text-xs font-medium">Use cases</span>
+        <h2 class="mt-5 text-4xl tracking-tight md:text-5xl">
+          <span class="font-display text-sky-200">What engineers</span>
+          <span class="font-bold"> ship with Ghostly.</span>
+        </h2>
+        <p class="mt-4 text-lg text-ghost/60">Real workflows from devs who'd rather talk than type.</p>
+      </div>
+
+      <div class="mt-10 glass rounded-2xl">
+        <div class="usecase-row">
+          <div class="usecase-icons">
+            <span class="app-ic"><img src="/assets/apps/cursor.png" alt="" /></span>
+            <span class="app-ic"><img src="/assets/apps/claude.png" alt="" /></span>
+          </div>
+          <div class="flex-1">
+            <div class="text-base font-semibold">Dictate context-rich prompts to Cursor or Claude in seconds</div>
+            <div class="mt-1 text-sm text-ghost/55">Tag <span class="font-mono text-sky-300/90">@file</span>s, paste whole mental models, skip the typing warm-up.</div>
+          </div>
+        </div>
+        <div class="usecase-row">
+          <div class="usecase-icons">
+            <span class="app-ic"><img src="/assets/apps/notion.png" alt="" /></span>
+            <span class="app-ic"><img src="/assets/apps/linear.png" alt="" /></span>
+          </div>
+          <div class="flex-1">
+            <div class="text-base font-semibold">Write PR summaries, Linear tickets, and RFCs 5× faster</div>
+            <div class="mt-1 text-sm text-ghost/55">Talk through what you built; AI cleanup fixes it into shippable prose.</div>
+          </div>
+        </div>
+        <div class="usecase-row">
+          <div class="usecase-icons">
+            <span class="app-ic"><img src="/assets/apps/slack.png" alt="" /></span>
+            <span class="app-ic"><img src="/assets/apps/discord.png" alt="" /></span>
+          </div>
+          <div class="flex-1">
+            <div class="text-base font-semibold">Reply to Slack &amp; Discord without breaking deep-work</div>
+            <div class="mt-1 text-sm text-ghost/55">Per-app profile keeps replies casual and short — no corporate rewrite.</div>
+          </div>
+        </div>
+        <div class="usecase-row">
+          <div class="usecase-icons">
+            <span class="app-ic"><img src="/assets/apps/terminal.png" alt="" /></span>
+            <span class="app-ic"><img src="/assets/apps/vscode.png" alt="" /></span>
+          </div>
+          <div class="flex-1">
+            <div class="text-base font-semibold">Talk through commits, rebases, and CI debugging</div>
+            <div class="mt-1 text-sm text-ghost/55">Commit messages that actually explain the change, dictated at speaking pace.</div>
+          </div>
+        </div>
+        <div class="usecase-row">
+          <div class="usecase-icons">
+            <span class="app-ic"><img src="/assets/apps/chatgpt.png" alt="" /></span>
+            <span class="app-ic"><img src="/assets/apps/perplexity.png" alt="" /></span>
+          </div>
+          <div class="flex-1">
+            <div class="text-base font-semibold">Brainstorm with ChatGPT or Perplexity hands-free</div>
+            <div class="mt-1 text-sm text-ghost/55">Screenshot + ask pipes the screen and your question to a vision model.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Top 10 grid -->
+    <section class="border-y border-white/5 bg-white/[0.015]">
+      <div class="mx-auto max-w-6xl px-6 py-16 md:py-24">
+        <div class="max-w-2xl reveal">
+          <h2 class="text-4xl tracking-tight md:text-5xl"><span class="font-display text-violet-200">Ten ways</span> <span class="font-bold">devs flow with Ghostly.</span></h2>
+          <p class="mt-4 text-lg text-ghost/60">Tiny habits that compound across a day.</p>
+        </div>
+        <div class="mt-10 grid gap-3 md:grid-cols-2" data-stagger>
+          <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span><span>Dictating Cursor prompts with file tags and camelCase identifiers</span></div>
+          <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Saying "approve" / "reject" to blaze through diff reviews</span></div>
+          <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span><span>Writing PR descriptions and release notes by talking</span></div>
+          <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><span>Capturing a bug repro the moment it happens, in Linear</span></div>
+          <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v4H3zM3 10h18v4H3zM3 17h18v4H3z"/></svg></span><span>Drafting RFCs and design docs at speaking pace</span></div>
+          <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span><span>Filling Notion / Obsidian with engineering notes between meetings</span></div>
+          <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></span><span>Replying to Slack threads and staying out of the keyboard</span></div>
+          <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15h6M9 11h6"/></svg></span><span>Dictating test cases before writing the implementation</span></div>
+          <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span><span>Logging CI failures + reproduction steps into the bug tracker</span></div>
+          <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg></span><span>Screenshot + ask to debug a framework you've never used</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-block">
+      <div class="mx-auto max-w-4xl px-6 py-20 md:py-28 text-center">
+        <h2 class="text-4xl font-extrabold tracking-tight md:text-6xl">Talk it out.<br /><span class="font-display text-sky-200">Ship it faster.</span></h2>
+        <p class="mx-auto mt-5 max-w-lg text-lg text-ghost/60">Free tier has full feature parity. Pro is $39 once. No subscription.</p>
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
+          <a href="/install/" class="btn-primary inline-flex items-center gap-2 rounded-xl px-8 py-4 text-lg font-semibold">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+            Download for macOS
+          </a>
+          <a href="/#pricing" class="btn-ghost inline-flex items-center gap-2 rounded-xl px-6 py-4 text-base font-semibold">See pricing</a>
+        </div>
+        <p class="mt-6 text-xs text-ghost/40">Apple Silicon · M1 or later · macOS 12+ · 30 min/wk free, Pro removes the cap</p>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5">
+      <div class="mx-auto max-w-6xl px-6 py-14">
+        <div class="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+          <div>
+            <div class="flex items-center gap-2">
+              <img src="/assets/ghostly_logo.svg" alt="" class="h-6 w-6" />
+              <span class="text-sm font-semibold">Ghostly</span>
+            </div>
+            <p class="mt-3 max-w-xs text-sm text-ghost/55">Voice-first typing for macOS. On-device Whisper with optional AI cleanup.</p>
+            <p class="mt-4 font-mono text-xs text-ghost/40">v0.9.0 · updated Apr 2026</p>
+          </div>
+          <div>
+            <div class="text-xs font-semibold uppercase tracking-wider text-ghost/40">Product</div>
+            <ul class="mt-4 space-y-2 text-sm text-ghost/60">
+              <li><a href="/#features" class="hover:text-ghost">Features</a></li>
+              <li><a href="/#how" class="hover:text-ghost">How it works</a></li>
+              <li><a href="/#ai" class="hover:text-ghost">AI cleanup</a></li>
+              <li><a href="/#pricing" class="hover:text-ghost">Pricing</a></li>
+              <li><a href="/#download" class="hover:text-ghost">Download</a></li>
+            </ul>
+          </div>
+          <div>
+            <div class="text-xs font-semibold uppercase tracking-wider text-ghost/40">For you</div>
+            <ul class="mt-4 space-y-2 text-sm text-ghost/60">
+              <li><a href="/for/developers/" class="text-sky-300">Developers</a></li>
+              <li><a href="/for/creatives/" class="hover:text-ghost">Creatives</a></li>
+              <li><a href="/for/leaders/" class="hover:text-ghost">Leaders</a></li>
+              <li><a href="/for/sales/" class="hover:text-ghost">Sales</a></li>
+              <li><a href="/for/students/" class="hover:text-ghost">Students</a></li>
+            </ul>
+          </div>
+          <div>
+            <div class="text-xs font-semibold uppercase tracking-wider text-ghost/40">Contact</div>
+            <ul class="mt-4 space-y-2 text-sm text-ghost/60">
+              <li><a href="/privacy" class="hover:text-ghost">Privacy</a></li>
+              <li><a href="mailto:security@try-ghostly.com" class="hover:text-ghost">Security</a></li>
+              <li><a href="mailto:support@try-ghostly.com" class="hover:text-ghost">Support</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="mt-12 border-t border-white/5 pt-6 text-xs text-ghost/40">© 2026 Ghostly. All rights reserved.</div>
+      </div>
+    </footer>
+
+    <script>
+      // Header shadow on scroll
+      (function () {
+        const header = document.getElementById('site-header');
+        if (!header) return;
+        const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 8);
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+      })();
+
+      // Reveal on scroll
+      (function () {
+        const prm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        document.querySelectorAll('[data-stagger]').forEach((grid) => {
+          Array.from(grid.children).forEach((child, i) => {
+            child.classList.add('reveal');
+            child.style.setProperty('--reveal-delay', `${i * 60}ms`);
+          });
+        });
+        if (prm) {
+          document.querySelectorAll('.reveal').forEach((el) => el.classList.add('in-view'));
+          return;
+        }
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+      })();
+
+      // Hero composer: cycle dictated developer prompts
+      (function () {
+        const prm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const promptEl = document.getElementById('dev-hero-prompt');
+        const composer = document.getElementById('dev-hero-composer');
+        const micText = document.getElementById('dev-hero-mic-text');
+        const micWrap = document.getElementById('dev-hero-mic');
+        if (!promptEl) return;
+
+        const scripts = [
+          [
+            { t: 'refactor ', cls: '' },
+            { t: 'fetchUser', cls: 'ident' },
+            { t: ' in ', cls: '' },
+            { t: '@helper.swift', cls: 'fname' },
+            { t: ' to retry three times with exponential backoff and surface a proper ', cls: '' },
+            { t: 'ApiError', cls: 'ident' },
+          ],
+          [
+            { t: 'add a test in ', cls: '' },
+            { t: '@auth.test.ts', cls: 'fname' },
+            { t: ' for the ', cls: '' },
+            { t: 'JWT', cls: 'ident' },
+            { t: ' expiry edge case, mock ', cls: '' },
+            { t: 'getTokenStore', cls: 'ident' },
+            { t: ' and assert we redirect to login', cls: '' },
+          ],
+          [
+            { t: 'wire up ', cls: '' },
+            { t: 'Supabase', cls: 'ident' },
+            { t: ' row-level security on ', cls: '' },
+            { t: '@schema.sql', cls: 'fname' },
+            { t: ' — only allow a user to read their own rows, keep admin writes', cls: '' },
+          ],
+          [
+            { t: 'migrate ', cls: '' },
+            { t: 'useCart', cls: 'ident' },
+            { t: ' from ', cls: '' },
+            { t: 'Zustand', cls: 'ident' },
+            { t: ' to ', cls: '' },
+            { t: 'XState', cls: 'ident' },
+            { t: ' and split optimistic updates into a separate machine', cls: '' },
+          ],
+        ];
+
+        let i = 0;
+
+        const render = (segments, n) => {
+          let total = 0;
+          let html = '';
+          for (const seg of segments) {
+            const remain = n - total;
+            if (remain <= 0) break;
+            const take = seg.t.slice(0, remain);
+            html += seg.cls ? `<span class="${seg.cls}">${take}</span>` : take;
+            total += take.length;
+            if (total >= n) break;
+          }
+          html += '<span class="caret"></span>';
+          promptEl.innerHTML = html;
+        };
+
+        const runScript = (segments) => {
+          return new Promise((resolve) => {
+            const full = segments.reduce((a, s) => a + s.t.length, 0);
+            let n = 0;
+            micText.textContent = 'Listening · fn';
+            micWrap.classList.remove('idle');
+            composer.classList.add('is-listening');
+
+            const step = () => {
+              n++;
+              render(segments, n);
+              if (n < full) {
+                setTimeout(step, 26 + Math.random() * 38);
+              } else {
+                micText.textContent = 'Transcribed · pasted';
+                setTimeout(() => {
+                  composer.classList.remove('is-listening');
+                  micWrap.classList.add('idle');
+                  setTimeout(resolve, 1500);
+                }, 220);
+              }
+            };
+            setTimeout(step, 300);
+          });
+        };
+
+        const loop = async () => {
+          while (true) {
+            await runScript(scripts[i % scripts.length]);
+            // small pause, clear, then next
+            await new Promise((r) => setTimeout(r, 500));
+            promptEl.innerHTML = '<span class="caret"></span>';
+            i++;
+          }
+        };
+
+        if (prm) {
+          render(scripts[0], scripts[0].reduce((a, s) => a + s.t.length, 0));
+          micText.textContent = 'Pasted';
+          composer.classList.remove('is-listening');
+        } else {
+          loop();
+        }
+      })();
+
+      // Xform cards: type the "in" string, reveal the "out"
+      (function () {
+        const prm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const els = document.querySelectorAll('.xform-val');
+        if (!els.length) return;
+        els.forEach((el) => {
+          const full = el.getAttribute('data-out');
+          el.textContent = prm ? full : '';
+          if (prm) return;
+          const io = new IntersectionObserver((entries) => {
+            entries.forEach((e) => {
+              if (!e.isIntersecting) return;
+              io.unobserve(el);
+              let i = 0;
+              const step = () => {
+                i++;
+                el.textContent = full.slice(0, i);
+                if (i < full.length) setTimeout(step, 36 + Math.random() * 28);
+              };
+              setTimeout(step, 200);
+            });
+          }, { threshold: 0.6 });
+          io.observe(el);
+        });
+      })();
+
+      // Diff demo: alternating approve/reject voice triggers
+      (function () {
+        const prm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prm) return;
+        const approve = document.getElementById('diff-approve');
+        const reject = document.getElementById('diff-reject');
+        const label = document.getElementById('diff-voice-label');
+        const status = document.getElementById('diff-status');
+        if (!approve || !reject) return;
+
+        const cycle = [
+          { word: 'approve', btn: approve, color: '#6ee7b7', text: '"approve" → ⏎' },
+          { word: 'reject',  btn: reject,  color: '#fca5a5', text: '"reject" → ⎋'  },
+          { word: 'approve', btn: approve, color: '#6ee7b7', text: '"approve" → ⏎' },
+          { word: 'approve', btn: approve, color: '#6ee7b7', text: '"approve" → ⏎' },
+        ];
+
+        let idx = 0;
+        const run = () => {
+          const step = cycle[idx % cycle.length];
+          label.textContent = `"${step.word}"`;
+          status.textContent = step.text;
+          step.btn.classList.add('is-trigger');
+          setTimeout(() => step.btn.classList.remove('is-trigger'), 650);
+          idx++;
+        };
+
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              run();
+              setInterval(run, 2200);
+              io.unobserve(e.target);
+            }
+          });
+        }, { threshold: 0.4 });
+        io.observe(document.querySelector('.diff-win'));
+      })();
+    </script>
+  </body>
+</html>
