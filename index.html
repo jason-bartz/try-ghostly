@@ -460,8 +460,7 @@
       }
       .hero-composer {
         position: relative;
-        min-width: 340px;
-        max-width: 440px;
+        width: min(440px, calc(100vw - 48px));
         padding: 12px 16px;
         border-radius: 14px;
         background: rgba(15, 15, 23, 0.9);
@@ -722,15 +721,18 @@
         display: inline-flex;
         align-items: center;
         gap: 10px;
-        padding: 10px 26px;
+        padding: 8px 22px;
         background: rgba(10, 10, 16, 0.7);
         border: 1px solid rgba(124, 92, 255, 0.35);
         border-radius: 999px;
         backdrop-filter: blur(12px);
         font-family: 'Instrument Serif', serif;
-        font-size: 22px;
+        font-size: 19px;
         color: #e8e9ef;
         box-shadow: 0 0 40px rgba(124, 92, 255, 0.2);
+      }
+      @media (min-width: 640px) {
+        .tone-input { padding: 10px 26px; font-size: 22px; }
       }
       .tone-caret { display: none; }
       .tone-caret.active { display: inline-block; }
@@ -741,18 +743,24 @@
         gap: 14px;
       }
       .tone-out-icon {
-        width: 56px; height: 56px;
-        border-radius: 14px;
+        width: 44px; height: 44px;
+        border-radius: 12px;
         overflow: hidden;
         box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.6);
+      }
+      @media (min-width: 640px) {
+        .tone-out-icon { width: 56px; height: 56px; border-radius: 14px; }
       }
       .tone-out-icon img { width: 100%; height: 100%; object-fit: cover; }
       .tone-out-text {
         font-family: 'Instrument Serif', serif;
-        font-size: 22px;
+        font-size: 17px;
         line-height: 1.5;
-        min-height: 33px;
+        min-height: 26px;
         color: rgba(232, 233, 239, 0.92);
+      }
+      @media (min-width: 640px) {
+        .tone-out-text { font-size: 22px; min-height: 33px; }
       }
       .tone-out-text .accent { color: #f59e0b; font-weight: 500; }
       .tone-connector { color: rgba(232, 233, 239, 0.18); }
@@ -760,7 +768,7 @@
   </head>
   <body class="font-sans antialiased">
     <header id="site-header" class="sticky top-0 z-50 border-b border-transparent bg-ink/60 backdrop-blur transition-colors duration-200">
-      <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+      <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:px-6 md:py-4">
         <a href="#" class="flex items-center gap-2">
           <img src="assets/ghostly_logo.svg" alt="" class="h-7 w-7" />
           <span class="text-lg font-bold tracking-tight">Ghostly</span>
@@ -772,15 +780,15 @@
           <a href="#pricing" class="hover:text-ghost">Pricing</a>
           <a href="#download" class="hover:text-ghost">Download</a>
         </nav>
-        <a href="/install/" class="btn-primary rounded-lg px-4 py-2 text-sm font-semibold">Download</a>
+        <a href="/install/" class="btn-primary rounded-lg px-3.5 py-2 text-sm font-semibold md:px-4">Download</a>
       </div>
     </header>
 
     <section class="grid-bg relative overflow-hidden">
-      <div class="mx-auto max-w-6xl px-6 py-24 md:py-32">
+      <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
         <div class="mx-auto max-w-3xl text-center">
           <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">On-device transcription · macOS · Private by default</span>
-          <h1 class="mt-6 text-5xl tracking-tight md:text-7xl" style="letter-spacing: -0.03em">
+          <h1 class="mt-6 text-[2.75rem] leading-[1.05] tracking-tight sm:text-5xl md:text-7xl" style="letter-spacing: -0.03em">
             <span class="font-display text-ghost" style="font-size: 1.08em">Voice-first</span>
             <span class="relative inline-block align-baseline"><span class="invisible font-extrabold" style="white-space: pre"> typing</span><span class="absolute left-0 top-0 font-extrabold" style="white-space: pre"><span id="hero-type"> typing</span><span id="hero-caret" class="hero-caret"></span></span></span>
             <br />
@@ -790,7 +798,7 @@
           <p class="mx-auto mt-6 max-w-xl text-lg text-ghost/70 md:text-xl">
             Press <span class="kbd">fn</span>, talk, release. Your words paste into the active app.
           </p>
-          <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
+          <div class="mt-8 flex flex-wrap items-center justify-center gap-3 md:mt-10">
             <a href="/install/" class="btn-primary inline-flex items-center gap-2 rounded-xl px-6 py-3 text-base font-semibold">
               <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
               Download for macOS
@@ -798,7 +806,7 @@
           </div>
         </div>
 
-        <div class="relative mx-auto mt-16 max-w-4xl">
+        <div class="relative mx-auto mt-12 max-w-4xl md:mt-16">
           <div class="slack-win">
             <div class="flex items-center gap-2 border-b border-white/5 bg-black/30 px-4 py-2.5">
               <span class="h-3 w-3 rounded-full bg-red-400/80"></span>
@@ -806,7 +814,7 @@
               <span class="h-3 w-3 rounded-full bg-green-400/80"></span>
               <span class="ml-3 text-xs text-ghost/40">Slack · acme-team</span>
             </div>
-            <div class="grid grid-cols-[160px_1fr] md:grid-cols-[200px_1fr]" style="min-height: 460px">
+            <div class="grid grid-cols-1 md:grid-cols-[200px_1fr]" style="min-height: 400px">
               <aside class="slack-sidebar hidden px-3 py-4 md:block">
                 <div class="mb-3 px-2 text-xs font-semibold uppercase tracking-wider text-ghost/40">acme-team</div>
                 <div class="space-y-0.5">
@@ -829,7 +837,7 @@
                   </div>
                 </div>
 
-                <div id="chat-feed" class="flex-1 space-y-3 overflow-y-auto px-5 py-5" style="max-height: 340px"></div>
+                <div id="chat-feed" class="flex-1 space-y-3 overflow-y-auto px-4 py-4 md:px-5 md:py-5" style="max-height: 280px"></div>
 
                 <div id="caption" class="caption-bubble overlay-hidden absolute left-1/2 z-10 w-[86%] max-w-md -translate-x-1/2 px-4 py-3" style="top: 42%; transform: translate(-50%, -50%)">
                   <div class="flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-wider text-ghost/40">
@@ -839,7 +847,7 @@
                   <div id="caption-text" class="mt-1 text-sm leading-snug text-ghost/90 caret">&nbsp;</div>
                 </div>
 
-                <div class="px-5 pb-5">
+                <div class="px-4 pb-4 md:px-5 md:pb-5">
                   <div class="rounded-lg border border-white/10 bg-black/30 focus-within:border-violet-400/40">
                     <div id="composer" class="min-h-[40px] px-4 pt-3 pb-1 text-sm text-ghost/90"><span class="text-ghost/30" id="composer-placeholder">Message #design</span></div>
                     <div class="flex items-center gap-2 border-t border-white/5 px-3 py-2">
@@ -884,7 +892,7 @@
       </div>
     </section>
 
-    <section id="features" class="mx-auto max-w-6xl px-6 py-24">
+    <section id="features" class="mx-auto max-w-6xl px-6 py-16 md:py-24">
       <div class="mx-auto max-w-2xl text-center reveal">
         <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">Features</span>
         <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
@@ -968,7 +976,7 @@
       </div>
     </section>
 
-    <section class="mx-auto max-w-6xl px-6 py-24">
+    <section class="mx-auto max-w-6xl px-6 py-16 md:py-24">
       <div class="mx-auto max-w-2xl text-center reveal">
         <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">Who it's for</span>
         <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
@@ -1063,7 +1071,7 @@
     </section>
 
     <section class="border-y border-white/5">
-      <div class="mx-auto max-w-5xl px-6 py-24">
+      <div class="mx-auto max-w-5xl px-6 py-16 md:py-24">
         <div class="mx-auto max-w-2xl text-center reveal">
           <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">How it compares</span>
           <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
@@ -1073,7 +1081,8 @@
           <p class="mt-4 text-lg text-ghost/60">Most AI dictation tools ship your audio to a server. Ghostly doesn't — and it's the only one here with choice of engine, configurable prompts, and no subscription.</p>
         </div>
 
-        <div class="mt-12 overflow-x-auto">
+        <p class="mt-10 text-center text-xs text-ghost/40 md:hidden">Scroll horizontally to compare →</p>
+        <div class="mt-4 overflow-x-auto md:mt-12">
           <table class="w-full min-w-[720px] border-separate" style="border-spacing: 0">
             <thead>
               <tr class="text-left text-xs uppercase tracking-wider text-ghost/40">
@@ -1103,7 +1112,7 @@
     </section>
 
     <section id="how" class="border-y border-white/5 bg-white/[0.02]">
-      <div class="mx-auto max-w-6xl px-6 py-24">
+      <div class="mx-auto max-w-6xl px-6 py-16 md:py-24">
         <div class="mx-auto max-w-2xl text-center reveal">
           <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">How it works</span>
           <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
@@ -1159,7 +1168,7 @@
       </div>
     </section>
 
-    <section class="mx-auto max-w-6xl px-6 py-24">
+    <section class="mx-auto max-w-6xl px-6 py-16 md:py-24">
       <div class="mx-auto max-w-2xl text-center reveal">
         <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">Works in every app</span>
         <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
@@ -1169,7 +1178,38 @@
         <p class="mt-4 text-lg text-ghost/60">No integrations, no extensions, no per-app setup. If you can type into it, you can talk into it.</p>
       </div>
 
-      <div class="relative mx-auto mt-16 h-[560px] max-w-4xl reveal" style="--reveal-delay: 150ms">
+      <!-- Mobile layout: simple grid, no absolute positioning -->
+      <div class="mt-12 md:hidden reveal" style="--reveal-delay: 150ms">
+        <div class="flex flex-col items-center gap-5">
+          <div class="hero-composer">
+            <span class="hero-label">Active input</span>
+            <div class="hero-text"><span id="hero-typing-m"></span><span class="hero-caret"></span></div>
+          </div>
+          <div class="center-pill">
+            <img src="assets/ghostly_logo.svg" alt="" class="h-5 w-5" />
+            <span class="text-sm font-semibold tracking-tight text-ghost">Ghostly</span>
+            <div id="hero-wave-m" class="mini-wave ml-1 flex h-5 w-[84px] items-center justify-center"></div>
+          </div>
+        </div>
+        <div class="mt-8 grid grid-cols-3 gap-2 text-[11px] sm:text-xs">
+          <span class="marquee-pill justify-center !px-2 !py-2"><img src="assets/apps/slack.png" alt="" loading="lazy" decoding="async" />Slack</span>
+          <span class="marquee-pill justify-center !px-2 !py-2"><img src="assets/apps/gmail.png" alt="" loading="lazy" decoding="async" />Gmail</span>
+          <span class="marquee-pill justify-center !px-2 !py-2"><img src="assets/apps/cursor.png" alt="" loading="lazy" decoding="async" />Cursor</span>
+          <span class="marquee-pill justify-center !px-2 !py-2"><img src="assets/apps/claude.png" alt="" loading="lazy" decoding="async" />Claude</span>
+          <span class="marquee-pill justify-center !px-2 !py-2"><img src="assets/apps/xcode.png" alt="" loading="lazy" decoding="async" />Xcode</span>
+          <span class="marquee-pill justify-center !px-2 !py-2"><img src="assets/apps/vscode.png" alt="" loading="lazy" decoding="async" />VS Code</span>
+          <span class="marquee-pill justify-center !px-2 !py-2"><img src="assets/apps/chatgpt.png" alt="" loading="lazy" decoding="async" />ChatGPT</span>
+          <span class="marquee-pill justify-center !px-2 !py-2"><img src="assets/apps/linear.png" alt="" loading="lazy" decoding="async" />Linear</span>
+          <span class="marquee-pill justify-center !px-2 !py-2"><img src="assets/apps/figma.png" alt="" loading="lazy" decoding="async" />Figma</span>
+          <span class="marquee-pill justify-center !px-2 !py-2"><img src="assets/apps/notion.png" alt="" loading="lazy" decoding="async" />Notion</span>
+          <span class="marquee-pill justify-center !px-2 !py-2"><img src="assets/apps/apple-mail.png" alt="" loading="lazy" decoding="async" />Mail</span>
+          <span class="marquee-pill justify-center !px-2 !py-2"><img src="assets/apps/messages.png" alt="" loading="lazy" decoding="async" />Messages</span>
+        </div>
+        <p class="mt-4 text-center text-xs text-ghost/40">…and every other app with a text field.</p>
+      </div>
+
+      <!-- Desktop layout: floating tiles -->
+      <div class="relative mx-auto mt-16 hidden h-[560px] max-w-4xl reveal md:block" style="--reveal-delay: 150ms">
         <!-- center composer + pill -->
         <div class="absolute left-1/2 top-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-5">
           <div class="hero-composer">
@@ -1186,96 +1226,96 @@
         <!-- floating app tiles -->
         <!-- row 1: top edge -->
         <div class="app-tile" style="top: 1%;  left: 4%;   --delay: 0s;   --dur: 5.2s">
-          <span class="app-icon"><img src="assets/apps/slack.png" alt="" /></span> Slack
+          <span class="app-icon"><img src="assets/apps/slack.png" alt="" loading="lazy" decoding="async" /></span> Slack
         </div>
         <div class="app-tile" style="top: 0%;  left: 32%;  --delay: 0.8s; --dur: 6.1s">
-          <span class="app-icon"><img src="assets/apps/superhuman.png" alt="" /></span> Superhuman
+          <span class="app-icon"><img src="assets/apps/superhuman.png" alt="" loading="lazy" decoding="async" /></span> Superhuman
         </div>
         <div class="app-tile" style="top: 2%;  right: 30%; --delay: 0.3s; --dur: 5.7s">
-          <span class="app-icon"><img src="assets/apps/perplexity.png" alt="" /></span> Perplexity
+          <span class="app-icon"><img src="assets/apps/perplexity.png" alt="" loading="lazy" decoding="async" /></span> Perplexity
         </div>
         <div class="app-tile" style="top: 1%;  right: 3%;  --delay: 1.1s; --dur: 6.3s">
-          <span class="app-icon"><img src="assets/apps/gmail.png" alt="" /></span> Gmail
+          <span class="app-icon"><img src="assets/apps/gmail.png" alt="" loading="lazy" decoding="async" /></span> Gmail
         </div>
 
         <!-- row 2 -->
         <div class="app-tile" style="top: 16%; left: 18%;  --delay: 0.4s; --dur: 5.6s">
-          <span class="app-icon"><img src="assets/apps/cursor.png" alt="" /></span> Cursor
+          <span class="app-icon"><img src="assets/apps/cursor.png" alt="" loading="lazy" decoding="async" /></span> Cursor
         </div>
         <div class="app-tile" style="top: 14%; right: 16%; --delay: 1.2s; --dur: 6.4s">
-          <span class="app-icon"><img src="assets/apps/claude.png" alt="" /></span> Claude
+          <span class="app-icon"><img src="assets/apps/claude.png" alt="" loading="lazy" decoding="async" /></span> Claude
         </div>
 
         <!-- row 3: upper-mid -->
         <div class="app-tile" style="top: 28%; left: 0%;   --delay: 1.1s; --dur: 5.5s">
-          <span class="app-icon"><img src="assets/apps/xcode.png" alt="" /></span> Xcode
+          <span class="app-icon"><img src="assets/apps/xcode.png" alt="" loading="lazy" decoding="async" /></span> Xcode
         </div>
         <div class="app-tile" style="top: 30%; left: 30%;  --delay: 0.9s; --dur: 5.5s">
-          <span class="app-icon"><img src="assets/apps/google-antigravity.png" alt="" /></span> AntiGravity
+          <span class="app-icon"><img src="assets/apps/google-antigravity.png" alt="" loading="lazy" decoding="async" /></span> AntiGravity
         </div>
         <div class="app-tile" style="top: 30%; right: 28%; --delay: 1.5s; --dur: 5.9s">
-          <span class="app-icon"><img src="assets/apps/obsidian.png" alt="" /></span> Obsidian
+          <span class="app-icon"><img src="assets/apps/obsidian.png" alt="" loading="lazy" decoding="async" /></span> Obsidian
         </div>
         <div class="app-tile" style="top: 28%; right: 0%;  --delay: 0.3s; --dur: 6.4s">
-          <span class="app-icon"><img src="assets/apps/vscode.png" alt="" /></span> VS Code
+          <span class="app-icon"><img src="assets/apps/vscode.png" alt="" loading="lazy" decoding="async" /></span> VS Code
         </div>
 
         <!-- row 4: mid -->
         <div class="app-tile" style="top: 44%; left: 12%;  --delay: 0.9s; --dur: 5.9s">
-          <span class="app-icon"><img src="assets/apps/chatgpt.png" alt="" /></span> ChatGPT
+          <span class="app-icon"><img src="assets/apps/chatgpt.png" alt="" loading="lazy" decoding="async" /></span> ChatGPT
         </div>
         <div class="app-tile" style="top: 44%; right: 10%; --delay: 0.2s; --dur: 6.1s">
-          <span class="app-icon"><img src="assets/apps/linear.png" alt="" /></span> Linear
+          <span class="app-icon"><img src="assets/apps/linear.png" alt="" loading="lazy" decoding="async" /></span> Linear
         </div>
 
         <!-- row 5: lower-mid -->
         <div class="app-tile" style="top: 56%; left: 0%;   --delay: 1.3s; --dur: 6.0s">
-          <span class="app-icon"><img src="assets/apps/terminal.png" alt="" /></span> Terminal
+          <span class="app-icon"><img src="assets/apps/terminal.png" alt="" loading="lazy" decoding="async" /></span> Terminal
         </div>
         <div class="app-tile" style="top: 58%; left: 28%;  --delay: 0.5s; --dur: 5.4s">
-          <span class="app-icon"><img src="assets/apps/drafts.png" alt="" /></span> Drafts
+          <span class="app-icon"><img src="assets/apps/drafts.png" alt="" loading="lazy" decoding="async" /></span> Drafts
         </div>
         <div class="app-tile" style="top: 58%; right: 26%; --delay: 1.0s; --dur: 6.6s">
-          <span class="app-icon"><img src="assets/apps/things.png" alt="" /></span> Things
+          <span class="app-icon"><img src="assets/apps/things.png" alt="" loading="lazy" decoding="async" /></span> Things
         </div>
         <div class="app-tile" style="top: 56%; right: 0%;  --delay: 0.7s; --dur: 5.7s">
-          <span class="app-icon"><img src="assets/apps/zed.png" alt="" /></span> Zed
+          <span class="app-icon"><img src="assets/apps/zed.png" alt="" loading="lazy" decoding="async" /></span> Zed
         </div>
 
         <!-- row 6 -->
         <div class="app-tile" style="top: 70%; left: 14%;  --delay: 0.8s; --dur: 5.8s">
-          <span class="app-icon"><img src="assets/apps/figma.png" alt="" /></span> Figma
+          <span class="app-icon"><img src="assets/apps/figma.png" alt="" loading="lazy" decoding="async" /></span> Figma
         </div>
         <div class="app-tile" style="top: 70%; right: 14%; --delay: 1.4s; --dur: 6.2s">
-          <span class="app-icon"><img src="assets/apps/notion.png" alt="" /></span> Notion
+          <span class="app-icon"><img src="assets/apps/notion.png" alt="" loading="lazy" decoding="async" /></span> Notion
         </div>
 
         <!-- row 7: lower -->
         <div class="app-tile" style="top: 82%; left: 2%;   --delay: 0.6s; --dur: 5.3s">
-          <span class="app-icon"><img src="assets/apps/apple-mail.png" alt="" /></span> Mail
+          <span class="app-icon"><img src="assets/apps/apple-mail.png" alt="" loading="lazy" decoding="async" /></span> Mail
         </div>
         <div class="app-tile" style="top: 82%; left: 30%;  --delay: 1.2s; --dur: 6.5s">
-          <span class="app-icon"><img src="assets/apps/replit.png" alt="" /></span> Replit
+          <span class="app-icon"><img src="assets/apps/replit.png" alt="" loading="lazy" decoding="async" /></span> Replit
         </div>
         <div class="app-tile" style="top: 82%; right: 28%; --delay: 0.4s; --dur: 5.6s">
-          <span class="app-icon"><img src="assets/apps/outlook.png" alt="" /></span> Outlook
+          <span class="app-icon"><img src="assets/apps/outlook.png" alt="" loading="lazy" decoding="async" /></span> Outlook
         </div>
         <div class="app-tile" style="top: 82%; right: 2%;  --delay: 1.0s; --dur: 6.0s">
-          <span class="app-icon"><img src="assets/apps/discord.png" alt="" /></span> Discord
+          <span class="app-icon"><img src="assets/apps/discord.png" alt="" loading="lazy" decoding="async" /></span> Discord
         </div>
 
         <!-- row 8: bottom edge -->
         <div class="app-tile" style="bottom: 1%; left: 6%;   --delay: 0.5s; --dur: 5.4s">
-          <span class="app-icon"><img src="assets/apps/messages.png" alt="" /></span> Messages
+          <span class="app-icon"><img src="assets/apps/messages.png" alt="" loading="lazy" decoding="async" /></span> Messages
         </div>
         <div class="app-tile" style="bottom: 0%; left: 34%;  --delay: 1.3s; --dur: 6.3s">
-          <span class="app-icon"><img src="assets/apps/whatsapp.png" alt="" /></span> WhatsApp
+          <span class="app-icon"><img src="assets/apps/whatsapp.png" alt="" loading="lazy" decoding="async" /></span> WhatsApp
         </div>
         <div class="app-tile" style="bottom: 1%; right: 32%; --delay: 0.7s; --dur: 5.8s">
-          <span class="app-icon"><img src="assets/apps/apple-notes.png" alt="" /></span> Notes
+          <span class="app-icon"><img src="assets/apps/apple-notes.png" alt="" loading="lazy" decoding="async" /></span> Notes
         </div>
         <div class="app-tile" style="bottom: 0%; right: 4%;  --delay: 1.1s; --dur: 6.1s">
-          <span class="app-icon"><img src="assets/apps/google-calendar.png" alt="" /></span> Calendar
+          <span class="app-icon"><img src="assets/apps/google-calendar.png" alt="" loading="lazy" decoding="async" /></span> Calendar
         </div>
 
         <!-- subtle connecting rings -->
@@ -1286,7 +1326,7 @@
       </div>
     </section>
 
-    <section id="ai" class="mx-auto max-w-6xl px-6 py-24">
+    <section id="ai" class="mx-auto max-w-6xl px-6 py-16 md:py-24">
       <div class="grid items-center gap-12 lg:grid-cols-2">
         <div class="reveal">
           <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">AI cleanup</span>
@@ -1346,7 +1386,7 @@
     </section>
 
     <section class="border-t border-white/5">
-      <div class="mx-auto max-w-5xl px-6 py-24">
+      <div class="mx-auto max-w-5xl px-6 py-16 md:py-24">
         <div class="mx-auto max-w-2xl text-center reveal">
           <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">Per-app tone</span>
           <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
@@ -1368,19 +1408,19 @@
               <path d="M 300 0 L 300 100" stroke="rgba(232,233,239,0.2)" stroke-width="1.25" stroke-dasharray="3 5" stroke-linecap="round"/>
               <path d="M 300 0 C 300 40, 470 50, 470 100" stroke="rgba(232,233,239,0.2)" stroke-width="1.25" stroke-dasharray="3 5" stroke-linecap="round"/>
             </svg>
-            <div class="mt-2 grid grid-cols-3 gap-6">
+            <div class="mt-2 grid grid-cols-3 gap-2 sm:gap-6">
               <div class="tone-out">
-                <div class="tone-out-icon"><img src="assets/apps/gmail.png" alt="Gmail" /></div>
+                <div class="tone-out-icon"><img src="assets/apps/gmail.png" alt="Gmail" loading="lazy" decoding="async" /></div>
                 <div class="tone-out-text"><span data-tone="gmail"></span><span class="hero-caret tone-caret" data-caret="gmail"></span></div>
                 <div class="text-xs uppercase tracking-wider text-ghost/40">Gmail</div>
               </div>
               <div class="tone-out">
-                <div class="tone-out-icon"><img src="assets/apps/slack.png" alt="Slack" /></div>
+                <div class="tone-out-icon"><img src="assets/apps/slack.png" alt="Slack" loading="lazy" decoding="async" /></div>
                 <div class="tone-out-text"><span data-tone="slack"></span><span class="hero-caret tone-caret" data-caret="slack"></span></div>
                 <div class="text-xs uppercase tracking-wider text-ghost/40">Slack</div>
               </div>
               <div class="tone-out">
-                <div class="tone-out-icon"><img src="assets/apps/messages.png" alt="Messages" /></div>
+                <div class="tone-out-icon"><img src="assets/apps/messages.png" alt="Messages" loading="lazy" decoding="async" /></div>
                 <div class="tone-out-text"><span data-tone="messages"></span><span class="hero-caret tone-caret" data-caret="messages"></span></div>
                 <div class="text-xs uppercase tracking-wider text-ghost/40">Messages</div>
               </div>
@@ -1391,7 +1431,7 @@
     </section>
 
     <section class="border-y border-white/5 bg-white/[0.02]">
-      <div class="mx-auto max-w-6xl px-6 py-24">
+      <div class="mx-auto max-w-6xl px-6 py-16 md:py-24">
         <div class="grid items-center gap-12 lg:grid-cols-2">
           <div class="order-2 lg:order-1">
             <div class="glass rounded-2xl p-6">
@@ -1420,7 +1460,7 @@
     </section>
 
     <section class="border-b border-white/5">
-      <div class="mx-auto max-w-6xl px-6 py-24">
+      <div class="mx-auto max-w-6xl px-6 py-16 md:py-24">
         <div class="mx-auto max-w-2xl text-center reveal">
           <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">Works anywhere</span>
           <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
@@ -1433,64 +1473,64 @@
         <div class="mt-14 space-y-4" aria-hidden="true">
           <div class="marquee">
             <div class="marquee-track">
-              <span class="marquee-pill"><img src="assets/apps/slack.png" alt=""/>Slack</span>
-              <span class="marquee-pill"><img src="assets/apps/gmail.png" alt=""/>Gmail</span>
-              <span class="marquee-pill"><img src="assets/apps/cursor.png" alt=""/>Cursor</span>
-              <span class="marquee-pill"><img src="assets/apps/claude.png" alt=""/>Claude</span>
-              <span class="marquee-pill"><img src="assets/apps/xcode.png" alt=""/>Xcode</span>
-              <span class="marquee-pill"><img src="assets/apps/vscode.png" alt=""/>VS Code</span>
-              <span class="marquee-pill"><img src="assets/apps/chatgpt.png" alt=""/>ChatGPT</span>
-              <span class="marquee-pill"><img src="assets/apps/linear.png" alt=""/>Linear</span>
-              <span class="marquee-pill"><img src="assets/apps/figma.png" alt=""/>Figma</span>
-              <span class="marquee-pill"><img src="assets/apps/notion.png" alt=""/>Notion</span>
-              <span class="marquee-pill"><img src="assets/apps/messages.png" alt=""/>Messages</span>
-              <span class="marquee-pill"><img src="assets/apps/discord.png" alt=""/>Discord</span>
-              <span class="marquee-pill"><img src="assets/apps/terminal.png" alt=""/>Terminal</span>
+              <span class="marquee-pill"><img src="assets/apps/slack.png" alt="" loading="lazy" decoding="async"/>Slack</span>
+              <span class="marquee-pill"><img src="assets/apps/gmail.png" alt="" loading="lazy" decoding="async"/>Gmail</span>
+              <span class="marquee-pill"><img src="assets/apps/cursor.png" alt="" loading="lazy" decoding="async"/>Cursor</span>
+              <span class="marquee-pill"><img src="assets/apps/claude.png" alt="" loading="lazy" decoding="async"/>Claude</span>
+              <span class="marquee-pill"><img src="assets/apps/xcode.png" alt="" loading="lazy" decoding="async"/>Xcode</span>
+              <span class="marquee-pill"><img src="assets/apps/vscode.png" alt="" loading="lazy" decoding="async"/>VS Code</span>
+              <span class="marquee-pill"><img src="assets/apps/chatgpt.png" alt="" loading="lazy" decoding="async"/>ChatGPT</span>
+              <span class="marquee-pill"><img src="assets/apps/linear.png" alt="" loading="lazy" decoding="async"/>Linear</span>
+              <span class="marquee-pill"><img src="assets/apps/figma.png" alt="" loading="lazy" decoding="async"/>Figma</span>
+              <span class="marquee-pill"><img src="assets/apps/notion.png" alt="" loading="lazy" decoding="async"/>Notion</span>
+              <span class="marquee-pill"><img src="assets/apps/messages.png" alt="" loading="lazy" decoding="async"/>Messages</span>
+              <span class="marquee-pill"><img src="assets/apps/discord.png" alt="" loading="lazy" decoding="async"/>Discord</span>
+              <span class="marquee-pill"><img src="assets/apps/terminal.png" alt="" loading="lazy" decoding="async"/>Terminal</span>
               <!-- duplicate for seamless loop -->
-              <span class="marquee-pill"><img src="assets/apps/slack.png" alt=""/>Slack</span>
-              <span class="marquee-pill"><img src="assets/apps/gmail.png" alt=""/>Gmail</span>
-              <span class="marquee-pill"><img src="assets/apps/cursor.png" alt=""/>Cursor</span>
-              <span class="marquee-pill"><img src="assets/apps/claude.png" alt=""/>Claude</span>
-              <span class="marquee-pill"><img src="assets/apps/xcode.png" alt=""/>Xcode</span>
-              <span class="marquee-pill"><img src="assets/apps/vscode.png" alt=""/>VS Code</span>
-              <span class="marquee-pill"><img src="assets/apps/chatgpt.png" alt=""/>ChatGPT</span>
-              <span class="marquee-pill"><img src="assets/apps/linear.png" alt=""/>Linear</span>
-              <span class="marquee-pill"><img src="assets/apps/figma.png" alt=""/>Figma</span>
-              <span class="marquee-pill"><img src="assets/apps/notion.png" alt=""/>Notion</span>
-              <span class="marquee-pill"><img src="assets/apps/messages.png" alt=""/>Messages</span>
-              <span class="marquee-pill"><img src="assets/apps/discord.png" alt=""/>Discord</span>
-              <span class="marquee-pill"><img src="assets/apps/terminal.png" alt=""/>Terminal</span>
+              <span class="marquee-pill"><img src="assets/apps/slack.png" alt="" loading="lazy" decoding="async"/>Slack</span>
+              <span class="marquee-pill"><img src="assets/apps/gmail.png" alt="" loading="lazy" decoding="async"/>Gmail</span>
+              <span class="marquee-pill"><img src="assets/apps/cursor.png" alt="" loading="lazy" decoding="async"/>Cursor</span>
+              <span class="marquee-pill"><img src="assets/apps/claude.png" alt="" loading="lazy" decoding="async"/>Claude</span>
+              <span class="marquee-pill"><img src="assets/apps/xcode.png" alt="" loading="lazy" decoding="async"/>Xcode</span>
+              <span class="marquee-pill"><img src="assets/apps/vscode.png" alt="" loading="lazy" decoding="async"/>VS Code</span>
+              <span class="marquee-pill"><img src="assets/apps/chatgpt.png" alt="" loading="lazy" decoding="async"/>ChatGPT</span>
+              <span class="marquee-pill"><img src="assets/apps/linear.png" alt="" loading="lazy" decoding="async"/>Linear</span>
+              <span class="marquee-pill"><img src="assets/apps/figma.png" alt="" loading="lazy" decoding="async"/>Figma</span>
+              <span class="marquee-pill"><img src="assets/apps/notion.png" alt="" loading="lazy" decoding="async"/>Notion</span>
+              <span class="marquee-pill"><img src="assets/apps/messages.png" alt="" loading="lazy" decoding="async"/>Messages</span>
+              <span class="marquee-pill"><img src="assets/apps/discord.png" alt="" loading="lazy" decoding="async"/>Discord</span>
+              <span class="marquee-pill"><img src="assets/apps/terminal.png" alt="" loading="lazy" decoding="async"/>Terminal</span>
             </div>
           </div>
           <div class="marquee reverse">
             <div class="marquee-track">
-              <span class="marquee-pill"><img src="assets/apps/apple-mail.png" alt=""/>Mail</span>
-              <span class="marquee-pill"><img src="assets/apps/drafts.png" alt=""/>Drafts</span>
-              <span class="marquee-pill"><img src="assets/apps/obsidian.png" alt=""/>Obsidian</span>
-              <span class="marquee-pill"><img src="assets/apps/outlook.png" alt=""/>Outlook</span>
-              <span class="marquee-pill"><img src="assets/apps/perplexity.png" alt=""/>Perplexity</span>
-              <span class="marquee-pill"><img src="assets/apps/things.png" alt=""/>Things</span>
-              <span class="marquee-pill"><img src="assets/apps/whatsapp.png" alt=""/>WhatsApp</span>
-              <span class="marquee-pill"><img src="assets/apps/zed.png" alt=""/>Zed</span>
-              <span class="marquee-pill"><img src="assets/apps/apple-notes.png" alt=""/>Notes</span>
-              <span class="marquee-pill"><img src="assets/apps/superhuman.png" alt=""/>Superhuman</span>
-              <span class="marquee-pill"><img src="assets/apps/replit.png" alt=""/>Replit</span>
-              <span class="marquee-pill"><img src="assets/apps/google-calendar.png" alt=""/>Calendar</span>
-              <span class="marquee-pill"><img src="assets/apps/google-antigravity.png" alt=""/>AntiGravity</span>
+              <span class="marquee-pill"><img src="assets/apps/apple-mail.png" alt="" loading="lazy" decoding="async"/>Mail</span>
+              <span class="marquee-pill"><img src="assets/apps/drafts.png" alt="" loading="lazy" decoding="async"/>Drafts</span>
+              <span class="marquee-pill"><img src="assets/apps/obsidian.png" alt="" loading="lazy" decoding="async"/>Obsidian</span>
+              <span class="marquee-pill"><img src="assets/apps/outlook.png" alt="" loading="lazy" decoding="async"/>Outlook</span>
+              <span class="marquee-pill"><img src="assets/apps/perplexity.png" alt="" loading="lazy" decoding="async"/>Perplexity</span>
+              <span class="marquee-pill"><img src="assets/apps/things.png" alt="" loading="lazy" decoding="async"/>Things</span>
+              <span class="marquee-pill"><img src="assets/apps/whatsapp.png" alt="" loading="lazy" decoding="async"/>WhatsApp</span>
+              <span class="marquee-pill"><img src="assets/apps/zed.png" alt="" loading="lazy" decoding="async"/>Zed</span>
+              <span class="marquee-pill"><img src="assets/apps/apple-notes.png" alt="" loading="lazy" decoding="async"/>Notes</span>
+              <span class="marquee-pill"><img src="assets/apps/superhuman.png" alt="" loading="lazy" decoding="async"/>Superhuman</span>
+              <span class="marquee-pill"><img src="assets/apps/replit.png" alt="" loading="lazy" decoding="async"/>Replit</span>
+              <span class="marquee-pill"><img src="assets/apps/google-calendar.png" alt="" loading="lazy" decoding="async"/>Calendar</span>
+              <span class="marquee-pill"><img src="assets/apps/google-antigravity.png" alt="" loading="lazy" decoding="async"/>AntiGravity</span>
               <!-- duplicate for seamless loop -->
-              <span class="marquee-pill"><img src="assets/apps/apple-mail.png" alt=""/>Mail</span>
-              <span class="marquee-pill"><img src="assets/apps/drafts.png" alt=""/>Drafts</span>
-              <span class="marquee-pill"><img src="assets/apps/obsidian.png" alt=""/>Obsidian</span>
-              <span class="marquee-pill"><img src="assets/apps/outlook.png" alt=""/>Outlook</span>
-              <span class="marquee-pill"><img src="assets/apps/perplexity.png" alt=""/>Perplexity</span>
-              <span class="marquee-pill"><img src="assets/apps/things.png" alt=""/>Things</span>
-              <span class="marquee-pill"><img src="assets/apps/whatsapp.png" alt=""/>WhatsApp</span>
-              <span class="marquee-pill"><img src="assets/apps/zed.png" alt=""/>Zed</span>
-              <span class="marquee-pill"><img src="assets/apps/apple-notes.png" alt=""/>Notes</span>
-              <span class="marquee-pill"><img src="assets/apps/superhuman.png" alt=""/>Superhuman</span>
-              <span class="marquee-pill"><img src="assets/apps/replit.png" alt=""/>Replit</span>
-              <span class="marquee-pill"><img src="assets/apps/google-calendar.png" alt=""/>Calendar</span>
-              <span class="marquee-pill"><img src="assets/apps/google-antigravity.png" alt=""/>AntiGravity</span>
+              <span class="marquee-pill"><img src="assets/apps/apple-mail.png" alt="" loading="lazy" decoding="async"/>Mail</span>
+              <span class="marquee-pill"><img src="assets/apps/drafts.png" alt="" loading="lazy" decoding="async"/>Drafts</span>
+              <span class="marquee-pill"><img src="assets/apps/obsidian.png" alt="" loading="lazy" decoding="async"/>Obsidian</span>
+              <span class="marquee-pill"><img src="assets/apps/outlook.png" alt="" loading="lazy" decoding="async"/>Outlook</span>
+              <span class="marquee-pill"><img src="assets/apps/perplexity.png" alt="" loading="lazy" decoding="async"/>Perplexity</span>
+              <span class="marquee-pill"><img src="assets/apps/things.png" alt="" loading="lazy" decoding="async"/>Things</span>
+              <span class="marquee-pill"><img src="assets/apps/whatsapp.png" alt="" loading="lazy" decoding="async"/>WhatsApp</span>
+              <span class="marquee-pill"><img src="assets/apps/zed.png" alt="" loading="lazy" decoding="async"/>Zed</span>
+              <span class="marquee-pill"><img src="assets/apps/apple-notes.png" alt="" loading="lazy" decoding="async"/>Notes</span>
+              <span class="marquee-pill"><img src="assets/apps/superhuman.png" alt="" loading="lazy" decoding="async"/>Superhuman</span>
+              <span class="marquee-pill"><img src="assets/apps/replit.png" alt="" loading="lazy" decoding="async"/>Replit</span>
+              <span class="marquee-pill"><img src="assets/apps/google-calendar.png" alt="" loading="lazy" decoding="async"/>Calendar</span>
+              <span class="marquee-pill"><img src="assets/apps/google-antigravity.png" alt="" loading="lazy" decoding="async"/>AntiGravity</span>
             </div>
           </div>
         </div>
@@ -1498,7 +1538,7 @@
     </section>
 
     <section id="pricing" class="border-t border-white/5">
-      <div class="mx-auto max-w-6xl px-6 py-24">
+      <div class="mx-auto max-w-6xl px-6 py-16 md:py-24">
         <div class="text-center">
           <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">Pricing</span>
           <h2 class="mt-4 text-4xl font-bold tracking-tight md:text-5xl">Generous free. Optional Pro.</h2>
@@ -1557,7 +1597,7 @@
       </div>
     </section>
 
-    <section id="download" class="mx-auto max-w-6xl px-6 py-24">
+    <section id="download" class="mx-auto max-w-6xl px-6 py-16 md:py-24">
       <div class="glass overflow-hidden rounded-3xl p-10 md:p-16">
         <div class="grid items-center gap-10 md:grid-cols-2">
           <div>
@@ -1595,7 +1635,7 @@
     </section>
 
     <section class="border-t border-white/5">
-      <div class="mx-auto max-w-3xl px-6 py-24">
+      <div class="mx-auto max-w-3xl px-6 py-16 md:py-24">
         <div class="text-center">
           <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">FAQ</span>
           <h2 class="mt-4 text-4xl font-bold tracking-tight md:text-5xl">Questions</h2>
@@ -1630,7 +1670,7 @@
     </section>
 
     <section class="grid-bg">
-      <div class="mx-auto max-w-4xl px-6 py-24 text-center">
+      <div class="mx-auto max-w-4xl px-6 py-16 md:py-24 text-center">
         <h2 class="text-4xl font-extrabold tracking-tight md:text-6xl">Try it.</h2>
         <p class="mx-auto mt-6 max-w-xl text-lg text-ghost/60">Local. Yours.</p>
         <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
@@ -1759,8 +1799,10 @@
 
       // Cursor/Ghostly hero composer: cycle random messages, drive waveform
       (function () {
-        const waveEl = document.getElementById('hero-wave');
-        const textEl = document.getElementById('hero-typing');
+        // Pick whichever variant is visible — desktop floating layout or mobile grid layout
+        const mq = window.matchMedia('(min-width: 768px)');
+        const waveEl = mq.matches ? document.getElementById('hero-wave')   : document.getElementById('hero-wave-m');
+        const textEl = mq.matches ? document.getElementById('hero-typing') : document.getElementById('hero-typing-m');
         if (!waveEl || !textEl) return;
 
         const messages = [
