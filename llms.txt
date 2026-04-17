@@ -2,11 +2,11 @@
 
 > Ghostly is a voice-first typing app for macOS. It lives in the menu bar: press a shortcut, talk, and your words land in the active app. Speech-to-text runs on-device using Whisper — audio never leaves the Mac. Optional AI cleanup (Apple Intelligence, OpenAI, Anthropic) polishes the transcript; only text is sent, never audio.
 
-Ghostly is Apple Silicon only — macOS 12+ on any Mac with an M1, M2, M3, or M4 chip. Intel Macs are not supported. This is a deliberate decision: Ghostly runs every AI model on-device (Whisper via Metal, optional Apple Intelligence cleanup via the Neural Engine), and real-time local transcription needs the unified memory and ML accelerators that only Apple Silicon has. The app is distributed as a signed `.dmg` and requires microphone and accessibility permissions. First launch downloads a Whisper model (500 MB–1.6 GB depending on variant: Small, Medium, Turbo, Large).
+Ghostly is Apple Silicon only — macOS 12+ on any Mac with an M1 chip or later. Intel Macs are not supported. This is a deliberate decision: Ghostly runs every AI model on-device (Whisper via Metal, optional Apple Intelligence cleanup via the Neural Engine), and real-time local transcription needs the unified memory and ML accelerators that only Apple Silicon has. The app is distributed as a signed `.dmg` and requires microphone and accessibility permissions. First launch downloads a Whisper model (500 MB–1.6 GB depending on variant: Small, Medium, Turbo, Large).
 
 ## Key facts
 
-- Platform: Apple Silicon only (M1, M2, M3, M4) on macOS 12 or later — Intel Macs not supported
+- Platform: Apple Silicon only (M1 or later) on macOS 12 or later — Intel Macs not supported
 - Pricing: Free tier has full feature parity (all Whisper models, AI cleanup, per-app prompts, screenshot vision), capped at 30 minutes of transcription per week on one Mac. Pro is a one-time $39 purchase — unlimited transcription, install on up to 3 Macs, lifetime updates. No subscription.
 - Privacy: On-device transcription. No analytics. No telemetry. Audio never transmitted.
 - Download: https://downloads.try-ghostly.com/Ghostly-latest.dmg

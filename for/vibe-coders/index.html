@@ -1,0 +1,1074 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ghostly for Vibe Coders — Talk to Cursor, Claude, and v0</title>
+    <meta name="description" content="Ramble your ideas straight into Cursor, Claude, ChatGPT, v0, Bolt, and Lovable. Ghostly cleans up the mumble into a clear prompt and pastes it into whatever chat has focus — on-device, private." />
+    <meta name="keywords" content="vibe coding, voice prompts, Cursor voice, Claude voice input, ChatGPT dictation, v0 prompts, Bolt prompts, Lovable dictation, no-code voice" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://try-ghostly.com/for/vibe-coders/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Ghostly" />
+    <meta property="og:url" content="https://try-ghostly.com/for/vibe-coders/" />
+    <meta property="og:title" content="Ghostly for Vibe Coders" />
+    <meta property="og:description" content="Talk your app into existence. Ghostly turns rambly thoughts into clean prompts, then pastes them into Cursor, Claude, v0, or whatever chat you're in." />
+    <meta property="og:image" content="https://try-ghostly.com/assets/og-image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Ghostly for Vibe Coders" />
+    <meta name="twitter:description" content="Talk to Cursor, Claude, v0, and ChatGPT at the speed of thought. Private, on-device." />
+    <meta name="twitter:image" content="https://try-ghostly.com/assets/og-image.png" />
+
+    <link rel="icon" type="image/svg+xml" href="/assets/ghostly-icon.svg" />
+    <meta name="theme-color" content="#0b0b0f" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans:  ['Inter', 'ui-sans-serif', 'system-ui'],
+              serif: ['"Instrument Serif"', 'ui-serif', 'Georgia'],
+              mono:  ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+            },
+            colors: { ink: '#0b0b0f', ghost: '#e8e9ef', accent: '#7c5cff' },
+          },
+        },
+      };
+    </script>
+    <style>
+      html { scroll-behavior: smooth; }
+      body { background: #0b0b0f; color: #e8e9ef; }
+      .grid-bg {
+        background-image:
+          radial-gradient(circle at 20% 10%, rgba(217, 70, 239, 0.22), transparent 42%),
+          radial-gradient(circle at 80% 0%, rgba(251, 146, 60, 0.14), transparent 45%),
+          linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        background-size: auto, auto, 42px 42px, 42px 42px;
+      }
+      .glass {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(8px);
+      }
+      .btn-primary {
+        background: linear-gradient(180deg, #ffffff 0%, #d8d9e3 100%);
+        color: #0b0b0f;
+      }
+      .btn-primary:hover { filter: brightness(1.05); }
+      .btn-ghost {
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: #e8e9ef;
+      }
+      .btn-ghost:hover { background: rgba(255, 255, 255, 0.1); }
+      .chip {
+        background: rgba(124, 92, 255, 0.12);
+        border: 1px solid rgba(124, 92, 255, 0.35);
+        color: #c9bfff;
+      }
+      .chip-vibe { background: rgba(217, 70, 239, 0.12); border-color: rgba(217, 70, 239, 0.35); color: #f0abfc; }
+      .kbd {
+        font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+        background: #15151c;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-bottom-width: 2px;
+        padding: 2px 8px;
+        border-radius: 6px;
+        font-size: 0.85em;
+      }
+      .font-display {
+        font-family: 'Instrument Serif', ui-serif, Georgia, serif;
+        font-style: italic;
+        font-weight: 400;
+        letter-spacing: -0.01em;
+      }
+
+      #site-header.is-scrolled {
+        border-bottom-color: rgba(255, 255, 255, 0.08);
+        background: rgba(11, 11, 15, 0.85);
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.4), 0 10px 30px -10px rgba(0, 0, 0, 0.35);
+      }
+
+      /* ---- Header "For you" dropdown ---- */
+      .nav-dropdown { display: inline-flex; align-items: center; position: relative; }
+      .nav-dropdown::after {
+        content: ""; position: absolute; left: -8px; right: -8px; top: 100%; height: 18px;
+      }
+      .nav-dropdown-trigger {
+        background: transparent; border: none; padding: 8px 0; font: inherit; color: inherit; cursor: pointer;
+      }
+      .nav-dropdown-menu {
+        position: absolute;
+        top: calc(100% + 10px);
+        left: 50%;
+        transform: translate(-50%, -6px);
+        min-width: 320px;
+        padding: 10px;
+        background: rgba(20, 20, 26, 0.96);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(124, 92, 255, 0.08) inset;
+        backdrop-filter: blur(12px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 180ms ease, transform 180ms ease;
+        z-index: 60;
+      }
+      .nav-dropdown:hover .nav-dropdown-menu,
+      .nav-dropdown:focus-within .nav-dropdown-menu {
+        opacity: 1; pointer-events: auto; transform: translate(-50%, 0);
+      }
+      .nav-dropdown:hover .nav-dropdown-trigger svg { transform: rotate(180deg); }
+      .nav-dropdown-menu a {
+        display: flex; align-items: flex-start; gap: 12px; padding: 10px 12px; border-radius: 10px;
+        color: rgba(232, 233, 239, 0.88);
+        transition: background 160ms ease, color 160ms ease;
+      }
+      .nav-dropdown-menu a:hover { background: rgba(124, 92, 255, 0.1); color: #fff; }
+      .nav-dropdown-menu a.is-active { background: rgba(124, 92, 255, 0.14); color: #fff; }
+      .nav-dropdown-icon {
+        flex-shrink: 0; width: 34px; height: 34px; border-radius: 9px;
+        display: inline-flex; align-items: center; justify-content: center;
+        background: rgba(124, 92, 255, 0.12); color: #c9bfff;
+      }
+      .nav-dropdown-icon svg { width: 16px; height: 16px; }
+      .nav-dropdown-icon-dev { background: rgba(56, 189, 248, 0.14); color: #7dd3fc; }
+      .nav-dropdown-icon-vibe { background: rgba(217, 70, 239, 0.14); color: #f0abfc; }
+      .nav-dropdown-icon-creative { background: rgba(244, 114, 182, 0.14); color: #f9a8d4; }
+      .nav-dropdown-icon-leader { background: rgba(251, 191, 36, 0.14); color: #fcd34d; }
+      .nav-dropdown-icon-sales { background: rgba(52, 211, 153, 0.14); color: #6ee7b7; }
+      .nav-dropdown-icon-student { background: rgba(167, 139, 250, 0.14); color: #c4b5fd; }
+      .nav-dropdown-label { display: block; font-size: 14px; font-weight: 600; letter-spacing: -0.005em; }
+      .nav-dropdown-sub { display: block; margin-top: 2px; font-size: 12px; color: rgba(232, 233, 239, 0.5); }
+
+      /* ---- Scroll reveal ---- */
+      .reveal {
+        opacity: 0; transform: translateY(22px);
+        transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1), transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+        transition-delay: var(--reveal-delay, 0ms);
+      }
+      .reveal.in-view { opacity: 1; transform: translateY(0); }
+      @media (prefers-reduced-motion: reduce) {
+        .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+      }
+
+      /* ---- Floating app tile ---- */
+      .app-tile {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 10px 14px; border-radius: 14px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(10px);
+        font-size: 13px; font-weight: 500; color: rgba(232, 233, 239, 0.85);
+        box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+      }
+      .app-tile img { width: 22px; height: 22px; border-radius: 5px; object-fit: contain; background: #ffffff; }
+
+      /* ---- Chat window (hero demo) ---- */
+      .chat-win {
+        background: #0f0f17;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 40px 100px -30px rgba(217, 70, 239, 0.3), 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+      }
+      .chat-tabs {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        background: rgba(0, 0, 0, 0.3);
+      }
+      .chat-dot { width: 11px; height: 11px; border-radius: 50%; }
+      .chat-dot.r { background: #ff5f57; }
+      .chat-dot.y { background: #febc2e; }
+      .chat-dot.g { background: #28c840; }
+      .chat-app-pill {
+        display: inline-flex; align-items: center; gap: 6px;
+        font-size: 11px; color: rgba(232, 233, 239, 0.6);
+        padding: 3px 10px; border-radius: 999px;
+        background: rgba(217, 70, 239, 0.08);
+        border: 1px solid rgba(217, 70, 239, 0.25);
+        margin-left: 6px;
+      }
+      .chat-app-pill img { width: 12px; height: 12px; border-radius: 3px; background: #fff; object-fit: contain; }
+      .chat-body {
+        display: flex; flex-direction: column;
+        min-height: 420px;
+      }
+      .chat-scroll {
+        padding: 16px 18px;
+        flex: 1;
+        display: flex; flex-direction: column; gap: 14px;
+        overflow: hidden;
+      }
+      .bubble {
+        max-width: 90%;
+        padding: 10px 14px;
+        border-radius: 14px;
+        font-size: 13px;
+        line-height: 1.55;
+        opacity: 0;
+        transform: translateY(6px);
+        transition: opacity 400ms ease, transform 400ms ease;
+      }
+      .bubble.in { opacity: 1; transform: translateY(0); }
+      .bubble.user {
+        align-self: flex-end;
+        background: rgba(217, 70, 239, 0.12);
+        border: 1px solid rgba(217, 70, 239, 0.28);
+        color: #fde4ff;
+        border-bottom-right-radius: 4px;
+      }
+      .bubble.assistant {
+        align-self: flex-start;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        color: rgba(232, 233, 239, 0.9);
+        border-bottom-left-radius: 4px;
+      }
+      .bubble.assistant .code {
+        display: block;
+        margin-top: 8px;
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-size: 11.5px;
+        background: #07070a;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 8px;
+        padding: 8px 10px;
+        color: #f0abfc;
+        white-space: pre;
+        overflow-x: auto;
+      }
+      .chat-composer {
+        margin: 0 16px 16px;
+        background: #14141c;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        padding: 12px 14px;
+        min-height: 120px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .chat-composer.is-listening { border-color: rgba(217, 70, 239, 0.4); box-shadow: 0 0 0 3px rgba(217, 70, 239, 0.1); }
+      .chat-prompt {
+        font-family: Inter, sans-serif;
+        font-size: 13.5px; line-height: 1.55; min-height: 54px;
+        color: rgba(232, 233, 239, 0.92);
+      }
+      .chat-prompt .highlight { color: #f0abfc; font-weight: 500; }
+      .chat-prompt .caret {
+        display: inline-block; width: 0.55ch; height: 1.1em; background: #f0abfc;
+        vertical-align: text-bottom; margin-left: 1px;
+        animation: blink 1s steps(2, end) infinite;
+      }
+      @keyframes blink { 50% { opacity: 0; } }
+      .chat-toolbar {
+        display: flex; align-items: center; justify-content: space-between;
+        padding-top: 8px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      .chat-mic {
+        display: inline-flex; align-items: center; gap: 8px;
+        font-size: 11px; color: rgba(240, 171, 252, 0.9);
+      }
+      .mic-dot { width: 7px; height: 7px; border-radius: 50%; background: #d946ef; box-shadow: 0 0 0 0 rgba(217, 70, 239, 0.5); animation: pulse 1.4s ease-in-out infinite; }
+      @keyframes pulse {
+        0% { box-shadow: 0 0 0 0 rgba(217, 70, 239, 0.5); }
+        70% { box-shadow: 0 0 0 10px rgba(217, 70, 239, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(217, 70, 239, 0); }
+      }
+      .chat-mic.idle .mic-dot { background: rgba(232, 233, 239, 0.3); animation: none; box-shadow: none; }
+      .chat-mic.idle { color: rgba(232, 233, 239, 0.4); }
+      .chat-send {
+        background: linear-gradient(180deg, #e879f9, #d946ef);
+        color: #0b0b0f;
+        font-weight: 600; font-size: 11px;
+        padding: 5px 11px; border-radius: 6px;
+      }
+
+      /* ---- Ramble-to-prompt demo ---- */
+      .ramble-card {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        overflow: hidden;
+      }
+      .ramble-side {
+        padding: 18px 20px;
+      }
+      .ramble-side + .ramble-side { border-top: 1px solid rgba(255, 255, 255, 0.06); }
+      @media (min-width: 768px) {
+        .ramble-card { display: grid; grid-template-columns: 1fr auto 1fr; align-items: stretch; }
+        .ramble-side + .ramble-side { border-top: none; border-left: 1px solid rgba(255, 255, 255, 0.06); }
+        .ramble-divider { display: flex; align-items: center; justify-content: center; padding: 0 8px; color: rgba(240, 171, 252, 0.5); font-size: 22px; }
+      }
+      .ramble-divider { display: flex; align-items: center; justify-content: center; padding: 10px; color: rgba(240, 171, 252, 0.5); font-size: 18px; }
+      .ramble-label {
+        font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+        color: rgba(232, 233, 239, 0.4);
+        margin-bottom: 10px;
+      }
+      .ramble-label.out { color: rgba(240, 171, 252, 0.8); }
+      .ramble-text {
+        font-size: 13.5px; line-height: 1.65;
+        color: rgba(232, 233, 239, 0.8);
+        font-style: italic;
+      }
+      .ramble-text.filler { color: rgba(232, 233, 239, 0.45); }
+      .ramble-clean {
+        font-size: 13.5px; line-height: 1.6;
+        color: rgba(232, 233, 239, 0.95);
+        font-weight: 500;
+      }
+      .ramble-clean strong { color: #f0abfc; font-weight: 600; }
+
+      /* ---- Paste-into-chat flow ---- */
+      .flow-step {
+        display: flex; align-items: center; gap: 14px;
+        padding: 16px 18px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        border-radius: 14px;
+      }
+      .flow-num {
+        flex-shrink: 0;
+        width: 32px; height: 32px; border-radius: 50%;
+        background: rgba(217, 70, 239, 0.14);
+        color: #f0abfc;
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-size: 13px; font-weight: 700;
+        display: inline-flex; align-items: center; justify-content: center;
+      }
+      .flow-step .flow-app {
+        margin-left: auto;
+        display: inline-flex; align-items: center; gap: 6px;
+        font-size: 11px; color: rgba(232, 233, 239, 0.45);
+      }
+      .flow-step .flow-app img { width: 16px; height: 16px; border-radius: 4px; background: #fff; object-fit: contain; }
+
+      /* ---- Auto-submit supported-app pills ---- */
+      .submit-pill {
+        display: inline-flex; align-items: center; gap: 6px;
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: rgba(217, 70, 239, 0.08);
+        border: 1px solid rgba(217, 70, 239, 0.24);
+        font-size: 11.5px; color: #fde4ff;
+      }
+      .submit-pill img { width: 13px; height: 13px; border-radius: 3px; background: #fff; object-fit: contain; }
+
+      /* ---- Smart-vocabulary chips ---- */
+      .vocab-chip {
+        display: inline-block;
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-size: 10.5px;
+        padding: 2px 7px;
+        border-radius: 5px;
+        background: rgba(217, 70, 239, 0.1);
+        border: 1px solid rgba(217, 70, 239, 0.22);
+        color: #f0abfc;
+      }
+
+      /* ---- App marquee ---- */
+      .marquee {
+        overflow: hidden;
+        -webkit-mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+                mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+      }
+      .marquee-track {
+        display: flex;
+        gap: 16px;
+        width: max-content;
+        animation: marquee 34s linear infinite;
+      }
+      @keyframes marquee {
+        from { transform: translateX(0); }
+        to   { transform: translateX(-50%); }
+      }
+
+      /* ---- Use-case row ---- */
+      .usecase-row {
+        display: flex; align-items: center; gap: 16px;
+        padding: 18px 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        transition: background 180ms ease;
+      }
+      .usecase-row:first-child { border-top: none; }
+      .usecase-row:hover { background: rgba(217, 70, 239, 0.04); }
+      .usecase-icons {
+        display: inline-flex; gap: -10px;
+        flex-shrink: 0;
+        width: 88px;
+      }
+      .usecase-icons .app-ic {
+        width: 42px; height: 42px; border-radius: 10px; overflow: hidden;
+        background: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 6px 20px -8px rgba(0, 0, 0, 0.5);
+      }
+      .usecase-icons .app-ic img { width: 100%; height: 100%; object-fit: contain; }
+      .usecase-icons .app-ic:not(:first-child) { margin-left: -14px; }
+
+      /* ---- Top-10 grid ---- */
+      .top-tile {
+        display: flex; align-items: center; gap: 12px;
+        padding: 16px 18px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+      }
+      .top-tile:hover {
+        border-color: rgba(217, 70, 239, 0.35);
+        background: rgba(217, 70, 239, 0.05);
+        transform: translateY(-1px);
+      }
+      .top-tile .top-icon {
+        flex-shrink: 0;
+        width: 32px; height: 32px; border-radius: 8px;
+        background: rgba(217, 70, 239, 0.1);
+        color: #f0abfc;
+        display: inline-flex; align-items: center; justify-content: center;
+      }
+
+      /* ---- CTA block ---- */
+      .cta-block {
+        background: radial-gradient(ellipse at center, rgba(217, 70, 239, 0.14), transparent 60%),
+                    linear-gradient(180deg, rgba(124, 92, 255, 0.08), transparent);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .mic-dot, .marquee-track, .chat-prompt .caret { animation: none !important; }
+      }
+
+      /* ---- Mobile ---- */
+      @media (max-width: 640px) {
+        .chat-scroll { padding: 12px 14px; gap: 10px; }
+        .chat-composer { margin: 0 12px 12px; padding: 10px 12px; min-height: 108px; }
+        .chat-prompt { font-size: 12.5px; min-height: 46px; }
+        .bubble { font-size: 12.5px; padding: 9px 12px; max-width: 95%; }
+        .chat-tabs { padding: 8px 12px; gap: 6px; }
+        .chat-app-pill { display: none; }
+
+        .ramble-side { padding: 14px 16px; }
+        .ramble-text, .ramble-clean { font-size: 13px; }
+
+        .flow-step { padding: 14px 14px; gap: 12px; }
+        .flow-step .flow-app { display: none; }
+
+        .usecase-row { padding: 14px 14px; gap: 12px; }
+        .usecase-icons { width: 72px; }
+        .usecase-icons .app-ic { width: 36px; height: 36px; }
+
+        .top-tile { padding: 13px 14px; font-size: 13px; }
+      }
+    </style>
+  </head>
+  <body class="font-sans antialiased">
+    <!-- Shared header -->
+    <header id="site-header" class="sticky top-0 z-50 border-b border-transparent bg-ink/60 backdrop-blur transition-colors duration-200">
+      <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:px-6 md:py-4">
+        <a href="/" class="flex items-center gap-2">
+          <img src="/assets/ghostly-logo.svg" alt="" class="h-7 w-7" />
+          <span class="text-lg font-bold tracking-tight">Ghostly</span>
+        </a>
+        <nav class="hidden items-center gap-8 text-sm text-ghost/70 md:flex">
+          <a href="/#features" class="hover:text-ghost">Features</a>
+          <div class="nav-dropdown">
+            <button type="button" class="nav-dropdown-trigger inline-flex items-center gap-1 text-ghost hover:text-ghost" aria-haspopup="true" aria-expanded="false">
+              For you
+              <svg class="h-3 w-3 opacity-70 transition-transform" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+            </button>
+            <div class="nav-dropdown-menu" role="menu">
+              <a href="/for/developers/" role="menuitem"><span class="nav-dropdown-icon nav-dropdown-icon-dev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span><span><span class="nav-dropdown-label">Developers</span><span class="nav-dropdown-sub">Dictate prompts, docs, and code</span></span></a>
+              <a href="/for/vibe-coders/" class="is-active" role="menuitem"><span class="nav-dropdown-icon nav-dropdown-icon-vibe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.6L18.5 9.5l-4.6 1.9L12 16l-1.9-4.6L5.5 9.5l4.6-1.9z"/><path d="M19 14l.7 1.7L21.4 16.4l-1.7.7L19 18.8l-.7-1.7L16.6 16.4l1.7-.7z"/></svg></span><span><span class="nav-dropdown-label">Vibe coders</span><span class="nav-dropdown-sub">Talk to Cursor, Claude, v0</span></span></a>
+              <a href="/for/creatives/" role="menuitem"><span class="nav-dropdown-icon nav-dropdown-icon-creative"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><circle cx="6" cy="6" r="2"/></svg></span><span><span class="nav-dropdown-label">Creatives</span><span class="nav-dropdown-sub">Scripts, posts, and first drafts</span></span></a>
+              <a href="/for/leaders/" role="menuitem"><span class="nav-dropdown-icon nav-dropdown-icon-leader"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></span><span><span class="nav-dropdown-label">Leaders</span><span class="nav-dropdown-sub">Inbox zero without the typing</span></span></a>
+              <a href="/for/sales/" role="menuitem"><span class="nav-dropdown-icon nav-dropdown-icon-sales"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></span><span><span class="nav-dropdown-label">Sales</span><span class="nav-dropdown-sub">CRM notes between calls</span></span></a>
+              <a href="/for/students/" role="menuitem"><span class="nav-dropdown-icon nav-dropdown-icon-student"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span><span><span class="nav-dropdown-label">Students</span><span class="nav-dropdown-sub">Essays at speaking speed</span></span></a>
+            </div>
+          </div>
+          <a href="/#how" class="hover:text-ghost">How it works</a>
+          <a href="/#pricing" class="hover:text-ghost">Pricing</a>
+          <a href="/#download" class="hover:text-ghost">Download</a>
+        </nav>
+        <a href="/install/" class="btn-primary rounded-lg px-3.5 py-2 text-sm font-semibold md:px-4">Download</a>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="grid-bg relative overflow-hidden">
+      <div class="mx-auto max-w-6xl px-6 py-16 md:py-24">
+        <div class="grid items-center gap-12 lg:grid-cols-[1.05fr_1fr]">
+          <div>
+            <span class="chip-vibe chip inline-block rounded-full px-3 py-1 text-xs font-medium">Ghostly for vibe coders</span>
+            <h1 class="mt-5 text-4xl leading-[1.05] tracking-tight md:text-6xl" style="letter-spacing: -0.03em">
+              <span class="font-display text-fuchsia-200" style="font-size: 1.05em">Talk your app</span><br />
+              <span class="font-bold">into existence.</span>
+            </h1>
+            <p class="mt-6 max-w-lg text-lg text-ghost/70">Open Cursor, Claude, v0, Bolt, Lovable — whatever you're vibing in. Hold <span class="kbd">fn</span>, ramble your idea, and Ghostly cleans it up, pastes it into the chat, and hits Enter for you. On-device. Private. Hands-free.</p>
+            <div class="mt-8 flex flex-wrap items-center gap-3">
+              <a href="/install/" class="btn-primary inline-flex items-center gap-2 rounded-xl px-6 py-3 text-base font-semibold">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+                Download for macOS
+              </a>
+              <a href="#how-vibe" class="btn-ghost inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold">See how it works →</a>
+            </div>
+            <p class="mt-5 text-xs text-ghost/45">Apple Silicon only · M1 or later · macOS 12+</p>
+          </div>
+
+          <!-- Hero demo: Claude-style chat + composer -->
+          <div class="reveal">
+            <div class="chat-win">
+              <div class="chat-tabs">
+                <span class="chat-dot r"></span><span class="chat-dot y"></span><span class="chat-dot g"></span>
+                <span class="chat-app-pill"><img src="/assets/apps/claude.png" alt="" /> Claude</span>
+                <span class="ml-auto text-[10px] text-ghost/30 font-mono">chat</span>
+              </div>
+              <div class="chat-body">
+                <div class="chat-scroll" id="vibe-hero-scroll">
+                  <div class="bubble user in">Hey — quick thing. Can you help me build a little vibe-check landing page? Kinda retro, real loud.</div>
+                  <div class="bubble assistant in">Totally. Want me to scaffold the page, pick a palette, and drop in copy — or just the copy?</div>
+                </div>
+                <div class="chat-composer is-listening" id="vibe-hero-composer">
+                  <div class="chat-prompt" id="vibe-hero-prompt"></div>
+                  <div class="chat-toolbar">
+                    <div class="chat-mic" id="vibe-hero-mic"><span class="mic-dot"></span><span id="vibe-hero-mic-text">Listening · fn</span></div>
+                    <button class="chat-send">⏎ Send</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p class="mt-4 text-center text-[11px] font-mono text-ghost/35">Talk → Ghostly cleans → pastes into Claude</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Logo/apps band -->
+    <section class="border-y border-white/5 bg-white/[0.015]">
+      <div class="mx-auto max-w-6xl px-6 py-10">
+        <p class="text-center text-xs font-semibold uppercase tracking-[0.15em] text-ghost/40">Works wherever you're vibe-coding</p>
+        <div class="mt-6 marquee">
+          <div class="marquee-track">
+            <div class="app-tile"><img src="/assets/apps/cursor.png" alt="" /> Cursor</div>
+            <div class="app-tile"><img src="/assets/apps/claude.png" alt="" /> Claude</div>
+            <div class="app-tile"><img src="/assets/apps/chatgpt.png" alt="" /> ChatGPT</div>
+            <div class="app-tile"><img src="/assets/apps/v0.png" alt="" /> v0</div>
+            <div class="app-tile"><img src="/assets/apps/replit.png" alt="" /> Replit</div>
+            <div class="app-tile"><img src="/assets/apps/windsurf.png" alt="" /> Windsurf</div>
+            <div class="app-tile"><img src="/assets/apps/zed.png" alt="" /> Zed</div>
+            <div class="app-tile"><img src="/assets/apps/vscode.png" alt="" /> VS Code</div>
+            <div class="app-tile"><img src="/assets/apps/perplexity.png" alt="" /> Perplexity</div>
+            <div class="app-tile"><img src="/assets/apps/figma.png" alt="" /> Figma</div>
+            <div class="app-tile"><img src="/assets/apps/google-antigravity.png" alt="" /> AntiGravity</div>
+            <div class="app-tile"><img src="/assets/apps/github.png" alt="" /> GitHub</div>
+            <!-- duplicated for seamless loop -->
+            <div class="app-tile"><img src="/assets/apps/cursor.png" alt="" /> Cursor</div>
+            <div class="app-tile"><img src="/assets/apps/claude.png" alt="" /> Claude</div>
+            <div class="app-tile"><img src="/assets/apps/chatgpt.png" alt="" /> ChatGPT</div>
+            <div class="app-tile"><img src="/assets/apps/v0.png" alt="" /> v0</div>
+            <div class="app-tile"><img src="/assets/apps/replit.png" alt="" /> Replit</div>
+            <div class="app-tile"><img src="/assets/apps/windsurf.png" alt="" /> Windsurf</div>
+            <div class="app-tile"><img src="/assets/apps/zed.png" alt="" /> Zed</div>
+            <div class="app-tile"><img src="/assets/apps/vscode.png" alt="" /> VS Code</div>
+            <div class="app-tile"><img src="/assets/apps/perplexity.png" alt="" /> Perplexity</div>
+            <div class="app-tile"><img src="/assets/apps/figma.png" alt="" /> Figma</div>
+            <div class="app-tile"><img src="/assets/apps/google-antigravity.png" alt="" /> AntiGravity</div>
+            <div class="app-tile"><img src="/assets/apps/github.png" alt="" /> GitHub</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The pitch: typing kills the vibe -->
+    <section class="mx-auto max-w-6xl px-6 py-16 md:py-24">
+      <div class="mx-auto max-w-2xl text-center reveal">
+        <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">Typing kills the vibe</span>
+        <h2 class="mt-5 text-4xl tracking-tight md:text-5xl">
+          <span class="font-display text-violet-200">You're not writing code.</span>
+          <span class="font-bold"> You're having a conversation.</span>
+        </h2>
+        <p class="mt-4 text-lg text-ghost/60">Vibe coding is talking to an LLM until something exists. But the chat is still a keyboard. Ghostly turns the loop into what it should be — you describe, the model builds, you describe again.</p>
+      </div>
+
+      <div class="mt-14 grid items-stretch gap-6 md:grid-cols-3">
+        <div class="glass reveal rounded-2xl p-6">
+          <div class="font-mono text-xs text-fuchsia-300/80">01 · Describe</div>
+          <h3 class="mt-3 text-lg font-semibold">Talk through the idea</h3>
+          <p class="mt-2 text-sm text-ghost/60">Ramble like you're pitching a friend. "Build me a pricing page with three tiers, kinda like Linear but warmer." Ghostly cleans the filler into a clear prompt.</p>
+        </div>
+        <div class="glass reveal rounded-2xl p-6" style="--reveal-delay: 120ms">
+          <div class="font-mono text-xs text-fuchsia-300/80">02 · Iterate</div>
+          <h3 class="mt-3 text-lg font-semibold">Keep the feedback flowing</h3>
+          <p class="mt-2 text-sm text-ghost/60">"Make the hero darker, use a serif for the headline, add a testimonial strip below." Hands stay off the keyboard. The model keeps shipping.</p>
+        </div>
+        <div class="glass reveal rounded-2xl p-6" style="--reveal-delay: 240ms">
+          <div class="font-mono text-xs text-fuchsia-300/80">03 · Ship</div>
+          <h3 class="mt-3 text-lg font-semibold">Deploy notes, tweets, launches</h3>
+          <p class="mt-2 text-sm text-ghost/60">Copy for the hero, the Product Hunt post, the announcement tweet — all dictated in one breath, each in the right tone per app.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feature 1: Ramble → clean prompt -->
+    <section class="border-y border-white/5 bg-white/[0.015]">
+      <div class="mx-auto max-w-6xl px-6 py-16 md:py-24">
+        <div class="grid items-center gap-14 lg:grid-cols-[1fr_1.15fr]">
+          <div class="reveal">
+            <span class="chip-vibe chip inline-block rounded-full px-3 py-1 text-xs font-medium">AI cleanup</span>
+            <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
+              <span class="font-display text-fuchsia-200">Ramble in.</span><br />
+              <span class="font-bold">Clean prompt out.</span>
+            </h2>
+            <p class="mt-4 max-w-md text-lg text-ghost/65">You don't have to know what you want before you say it. Ghostly strips "umms," tangents, and self-corrections, keeps the structure, and drops a prompt that actually reads like a prompt.</p>
+            <ul class="mt-6 space-y-3 text-sm text-ghost/70">
+              <li class="flex items-start gap-3"><svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-fuchsia-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Per-app prompt profiles — Cursor gets terse, Claude gets conversational.</li>
+              <li class="flex items-start gap-3"><svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-fuchsia-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Run 100% on-device with Apple Intelligence, or bring your own key.</li>
+              <li class="flex items-start gap-3"><svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-fuchsia-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Screenshot + describe: pipe a screen and your ask into a vision model.</li>
+            </ul>
+          </div>
+
+          <div class="reveal space-y-4" style="--reveal-delay: 160ms">
+            <div class="ramble-card">
+              <div class="ramble-side">
+                <div class="ramble-label">You said</div>
+                <p class="ramble-text">"Okay so, um, I want a <span class="filler">— wait let me think —</span> like a dashboard, a really clean one, it's for tracking habits and I want three cards at the top and then like a calendar heatmap thing underneath, kinda like GitHub contributions but nicer, and use like a warm color, maybe peach?"</p>
+              </div>
+              <div class="ramble-divider">→</div>
+              <div class="ramble-side">
+                <div class="ramble-label out">Pasted into Cursor</div>
+                <p class="ramble-clean">Build a clean habit-tracking dashboard:<br/>— <strong>3 summary cards</strong> at the top (streak, completion %, current week)<br/>— <strong>Calendar heatmap</strong> below, GitHub-style but softer<br/>— <strong>Palette:</strong> warm peach, low contrast, calm</p>
+              </div>
+            </div>
+
+            <div class="ramble-card">
+              <div class="ramble-side">
+                <div class="ramble-label">You said</div>
+                <p class="ramble-text">"make the hero bigger and, um, change the CTA to just 'start free' and move the testimonials below the features, also that gradient is way too much, tone it down"</p>
+              </div>
+              <div class="ramble-divider">→</div>
+              <div class="ramble-side">
+                <div class="ramble-label out">Pasted into v0</div>
+                <p class="ramble-clean">— Enlarge the <strong>hero</strong><br/>— Change CTA to <strong>"Start free"</strong><br/>— Move <strong>testimonials</strong> below the features<br/>— <strong>Soften</strong> the gradient</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feature 2: Auto-submit -->
+    <section id="how-vibe" class="mx-auto max-w-6xl px-6 py-16 md:py-24">
+      <div class="grid items-start gap-14 lg:grid-cols-[1fr_1.05fr]">
+        <div class="reveal">
+          <span class="chip-vibe chip inline-block rounded-full px-3 py-1 text-xs font-medium">Auto-submit</span>
+          <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
+            <span class="font-display text-fuchsia-200">Talk.</span>
+            <span class="font-bold"> It hits Enter for you.</span>
+          </h2>
+          <p class="mt-4 max-w-md text-lg text-ghost/65">After dictating, Ghostly auto-submits with <span class="kbd">⏎</span>, <span class="kbd">⌘⏎</span>, or <span class="kbd">⌃⏎</span> — whichever key the focused app expects. Release <span class="kbd">fn</span>, the prompt lands, the message sends. Your hands never touch the keyboard.</p>
+          <div class="mt-6 space-y-2.5 text-sm text-ghost/70">
+            <div class="flex items-start gap-3"><svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-fuchsia-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Per-app submit key — Claude Code uses <span class="kbd">⌘⏎</span>, Cursor and Slack use <span class="kbd">⏎</span>.</div>
+            <div class="flex items-start gap-3"><svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-fuchsia-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Auto-detects the app in focus — no manual mapping.</div>
+            <div class="flex items-start gap-3"><svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-fuchsia-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Toggle it off if you'd rather eyeball before sending.</div>
+          </div>
+          <p class="mt-7 text-xs font-semibold uppercase tracking-[0.12em] text-ghost/40">Auto-submit supported in</p>
+          <div class="mt-3 flex flex-wrap gap-2">
+            <span class="submit-pill"><img src="/assets/apps/claude.png" alt="" /> Claude Code</span>
+            <span class="submit-pill"><img src="/assets/apps/cursor.png" alt="" /> Cursor</span>
+            <span class="submit-pill"><img src="/assets/apps/chatgpt.png" alt="" /> ChatGPT</span>
+            <span class="submit-pill"><img src="/assets/apps/slack.png" alt="" /> Slack</span>
+            <span class="submit-pill"><img src="/assets/apps/messages.png" alt="" /> iMessage</span>
+            <span class="submit-pill"><img src="/assets/apps/discord.png" alt="" /> Discord</span>
+            <span class="submit-pill"><img src="/assets/apps/linear.png" alt="" /> Linear</span>
+            <span class="submit-pill">+ more</span>
+          </div>
+        </div>
+
+        <div class="reveal space-y-3" style="--reveal-delay: 140ms">
+          <div class="flow-step">
+            <span class="flow-num">1</span>
+            <div class="flex-1">
+              <div class="text-base font-semibold">Jump into whatever you're building in</div>
+              <div class="mt-1 text-sm text-ghost/55">Open Cursor. Or Claude. Or a fresh v0. Ghostly doesn't care.</div>
+            </div>
+            <span class="flow-app"><img src="/assets/apps/cursor.png" alt="" /> <img src="/assets/apps/claude.png" alt="" /> <img src="/assets/apps/v0.png" alt="" /></span>
+          </div>
+          <div class="flow-step">
+            <span class="flow-num">2</span>
+            <div class="flex-1">
+              <div class="text-base font-semibold">Hold <span class="kbd">fn</span> and just talk</div>
+              <div class="mt-1 text-sm text-ghost/55">Ramble, backtrack, think out loud. Ghostly listens on-device.</div>
+            </div>
+            <span class="flow-app">🎙</span>
+          </div>
+          <div class="flow-step">
+            <span class="flow-num">3</span>
+            <div class="flex-1">
+              <div class="text-base font-semibold">Release — it lands, then submits itself</div>
+              <div class="mt-1 text-sm text-ghost/55">Cleaned prompt pastes in. Ghostly fires the right submit key for that app — you do nothing.</div>
+            </div>
+            <span class="flow-app">⏎</span>
+          </div>
+          <div class="flow-step">
+            <span class="flow-num">4</span>
+            <div class="flex-1">
+              <div class="text-base font-semibold">Read, react, ramble again</div>
+              <div class="mt-1 text-sm text-ghost/55">Your hands never touched the keyboard. The loop keeps going.</div>
+            </div>
+            <span class="flow-app">↻</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feature 3: Privacy -->
+    <section class="border-y border-white/5 bg-white/[0.015]">
+      <div class="mx-auto max-w-6xl px-6 py-16 md:py-24">
+        <div class="grid items-center gap-14 lg:grid-cols-[1fr_1.1fr]">
+          <div class="reveal">
+            <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">Private by default</span>
+            <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
+              <span class="font-display text-violet-200">Your ideas</span>
+              <span class="font-bold"> never leave the Mac.</span>
+            </h2>
+            <p class="mt-4 max-w-md text-lg text-ghost/65">Transcription runs on-device with Whisper, Parakeet, or Moonshine. If AI cleanup is on, only the resulting text hits the API — never audio, never your screen. Or keep everything local with Apple Intelligence.</p>
+            <div class="mt-6 space-y-2.5 text-sm text-ghost/70">
+              <div class="flex items-start gap-3"><svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Whisper, Parakeet (Nvidia), Moonshine (streaming)</div>
+              <div class="flex items-start gap-3"><svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Bring your own key: OpenAI, Anthropic, Groq, Z.AI</div>
+              <div class="flex items-start gap-3"><svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Or 100% on-device with Apple Intelligence</div>
+              <div class="flex items-start gap-3"><svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Works offline after first-run model download</div>
+            </div>
+          </div>
+
+          <div class="reveal" style="--reveal-delay: 160ms">
+            <div class="glass rounded-2xl p-6">
+              <p class="text-xs font-semibold uppercase tracking-[0.15em] text-ghost/40">Smart vocabulary</p>
+              <p class="mt-2 text-sm text-ghost/65">Ghostly swaps its word list based on the app you're dictating into. "Fetch user by ID" stays <span class="font-mono text-fuchsia-300/90">fetchUserById</span> — not "fetched user by idea."</p>
+              <div class="mt-5 space-y-3 text-sm">
+                <div class="flex items-start gap-3 rounded-xl border border-white/5 bg-white/[0.02] p-3">
+                  <img src="/assets/apps/cursor.png" alt="" class="mt-0.5 h-7 w-7 flex-shrink-0 rounded-md bg-white object-contain" />
+                  <div class="flex-1 min-w-0">
+                    <div class="font-semibold text-ghost/90">Cursor · coding vocab</div>
+                    <div class="mt-2 flex flex-wrap gap-1">
+                      <span class="vocab-chip">React</span>
+                      <span class="vocab-chip">TypeScript</span>
+                      <span class="vocab-chip">shadcn</span>
+                      <span class="vocab-chip">pnpm</span>
+                      <span class="vocab-chip">Supabase</span>
+                      <span class="vocab-chip">@helper.ts</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3 rounded-xl border border-white/5 bg-white/[0.02] p-3">
+                  <img src="/assets/apps/slack.png" alt="" class="mt-0.5 h-7 w-7 flex-shrink-0 rounded-md bg-white object-contain" />
+                  <div class="flex-1 min-w-0">
+                    <div class="font-semibold text-ghost/90">Slack · work vocab</div>
+                    <div class="mt-1 text-xs text-ghost/55">Teammate names, project codes, standup shorthand.</div>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3 rounded-xl border border-white/5 bg-white/[0.02] p-3">
+                  <img src="/assets/apps/apple-mail.png" alt="" class="mt-0.5 h-7 w-7 flex-shrink-0 rounded-md bg-white object-contain" />
+                  <div class="flex-1 min-w-0">
+                    <div class="font-semibold text-ghost/90">Mail · email vocab</div>
+                    <div class="mt-1 text-xs text-ghost/55">Greetings, sign-offs, recipient names spelled right.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p class="mt-4 text-xs text-ghost/40">Editable in the Dictionary tab — add your own service names, acronyms, and handles.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How vibe coders use Ghostly -->
+    <section class="mx-auto max-w-6xl px-6 py-16 md:py-24">
+      <div class="max-w-2xl reveal">
+        <span class="chip-vibe chip inline-block rounded-full px-3 py-1 text-xs font-medium">Use cases</span>
+        <h2 class="mt-5 text-4xl tracking-tight md:text-5xl">
+          <span class="font-display text-fuchsia-200">What vibe coders</span>
+          <span class="font-bold"> ship with Ghostly.</span>
+        </h2>
+        <p class="mt-4 text-lg text-ghost/60">Real loops from folks who'd rather talk to a model than type at it.</p>
+      </div>
+
+      <div class="mt-10 glass rounded-2xl">
+        <div class="usecase-row">
+          <div class="usecase-icons">
+            <span class="app-ic"><img src="/assets/apps/cursor.png" alt="" /></span>
+            <span class="app-ic"><img src="/assets/apps/claude.png" alt="" /></span>
+          </div>
+          <div class="flex-1">
+            <div class="text-base font-semibold">Describe the whole feature before touching code</div>
+            <div class="mt-1 text-sm text-ghost/55">Pitch it to Claude or Cursor the way you'd pitch a cofounder — out loud, in full sentences.</div>
+          </div>
+        </div>
+        <div class="usecase-row">
+          <div class="usecase-icons">
+            <span class="app-ic"><img src="/assets/apps/v0.png" alt="" /></span>
+            <span class="app-ic"><img src="/assets/apps/figma.png" alt="" /></span>
+          </div>
+          <div class="flex-1">
+            <div class="text-base font-semibold">Ramble UI briefs straight into v0 or Figma</div>
+            <div class="mt-1 text-sm text-ghost/55">"Stripe-style pricing, three tiers, annual toggle, peach accent." Paste. Done.</div>
+          </div>
+        </div>
+        <div class="usecase-row">
+          <div class="usecase-icons">
+            <span class="app-ic"><img src="/assets/apps/replit.png" alt="" /></span>
+            <span class="app-ic"><img src="/assets/apps/windsurf.png" alt="" /></span>
+          </div>
+          <div class="flex-1">
+            <div class="text-base font-semibold">Iterate on a live preview without breaking flow</div>
+            <div class="mt-1 text-sm text-ghost/55">Preview open, chat open, you talk. The model ships, you look, you talk again.</div>
+          </div>
+        </div>
+        <div class="usecase-row">
+          <div class="usecase-icons">
+            <span class="app-ic"><img src="/assets/apps/chatgpt.png" alt="" /></span>
+            <span class="app-ic"><img src="/assets/apps/perplexity.png" alt="" /></span>
+          </div>
+          <div class="flex-1">
+            <div class="text-base font-semibold">Rubber-duck hard problems with ChatGPT or Perplexity</div>
+            <div class="mt-1 text-sm text-ghost/55">Talk through the bug, screenshot the error, send it all in one breath.</div>
+          </div>
+        </div>
+        <div class="usecase-row">
+          <div class="usecase-icons">
+            <span class="app-ic"><img src="/assets/apps/notion.png" alt="" /></span>
+            <span class="app-ic"><img src="/assets/apps/linear.png" alt="" /></span>
+          </div>
+          <div class="flex-1">
+            <div class="text-base font-semibold">Capture ideas before they evaporate</div>
+            <div class="mt-1 text-sm text-ghost/55">Mid-build insight → Notion or Linear in seconds. No lost threads.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Top 10 grid -->
+    <section class="border-y border-white/5 bg-white/[0.015]">
+      <div class="mx-auto max-w-6xl px-6 py-16 md:py-24">
+        <div class="max-w-2xl reveal">
+          <h2 class="text-4xl tracking-tight md:text-5xl"><span class="font-display text-violet-200">Ten loops</span> <span class="font-bold">vibe coders run with Ghostly.</span></h2>
+          <p class="mt-4 text-lg text-ghost/60">Small habits that compound into whole apps.</p>
+        </div>
+        <div class="mt-10 grid gap-3 md:grid-cols-2" data-stagger>
+          <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 4.6L18.5 9.5l-4.6 1.9L12 16l-1.9-4.6L5.5 9.5l4.6-1.9z"/></svg></span><span>Pitching a brand-new app idea to Cursor in one breath</span></div>
+          <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M7 20h10"/></svg></span><span>Narrating UI changes while the preview is open</span></div>
+          <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></span><span>Vibing a tone onto a landing page — "warmer, weirder, less corporate"</span></div>
+          <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></span><span>Back-and-forth with Claude about why a component broke</span></div>
+          <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg></span><span>Describing screenshots to a vision model — "turn this Figma into React"</span></div>
+          <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/></svg></span><span>Stacking features onto v0 without ever retyping the brief</span></div>
+          <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></span><span>Approving and rejecting diffs by voice in Cursor</span></div>
+          <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h14M5 12h14M5 21h14"/></svg></span><span>Drafting the launch tweet and PH post mid-build</span></div>
+          <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span><span>Capturing 3am ideas straight into Notion before they fade</span></div>
+          <div class="top-tile"><span class="top-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9z"/></svg></span><span>Shipping ten iterations in an hour — no keyboard fatigue</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-block">
+      <div class="mx-auto max-w-4xl px-6 py-20 md:py-28 text-center">
+        <h2 class="text-4xl font-extrabold tracking-tight md:text-6xl">Stop typing.<br /><span class="font-display text-fuchsia-200">Start vibing.</span></h2>
+        <p class="mx-auto mt-5 max-w-lg text-lg text-ghost/60">Free tier has full feature parity. Pro is $39 once. No subscription.</p>
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
+          <a href="/install/" class="btn-primary inline-flex items-center gap-2 rounded-xl px-8 py-4 text-lg font-semibold">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+            Download for macOS
+          </a>
+          <a href="/#pricing" class="btn-ghost inline-flex items-center gap-2 rounded-xl px-6 py-4 text-base font-semibold">See pricing</a>
+        </div>
+        <p class="mt-6 text-xs text-ghost/40">Apple Silicon · M1 or later · macOS 12+ · 30 min/wk free, Pro removes the cap</p>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5">
+      <div class="mx-auto max-w-6xl px-6 py-14">
+        <div class="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+          <div>
+            <div class="flex items-center gap-2">
+              <img src="/assets/ghostly-logo.svg" alt="" class="h-6 w-6" />
+              <span class="text-sm font-semibold">Ghostly</span>
+            </div>
+            <p class="mt-3 max-w-xs text-sm text-ghost/55">Voice-first typing for macOS. On-device Whisper with optional AI cleanup.</p>
+            <p class="mt-4 font-mono text-xs text-ghost/40">v0.9.0 · updated Apr 2026</p>
+          </div>
+          <div>
+            <div class="text-xs font-semibold uppercase tracking-wider text-ghost/40">Product</div>
+            <ul class="mt-4 space-y-2 text-sm text-ghost/60">
+              <li><a href="/#features" class="hover:text-ghost">Features</a></li>
+              <li><a href="/#how" class="hover:text-ghost">How it works</a></li>
+              <li><a href="/#ai" class="hover:text-ghost">AI cleanup</a></li>
+              <li><a href="/#pricing" class="hover:text-ghost">Pricing</a></li>
+              <li><a href="/#download" class="hover:text-ghost">Download</a></li>
+            </ul>
+          </div>
+          <div>
+            <div class="text-xs font-semibold uppercase tracking-wider text-ghost/40">For you</div>
+            <ul class="mt-4 space-y-2 text-sm text-ghost/60">
+              <li><a href="/for/developers/" class="hover:text-ghost">Developers</a></li>
+              <li><a href="/for/vibe-coders/" class="text-fuchsia-300">Vibe coders</a></li>
+              <li><a href="/for/creatives/" class="hover:text-ghost">Creatives</a></li>
+              <li><a href="/for/leaders/" class="hover:text-ghost">Leaders</a></li>
+              <li><a href="/for/sales/" class="hover:text-ghost">Sales</a></li>
+              <li><a href="/for/students/" class="hover:text-ghost">Students</a></li>
+            </ul>
+          </div>
+          <div>
+            <div class="text-xs font-semibold uppercase tracking-wider text-ghost/40">Contact</div>
+            <ul class="mt-4 space-y-2 text-sm text-ghost/60">
+              <li><a href="/privacy" class="hover:text-ghost">Privacy</a></li>
+              <li><a href="mailto:security@try-ghostly.com" class="hover:text-ghost">Security</a></li>
+              <li><a href="mailto:support@try-ghostly.com" class="hover:text-ghost">Support</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="mt-12 border-t border-white/5 pt-6 text-xs text-ghost/40">© 2026 Ghostly. All rights reserved.</div>
+      </div>
+    </footer>
+
+    <script>
+      // Header shadow on scroll
+      (function () {
+        const header = document.getElementById('site-header');
+        if (!header) return;
+        const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 8);
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+      })();
+
+      // Reveal on scroll
+      (function () {
+        const prm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        document.querySelectorAll('[data-stagger]').forEach((grid) => {
+          Array.from(grid.children).forEach((child, i) => {
+            child.classList.add('reveal');
+            child.style.setProperty('--reveal-delay', `${i * 60}ms`);
+          });
+        });
+        if (prm) {
+          document.querySelectorAll('.reveal').forEach((el) => el.classList.add('in-view'));
+          return;
+        }
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+      })();
+
+      // Hero composer: cycle rambly → clean prompts
+      (function () {
+        const prm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const promptEl = document.getElementById('vibe-hero-prompt');
+        const composer = document.getElementById('vibe-hero-composer');
+        const micText = document.getElementById('vibe-hero-mic-text');
+        const micWrap = document.getElementById('vibe-hero-mic');
+        if (!promptEl) return;
+
+        const scripts = [
+          [
+            { t: 'Just the ', cls: '' },
+            { t: 'copy', cls: 'highlight' },
+            { t: ' — hero headline: ', cls: '' },
+            { t: '"Vibe-check your week"', cls: 'highlight' },
+            { t: '. Subline about tracking moods in 10 seconds. Peach and cream palette, big rounded buttons.', cls: '' },
+          ],
+          [
+            { t: 'Add a ', cls: '' },
+            { t: 'testimonial strip', cls: 'highlight' },
+            { t: ' under the features — three quotes, loose handwritten vibe, no stars, just names and cities.', cls: '' },
+          ],
+          [
+            { t: 'Make the hero ', cls: '' },
+            { t: 'louder', cls: 'highlight' },
+            { t: ' — bigger serif, contrast 2x, and put a ', cls: '' },
+            { t: 'gradient blob', cls: 'highlight' },
+            { t: ' behind the headline that drifts on scroll.', cls: '' },
+          ],
+          [
+            { t: 'Scaffold a ', cls: '' },
+            { t: 'pricing page', cls: 'highlight' },
+            { t: ': three tiers (free, pro, team), annual toggle, FAQ below. Keep it simple — Linear-clean but warmer.', cls: '' },
+          ],
+        ];
+
+        let i = 0;
+
+        const render = (segments, n) => {
+          let total = 0;
+          let html = '';
+          for (const seg of segments) {
+            const remain = n - total;
+            if (remain <= 0) break;
+            const take = seg.t.slice(0, remain);
+            html += seg.cls ? `<span class="${seg.cls}">${take}</span>` : take;
+            total += take.length;
+            if (total >= n) break;
+          }
+          html += '<span class="caret"></span>';
+          promptEl.innerHTML = html;
+        };
+
+        const runScript = (segments) => {
+          return new Promise((resolve) => {
+            const full = segments.reduce((a, s) => a + s.t.length, 0);
+            let n = 0;
+            micText.textContent = 'Listening · fn';
+            micWrap.classList.remove('idle');
+            composer.classList.add('is-listening');
+
+            const step = () => {
+              n++;
+              render(segments, n);
+              if (n < full) {
+                setTimeout(step, 22 + Math.random() * 34);
+              } else {
+                micText.textContent = 'Cleaned · pasted';
+                setTimeout(() => {
+                  composer.classList.remove('is-listening');
+                  micWrap.classList.add('idle');
+                  setTimeout(resolve, 1800);
+                }, 220);
+              }
+            };
+            setTimeout(step, 300);
+          });
+        };
+
+        const loop = async () => {
+          while (true) {
+            await runScript(scripts[i % scripts.length]);
+            await new Promise((r) => setTimeout(r, 500));
+            promptEl.innerHTML = '<span class="caret"></span>';
+            i++;
+          }
+        };
+
+        if (prm) {
+          render(scripts[0], scripts[0].reduce((a, s) => a + s.t.length, 0));
+          micText.textContent = 'Pasted';
+          composer.classList.remove('is-listening');
+        } else {
+          loop();
+        }
+      })();
+    </script>
+  </body>
+</html>
