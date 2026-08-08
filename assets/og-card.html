@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Ghostly OG card</title>
+    <!--
+      Source for assets/og-image.png.
+
+      Kept in the repo rather than exported from a design tool so the social
+      card can be regenerated from the same tokens as the site: open this file,
+      screenshot the #card element at 1200x630, save over assets/og-image.png.
+      Rasterising with rsvg-convert is not an option here — Inter is not
+      installed system-wide, so it would silently fall back to Arial.
+    -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        background: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        font-family: Inter, -apple-system, sans-serif;
+      }
+      #card {
+        width: 1200px;
+        height: 630px;
+        position: relative;
+        overflow: hidden;
+        background: #000;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 64px 72px;
+        color: #f2f3f7;
+      }
+      /* Single soft bloom — same restraint as the site hero. */
+      #card::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse 85% 70% at 50% -15%,
+          rgba(124, 92, 255, 0.22) 0%,
+          rgba(124, 92, 255, 0.06) 40%,
+          transparent 72%
+        );
+      }
+      .row { position: relative; display: flex; align-items: center; }
+      .brand { gap: 16px; }
+      .brand img { width: 52px; height: 52px; }
+      .brand span {
+        font-size: 30px;
+        font-weight: 700;
+        letter-spacing: -0.035em;
+      }
+      h1 {
+        position: relative;
+        font-size: 86px;
+        font-weight: 800;
+        letter-spacing: -0.045em;
+        line-height: 0.98;
+      }
+      /* Two-tone: the setup recedes, the promise lands. */
+      h1 .muted { font-weight: 500; color: rgba(242, 243, 247, 0.42); }
+      p.sub {
+        position: relative;
+        margin-top: 26px;
+        max-width: 760px;
+        font-size: 26px;
+        line-height: 1.45;
+        letter-spacing: -0.015em;
+        color: rgba(242, 243, 247, 0.6);
+      }
+      .foot { justify-content: space-between; }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 999px;
+        padding: 9px 18px;
+        font-size: 19px;
+        font-weight: 500;
+        color: rgba(242, 243, 247, 0.55);
+      }
+      .dot { width: 9px; height: 9px; border-radius: 999px; background: #6ee7b7; }
+      .url {
+        font-size: 21px;
+        font-weight: 500;
+        letter-spacing: -0.015em;
+        color: rgba(242, 243, 247, 0.38);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="card">
+      <div class="row brand">
+        <img src="./ghostly-icon.svg?v=2" alt="" />
+        <span>Ghostly</span>
+      </div>
+
+      <div>
+        <h1>
+          <span class="muted">Your AI</span> ghostwriter.<br />Just speak.
+        </h1>
+        <p class="sub">
+          Speak, and polished text lands wherever your cursor is — punctuated,
+          formatted, and shaped to whatever you're writing in.
+        </p>
+      </div>
+
+      <div class="row foot">
+        <span class="badge"><span class="dot"></span>On-device · macOS · Private by default</span>
+        <span class="url">try-ghostly.com</span>
+      </div>
+    </div>
+  </body>
+</html>

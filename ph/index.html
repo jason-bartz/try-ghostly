@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ghostly for Product Hunt — 50% off voice-first typing for macOS</title>
+    <title>Ghostly for Product Hunt — 50% off your AI ghostwriter for macOS</title>
     <meta
       name="description"
       content="Hunters get Ghostly Pro for $19 (normally $39) with code PRODUCTHUNT. Press a shortcut, talk, and your words land in the active app. Whisper runs on-device — audio never leaves your Mac."
@@ -26,7 +26,7 @@
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Ghostly — voice-first typing for macOS. Press. Talk. Your words land." />
+    <meta property="og:image:alt" content="Ghostly — your AI ghostwriter for macOS. Just speak." />
     <meta property="og:locale" content="en_US" />
 
     <!-- Twitter -->
@@ -37,7 +37,7 @@
     <meta name="twitter:title" content="Ghostly for Product Hunt — 50% off Pro" />
     <meta name="twitter:description" content="Hunters: Ghostly Pro for $19 with code PRODUCTHUNT. Press fn, talk, release — your words paste into the active app." />
     <meta name="twitter:image" content="https://try-ghostly.com/assets/og-image.png" />
-    <meta name="twitter:image:alt" content="Ghostly — voice-first typing for macOS" />
+    <meta name="twitter:image:alt" content="Ghostly — your AI ghostwriter for macOS" />
 
     <!-- Icons & theme -->
     <link rel="icon" type="image/svg+xml" href="/assets/ghostly-icon.svg" />
@@ -982,15 +982,14 @@
     <section class="grid-bg relative overflow-hidden">
       <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
         <div class="mx-auto max-w-3xl text-center">
-          <h1 class="text-[2.75rem] leading-[1.05] tracking-tight sm:text-5xl md:text-7xl" style="letter-spacing: -0.03em">
-            <span class="font-display">Voice-first</span>
-            <span class="relative inline-block align-baseline"><span class="invisible font-extrabold" style="white-space: pre"> typing</span><span class="absolute left-0 top-0 font-extrabold" style="white-space: pre"><span id="hero-type"> typing</span><span id="hero-caret" class="hero-caret"></span></span></span>
+          <h1 class="display text-[3rem] sm:text-6xl md:text-[5.25rem]">
+            <span class="font-display">Your AI</span>
+            <span class="text-ghost"> ghostwriter.</span>
             <br />
-            <span class="font-display">for</span>
-            <span class="font-extrabold"> macOS.</span>
+            <span class="relative inline-block align-baseline"><span class="invisible" style="white-space: pre">Just speak.</span><span class="absolute left-0 top-0 text-ghost" style="white-space: pre"><span id="hero-type">Just speak.</span><span id="hero-caret" class="hero-caret"></span></span></span>
           </h1>
           <p class="mx-auto mt-6 max-w-xl text-lg text-ghost/70 md:text-xl">
-            Press <span class="kbd">fn</span>, talk, release. Your words paste into the active app.
+            Talk, and polished text lands wherever your cursor is — punctuated, formatted, and shaped to whatever you're writing in.
           </p>
           <div class="mt-8 flex flex-wrap items-center justify-center gap-3 md:mt-10">
             <a href="/install/" class="btn-primary inline-flex items-center gap-2 rounded-xl px-6 py-3 text-base font-semibold">
@@ -1888,7 +1887,7 @@
               <img src="/assets/ghostly-logo.svg" alt="" class="h-6 w-6" />
               <span class="text-sm font-semibold">Ghostly</span>
             </div>
-            <p class="mt-3 max-w-xs text-sm text-ghost/55">Voice-first typing for macOS. On-device Whisper with optional AI cleanup.</p>
+            <p class="mt-3 max-w-xs text-sm text-ghost/55">Your AI ghostwriter for macOS. On-device transcription with optional AI cleanup.</p>
             <p class="mt-4 font-mono text-xs text-ghost/40" id="footer-version">v0.1.9 · updated Apr 2026</p>
           </div>
 
@@ -1938,7 +1937,7 @@
         if (!typed) return;
         const prm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         if (prm) return; // keep full text as-is for reduced motion
-        const full = ' typing';
+        const full = 'Just speak.';
         typed.textContent = '';
         let i = 0;
         const step = () => {
