@@ -48,7 +48,7 @@
     <meta name="format-detection" content="telephone=no" />
 
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
     <script src="https://cdn.tailwindcss.com"></script>
@@ -58,16 +58,15 @@
           extend: {
             fontFamily: {
               sans:  ['Inter', 'ui-sans-serif', 'system-ui'],
-              serif: ['"Instrument Serif"', 'ui-serif', 'Georgia'],
             },
-            colors: { ink: '#0b0b0f', ghost: '#e8e9ef', accent: '#7c5cff' },
+            colors: { ink: '#000000', ghost: '#f2f3f7', accent: '#7c5cff' },
           },
         },
       };
     </script>
     <style>
       html { scroll-behavior: smooth; }
-      body { background: #0b0b0f; color: #e8e9ef; }
+      body { background: #000; color: #f2f3f7; }
       .grid-bg {
         background-image:
           radial-gradient(circle at 20% 10%, rgba(124, 92, 255, 0.22), transparent 40%),
@@ -245,11 +244,26 @@
       }
       @keyframes hero-blink { 50% { opacity: 0; } }
 
-      /* Serif display accent */
+      /* Display accent.
+       *
+       * The old treatment paired a heavy sans with an italic serif — the
+       * editorial look every AI tool shipped in 2025. Emphasis now comes from
+       * weight and tracking inside a single family. */
       .font-display {
-        font-family: 'Instrument Serif', ui-serif, Georgia, serif;
-        font-style: italic;
-        font-weight: 400;
+        font-weight: 500;
+        letter-spacing: -0.035em;
+        color: rgba(242, 243, 247, 0.42);
+      }
+
+      .display {
+        font-weight: 800;
+        letter-spacing: -0.045em;
+        line-height: 0.98;
+      }
+
+      .eyebrow {
+        font-size: 13px;
+        font-weight: 600;
         letter-spacing: -0.01em;
       }
 
@@ -408,8 +422,8 @@
 
       /* Step vignettes */
       .step-num {
-        font-family: 'Instrument Serif', ui-serif, Georgia, serif;
-        font-style: italic;
+        font-weight: 800;
+        letter-spacing: -0.05em;
         font-size: 56px;
         line-height: 1;
         color: rgba(124, 92, 255, 0.7);
@@ -479,7 +493,6 @@
 
       /* ---- Animated AI auto-edits panel ---- */
       .auto-edit {
-        font-family: 'Instrument Serif', ui-serif, Georgia, serif;
         font-size: 19px;
         line-height: 1.75;
         color: rgba(232, 233, 239, 0.92);
@@ -741,7 +754,6 @@
         border: 1px solid rgba(124, 92, 255, 0.35);
         border-radius: 999px;
         backdrop-filter: blur(12px);
-        font-family: 'Instrument Serif', serif;
         font-size: 19px;
         color: #e8e9ef;
         box-shadow: 0 0 40px rgba(124, 92, 255, 0.2);
@@ -768,7 +780,6 @@
       }
       .tone-out-icon img { width: 100%; height: 100%; object-fit: contain; background: #ffffff; }
       .tone-out-text {
-        font-family: 'Instrument Serif', serif;
         font-size: 17px;
         line-height: 1.5;
         min-height: 26px;
@@ -972,10 +983,10 @@
       <div class="mx-auto max-w-6xl px-6 py-16 md:py-32">
         <div class="mx-auto max-w-3xl text-center">
           <h1 class="text-[2.75rem] leading-[1.05] tracking-tight sm:text-5xl md:text-7xl" style="letter-spacing: -0.03em">
-            <span class="font-display text-ghost" style="font-size: 1.08em">Voice-first</span>
+            <span class="font-display">Voice-first</span>
             <span class="relative inline-block align-baseline"><span class="invisible font-extrabold" style="white-space: pre"> typing</span><span class="absolute left-0 top-0 font-extrabold" style="white-space: pre"><span id="hero-type"> typing</span><span id="hero-caret" class="hero-caret"></span></span></span>
             <br />
-            <span class="font-display text-violet-200" style="font-size: 1.08em">for</span>
+            <span class="font-display">for</span>
             <span class="font-extrabold"> macOS.</span>
           </h1>
           <p class="mx-auto mt-6 max-w-xl text-lg text-ghost/70 md:text-xl">
@@ -1077,9 +1088,9 @@
 
     <section id="features" class="mx-auto max-w-6xl px-6 py-16 md:py-24">
       <div class="mx-auto max-w-2xl text-center reveal">
-        <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">Features</span>
-        <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
-          <span class="font-display text-ghost/90">What</span>
+        <span class="eyebrow" style="color: #c9bfff">Features</span>
+        <h2 class="display mt-4 text-[2.6rem] md:text-[3.4rem]">
+          <span class="font-display">What</span>
           <span class="font-bold"> Ghostly does</span>
         </h2>
       </div>
@@ -1161,9 +1172,9 @@
 
     <section class="mx-auto max-w-6xl px-6 py-16 md:py-24">
       <div class="mx-auto max-w-2xl text-center reveal">
-        <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">Who it's for</span>
-        <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
-          <span class="font-display text-ghost/90">Talking</span>
+        <span class="eyebrow" style="color: #7dd3fc">Who it's for</span>
+        <h2 class="display mt-4 text-[2.6rem] md:text-[3.4rem]">
+          <span class="font-display">Talking</span>
           <span class="font-bold"> is faster than typing.</span>
         </h2>
         <p class="mt-4 text-lg text-ghost/60">Different jobs, same shortcut. Ghostly adapts to the app in focus.</p>
@@ -1223,9 +1234,9 @@
     <section class="mx-auto max-w-6xl px-6 pb-24">
       <div class="grid items-center gap-12 lg:grid-cols-[1.1fr_1fr]">
         <div class="reveal">
-          <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">Speed</span>
-          <h2 class="mt-4 text-5xl tracking-tight md:text-6xl" style="letter-spacing: -0.02em">
-            <span class="font-display text-violet-200" style="font-size: 1.1em">3×</span>
+          <span class="eyebrow" style="color: #fcd34d">Speed</span>
+          <h2 class="display mt-4 text-[3rem] md:text-[4rem]">
+            <span class="font-display">3×</span>
             <span class="font-bold"> faster than your keyboard.</span>
           </h2>
           <p class="mt-5 max-w-md text-lg text-ghost/60">Most people type around 40 WPM. Most people speak around 150. Ghostly narrows the gap between how fast you think and how fast your tools can keep up.</p>
@@ -1256,9 +1267,9 @@
     <section class="border-y border-white/5">
       <div class="mx-auto max-w-6xl px-6 py-16 md:py-24">
         <div class="mx-auto max-w-2xl text-center reveal">
-          <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">How it compares</span>
-          <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
-            <span class="font-display text-violet-200">Local-native,</span>
+          <span class="eyebrow" style="color: #6ee7b7">How it compares</span>
+          <h2 class="display mt-4 text-[2.6rem] md:text-[3.4rem]">
+            <span class="font-display">Local-native,</span>
             <span class="font-bold"> not cloud-first.</span>
           </h2>
           <p class="mt-4 text-lg text-ghost/60">Most AI dictation tools ship your audio to a server and bill you monthly. Ghostly does neither — on-device transcription, choice of engine, and a one-time price.</p>
@@ -1365,10 +1376,10 @@
     <section class="border-b border-white/5">
       <div class="mx-auto max-w-6xl px-6 py-20 md:py-28">
         <div class="mx-auto max-w-2xl text-center reveal">
-          <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">Language support</span>
-          <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
+          <span class="eyebrow" style="color: #f0abfc">Language support</span>
+          <h2 class="display mt-4 text-[2.6rem] md:text-[3.4rem]">
             <span class="font-bold">Speaks</span>
-            <span class="font-display text-violet-200"> your language.</span>
+            <span class="font-display"> your language.</span>
           </h2>
           <p class="mt-4 text-lg text-ghost/60">Whisper transcribes English, Spanish, French, German, Italian, Portuguese, Russian, Japanese, Mandarin, Arabic, Hindi — and plenty more — all on-device.</p>
         </div>
@@ -1410,10 +1421,10 @@
     <section id="how" class="border-y border-white/5 bg-white/[0.02]">
       <div class="mx-auto max-w-6xl px-6 py-16 md:py-24">
         <div class="mx-auto max-w-2xl text-center reveal">
-          <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">How it works</span>
-          <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
+          <span class="eyebrow" style="color: #c9bfff">How it works</span>
+          <h2 class="display mt-4 text-[2.6rem] md:text-[3.4rem]">
             <span class="font-bold">Hold the shortcut,</span>
-            <span class="font-display text-violet-200"> talk,</span>
+            <span class="font-display"> talk,</span>
             <span class="font-bold"> release.</span>
           </h2>
           <p class="mt-4 text-lg text-ghost/60">The transcript pastes into whatever field the cursor is in. Silences get skipped automatically.</p>
@@ -1467,10 +1478,10 @@
     <section id="ai" class="mx-auto max-w-6xl px-6 py-16 md:py-24">
       <div class="grid items-center gap-12 lg:grid-cols-2">
         <div class="reveal">
-          <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">AI cleanup</span>
-          <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
+          <span class="eyebrow" style="color: #7dd3fc">AI cleanup</span>
+          <h2 class="display mt-4 text-[2.6rem] md:text-[3.4rem]">
             <span class="font-bold">Bring</span>
-            <span class="font-display text-violet-200"> your own</span>
+            <span class="font-display"> your own</span>
             <span class="font-bold"> model.</span>
           </h2>
           <p class="mt-4 text-lg text-ghost/60">
@@ -1514,7 +1525,7 @@
             </div>
             <div class="rounded-xl border border-violet-500/30 bg-violet-500/5 p-5">
               <div class="mb-2 text-xs uppercase tracking-wider text-violet-300">Cleaned</div>
-              <p class="auto-edit-clean" style="font-family: 'Instrument Serif', serif; font-size: 19px; line-height: 1.6; color: #e8e9ef;">
+              <p class="auto-edit-clean" style=" font-size: 19px; line-height: 1.6; color: #e8e9ef;">
                 I was thinking we could push the launch to the 25th and get marketing involved earlier this time.
               </p>
             </div>
@@ -1526,9 +1537,9 @@
     <section class="border-t border-white/5">
       <div class="mx-auto max-w-5xl px-6 py-16 md:py-24">
         <div class="mx-auto max-w-2xl text-center reveal">
-          <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">Per-app tone</span>
-          <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
-            <span class="font-display text-ghost/90">Different tones</span>
+          <span class="eyebrow" style="color: #fcd34d">Per-app tone</span>
+          <h2 class="display mt-4 text-[2.6rem] md:text-[3.4rem]">
+            <span class="font-display">Different tones</span>
             <span class="font-bold"> for each app.</span>
           </h2>
           <p class="mt-4 text-lg text-ghost/60">Ghostly adapts to whatever's in focus. Same voice input — different punctuation, casing, and tone per destination. Sound like you, not a transcript.</p>
@@ -1587,7 +1598,7 @@
             </div>
           </div>
           <div class="order-1 lg:order-2">
-            <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">CLI</span>
+            <span class="eyebrow" style="color: #6ee7b7">CLI</span>
             <h2 class="mt-4 text-4xl font-bold tracking-tight md:text-5xl">Wire it into your stack.</h2>
             <p class="mt-4 text-lg text-ghost/60">
               Trigger Ghostly from a Raycast script, a Stream Deck macro, or a shell alias. Remote-control flags send to the running instance — no duplicate process.
@@ -1600,9 +1611,9 @@
     <section class="border-b border-white/5">
       <div class="mx-auto max-w-6xl px-6 py-16 md:py-24">
         <div class="mx-auto max-w-2xl text-center reveal">
-          <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">Works anywhere</span>
-          <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
-            <span class="font-display text-ghost/90">Any app</span>
+          <span class="eyebrow" style="color: #f0abfc">Works anywhere</span>
+          <h2 class="display mt-4 text-[2.6rem] md:text-[3.4rem]">
+            <span class="font-display">Any app</span>
             <span class="font-bold"> with a cursor.</span>
           </h2>
           <p class="mt-4 text-lg text-ghost/60">Ghostly pastes into whatever's in focus — editors, inboxes, chat, docs, terminals. Wherever your cursor lands.</p>
@@ -1783,7 +1794,7 @@
       <div class="glass overflow-hidden rounded-3xl p-10 md:p-16">
         <div class="grid items-center gap-10 md:grid-cols-2">
           <div>
-            <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">Download</span>
+            <span class="eyebrow" style="color: #c9bfff">Download</span>
             <h2 class="mt-4 text-4xl font-bold tracking-tight md:text-5xl">Install Ghostly</h2>
             <p class="mt-4 text-lg text-ghost/60">
               Ghostly is Apple Silicon only — any Mac with an M1 chip or later. Grab the latest <span class="kbd">.dmg</span>, drag Ghostly to Applications, launch. It'll ask for microphone and accessibility access. Pick a shortcut in Settings. First run downloads a transcription model (500 MB–1.6 GB depending on which one you pick). After that, dictation works offline.
@@ -1819,7 +1830,7 @@
     <section class="border-t border-white/5">
       <div class="mx-auto max-w-3xl px-6 py-16 md:py-24">
         <div class="text-center">
-          <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">FAQ</span>
+          <span class="eyebrow" style="color: #7dd3fc">FAQ</span>
           <h2 class="mt-4 text-4xl font-bold tracking-tight md:text-5xl">Questions</h2>
         </div>
         <div class="mt-12 space-y-4">

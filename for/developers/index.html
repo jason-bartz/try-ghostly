@@ -23,7 +23,7 @@
     <link rel="icon" type="image/svg+xml" href="/assets/ghostly-icon.svg" />
     <meta name="theme-color" content="#0b0b0f" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
     <script src="https://cdn.tailwindcss.com"></script>
@@ -33,17 +33,16 @@
           extend: {
             fontFamily: {
               sans:  ['Inter', 'ui-sans-serif', 'system-ui'],
-              serif: ['"Instrument Serif"', 'ui-serif', 'Georgia'],
               mono:  ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
             },
-            colors: { ink: '#0b0b0f', ghost: '#e8e9ef', accent: '#7c5cff' },
+            colors: { ink: '#000000', ghost: '#f2f3f7', accent: '#7c5cff' },
           },
         },
       };
     </script>
     <style>
       html { scroll-behavior: smooth; }
-      body { background: #0b0b0f; color: #e8e9ef; }
+      body { background: #000; color: #f2f3f7; }
       .grid-bg {
         background-image:
           radial-gradient(circle at 20% 10%, rgba(124, 92, 255, 0.22), transparent 40%),
@@ -84,8 +83,8 @@
         font-size: 0.85em;
       }
       .font-display {
-        font-family: 'Instrument Serif', ui-serif, Georgia, serif;
-        font-style: italic;
+        font-weight: 800;
+        letter-spacing: -0.05em;
         font-weight: 400;
         letter-spacing: -0.01em;
       }
@@ -651,9 +650,9 @@
     <!-- Section: Typing slows down shipping -->
     <section class="mx-auto max-w-6xl px-6 py-16 md:py-24">
       <div class="mx-auto max-w-2xl text-center reveal">
-        <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">Typing is the bottleneck</span>
+        <span class="eyebrow" style="color: #c9bfff">Typing is the bottleneck</span>
         <h2 class="mt-5 text-4xl tracking-tight md:text-5xl">
-          <span class="font-display text-violet-200">Your keyboard</span>
+          <span class="font-display">Your keyboard</span>
           <span class="font-bold"> is the slowest thing in your stack.</span>
         </h2>
         <p class="mt-4 text-lg text-ghost/60">Your LLM drafts in seconds. Your build runs in seconds. The prompt you're typing takes thirty. Ghostly closes that gap — you speak, it lands correctly formatted in the active app.</p>
@@ -684,7 +683,7 @@
         <div class="grid items-center gap-14 lg:grid-cols-[1fr_1.05fr]">
           <div class="reveal">
             <span class="chip-dev chip inline-block rounded-full px-3 py-1 text-xs font-medium">Syntax-smart</span>
-            <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
+            <h2 class="display mt-4 text-[2.6rem] md:text-[3.4rem]">
               <span class="font-display text-sky-200">Better prompts,</span><br />
               <span class="font-bold">better code.</span>
             </h2>
@@ -762,7 +761,7 @@
 
         <div class="reveal order-1 lg:order-2" style="--reveal-delay: 120ms">
           <span class="chip-dev chip inline-block rounded-full px-3 py-1 text-xs font-medium">Voice commands</span>
-          <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
+          <h2 class="display mt-4 text-[2.6rem] md:text-[3.4rem]">
             <span class="font-display text-sky-200">Approve,</span>
             <span class="font-bold"> without touching the keyboard.</span>
           </h2>
@@ -802,9 +801,9 @@
       <div class="mx-auto max-w-6xl px-6 py-16 md:py-24">
         <div class="grid items-center gap-14 lg:grid-cols-[1fr_1.1fr]">
           <div class="reveal">
-            <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">Private by default</span>
-            <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
-              <span class="font-display text-violet-200">Your code</span>
+            <span class="eyebrow" style="color: #7dd3fc">Private by default</span>
+            <h2 class="display mt-4 text-[2.6rem] md:text-[3.4rem]">
+              <span class="font-display">Your code</span>
               <span class="font-bold"> doesn't leave your machine.</span>
             </h2>
             <p class="mt-4 max-w-md text-lg text-ghost/65">Transcription runs on-device with Whisper, Parakeet, or Moonshine. If you enable AI cleanup, only the resulting text is sent — never audio, never your screen. Apple Intelligence keeps cleanup local too.</p>
@@ -915,7 +914,7 @@
     <section class="border-y border-white/5 bg-white/[0.015]">
       <div class="mx-auto max-w-6xl px-6 py-16 md:py-24">
         <div class="max-w-2xl reveal">
-          <h2 class="text-4xl tracking-tight md:text-5xl"><span class="font-display text-violet-200">Ten ways</span> <span class="font-bold">devs flow with Ghostly.</span></h2>
+          <h2 class="text-4xl tracking-tight md:text-5xl"><span class="font-display">Ten ways</span> <span class="font-bold">devs flow with Ghostly.</span></h2>
           <p class="mt-4 text-lg text-ghost/60">Tiny habits that compound across a day.</p>
         </div>
         <div class="mt-10 grid gap-3 md:grid-cols-2" data-stagger>

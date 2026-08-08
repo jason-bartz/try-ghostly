@@ -23,7 +23,7 @@
     <link rel="icon" type="image/svg+xml" href="/assets/ghostly-icon.svg" />
     <meta name="theme-color" content="#0b0b0f" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
     <script src="https://cdn.tailwindcss.com"></script>
@@ -33,17 +33,16 @@
           extend: {
             fontFamily: {
               sans:  ['Inter', 'ui-sans-serif', 'system-ui'],
-              serif: ['"Instrument Serif"', 'ui-serif', 'Georgia'],
               mono:  ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
             },
-            colors: { ink: '#0b0b0f', ghost: '#e8e9ef', accent: '#7c5cff' },
+            colors: { ink: '#000000', ghost: '#f2f3f7', accent: '#7c5cff' },
           },
         },
       };
     </script>
     <style>
       html { scroll-behavior: smooth; }
-      body { background: #0b0b0f; color: #e8e9ef; }
+      body { background: #000; color: #f2f3f7; }
       .grid-bg {
         background-image:
           radial-gradient(circle at 20% 10%, rgba(217, 70, 239, 0.22), transparent 42%),
@@ -84,8 +83,8 @@
         font-size: 0.85em;
       }
       .font-display {
-        font-family: 'Instrument Serif', ui-serif, Georgia, serif;
-        font-style: italic;
+        font-weight: 800;
+        letter-spacing: -0.05em;
         font-weight: 400;
         letter-spacing: -0.01em;
       }
@@ -594,9 +593,9 @@
     <!-- The pitch: typing kills the vibe -->
     <section class="mx-auto max-w-6xl px-6 py-16 md:py-24">
       <div class="mx-auto max-w-2xl text-center reveal">
-        <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">Typing kills the vibe</span>
+        <span class="eyebrow" style="color: #c9bfff">Typing kills the vibe</span>
         <h2 class="mt-5 text-4xl tracking-tight md:text-5xl">
-          <span class="font-display text-violet-200">You're not writing code.</span>
+          <span class="font-display">You're not writing code.</span>
           <span class="font-bold"> You're having a conversation.</span>
         </h2>
         <p class="mt-4 text-lg text-ghost/60">Vibe coding is talking to an LLM until something exists. But the chat is still a keyboard. Ghostly turns the loop into what it should be — you describe, the model builds, you describe again.</p>
@@ -627,7 +626,7 @@
         <div class="grid items-center gap-14 lg:grid-cols-[1fr_1.15fr]">
           <div class="reveal">
             <span class="chip-vibe chip inline-block rounded-full px-3 py-1 text-xs font-medium">AI cleanup</span>
-            <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
+            <h2 class="display mt-4 text-[2.6rem] md:text-[3.4rem]">
               <span class="font-display text-fuchsia-200">Ramble in.</span><br />
               <span class="font-bold">Clean prompt out.</span>
             </h2>
@@ -673,7 +672,7 @@
       <div class="grid items-start gap-14 lg:grid-cols-[1fr_1.05fr]">
         <div class="reveal">
           <span class="chip-vibe chip inline-block rounded-full px-3 py-1 text-xs font-medium">Auto-submit</span>
-          <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
+          <h2 class="display mt-4 text-[2.6rem] md:text-[3.4rem]">
             <span class="font-display text-fuchsia-200">Talk.</span>
             <span class="font-bold"> It hits Enter for you.</span>
           </h2>
@@ -738,9 +737,9 @@
       <div class="mx-auto max-w-6xl px-6 py-16 md:py-24">
         <div class="grid items-center gap-14 lg:grid-cols-[1fr_1.1fr]">
           <div class="reveal">
-            <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">Private by default</span>
-            <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
-              <span class="font-display text-violet-200">Your ideas</span>
+            <span class="eyebrow" style="color: #7dd3fc">Private by default</span>
+            <h2 class="display mt-4 text-[2.6rem] md:text-[3.4rem]">
+              <span class="font-display">Your ideas</span>
               <span class="font-bold"> never leave the Mac.</span>
             </h2>
             <p class="mt-4 max-w-md text-lg text-ghost/65">Transcription runs on-device with Whisper, Parakeet, or Moonshine. If AI cleanup is on, only the resulting text hits the API — never audio, never your screen. Or keep everything local with Apple Intelligence.</p>
@@ -862,7 +861,7 @@
     <section class="border-y border-white/5 bg-white/[0.015]">
       <div class="mx-auto max-w-6xl px-6 py-16 md:py-24">
         <div class="max-w-2xl reveal">
-          <h2 class="text-4xl tracking-tight md:text-5xl"><span class="font-display text-violet-200">Ten loops</span> <span class="font-bold">vibe coders run with Ghostly.</span></h2>
+          <h2 class="text-4xl tracking-tight md:text-5xl"><span class="font-display">Ten loops</span> <span class="font-bold">vibe coders run with Ghostly.</span></h2>
           <p class="mt-4 text-lg text-ghost/60">Small habits that compound into whole apps.</p>
         </div>
         <div class="mt-10 grid gap-3 md:grid-cols-2" data-stagger>

@@ -23,7 +23,7 @@
     <link rel="icon" type="image/svg+xml" href="/assets/ghostly-icon.svg" />
     <meta name="theme-color" content="#0b0b0f" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
     <script src="https://cdn.tailwindcss.com"></script>
@@ -31,15 +31,15 @@
       tailwind.config = {
         theme: {
           extend: {
-            fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui'], serif: ['"Instrument Serif"', 'ui-serif', 'Georgia'] },
-            colors: { ink: '#0b0b0f', ghost: '#e8e9ef', accent: '#7c5cff' },
+            fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui'] },
+            colors: { ink: '#000000', ghost: '#f2f3f7', accent: '#7c5cff' },
           },
         },
       };
     </script>
     <style>
       html { scroll-behavior: smooth; }
-      body { background: #0b0b0f; color: #e8e9ef; }
+      body { background: #000; color: #f2f3f7; }
       .grid-bg {
         background-image:
           radial-gradient(circle at 50% 0%, rgba(251, 191, 36, 0.20), transparent 45%),
@@ -56,7 +56,7 @@
       .chip { background: rgba(124, 92, 255, 0.12); border: 1px solid rgba(124, 92, 255, 0.35); color: #c9bfff; }
       .chip-leader { background: rgba(251, 191, 36, 0.10); border-color: rgba(251, 191, 36, 0.35); color: #fcd34d; }
       .kbd { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: #15151c; border: 1px solid rgba(255, 255, 255, 0.12); border-bottom-width: 2px; padding: 2px 8px; border-radius: 6px; font-size: 0.85em; }
-      .font-display { font-family: 'Instrument Serif', ui-serif, Georgia, serif; font-style: italic; font-weight: 400; letter-spacing: -0.01em; }
+      .font-display { font-style: italic; font-weight: 400; letter-spacing: -0.01em; }
       #site-header.is-scrolled { border-bottom-color: rgba(255, 255, 255, 0.08); background: rgba(11, 11, 15, 0.85); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.4), 0 10px 30px -10px rgba(0, 0, 0, 0.35); }
 
       /* Nav dropdown */
@@ -440,7 +440,7 @@
     <!-- Intro story -->
     <section class="mx-auto max-w-6xl px-6 py-16 md:py-24">
       <div class="mx-auto max-w-2xl text-center reveal">
-        <span class="chip inline-block rounded-full px-3 py-1 text-xs font-medium">Your inbox shouldn't own you</span>
+        <span class="eyebrow" style="color: #c9bfff">Your inbox shouldn't own you</span>
         <h2 class="mt-5 text-4xl tracking-tight md:text-5xl">
           <span class="font-display text-amber-200">Four hours back.</span><br />
           <span class="font-bold">Every week.</span>
@@ -473,7 +473,7 @@
         <div class="grid items-center gap-14 lg:grid-cols-[1fr_1.05fr]">
           <div class="reveal">
             <span class="chip-leader chip inline-block rounded-full px-3 py-1 text-xs font-medium">Hallway-thinking → memo</span>
-            <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
+            <h2 class="display mt-4 text-[2.6rem] md:text-[3.4rem]">
               <span class="font-display text-amber-200">Talk like you think.</span><br />
               <span class="font-bold">Send it like you'd write it.</span>
             </h2>
@@ -533,7 +533,7 @@
 
         <div class="reveal order-1 lg:order-2" style="--reveal-delay: 120ms">
           <span class="chip-leader chip inline-block rounded-full px-3 py-1 text-xs font-medium">Per-app profiles</span>
-          <h2 class="mt-4 text-4xl tracking-tight md:text-5xl">
+          <h2 class="display mt-4 text-[2.6rem] md:text-[3.4rem]">
             <span class="font-display text-amber-200">Gmail gets paragraphs.</span><br />
             <span class="font-bold">Slack gets sentences.</span>
           </h2>
@@ -633,7 +633,7 @@
     <!-- Top 10 grid -->
     <section class="mx-auto max-w-6xl px-6 py-16 md:py-24">
       <div class="max-w-2xl reveal">
-        <h2 class="text-4xl tracking-tight md:text-5xl"><span class="font-display text-violet-200">Ten ways</span> <span class="font-bold">leaders get time back.</span></h2>
+        <h2 class="text-4xl tracking-tight md:text-5xl"><span class="font-display">Ten ways</span> <span class="font-bold">leaders get time back.</span></h2>
         <p class="mt-4 text-lg text-ghost/60">The keyboard was the bottleneck. Now it isn't.</p>
       </div>
       <div class="mt-10 grid gap-3 md:grid-cols-2" data-stagger>
