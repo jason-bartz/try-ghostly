@@ -1,13 +1,13 @@
 # Ghostly
 
-> Ghostly is a voice-first typing app for macOS. It lives in the menu bar: press a shortcut, talk, and your words land in the active app. Speech-to-text runs on-device using Whisper — audio never leaves the Mac. Optional AI cleanup (Apple Intelligence, OpenAI, Anthropic) polishes the transcript; only text is sent, never audio.
+> Ghostly is a voice-first typing app for macOS. It lives in the menu bar: press a shortcut, talk, and your words land in the active app. Speech-to-text runs on-device using Whisper — audio never leaves the Mac. Optional AI cleanup (Apple Intelligence, OpenAI, Anthropic) polishes the transcript; only text is sent, never audio. Ghostly also transcribes meetings live without joining the call, and can run hands-free with Open Mic.
 
 Ghostly is Apple Silicon only — macOS 12+ on any Mac with an M1 chip or later. Intel Macs are not supported. This is a deliberate decision: Ghostly runs every AI model on-device (Whisper via Metal, optional Apple Intelligence cleanup via the Neural Engine), and real-time local transcription needs the unified memory and ML accelerators that only Apple Silicon has. The app is distributed as a signed `.dmg` and requires microphone and accessibility permissions. First launch downloads a Whisper model (500 MB–1.6 GB depending on variant: Small, Medium, Turbo, Large).
 
 ## Key facts
 
 - Platform: Apple Silicon only (M1 or later) on macOS 12 or later — Intel Macs not supported
-- Pricing: Free tier has full feature parity (all Whisper models, AI cleanup, per-app prompts, screenshot vision), capped at 30 minutes of transcription per week on one Mac. Pro is a one-time $39 purchase — unlimited transcription, install on up to 3 Macs, lifetime updates. No subscription.
+- Pricing: Free tier is uncapped and full-featured — unlimited dictation on every Mac you own, all engines (Whisper, Parakeet, Moonshine), Meeting Mode, Open Mic, per-app prompts, screenshot vision. The AI features run on a user-supplied API key (Anthropic, OpenAI, Groq, Ollama) or on-device Apple Intelligence. Ghostly Max is the optional paid tier: $12/month or $108/year, hosted AI with no API key and no setup, plus Max-only features (ask-your-transcripts, vocabulary learning, encrypted sync). Max is in early access and not yet purchasable.
 - Privacy: On-device transcription. No analytics. No telemetry. Audio never transmitted.
 - Download: https://downloads.try-ghostly.com/Ghostly-latest.dmg
 
@@ -17,6 +17,24 @@ Ghostly is Apple Silicon only — macOS 12+ on any Mac with an M1 chip or later.
 - [Download (.dmg)](https://downloads.try-ghostly.com/Ghostly-latest.dmg): Latest signed macOS installer
 - [Install guide](https://try-ghostly.com/install/): How to install Ghostly on macOS
 - [Privacy policy](https://try-ghostly.com/privacy/): Data handling and permissions
+
+## Modes
+
+- Dictate: hold a global shortcut, talk, release. The cleaned transcript is pasted where the cursor is. A separate Verbatim shortcut transcribes with no rewriting at all.
+- Meeting Mode: live transcription of a call in a floating panel, capturing both your microphone and the call's audio through a macOS process tap. No bot joins the meeting and no screen recording permission is needed. Capturing the other participants requires macOS 14.2 or later; below that Ghostly transcribes your side only. Speakers are labelled and renameable. Auto-connect is off by default and can be excluded by meeting name. Transcripts stay on the Mac, are never written to logs or diagnostics bundles, and are deleted after a chosen retention period.
+- "Where were we?": an on-demand catch-up summary of the meeting in progress — what is being discussed now, what was missed, decisions made, anything asked of you, and one line you could say to rejoin. Generated on-device with Apple Intelligence, through your own AI provider, or extractively with no AI.
+- Open Mic: hands-free dictation. The mic stays armed and each pause closes a segment, which is transcribed and inserted. Ending a segment with the submit phrase ("send it" by default) strips the phrase and presses Enter or Cmd+Enter. Off by default.
+
+## Other features
+
+- Per-app writing styles matched on the real bundle identifier — casual in Slack, formal in Mail, verbatim in an editor.
+- Agent detection: in Claude Code, Cursor, ChatGPT, Codex and similar apps, Ghostly switches to local deterministic cleanup so a dictated prompt is punctuated but never reworded.
+- Edit what you just said: revise the previous output by voice, or with shortcut chips (shorten, lengthen, fix grammar, rephrase).
+- Screenshot + dictate: captures the screen alongside a spoken question and stages both for any AI chat that accepts images.
+- Voice commands mapped to keystrokes, plus a configurable "scratch that" phrase for self-correction.
+- Personal dictionary for names, products, and jargon, including how they sound versus how they are spelled.
+- Notes and a Meetings library, both stored on-device: full-text search, tags, date and app grouping, and export as Markdown, plain text, or JSON.
+- Swappable engines: Whisper by default, with Parakeet and Moonshine available.
 
 ## How it works
 
@@ -29,7 +47,8 @@ Ghostly is Apple Silicon only — macOS 12+ on any Mac with an M1 chip or later.
 ## Common questions
 
 - Does audio leave the Mac? No. Transcription is on-device. AI cleanup only sees text.
-- Is it free? Yes — full feature parity on the free tier (all Whisper models, AI cleanup, every feature), capped at 30 minutes of transcription per week on one Mac. Pro ($39 one-time, no subscription) removes the cap and allows install on up to 3 Macs.
+- Is it free? Yes, and uncapped — unlimited dictation, every feature, on as many Macs as you own. AI features use your own API key. Ghostly Max ($12/month) is optional: the same AI with no key required, plus Max-only features. Max is in early access.
 - Does it work offline? Yes, after first-run model download.
 - Windows, Linux, or Intel Mac? No — Apple Silicon only (M1 or later). The AI models run on-device via Metal and the Neural Engine, and Intel hardware can't keep up without shipping audio off the machine, which defeats the privacy model.
-- Apple Intelligence support? Yes, as an on-device AI cleanup option.
+- Apple Intelligence support? Yes, as an on-device AI cleanup option, and as an on-device backend for meeting summaries.
+- Does a bot join my meetings? No. Meeting Mode captures audio locally on the Mac; nothing appears in the participant list.

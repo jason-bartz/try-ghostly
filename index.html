@@ -6,9 +6,9 @@
     <title>Ghostly — Your AI ghostwriter for macOS | Private, on-device dictation</title>
     <meta
       name="description"
-      content="Ghostly is your AI ghostwriter for macOS. Speak, and polished text lands wherever your cursor is — punctuated, formatted, and shaped to the app you're writing in. Runs on-device; your audio never leaves your Mac."
+      content="Ghostly is your AI ghostwriter for macOS. Speak, and polished text lands wherever your cursor is — punctuated, formatted, and shaped to the app you're writing in. Live meeting transcripts, hands-free Open Mic, and a &quot;Where were we?&quot; catch-up — all on-device."
     />
-    <meta name="keywords" content="AI ghostwriter, macOS dictation, voice typing, speech to text Mac, on-device transcription, dictate to Claude Code, voice for AI agents, Cursor dictation, menu bar dictation, push to talk, Apple Silicon, privacy-first transcription" />
+    <meta name="keywords" content="AI ghostwriter, macOS dictation, voice typing, speech to text Mac, on-device transcription, meeting transcription without a bot, live meeting transcript Mac, hands-free dictation, dictate to Claude Code, voice for AI agents, Cursor dictation, menu bar dictation, push to talk, Apple Silicon, privacy-first transcription" />
     <meta name="author" content="Jason Bartz" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <link rel="canonical" href="https://try-ghostly.com/" />
@@ -64,25 +64,48 @@
           "url": "https://try-ghostly.com/",
           "downloadUrl": "https://downloads.try-ghostly.com/Ghostly-latest.dmg",
           "installUrl": "https://downloads.try-ghostly.com/Ghostly-latest.dmg",
-          "softwareVersion": "0.1.23",
+          "softwareVersion": "0.1.25",
           "fileFormat": "application/x-apple-diskimage",
           "image": "https://try-ghostly.com/assets/og-image.png",
-          "description": "Menu-bar dictation for macOS. Press a shortcut, talk, and your words land in the active app. Transcription runs on-device with Whisper — audio never leaves your Mac.",
+          "description": "Menu-bar dictation for macOS. Press a shortcut, talk, and your words land in the active app. Transcription runs on-device with Whisper — audio never leaves your Mac. Also transcribes your calls live without joining them, and runs hands-free with Open Mic.",
           "featureList": [
             "On-device Whisper transcription",
             "Global push-to-talk shortcut",
             "Pastes into the active app",
+            "Meeting Mode — live call transcripts with no bot in the participant list",
+            "\"Where were we?\" — instant catch-up summary of what you missed",
+            "Open Mic — hands-free dictation with a spoken submit phrase",
+            "Searchable notes and meeting library, stored on-device",
             "Works offline after first-run model download",
             "Optional AI cleanup (Apple Intelligence, OpenAI, Anthropic)",
             "Voice Activity Detection (Silero VAD)",
             "Multiple Whisper model sizes (Small, Medium, Turbo, Large)"
           ],
-          "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD",
-            "availability": "https://schema.org/InStock"
-          },
+          "offers": [
+            {
+              "@type": "Offer",
+              "name": "Ghostly Free",
+              "description": "Unlimited on-device dictation. AI features work with your own API key.",
+              "price": "0",
+              "priceCurrency": "USD",
+              "availability": "https://schema.org/InStock"
+            },
+            {
+              "@type": "Offer",
+              "name": "Ghostly Max",
+              "description": "Everything in Free plus hosted AI with no API key required. Early access.",
+              "price": "12",
+              "priceCurrency": "USD",
+              "availability": "https://schema.org/PreOrder",
+              "priceSpecification": {
+                "@type": "UnitPriceSpecification",
+                "price": "12",
+                "priceCurrency": "USD",
+                "billingIncrement": 1,
+                "unitCode": "MON"
+              }
+            }
+          ],
           "author": {
             "@type": "Person",
             "name": "Jason Bartz"
@@ -116,10 +139,34 @@
             },
             {
               "@type": "Question",
+              "name": "Does Ghostly join my meetings like a notetaker bot?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. Meeting Mode captures your microphone and the call's audio locally through a macOS process tap, so nothing joins the call and no bot appears in the participant list. Transcripts stay on your Mac, are never written to logs or diagnostics bundles, and are deleted automatically after the retention period you choose. Capturing the other participants needs macOS 14.2 or later; below that Ghostly transcribes your side only and says so."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is \"Where were we?\"",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A shortcut that summarises the meeting you're in: what's being discussed right now, what you missed, the decisions made, anything asked of you, and one line you could say to rejoin the conversation. Summaries can be generated on-device with Apple Intelligence, through your own AI provider, or extractively with no AI at all."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is Open Mic?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A hands-free mode. Instead of holding a shortcut per sentence, you leave the mic open and Ghostly transcribes each utterance when you pause. End a segment with your submit phrase — \"send it\" by default — and Ghostly strips the phrase and presses Enter for you. It's off by default, and the mic stays open only while you have it armed."
+              }
+            },
+            {
+              "@type": "Question",
               "name": "Is Ghostly free?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Yes. The free tier has full feature parity — all Whisper models, AI cleanup, per-app prompts, screenshot vision — capped at 30 minutes of transcription per week on one Mac. Pro ($39 one-time, no subscription) removes the time cap and lets you install on up to three Macs."
+                "text": "Yes, and the free tier is uncapped — unlimited dictation, every Whisper model, per-app prompts, screenshot vision, Meeting Mode, on as many Macs as you own. The AI features run on your own API key. Ghostly Max ($12/month) is the optional paid tier: the same AI features with no API key and no setup, plus Max-only features. Max is in early access."
               }
             },
             {
@@ -231,38 +278,6 @@
         border-color: rgba(124, 92, 255, 0.4);
         background: rgba(124, 92, 255, 0.06);
       }
-      .waveform span {
-        display: inline-block;
-        width: 3px;
-        margin: 0 2px;
-        border-radius: 2px;
-        background: linear-gradient(to top, #7c5cff, #7dd3fc);
-        transition: height 90ms ease-out, opacity 90ms ease-out;
-      }
-      .slack-win {
-        background: #0f0f17;
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 14px;
-        overflow: hidden;
-        box-shadow: 0 30px 80px -20px rgba(124, 92, 255, 0.25);
-      }
-      .slack-sidebar {
-        background: linear-gradient(180deg, #1a1430 0%, #120d24 100%);
-        border-right: 1px solid rgba(255, 255, 255, 0.06);
-      }
-      .slack-channel {
-        color: rgba(232, 233, 239, 0.55);
-        padding: 5px 10px;
-        border-radius: 6px;
-        font-size: 13px;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-      }
-      .slack-channel.active {
-        background: rgba(124, 92, 255, 0.25);
-        color: #fff;
-      }
       .avatar {
         width: 36px;
         height: 36px;
@@ -289,16 +304,6 @@
         70%  { box-shadow: 0 0 0 10px rgba(255, 95, 87, 0); }
         100% { box-shadow: 0 0 0 0 rgba(255, 95, 87, 0); }
       }
-      .caret::after {
-        content: '';
-        display: inline-block;
-        width: 2px;
-        height: 1em;
-        background: #7c5cff;
-        margin-left: 2px;
-        vertical-align: text-bottom;
-        animation: blink 1s steps(2) infinite;
-      }
       @keyframes blink { 50% { opacity: 0; } }
       .msg-enter {
         animation: msgIn 380ms cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -307,42 +312,108 @@
         from { opacity: 0; transform: translateY(6px); }
         to   { opacity: 1; transform: translateY(0); }
       }
+      /* ── The recorder pill ───────────────────────────────────────────────
+       *
+       * A 1:1 reproduction of the real overlay window — geometry, colours,
+       * bar count, easing and the mask are all lifted from
+       * src/overlay/RecordingOverlay.css in the app. Screenshots of the
+       * shipping product should be indistinguishable from this. If the
+       * overlay changes there, change it here (and in ph/, for/creatives/). */
       .overlay-pill {
+        box-sizing: border-box;
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        width: 220px;
+        height: 44px;
+        padding: 8px 10px;
+        border-radius: 22px;
         background: rgba(10, 10, 16, 0.92);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 999px;
-        backdrop-filter: blur(16px);
+        border: 1px solid rgba(167, 139, 250, 0.18);
+        backdrop-filter: blur(20px) saturate(1.4);
+        -webkit-backdrop-filter: blur(20px) saturate(1.4);
         box-shadow:
-          0 0 0 1px rgba(124, 92, 255, 0.35),
-          0 20px 50px -10px rgba(0, 0, 0, 0.6),
-          0 0 40px rgba(124, 92, 255, 0.25);
-        transition: opacity 260ms ease, transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+          0 1px 0 rgba(255, 255, 255, 0.14) inset,
+          0 0 0 1px rgba(255, 255, 255, 0.03) inset,
+          0 0 22px rgba(124, 58, 237, 0.22),
+          0 8px 28px rgba(0, 0, 0, 0.55);
+        transition:
+          opacity 260ms ease,
+          transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
+          box-shadow 180ms ease-out;
       }
-      .caption-bubble {
-        position: relative;
-        background: rgba(15, 15, 23, 0.96);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 14px;
-        backdrop-filter: blur(12px);
-        box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.55);
-        transition: opacity 260ms ease, transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+      /* The bare mark, floating — not the app-icon tile. */
+      .pill-mark {
+        height: 22px;
+        width: auto;
+        animation: ghost-float 2.4s infinite ease-in-out;
+        filter: drop-shadow(0 0 4px rgba(167, 139, 250, 0.5));
+      }
+      @keyframes ghost-float {
+        0%, 100% { transform: translateY(0); opacity: 0.9; }
+        50%      { transform: translateY(-2px); opacity: 1; }
+      }
+      .pill-middle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 0;
+      }
+      .pill-wave {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 2px;
+        height: 30px;
+        overflow: hidden;
+        -webkit-mask-image: linear-gradient(to right, transparent 0, #000 14%, #000 86%, transparent 100%);
+        mask-image: linear-gradient(to right, transparent 0, #000 14%, #000 86%, transparent 100%);
+      }
+      .pill-wave span {
+        width: 3px;
+        min-height: 3px;
+        max-height: 28px;
+        border-radius: 2px;
+        background: linear-gradient(to top, #7c3aed 0%, #a78bfa 55%, #ddd6fe 100%);
+        box-shadow: 0 0 5px #a78bfa, 0 0 10px rgba(124, 58, 237, 0.38);
+        transition: height 55ms ease-out, opacity 100ms ease-out;
+      }
+      /* Shimmering status text — replaces the bars once you stop talking. */
+      .pill-status {
+        font-size: 12px;
+        white-space: nowrap;
+        background: linear-gradient(
+          100deg,
+          rgba(196, 181, 253, 0.45) 35%,
+          #ede9fe 48%,
+          #c4b5fd 56%,
+          rgba(196, 181, 253, 0.45) 68%
+        );
+        background-size: 200% 100%;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        animation: pill-shimmer 2.2s linear infinite;
+      }
+      @keyframes pill-shimmer {
+        0%   { background-position: 200% 50%; }
+        100% { background-position: -200% 50%; }
+      }
+      .pill-cancel {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        color: #a78bfa;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .pill-mark { animation: none; }
+        .pill-status { animation: none; background: none; color: #c4b5fd; }
       }
       .overlay-hidden { opacity: 0; pointer-events: none; }
-      .mini-wave span {
-        display: inline-block;
-        width: 2px;
-        margin: 0 1px;
-        border-radius: 2px;
-        background: linear-gradient(to top, #7c5cff, #7dd3fc);
-        transition: height 70ms ease-out;
-      }
-      .send-btn {
-        transition: background 160ms ease, transform 120ms ease;
-      }
-      .send-btn.flash {
-        background: rgba(124, 92, 255, 0.9) !important;
-        transform: scale(0.94);
-      }
       .spin {
         animation: spin 0.9s linear infinite;
       }
@@ -476,16 +547,10 @@
         0%, 100% { transform: translateY(0); }
         50%      { transform: translateY(-8px); }
       }
+      /* Positioning + ambience only — the pill itself is .overlay-pill, so this
+       * section shows the same chrome the app draws. */
       .center-pill {
         position: relative;
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        padding: 12px 20px;
-        border-radius: 999px;
-        background: rgba(10, 10, 16, 0.85);
-        border: 1px solid rgba(124, 92, 255, 0.4);
-        box-shadow: 0 0 0 6px rgba(124, 92, 255, 0.08), 0 30px 60px -15px rgba(124, 92, 255, 0.35);
       }
       .hero-composer {
         position: relative;
@@ -539,8 +604,9 @@
         position: absolute;
         inset: -14px;
         border-radius: 999px;
-        border: 1px solid rgba(124, 92, 255, 0.25);
+        border: 1px solid rgba(124, 58, 237, 0.28);
         animation: ring 2.6s ease-out infinite;
+        pointer-events: none;
       }
       @keyframes ring {
         0%   { transform: scale(0.95); opacity: 0.7; }
@@ -565,27 +631,6 @@
         justify-content: center;
         overflow: hidden;
         position: relative;
-      }
-      .step-wave span {
-        display: inline-block;
-        width: 3px;
-        margin: 0 2px;
-        border-radius: 2px;
-        background: linear-gradient(to top, #7c5cff, #7dd3fc);
-        animation: sbar 1.2s ease-in-out infinite;
-      }
-      .step-wave span:nth-child(2) { animation-delay: 0.08s; }
-      .step-wave span:nth-child(3) { animation-delay: 0.16s; }
-      .step-wave span:nth-child(4) { animation-delay: 0.24s; }
-      .step-wave span:nth-child(5) { animation-delay: 0.32s; }
-      .step-wave span:nth-child(6) { animation-delay: 0.40s; }
-      .step-wave span:nth-child(7) { animation-delay: 0.48s; }
-      .step-wave span:nth-child(8) { animation-delay: 0.56s; }
-      .step-wave span:nth-child(9) { animation-delay: 0.64s; }
-      .step-wave span:nth-child(10){ animation-delay: 0.72s; }
-      @keyframes sbar {
-        0%, 100% { height: 10px; }
-        50%      { height: 34px; }
       }
       .step-type::after {
         content: '';
@@ -1012,6 +1057,522 @@
         font-size: 12px;
         color: rgba(232, 233, 239, 0.5);
       }
+
+      /* ═══════════════════════════════════════════════════════════════════
+         Shared app-window chrome
+         Used by the hero stage and the "in the wild" reel so every fake
+         window on the page is drawn by one set of rules.
+         ═══════════════════════════════════════════════════════════════ */
+      .win {
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        background: #0d0d14;
+        overflow: hidden;
+        box-shadow: 0 30px 80px -24px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+      }
+      .win-bar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 9px 14px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        background: rgba(255, 255, 255, 0.025);
+      }
+      .win-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+      .win-title {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        margin-left: 6px;
+        font-size: 11.5px;
+        color: rgba(232, 233, 239, 0.45);
+        min-width: 0;
+      }
+      .win-title img { width: 14px; height: 14px; border-radius: 3px; object-fit: contain; }
+      .win-title span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+      /* ═══════════════════════════════════════════════════════════════════
+         Hero stage — three modes, cross-faded on a loop
+         ═══════════════════════════════════════════════════════════════ */
+      .mode-tabs {
+        display: flex;
+        justify-content: center;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .mode-tab {
+        position: relative;
+        overflow: hidden;
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 7px 14px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(255, 255, 255, 0.03);
+        font-size: 12.5px;
+        font-weight: 500;
+        letter-spacing: -0.005em;
+        color: rgba(232, 233, 239, 0.5);
+        cursor: pointer;
+        transition: color 220ms ease, border-color 220ms ease, background 220ms ease;
+      }
+      .mode-tab svg { width: 13px; height: 13px; opacity: 0.75; }
+      /* Keep all three on one row on a phone — a wrapped tab strip reads as
+         a layout accident rather than a control. */
+      @media (max-width: 420px) {
+        .mode-tabs { gap: 4px; }
+        .mode-tab { padding: 6px 10px; font-size: 11.5px; gap: 5px; }
+        .mode-tab svg { display: none; }
+      }
+      .mode-tab.is-active {
+        color: #e8e2ff;
+        border-color: rgba(124, 92, 255, 0.45);
+        background: rgba(124, 92, 255, 0.12);
+      }
+      /* Progress sweep — shows how long the current mode has left. */
+      .mode-tab .mode-progress {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: 2px;
+        width: 100%;
+        transform: scaleX(0);
+        transform-origin: left center;
+        background: linear-gradient(90deg, #7c5cff, #a78bfa);
+        opacity: 0;
+      }
+      .mode-tab.is-active .mode-progress { opacity: 1; }
+
+      /* All scenes share one grid cell, so the stage is as tall as the
+         tallest scene and never reflows mid-loop. */
+      .mode-stage { display: grid; }
+      .mode-scene {
+        grid-area: 1 / 1;
+        opacity: 0;
+        transform: translateY(10px) scale(0.992);
+        pointer-events: none;
+        transition: opacity 480ms ease, transform 480ms cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .mode-scene.is-active { opacity: 1; transform: none; pointer-events: auto; }
+      /* Every scene fills the shared cell, so the shorter ones don't leave a
+         void under their window where the tallest scene reaches — and their
+         footer strip sits on the bottom edge rather than floating mid-air. */
+      .mode-scene > .win { height: 100%; display: flex; flex-direction: column; }
+      .mode-scene > .win > .scene-body { flex: 1 1 auto; }
+
+      .scene-body { padding: 16px 18px; }
+      @media (min-width: 768px) { .scene-body { padding: 20px 22px; } }
+
+      /* — Scene 1: raw speech becomes clean text — */
+      .say-raw {
+        font-size: 15px;
+        line-height: 1.6;
+        letter-spacing: -0.005em;
+        color: rgba(232, 233, 239, 0.42);
+        min-height: 4.8em;
+        transition: opacity 320ms ease, filter 320ms ease;
+      }
+      @media (min-width: 768px) { .say-raw { font-size: 16.5px; min-height: 3.2em; } }
+      .say-raw.is-spent { opacity: 0.28; filter: blur(0.6px); }
+      .say-clean {
+        font-size: 16px;
+        line-height: 1.6;
+        letter-spacing: -0.012em;
+        color: #eceef5;
+        min-height: 4.8em;
+      }
+      @media (min-width: 768px) { .say-clean { font-size: 19px; min-height: 3.2em; } }
+      .field-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 4px 10px 4px 5px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        font-size: 11px;
+        color: rgba(232, 233, 239, 0.6);
+      }
+      .field-chip img { width: 16px; height: 16px; border-radius: 4px; object-fit: contain; }
+
+      /* — Scene 2: the meeting panel — */
+      .mt-line {
+        display: flex;
+        gap: 10px;
+        padding: 6px 0;
+        opacity: 0;
+        transform: translateY(6px);
+        transition: opacity 320ms ease, transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .mt-line.in { opacity: 1; transform: none; }
+      .mt-who {
+        flex-shrink: 0;
+        width: 74px;
+        font-size: 11.5px;
+        font-weight: 600;
+        letter-spacing: -0.005em;
+        padding-top: 1px;
+        text-align: right;
+        color: rgba(232, 233, 239, 0.42);
+      }
+      .mt-who.you { color: #c4b5fd; }
+      .mt-text { font-size: 13.5px; line-height: 1.55; color: rgba(232, 233, 239, 0.82); }
+      .mt-line.addressed .mt-text {
+        background: rgba(251, 191, 36, 0.09);
+        box-shadow: 0 0 0 1px rgba(251, 191, 36, 0.22) inset;
+        border-radius: 8px;
+        padding: 3px 8px;
+        margin: -3px -8px;
+      }
+      .mt-alert {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 10px;
+        padding: 7px 11px;
+        border-radius: 10px;
+        background: rgba(251, 191, 36, 0.1);
+        border: 1px solid rgba(251, 191, 36, 0.28);
+        font-size: 11.5px;
+        font-weight: 500;
+        color: #fcd34d;
+        opacity: 0;
+        transform: translateY(4px);
+        transition: opacity 300ms ease, transform 300ms ease;
+      }
+      .mt-alert.in { opacity: 1; transform: none; }
+      .catchup {
+        margin-top: 12px;
+        border-radius: 12px;
+        border: 1px solid rgba(124, 92, 255, 0.3);
+        background: linear-gradient(180deg, rgba(124, 92, 255, 0.11), rgba(124, 92, 255, 0.03));
+        padding: 13px 15px;
+        opacity: 0;
+        transform: translateY(8px);
+        transition: opacity 420ms ease, transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .catchup.in { opacity: 1; transform: none; }
+      .catchup-row { display: flex; gap: 10px; padding: 3px 0; font-size: 12.5px; line-height: 1.5; }
+      .catchup-key {
+        flex-shrink: 0;
+        width: 96px; /* wide enough that "Asked of you" stays on one line */
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        padding-top: 3px;
+        color: rgba(196, 181, 253, 0.75);
+      }
+      .catchup-val { color: rgba(240, 238, 255, 0.9); }
+      .catchup-val em { color: #ddd6fe; font-style: normal; font-weight: 500; }
+
+      /* — Scene 3: Open Mic — */
+      .om-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 4px 11px;
+        border-radius: 999px;
+        border: 1px solid rgba(52, 211, 153, 0.3);
+        background: rgba(52, 211, 153, 0.1);
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+        color: #6ee7b7;
+      }
+      .om-seg {
+        display: flex;
+        align-items: flex-start;
+        gap: 9px;
+        padding: 7px 0;
+        opacity: 0;
+        transform: translateY(6px);
+        transition: opacity 300ms ease, transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .om-seg.in { opacity: 1; transform: none; }
+      .om-tick {
+        flex-shrink: 0;
+        width: 16px; height: 16px;
+        margin-top: 2px;
+        border-radius: 50%;
+        background: rgba(52, 211, 153, 0.16);
+        color: #6ee7b7;
+        display: inline-flex; align-items: center; justify-content: center;
+      }
+      .om-tick svg { width: 9px; height: 9px; }
+      .om-seg-text { font-size: 13.5px; line-height: 1.55; color: rgba(232, 233, 239, 0.85); }
+      .om-phrase {
+        color: #fcd34d;
+        text-decoration: line-through;
+        text-decoration-color: rgba(252, 211, 77, 0.5);
+      }
+      .om-key {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-left: 8px;
+        padding: 1px 7px;
+        border-radius: 5px;
+        border: 1px solid rgba(124, 92, 255, 0.35);
+        background: rgba(124, 92, 255, 0.14);
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 10px;
+        color: #c9bfff;
+        opacity: 0;
+        transform: scale(0.9);
+        transition: opacity 200ms ease, transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .om-key.in { opacity: 1; transform: none; }
+
+      /* ═══════════════════════════════════════════════════════════════════
+         "In the wild" reel — horizontally scrolling, auto-advancing scenes
+         ═══════════════════════════════════════════════════════════════ */
+      .reel {
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        scroll-behavior: smooth;
+        overscroll-behavior-x: contain;
+        -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+                mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+      }
+      .reel::-webkit-scrollbar { display: none; }
+      .reel-track {
+        display: flex;
+        gap: 22px;
+        width: max-content;
+        /* Percentage padding resolves against the reel's content box, not the
+           viewport — so the first and last card still centre on a desktop
+           browser that reserves space for a scrollbar. */
+        padding: 10px max(24px, calc((100% - 720px) / 2)) 22px;
+      }
+      .reel-card {
+        scroll-snap-align: center;
+        flex-shrink: 0;
+        width: min(720px, 84vw);
+        opacity: 0.34;
+        transform: scale(0.955);
+        filter: saturate(0.6);
+        transition: opacity 520ms ease, transform 520ms cubic-bezier(0.22, 1, 0.36, 1), filter 520ms ease;
+      }
+      .reel-card.is-active { opacity: 1; transform: none; filter: none; }
+      @media (prefers-reduced-motion: reduce) {
+        .reel { scroll-behavior: auto; }
+        .reel-card { opacity: 1; transform: none; filter: none; }
+      }
+
+      /* Terminal / editor body shared by the Claude Code and VS Code cards */
+      .term {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 12px;
+        line-height: 1.75;
+        color: rgba(232, 233, 239, 0.78);
+      }
+      @media (min-width: 768px) { .term { font-size: 12.5px; } }
+      .term .dim { color: rgba(232, 233, 239, 0.34); }
+      .term .accent { color: #c9bfff; }
+      .term .ok { color: #6ee7b7; }
+      .term .warn { color: #fcd34d; }
+      .term .add { color: #6ee7b7; }
+      .term .del { color: #fca5a5; }
+      .cc-mark {
+        display: inline-block;
+        width: 12px;
+        text-align: center;
+        color: #d97757;
+      }
+      .term-row {
+        opacity: 0;
+        transform: translateY(4px);
+        transition: opacity 260ms ease, transform 260ms ease;
+      }
+      .term-row.in { opacity: 1; transform: none; }
+
+      /* Card footer: what was actually said, plus the style Ghostly applied */
+      .said {
+        display: flex;
+        align-items: flex-start;
+        gap: 11px;
+        padding: 12px 16px;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        background: rgba(0, 0, 0, 0.32);
+        min-height: 74px;
+      }
+      .said-meter {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        height: 22px;
+        width: 34px;
+        flex-shrink: 0;
+        margin-top: 2px;
+        overflow: hidden;
+      }
+      .said-meter span {
+        width: 2.5px;
+        min-height: 2.5px;
+        border-radius: 2px;
+        background: linear-gradient(to top, #7c3aed, #c4b5fd);
+        box-shadow: 0 0 4px rgba(167, 139, 250, 0.6);
+        transition: height 60ms ease-out, opacity 120ms ease-out;
+      }
+      .said-body { min-width: 0; flex: 1; }
+      .said-label {
+        display: block;
+        font-size: 9.5px;
+        font-weight: 700;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+        color: rgba(232, 233, 239, 0.32);
+      }
+      .said-text {
+        margin-top: 3px;
+        font-size: 12.5px;
+        line-height: 1.5;
+        color: rgba(232, 233, 239, 0.62);
+        font-style: italic;
+      }
+      .style-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 8px;
+        padding: 3px 9px;
+        border-radius: 999px;
+        border: 1px solid rgba(124, 92, 255, 0.3);
+        background: rgba(124, 92, 255, 0.12);
+        font-size: 10.5px;
+        font-weight: 500;
+        color: #c9bfff;
+        opacity: 0;
+        transform: translateY(3px);
+        transition: opacity 260ms ease, transform 260ms ease;
+      }
+      .style-chip.in { opacity: 1; transform: none; }
+      .style-chip.green { border-color: rgba(52, 211, 153, 0.3); background: rgba(52, 211, 153, 0.11); color: #6ee7b7; }
+
+      .reel-dots { display: flex; justify-content: center; gap: 8px; }
+      .reel-dot {
+        width: 7px; height: 7px;
+        border-radius: 50%;
+        border: 0;
+        padding: 0;
+        cursor: pointer;
+        background: rgba(255, 255, 255, 0.16);
+        transition: background 260ms ease, width 260ms ease, border-radius 260ms ease;
+      }
+      .reel-dot.is-active { width: 22px; border-radius: 999px; background: #7c5cff; }
+
+      /* Gmail compose */
+      .gm-head {
+        display: flex;
+        gap: 8px;
+        padding: 7px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        font-size: 12.5px;
+      }
+      .gm-head .k { color: rgba(232, 233, 239, 0.34); width: 54px; flex-shrink: 0; }
+      .gm-head .v { color: rgba(232, 233, 239, 0.78); }
+      .gm-body {
+        margin-top: 12px;
+        font-size: 13px;
+        line-height: 1.62;
+        color: rgba(232, 233, 239, 0.86);
+        white-space: pre-wrap;
+        min-height: 148px;
+      }
+      .gm-send {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 6px 16px;
+        border-radius: 999px;
+        background: rgba(124, 92, 255, 0.2);
+        border: 1px solid rgba(124, 92, 255, 0.4);
+        font-size: 12px;
+        font-weight: 600;
+        color: #d5ccff;
+        transition: background 180ms ease, transform 140ms ease;
+      }
+      .gm-send.flash { background: rgba(124, 92, 255, 0.85); color: #fff; transform: scale(0.95); }
+
+      /* Slack thread */
+      .sl-msg { display: flex; gap: 10px; padding: 7px 0; }
+      .sl-av {
+        width: 28px; height: 28px;
+        border-radius: 7px;
+        flex-shrink: 0;
+        object-fit: cover;
+      }
+      .sl-name { font-size: 12.5px; font-weight: 600; color: #eceef5; }
+      .sl-time { font-size: 10.5px; color: rgba(232, 233, 239, 0.32); }
+      .sl-text { margin-top: 1px; font-size: 13px; line-height: 1.55; color: rgba(232, 233, 239, 0.8); }
+      .sl-input {
+        margin-top: 12px;
+        border-radius: 9px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(0, 0, 0, 0.35);
+        padding: 9px 12px;
+        font-size: 13px;
+        line-height: 1.5;
+        min-height: 40px;
+        color: rgba(232, 233, 239, 0.9);
+      }
+      .sl-input.focus { border-color: rgba(124, 92, 255, 0.45); }
+
+      /* VS Code source control */
+      .vs-file {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 4px 0;
+        font-size: 12px;
+        color: rgba(232, 233, 239, 0.7);
+      }
+      .vs-file .badge { font-size: 10px; font-weight: 700; width: 12px; text-align: center; }
+      .vs-commit {
+        margin-top: 10px;
+        border-radius: 6px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(0, 0, 0, 0.4);
+        padding: 8px 11px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 11.5px;
+        line-height: 1.6;
+        color: rgba(232, 233, 239, 0.88);
+        white-space: pre-wrap;
+        min-height: 74px;
+      }
+      .vs-commit.focus { border-color: rgba(124, 92, 255, 0.5); }
+      .vs-btn {
+        display: block;
+        margin-top: 9px;
+        border-radius: 5px;
+        background: rgba(124, 92, 255, 0.22);
+        border: 1px solid rgba(124, 92, 255, 0.4);
+        padding: 6px 0;
+        text-align: center;
+        font-size: 11.5px;
+        font-weight: 600;
+        color: #d5ccff;
+        transition: background 180ms ease;
+      }
+      .vs-btn.flash { background: rgba(124, 92, 255, 0.85); color: #fff; }
+
+      /* Live caret shared by the reel + hero scenes */
+      .tick::after {
+        content: '';
+        display: inline-block;
+        width: 2px;
+        height: 1em;
+        background: #a78bfa;
+        margin-left: 2px;
+        vertical-align: text-bottom;
+        animation: blink 1s steps(2) infinite;
+      }
     </style>
   </head>
   <body class="font-sans antialiased">
@@ -1023,6 +1584,7 @@
         </a>
         <nav class="hidden items-center gap-8 text-sm text-ghost/70 md:flex">
           <a href="#features" class="hover:text-ghost">Features</a>
+          <a href="#meetings" class="hover:text-ghost">Meetings</a>
           <div class="nav-dropdown relative">
             <button type="button" class="nav-dropdown-trigger inline-flex items-center gap-1 hover:text-ghost" aria-haspopup="true" aria-expanded="false">
               For you
@@ -1056,9 +1618,10 @@
             <br />
             <span class="relative inline-block align-baseline"><span class="invisible" style="white-space: pre">Just speak.</span><span class="absolute left-0 top-0 text-ghost" style="white-space: pre"><span id="hero-type">Just speak.</span><span id="hero-caret" class="hero-caret"></span></span></span>
           </h1>
-          <p class="mx-auto mt-7 max-w-lg text-lg leading-relaxed text-ghost/60 md:text-xl">
-            Talk, and polished text lands wherever your cursor is — punctuated,
-            formatted, and shaped to whatever you're writing in.
+          <p class="mx-auto mt-7 max-w-xl text-lg leading-relaxed text-ghost/60 md:text-xl">
+            Talk, and polished text lands wherever your cursor is. Ghostly also
+            sits in on your calls without joining them, and will run hands-free
+            when you'd rather not touch a key at all.
           </p>
           <div class="mt-8 flex flex-wrap items-center justify-center gap-3 md:mt-10">
             <a href="/install/" class="btn-primary inline-flex items-center gap-2 rounded-xl px-6 py-3 text-base font-semibold">
@@ -1068,72 +1631,147 @@
           </div>
         </div>
 
-        <div class="relative mx-auto mt-12 max-w-4xl md:mt-16">
-          <div class="slack-win">
-            <div class="flex items-center gap-2 border-b border-white/5 bg-black/30 px-4 py-2.5">
-              <span class="h-3 w-3 rounded-full bg-red-400/80"></span>
-              <span class="h-3 w-3 rounded-full bg-yellow-400/80"></span>
-              <span class="h-3 w-3 rounded-full bg-green-400/80"></span>
-              <span class="ml-3 text-xs text-ghost/40">Slack · acme-team</span>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-[200px_1fr]" style="min-height: 400px">
-              <aside class="slack-sidebar hidden px-3 py-4 md:block">
-                <div class="mb-3 px-2 text-xs font-semibold uppercase tracking-wider text-ghost/40">acme-team</div>
-                <div class="space-y-0.5">
-                  <div class="slack-channel"># general</div>
-                  <div class="slack-channel"># engineering</div>
-                  <div class="slack-channel active"># design</div>
-                  <div class="slack-channel"># random</div>
+        <!-- ═══════════════════════════════════════════════════════════════
+             Hero stage.
+             Three modes on a loop, because Ghostly is no longer one thing:
+             press-and-talk dictation, live meeting capture, and hands-free
+             Open Mic. Every scene lives in the same grid cell, so the stage
+             is as tall as the tallest one and never jumps mid-cycle.
+             ════════════════════════════════════════════════════════════ -->
+        <div class="relative mx-auto mt-12 max-w-3xl md:mt-16" id="hero-stage-root">
+          <div class="mode-tabs" role="tablist" aria-label="Ghostly modes">
+            <button class="mode-tab is-active" role="tab" data-mode="0" aria-selected="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 11a7 7 0 0 1-14 0M12 18v3"/></svg>
+              Dictate
+              <span class="mode-progress"></span>
+            </button>
+            <button class="mode-tab" role="tab" data-mode="1" aria-selected="false">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h3l-.5 8H17M4 6h13v12H4z"/><circle cx="10.5" cy="11" r="2"/></svg>
+              Meeting Mode
+              <span class="mode-progress"></span>
+            </button>
+            <button class="mode-tab" role="tab" data-mode="2" aria-selected="false">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h2m3 0h2m3 0h2m3 0h3"/><path d="M6.5 8v8M11 6v12M15.5 9v6"/></svg>
+              Open Mic
+              <span class="mode-progress"></span>
+            </button>
+          </div>
+
+          <div class="mode-stage mt-5 text-left">
+            <!-- ── Scene 1 · Dictate ─────────────────────────────────── -->
+            <section class="mode-scene is-active" data-scene="0" aria-label="Dictation">
+              <div class="win">
+                <div class="win-bar">
+                  <span class="win-dot bg-red-400/70"></span>
+                  <span class="win-dot bg-yellow-400/70"></span>
+                  <span class="win-dot bg-green-400/70"></span>
+                  <span class="win-title"><span>Anywhere your cursor is</span></span>
                 </div>
-                <div class="mt-5 mb-2 px-2 text-xs font-semibold uppercase tracking-wider text-ghost/40">Direct messages</div>
-                <div class="space-y-0.5">
-                  <div class="slack-channel"><span class="h-2 w-2 rounded-full bg-emerald-400"></span> Maya Chen</div>
-                  <div class="slack-channel"><span class="h-2 w-2 rounded-full bg-ghost/30"></span> Jordan Lee</div>
-                </div>
-              </aside>
-              <div class="relative flex flex-col">
-                <div class="flex items-center justify-between border-b border-white/5 px-5 py-3">
-                  <div>
-                    <div class="text-sm font-semibold text-ghost"># design</div>
-                    <div class="text-[11px] text-ghost/40">Design reviews, critiques, shipping</div>
+                <div class="scene-body">
+                  <div class="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.12em] text-ghost/35">
+                    <span class="h-1.5 w-1.5 rounded-full bg-emerald-400" style="animation: pulse 1.4s infinite"></span>
+                    <span id="d-stage">Listening</span>
                   </div>
-                </div>
+                  <p class="say-raw mt-2" id="d-raw">&nbsp;</p>
 
-                <div id="chat-feed" class="flex-1 space-y-3 overflow-y-auto px-4 py-4 md:px-5 md:py-5" style="max-height: 280px"></div>
-
-                <div id="caption" class="caption-bubble overlay-hidden absolute left-1/2 z-10 w-[86%] max-w-md -translate-x-1/2 px-4 py-3" style="top: 42%; transform: translate(-50%, -50%)">
-                  <div class="flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-wider text-ghost/40">
-                    <span class="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                    <span id="caption-stage">Listening</span>
+                  <div class="my-4 flex items-center gap-3">
+                    <span class="h-px flex-1 bg-white/[0.07]"></span>
+                    <svg class="h-4 w-4 text-violet-300/70" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+                    <span class="h-px flex-1 bg-white/[0.07]"></span>
                   </div>
-                  <div id="caption-text" class="mt-1 text-sm leading-snug text-ghost/90 caret">&nbsp;</div>
-                </div>
 
-                <div class="px-4 pb-4 md:px-5 md:pb-5">
-                  <div class="rounded-lg border border-white/10 bg-black/30 focus-within:border-violet-400/40">
-                    <div id="composer" class="min-h-[40px] px-4 pt-3 pb-1 text-sm text-ghost/90"><span class="text-ghost/30" id="composer-placeholder">Message #design</span></div>
-                    <div class="flex items-center gap-2 border-t border-white/5 px-3 py-2">
-                      <button class="p-1 text-ghost/40 hover:text-ghost/70"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12m6-6H6"/></svg></button>
-                      <button class="p-1 text-ghost/40 hover:text-ghost/70"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.5 6c.83 0 1.5.67 1.5 1.5S16.33 11 15.5 11 14 10.33 14 9.5 14.67 8 15.5 8zm-7 0c.83 0 1.5.67 1.5 1.5S9.33 11 8.5 11 7 10.33 7 9.5 7.67 8 8.5 8zm3.5 10c-2.33 0-4.32-1.45-5.12-3.5h10.24c-.8 2.05-2.79 3.5-5.12 3.5z"/></svg></button>
-                      <button class="p-1 text-ghost/40 hover:text-ghost/70"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/></svg></button>
-                      <div class="ml-auto flex items-center gap-2">
-                        <button id="send-btn" class="send-btn flex items-center gap-1.5 rounded-md bg-white/5 px-3 py-1.5 text-xs font-semibold text-ghost/40">
-                          <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>
-                          Send
-                        </button>
-                      </div>
+                  <div class="field-chip" id="d-chip"><img src="assets/apps/slack.png" alt="" /><span id="d-app">Slack · #incidents</span></div>
+                  <p class="say-clean mt-3" id="d-clean">&nbsp;</p>
+                </div>
+                <div class="mt-auto flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-white/[0.06] bg-black/25 px-[18px] py-3 text-[11px] text-ghost/35 md:px-[22px]">
+                  <span class="inline-flex items-center gap-1.5"><span class="h-1 w-1 rounded-full bg-emerald-400/70"></span>Transcribed on this Mac</span>
+                  <span class="inline-flex items-center gap-1.5"><span class="h-1 w-1 rounded-full bg-violet-400/70"></span>Style matched to the app in focus</span>
+                  <span class="ml-auto hidden md:inline">Hold <span class="kbd" style="font-size: 10px">fn</span>, talk, release</span>
+                </div>
+              </div>
+            </section>
+
+            <!-- ── Scene 2 · Meeting Mode ────────────────────────────── -->
+            <section class="mode-scene" data-scene="1" aria-label="Meeting Mode">
+              <div class="win">
+                <div class="win-bar">
+                  <span class="win-dot bg-red-400/70"></span>
+                  <span class="win-dot bg-yellow-400/70"></span>
+                  <span class="win-dot bg-green-400/70"></span>
+                  <span class="win-title"><span>Meeting · Zoom · Q3 roadmap</span></span>
+                  <span class="ml-auto inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-ghost/45">
+                    <span class="rec-dot" style="width: 6px; height: 6px"></span> capturing
+                  </span>
+                </div>
+                <div class="scene-body">
+                  <div class="mb-2 flex items-center gap-2 text-[10.5px] text-ghost/35">
+                    <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" d="M12 15a3 3 0 003-3V6a3 3 0 00-6 0v6a3 3 0 003 3zM19 12a7 7 0 01-14 0"/></svg>
+                    Your mic and the call's audio — both captured on this Mac. Nothing joined the meeting.
+                  </div>
+                  <div id="m-lines"></div>
+                  <div class="mt-alert" id="m-alert">
+                    <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
+                    You were just addressed
+                  </div>
+                  <div class="catchup" id="m-catchup">
+                    <div class="mb-2.5 flex items-center gap-2">
+                      <img src="assets/ghostly-mark.svg" alt="" class="h-4 w-auto" />
+                      <span class="text-[11px] font-semibold tracking-tight text-violet-200">Where were we?</span>
+                      <!-- No keycap here on purpose: the catch-up shortcut
+                           ships unbound, so the panel button is the honest
+                           affordance to show. -->
+                      <span class="ml-auto text-[10px] text-ghost/30">panel button, or a shortcut you assign</span>
                     </div>
+                    <div class="catchup-row"><span class="catchup-key">Now</span><span class="catchup-val">Priya is walking through why the Q3 billing migration slipped two weeks.</span></div>
+                    <div class="catchup-row"><span class="catchup-key">Missed</span><span class="catchup-val">Dunning is blocked on the invoice schema · ~40 support tickets a week from the old flow.</span></div>
+                    <div class="catchup-row"><span class="catchup-key">Decisions</span><span class="catchup-val">Migration moves to the Aug 22 release train; the dunning fix ships ahead of it.</span></div>
+                    <div class="catchup-row"><span class="catchup-key">Asked of you</span><span class="catchup-val">Confirm whether design can have the invoice mocks by Friday.</span></div>
+                    <div class="catchup-row"><span class="catchup-key">Say next</span><span class="catchup-val"><em>"Friday works for the mocks — I'll have design send them over before standup."</em></span></div>
                   </div>
                 </div>
               </div>
-            </div>
+            </section>
+
+            <!-- ── Scene 3 · Open Mic ────────────────────────────────── -->
+            <section class="mode-scene" data-scene="2" aria-label="Open Mic">
+              <div class="win">
+                <div class="win-bar">
+                  <span class="win-dot bg-red-400/70"></span>
+                  <span class="win-dot bg-yellow-400/70"></span>
+                  <span class="win-dot bg-green-400/70"></span>
+                  <span class="win-title"><img src="assets/apps/claude.png" alt="" /><span>Claude — ~/acme/billing</span></span>
+                  <span class="ml-auto om-status" id="om-status">
+                    <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span> Open — listening
+                  </span>
+                </div>
+                <div class="scene-body">
+                  <p class="text-[11.5px] leading-relaxed text-ghost/40">
+                    No key held, no shortcut per sentence. Every pause closes a segment
+                    and sends it. Your submit phrase presses the key.
+                  </p>
+                  <div class="mt-3" id="om-segs"></div>
+                </div>
+                <div class="mt-auto flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-white/[0.06] bg-black/25 px-[18px] py-3 text-[11px] text-ghost/35 md:px-[22px]">
+                  <span class="inline-flex items-center gap-1.5"><span class="h-1 w-1 rounded-full bg-emerald-400/70"></span>Silence closes a segment after 700&nbsp;ms</span>
+                  <span class="inline-flex items-center gap-1.5"><span class="h-1 w-1 rounded-full bg-amber-400/70"></span>Submit phrase: <span class="font-mono">"send it"</span></span>
+                  <span class="ml-auto hidden md:inline">Close the mic with <span class="kbd" style="font-size: 10px">⌘⌥K</span></span>
+                </div>
+              </div>
+            </section>
           </div>
 
-          <!-- Floating overlay pill, below Slack window -->
-          <div class="mt-3 flex items-center justify-center" style="min-height: 38px">
-            <div id="pill" class="overlay-pill overlay-hidden flex items-center gap-2.5 px-3 py-1.5">
-              <img src="assets/ghostly-logo.svg" alt="" class="h-4 w-4" />
-              <div class="mini-wave flex h-5 w-[72px] items-center justify-center" id="mini-wave"></div>
+          <!-- The real overlay pill: same geometry, colours and easing the
+               app draws. Driven by whichever scene is on stage. -->
+          <div class="mt-4 flex items-center justify-center" style="min-height: 52px">
+            <div id="pill" class="overlay-pill overlay-hidden">
+              <img src="assets/ghostly-mark.svg" alt="" class="pill-mark" />
+              <div class="pill-middle">
+                <div class="pill-wave" id="mini-wave"></div>
+                <div class="pill-status" id="pill-status" style="display: none">Transcribing...</div>
+              </div>
+              <span class="pill-cancel" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><g fill="currentColor"><path d="m14.293 8.29297c.3905-.39052 1.0235-.39052 1.414 0s.3905 1.02354 0 1.41406l-5.99998 5.99997c-.39053.3906-1.02354.3906-1.41407 0-.39052-.3905-.39052-1.0235 0-1.414z"/><path d="m8.29295 8.29297c.39053-.39052 1.02354-.39052 1.41407 0l5.99998 6.00003c.3905.3905.3905 1.0235 0 1.414-.3905.3906-1.0235.3906-1.414 0l-6.00005-5.99997c-.39052-.39052-.39052-1.02354 0-1.41406z"/><path d="m20 12c0-4.41828-3.5817-8-8-8-4.41828 0-8 3.58172-8 8 0 4.4183 3.58172 8 8 8 4.4183 0 8-3.5817 8-8zm2 0c0 5.5228-4.4772 10-10 10-5.52285 0-10-4.4772-10-10 0-5.52285 4.47715-10 10-10 5.5228 0 10 4.47715 10 10z" opacity=".4"/></g></svg>
+              </span>
             </div>
           </div>
         </div>
@@ -1151,6 +1789,191 @@
           <svg class="h-4 w-4 text-ghost/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Works offline after first model download
         </span>
+        <span class="hidden h-1 w-1 rounded-full bg-ghost/20 md:inline-block"></span>
+        <span class="inline-flex items-center gap-2">
+          <svg class="h-4 w-4 text-ghost/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          No bot in your meetings
+        </span>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         "In the wild" reel.
+         Four real workflows, scrolling horizontally, each one animating its
+         own dictation when it reaches centre. This is the section that has
+         to answer "what does this actually look like on my machine" — so
+         every transcript, prompt and reply below is written the way people
+         really talk and really work, not marketing-speak.
+         ================================================================== -->
+    <section id="in-the-wild" class="overflow-hidden border-b border-white/5 py-16 md:py-24">
+      <div class="mx-auto max-w-6xl px-6">
+        <div class="mx-auto max-w-2xl text-center reveal">
+          <span class="eyebrow" style="color: #c9bfff">In the wild</span>
+          <h2 class="display mt-4 text-[2.6rem] md:text-[3.4rem]">
+            <span class="font-display">The same shortcut,</span>
+            <span class="text-ghost"> four different jobs.</span>
+          </h2>
+          <p class="mt-4 text-lg text-ghost/60">
+            Ghostly knows what's in front of you. A prompt to Claude Code goes
+            through untouched. An email gets sentences and a sign-off. Slack
+            stays short.
+          </p>
+        </div>
+      </div>
+
+      <div class="reel mt-12" id="reel" tabindex="0" aria-label="Ghostly in four apps">
+        <div class="reel-track">
+          <!-- ── 1 · Claude Code ─────────────────────────────────────── -->
+          <article class="reel-card is-active" data-reel="0">
+            <div class="win">
+              <div class="win-bar">
+                <span class="win-dot bg-red-400/70"></span>
+                <span class="win-dot bg-yellow-400/70"></span>
+                <span class="win-dot bg-green-400/70"></span>
+                <span class="win-title"><img src="assets/apps/claude.png" alt="" /><span>claude — ~/acme/checkout — 108×32</span></span>
+              </div>
+              <div class="term px-4 py-3.5" style="min-height: 238px">
+                <div class="dim"><span class="cc-mark">✳</span> Claude Code v2.4.1 · sonnet · ~/acme/checkout</div>
+                <div class="mt-2 flex gap-2">
+                  <span class="accent">&gt;</span>
+                  <span class="flex-1" data-target="cc-prompt">&nbsp;</span>
+                </div>
+                <div class="mt-2 space-y-0.5" data-rows="cc">
+                  <div class="term-row"><span class="cc-mark">⏺</span> Read(<span class="accent">src/payments/retryPolicy.ts</span>) <span class="dim">⎿ 214 lines</span></div>
+                  <div class="term-row"><span class="cc-mark">⏺</span> Grep(<span class="accent">idempotencyKey</span>) <span class="dim">⎿ 3 matches in 2 files</span></div>
+                  <div class="term-row"><span class="cc-mark">⏺</span> Update(<span class="accent">src/payments/retryPolicy.ts</span>) <span class="dim">⎿</span> <span class="add">+14</span> <span class="del">−6</span></div>
+                  <div class="term-row"><span class="cc-mark">⏺</span> Bash(<span class="accent">bun test payments</span>) <span class="dim">⎿</span> <span class="ok">18 pass, 0 fail</span></div>
+                  <div class="term-row dim">&nbsp;</div>
+                  <div class="term-row">The retry now derives its key from <span class="accent">paymentIntent.id</span> and reuses it, so a 402 can't mint a second charge. Added a regression test for the duplicate-capture path.</div>
+                </div>
+              </div>
+              <div class="said">
+                <div class="said-meter" data-meter></div>
+                <div class="said-body">
+                  <span class="said-label">You said</span>
+                  <p class="said-text" data-target="cc-said">&nbsp;</p>
+                  <span class="style-chip green" data-chip>
+                    <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    Agent detected · local cleanup, prompt never rewritten
+                  </span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- ── 2 · Gmail ───────────────────────────────────────────── -->
+          <article class="reel-card" data-reel="1">
+            <div class="win">
+              <div class="win-bar">
+                <span class="win-dot bg-red-400/70"></span>
+                <span class="win-dot bg-yellow-400/70"></span>
+                <span class="win-dot bg-green-400/70"></span>
+                <span class="win-title"><img src="assets/apps/gmail.png" alt="" /><span>New Message — Gmail</span></span>
+              </div>
+              <div class="px-4 py-3" style="min-height: 238px">
+                <div class="gm-head"><span class="k">To</span><span class="v">kara.velez@northwind.io</span></div>
+                <div class="gm-head"><span class="k">Subject</span><span class="v">Re: MSA redlines — section 4</span></div>
+                <div class="gm-body" data-target="gm-body">&nbsp;</div>
+                <div class="mt-3 flex items-center gap-3">
+                  <span class="gm-send" data-send>
+                    <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>
+                    Send
+                  </span>
+                  <span class="text-[11px] text-ghost/30">Draft saved</span>
+                </div>
+              </div>
+              <div class="said">
+                <div class="said-meter" data-meter></div>
+                <div class="said-body">
+                  <span class="said-label">You said</span>
+                  <p class="said-text" data-target="gm-said">&nbsp;</p>
+                  <span class="style-chip" data-chip>
+                    <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    Email style · full sentences, fillers dropped, signed off
+                  </span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- ── 3 · Slack ───────────────────────────────────────────── -->
+          <article class="reel-card" data-reel="2">
+            <div class="win">
+              <div class="win-bar">
+                <span class="win-dot bg-red-400/70"></span>
+                <span class="win-dot bg-yellow-400/70"></span>
+                <span class="win-dot bg-green-400/70"></span>
+                <span class="win-title"><img src="assets/apps/slack.png" alt="" /><span>Slack — #incidents</span></span>
+              </div>
+              <div class="px-4 py-3" style="min-height: 238px">
+                <div class="sl-msg">
+                  <img src="assets/demo-maya.png" alt="" class="sl-av" />
+                  <div class="min-w-0">
+                    <div class="flex items-baseline gap-2"><span class="sl-name">Priya Raman</span><span class="sl-time">10:47</span></div>
+                    <p class="sl-text">api p99 just jumped to 4.2s, started ~10 min ago. anyone shipping right now?</p>
+                  </div>
+                </div>
+                <div class="sl-msg" data-hide style="visibility: hidden">
+                  <img src="assets/demo-user.png" alt="" class="sl-av" />
+                  <div class="min-w-0">
+                    <div class="flex items-baseline gap-2"><span class="sl-name">You</span><span class="sl-time">10:48</span></div>
+                    <p class="sl-text" data-target="sl-sent"></p>
+                  </div>
+                </div>
+                <div class="sl-input" data-input><span data-target="sl-input">&nbsp;</span></div>
+              </div>
+              <div class="said">
+                <div class="said-meter" data-meter></div>
+                <div class="said-body">
+                  <span class="said-label">You said</span>
+                  <p class="said-text" data-target="sl-said">&nbsp;</p>
+                  <span class="style-chip" data-chip>
+                    <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.9 9.9 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+                    Slack style · terse, lowercase, no sign-off
+                  </span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- ── 4 · VS Code ─────────────────────────────────────────── -->
+          <article class="reel-card" data-reel="3">
+            <div class="win">
+              <div class="win-bar">
+                <span class="win-dot bg-red-400/70"></span>
+                <span class="win-dot bg-yellow-400/70"></span>
+                <span class="win-dot bg-green-400/70"></span>
+                <span class="win-title"><img src="assets/apps/vscode.png" alt="" /><span>retryPolicy.ts — acme-checkout — Visual Studio Code</span></span>
+              </div>
+              <div class="px-4 py-3" style="min-height: 238px">
+                <div class="mb-2 text-[10px] font-semibold uppercase tracking-[0.12em] text-ghost/35">Source Control · 3 changes</div>
+                <div class="vs-file"><span class="badge text-amber-300">M</span> src/payments/retryPolicy.ts <span class="dim text-ghost/30">src/payments</span></div>
+                <div class="vs-file"><span class="badge text-emerald-300">U</span> src/payments/retryPolicy.test.ts <span class="dim text-ghost/30">src/payments</span></div>
+                <div class="vs-file"><span class="badge text-amber-300">M</span> CHANGELOG.md <span class="dim text-ghost/30">/</span></div>
+                <div class="vs-commit" data-input><span data-target="vs-msg">&nbsp;</span></div>
+                <span class="vs-btn" data-send>✓ Commit to <span class="font-mono">fix/duplicate-capture</span></span>
+              </div>
+              <div class="said">
+                <div class="said-meter" data-meter></div>
+                <div class="said-body">
+                  <span class="said-label">You said</span>
+                  <p class="said-text" data-target="vs-said">&nbsp;</p>
+                  <span class="style-chip" data-chip>
+                    <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                    Code-aware · conventional commit, subject and body split
+                  </span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="reel-dots mt-6" id="reel-dots">
+        <button class="reel-dot is-active" data-dot="0" aria-label="Claude Code"></button>
+        <button class="reel-dot" data-dot="1" aria-label="Gmail"></button>
+        <button class="reel-dot" data-dot="2" aria-label="Slack"></button>
+        <button class="reel-dot" data-dot="3" aria-label="VS Code"></button>
       </div>
     </section>
 
@@ -1161,7 +1984,9 @@
          is the audience most likely to pay.
          ================================================================== -->
     <section class="mx-auto max-w-6xl px-6 py-20 md:py-28">
-      <div class="grid items-center gap-14 md:grid-cols-2">
+      <!-- items-start, not items-center: the two columns are different
+           heights, and centring them floats the eyebrows off each other. -->
+      <div class="grid items-start gap-14 md:grid-cols-2">
         <div class="reveal">
           <span class="eyebrow" style="color: #6ee7b7">No setup</span>
           <h2 class="display mt-4 text-[2.6rem] md:text-[3.4rem]">
@@ -1203,7 +2028,7 @@
         </div>
 
         <div class="reveal">
-          <span class="eyebrow" style="color: #fcd34d">Beep boop</span>
+          <span class="eyebrow" style="color: #fcd34d">Agent-aware</span>
           <h2 class="display mt-4 text-[2.6rem] md:text-[3.4rem]">
             <span class="font-display">Built for talking</span>
             <span class="text-ghost"> to agents.</span>
@@ -1229,6 +2054,192 @@
       </div>
     </section>
 
+    <!-- =====================================================================
+         Beyond dictation: Meeting Mode and Open Mic.
+         The hero already animates both; this section carries the argument.
+         The visuals here are deliberately different from the hero's — a
+         participant list with no bot in it, and the two settings that make
+         hands-free actually usable.
+         ================================================================== -->
+    <section id="meetings" class="border-y border-white/5 bg-white/[0.02]">
+      <div class="mx-auto max-w-6xl px-6 py-20 md:py-28">
+        <div class="mx-auto max-w-2xl text-center reveal">
+          <span class="eyebrow" style="color: #6ee7b7">Beyond dictation</span>
+          <h2 class="display mt-4 text-[2.6rem] md:text-[3.4rem]">
+            <span class="font-display">It sits in on your calls.</span>
+            <span class="text-ghost"> It never joins them.</span>
+          </h2>
+          <p class="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-ghost/60">
+            Meeting Mode transcribes both sides of a conversation — your
+            microphone and the call's audio — through a macOS process tap on
+            your own machine. No bot, no invite, no screen recording permission.
+          </p>
+        </div>
+
+        <div class="mt-16 grid items-start gap-14 md:grid-cols-2">
+          <div class="reveal md:sticky md:top-24">
+            <div class="glass rounded-2xl p-6">
+              <div class="mb-4 flex items-center justify-between">
+                <span class="text-xs font-semibold uppercase tracking-wider text-ghost/45">Participants (4)</span>
+                <span class="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-ghost/40">
+                  <span class="rec-dot" style="width: 6px; height: 6px"></span> Ghostly capturing
+                </span>
+              </div>
+              <div class="space-y-2.5">
+                <div class="flex items-center gap-3 rounded-lg bg-white/[0.03] px-3 py-2.5">
+                  <span class="avatar" style="width: 28px; height: 28px; border-radius: 7px; font-size: 11px">JB</span>
+                  <span class="text-sm text-ghost/85">You <span class="text-ghost/35">(host)</span></span>
+                </div>
+                <div class="flex items-center gap-3 rounded-lg bg-white/[0.03] px-3 py-2.5">
+                  <span class="avatar" style="width: 28px; height: 28px; border-radius: 7px; font-size: 11px; background: linear-gradient(135deg,#f472b6,#a78bfa)">PR</span>
+                  <span class="text-sm text-ghost/85">Priya Raman</span>
+                </div>
+                <div class="flex items-center gap-3 rounded-lg bg-white/[0.03] px-3 py-2.5">
+                  <span class="avatar" style="width: 28px; height: 28px; border-radius: 7px; font-size: 11px; background: linear-gradient(135deg,#38bdf8,#34d399)">MO</span>
+                  <span class="text-sm text-ghost/85">Marcus Odell</span>
+                </div>
+                <div class="flex items-center gap-3 rounded-lg bg-white/[0.03] px-3 py-2.5">
+                  <span class="avatar" style="width: 28px; height: 28px; border-radius: 7px; font-size: 11px; background: linear-gradient(135deg,#fbbf24,#f472b6)">TL</span>
+                  <span class="text-sm text-ghost/85">Tomás Lima</span>
+                </div>
+                <!-- The point of the whole graphic: there is no fifth row. -->
+                <div class="flex items-center gap-3 rounded-lg border border-dashed border-white/10 px-3 py-2.5">
+                  <span class="flex h-7 w-7 items-center justify-center rounded-[7px] border border-dashed border-white/15 text-ghost/25">
+                    <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" d="M18 6L6 18M6 6l12 12"/></svg>
+                  </span>
+                  <span class="text-sm text-ghost/35">No “Ghostly Notetaker” here</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="reveal" style="--reveal-delay: 120ms">
+            <div class="space-y-8" data-stagger>
+              <div class="flex gap-4">
+                <div class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-violet-500/15 text-violet-300">
+                  <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12M8 12h12M8 17h8M3.5 7h.01M3.5 12h.01M3.5 17h.01"/></svg>
+                </div>
+                <div>
+                  <h3 class="text-[17px] font-semibold tracking-tight">Both sides, labelled</h3>
+                  <p class="mt-1.5 text-[15px] leading-relaxed text-ghost/55">
+                    Your lines and theirs are attributed separately in a floating
+                    panel you can read mid-call. Click any name to rename that
+                    speaker for the rest of the meeting.
+                  </p>
+                </div>
+              </div>
+              <div class="flex gap-4">
+                <div class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-violet-500/15 text-violet-300">
+                  <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12a9 9 0 1 0 3-6.7M3 4v4h4"/></svg>
+                </div>
+                <div>
+                  <h3 class="text-[17px] font-semibold tracking-tight">“Where were we?”</h3>
+                  <p class="mt-1.5 text-[15px] leading-relaxed text-ghost/55">
+                    One shortcut and you get what's being discussed right now,
+                    what you missed, the decisions made, anything asked of you,
+                    and one line you could say to rejoin — without looking absent.
+                  </p>
+                </div>
+              </div>
+              <div class="flex gap-4">
+                <div class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/[0.06] text-ghost/70">
+                  <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3a4 4 0 014 4v3a4 4 0 01-8 0V7a4 4 0 014-4zM6 11a6 6 0 0012 0M12 17v4"/></svg>
+                </div>
+                <div>
+                  <h3 class="text-[17px] font-semibold tracking-tight">Starts when you say so</h3>
+                  <p class="mt-1.5 text-[15px] leading-relaxed text-ghost/55">
+                    Ghostly can notice a call by checking whether a conferencing
+                    app is really using your mic — then either asks, or runs a
+                    countdown you can cancel. Auto-connect is off by default, and
+                    you can exclude anything named <em>1:1</em>, <em>therapy</em>,
+                    or <em>interview</em>.
+                  </p>
+                </div>
+              </div>
+              <div class="flex gap-4">
+                <div class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/[0.06] text-ghost/70">
+                  <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l7 3v6c0 4.4-3 8.1-7 9-4-.9-7-4.6-7-9V6l7-3z"/></svg>
+                </div>
+                <div>
+                  <h3 class="text-[17px] font-semibold tracking-tight">Stays on your Mac</h3>
+                  <p class="mt-1.5 text-[15px] leading-relaxed text-ghost/55">
+                    Transcripts are never written to the log file or included in a
+                    diagnostics bundle, and are deleted automatically after the
+                    retention period you pick. Summaries can run on-device with
+                    Apple Intelligence, through your own provider, or with no AI
+                    at all.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <p class="mt-8 text-sm text-ghost/40">
+              Capturing the other participants needs macOS 14.2 or later. Below
+              that, Ghostly transcribes your side only — and tells you so.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-6xl px-6 py-20 md:py-28">
+      <div class="grid items-center gap-14 md:grid-cols-2">
+        <div class="reveal">
+          <span class="eyebrow" style="color: #fcd34d">Open Mic</span>
+          <h2 class="display mt-4 text-[2.6rem] md:text-[3.4rem]">
+            <span class="font-display">Stop pressing keys</span>
+            <span class="text-ghost"> altogether.</span>
+          </h2>
+          <p class="mt-5 max-w-md text-lg leading-relaxed text-ghost/60">
+            Arm the mic once and it stays open. Every pause closes a segment,
+            transcribes it, and drops it where your cursor is — no shortcut per
+            sentence, no reaching back to the keyboard between thoughts.
+          </p>
+          <p class="mt-4 max-w-md text-lg leading-relaxed text-ghost/60">
+            End a segment with your submit phrase and Ghostly strips the phrase
+            and presses the key for you. Say <em class="text-ghost/85">"send
+            it"</em> and the message is gone.
+          </p>
+          <p class="mt-6 max-w-md text-sm leading-relaxed text-ghost/40">
+            Off by default. An open microphone is a real trade, so it's yours to
+            make — close it with the shortcut or the menu bar whenever you step
+            away.
+          </p>
+        </div>
+
+        <div class="reveal" style="--reveal-delay: 120ms">
+          <div class="glass rounded-2xl p-6">
+            <div class="mb-5 flex items-center justify-between">
+              <span class="text-xs font-semibold uppercase tracking-wider text-ghost/45">Open Mic</span>
+              <span class="om-status"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span> Open — listening</span>
+            </div>
+            <div class="space-y-4">
+              <div class="rounded-xl border border-white/[0.07] bg-black/25 p-4">
+                <div class="flex items-baseline justify-between">
+                  <span class="text-[13px] font-medium text-ghost/80">Silence to end a segment</span>
+                  <span class="font-mono text-[13px] text-violet-200">700 ms</span>
+                </div>
+                <p class="mt-1.5 text-[12.5px] leading-relaxed text-ghost/45">Shorter is snappier; longer keeps a thought in one piece.</p>
+              </div>
+              <div class="rounded-xl border border-white/[0.07] bg-black/25 p-4">
+                <div class="flex items-baseline justify-between">
+                  <span class="text-[13px] font-medium text-ghost/80">Submit phrase</span>
+                  <span class="font-mono text-[13px] text-violet-200">"send it"</span>
+                </div>
+                <p class="mt-1.5 text-[12.5px] leading-relaxed text-ghost/45">Stripped from the text, then <span class="kbd" style="font-size: 10px">⏎</span> or <span class="kbd" style="font-size: 10px">⌘⏎</span> is pressed.</p>
+              </div>
+              <div class="rounded-xl border border-white/[0.07] bg-black/25 p-4">
+                <div class="flex items-baseline justify-between">
+                  <span class="text-[13px] font-medium text-ghost/80">Minimum segment</span>
+                  <span class="font-mono text-[13px] text-violet-200">300 ms</span>
+                </div>
+                <p class="mt-1.5 text-[12.5px] leading-relaxed text-ghost/45">Coughs, clicks and chair creaks get dropped as noise.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Notes / timeline + appearance -->
     <section class="mx-auto max-w-6xl px-6 py-20 md:py-28">
       <div class="mx-auto max-w-2xl text-center reveal">
@@ -1244,7 +2255,7 @@
         </p>
       </div>
 
-      <div class="mt-14 grid gap-5 md:grid-cols-3" data-stagger>
+      <div class="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-4" data-stagger>
         <div class="feature-card glass rounded-2xl p-6">
           <h3 class="text-[17px] font-semibold tracking-tight">Timeline &amp; by-app views</h3>
           <p class="mt-2 text-[15px] leading-relaxed text-ghost/55">
@@ -1257,6 +2268,13 @@
           <p class="mt-2 text-[15px] leading-relaxed text-ghost/55">
             Full-text search across everything you've dictated, colour-coded tags,
             and the original recording kept alongside each note.
+          </p>
+        </div>
+        <div class="feature-card glass rounded-2xl p-6">
+          <h3 class="text-[17px] font-semibold tracking-tight">Every meeting, findable</h3>
+          <p class="mt-2 text-[15px] leading-relaxed text-ghost/55">
+            Transcripts and summaries live in their own tab — searchable, filterable
+            by date or tag, and exportable as Markdown, plain text, or JSON.
           </p>
         </div>
         <div class="feature-card glass rounded-2xl p-6">
@@ -1283,8 +2301,8 @@
           <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/15 text-violet-300">
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 1v22M5 8v8M19 8v8M8 4v16M16 4v16"/></svg>
           </div>
-          <h3 class="text-lg font-semibold">Local Whisper</h3>
-          <p class="mt-2 text-sm text-ghost/60">Four model sizes: Small (466 MB), Medium (1.5 GB), Turbo (809 MB), Large-v3 (3.1 GB). GPU-accelerated on Apple Silicon via Metal.</p>
+          <h3 class="text-lg font-semibold">On-device transcription</h3>
+          <p class="mt-2 text-sm text-ghost/60">Whisper in four sizes — Small (466 MB), Turbo (809 MB), Medium (1.5 GB), Large-v3 (3.1 GB) — GPU-accelerated via Metal. Swap in Parakeet or Moonshine if you'd rather. Same UI.</p>
         </div>
 
         <div class="feature-card glass rounded-2xl p-6">
@@ -1297,6 +2315,38 @@
 
         <div class="feature-card glass rounded-2xl p-6">
           <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/15 text-violet-300">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h3l-.5 8H17M4 6h13v12H4z"/><circle cx="10.5" cy="11" r="2" stroke-width="2"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold">Meeting Mode</h3>
+          <p class="mt-2 text-sm text-ghost/60">Live transcripts of your calls in a floating panel — your mic and the call's audio, labelled per speaker. Nothing joins the meeting; no screen recording permission needed.</p>
+        </div>
+
+        <div class="feature-card glass rounded-2xl p-6">
+          <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-white/5 text-ghost/80">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12a9 9 0 1 0 3-6.7M3 4v4h4"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold">"Where were we?"</h3>
+          <p class="mt-2 text-sm text-ghost/60">Catch up mid-call: what's being discussed now, what you missed, the decisions, anything asked of you, and one line you could say to rejoin.</p>
+        </div>
+
+        <div class="feature-card glass rounded-2xl p-6">
+          <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/15 text-violet-300">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6.5 8v8M11 5v14M15.5 9v6M20 11v2M2 11v2"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold">Open Mic</h3>
+          <p class="mt-2 text-sm text-ghost/60">Hands-free dictation. Leave the mic armed and every pause closes a segment. Finish with <em>"send it"</em> and Ghostly strips the phrase and presses <span class="kbd">⏎</span>.</p>
+        </div>
+
+        <div class="feature-card glass rounded-2xl p-6">
+          <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-white/5 text-ghost/80">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h10M18 20l4-4-4-4"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold">Notes &amp; meeting library</h3>
+          <p class="mt-2 text-sm text-ghost/60">Every dictation and every meeting saved on-device — searchable, taggable, groupable by day or app, and exportable as Markdown, text, or JSON.</p>
+        </div>
+
+        <div class="feature-card glass rounded-2xl p-6">
+          <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/15 text-violet-300">
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 11a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
           </div>
           <h3 class="text-lg font-semibold">Bring-your-own-key cleanup</h3>
@@ -1305,52 +2355,49 @@
 
         <div class="feature-card glass rounded-2xl p-6">
           <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-white/5 text-ghost/80">
-            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-          </div>
-          <h3 class="text-lg font-semibold">Screenshot + ask</h3>
-          <p class="mt-2 text-sm text-ghost/60">One shortcut captures the screen, records the question, sends both to a vision model, pastes the answer.</p>
-        </div>
-
-        <div class="feature-card glass rounded-2xl p-6">
-          <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/15 text-violet-300">
-            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-          </div>
-          <h3 class="text-lg font-semibold">Edit last paste</h3>
-          <p class="mt-2 text-sm text-ghost/60">Say <em>"make it shorter"</em> or <em>"change Monday to Tuesday"</em> and the previous output gets rewritten in place. No re-typing.</p>
-        </div>
-
-        <div class="feature-card glass rounded-2xl p-6">
-          <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-white/5 text-ghost/80">
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14-7H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V6a2 2 0 00-2-2z"/></svg>
           </div>
-          <h3 class="text-lg font-semibold">Per-app profiles</h3>
-          <p class="mt-2 text-sm text-ghost/60">Different system prompt + vocabulary per active app. Terse for Slack, full sentences for Mail, code-aware for your editor.</p>
+          <h3 class="text-lg font-semibold">Per-app writing styles</h3>
+          <p class="mt-2 text-sm text-ghost/60">A different prompt and vocabulary per app, matched on the real bundle identifier. Casual in Slack, formal in Mail, verbatim in your editor.</p>
         </div>
 
         <div class="feature-card glass rounded-2xl p-6">
           <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/15 text-violet-300">
-            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
           </div>
-          <h3 class="text-lg font-semibold">Voice commands</h3>
-          <p class="mt-2 text-sm text-ghost/60">Map spoken phrases to keystrokes. <em>"approve"</em> sends <span class="kbd">⏎</span>, <em>"reject"</em> sends <span class="kbd">⎋</span>. Useful with Cursor and Claude Code.</p>
+          <h3 class="text-lg font-semibold">Verbatim dictation</h3>
+          <p class="mt-2 text-sm text-ghost/60">A separate shortcut that transcribes exactly what you said with no rewriting at all — the escape hatch for quotes, code, names, and anything an AI shouldn't touch.</p>
         </div>
 
         <div class="feature-card glass rounded-2xl p-6">
           <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-white/5 text-ghost/80">
-            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4h16v16H4z M9 9l6 6m0-6l-6 6"/></svg>
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
           </div>
-          <h3 class="text-lg font-semibold">"Scratch that"</h3>
-          <p class="mt-2 text-sm text-ghost/60">Say it mid-sentence; everything before drops. Configurable trigger phrase so you can self-correct without re-recording.</p>
+          <h3 class="text-lg font-semibold">Edit what you just said</h3>
+          <p class="mt-2 text-sm text-ghost/60">Say <em>"make it shorter"</em> or <em>"change Monday to Tuesday"</em> — or use the quick chips: shorten, lengthen, fix grammar, rephrase. Rewritten in place.</p>
         </div>
 
         <div class="feature-card glass rounded-2xl p-6">
           <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/15 text-violet-300">
-            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
           </div>
-          <h3 class="text-lg font-semibold">Swappable engines</h3>
-          <p class="mt-2 text-sm text-ghost/60">Whisper by default. Swap in Parakeet (Nvidia) for faster inference or Moonshine for English-only streaming. Same UI.</p>
+          <h3 class="text-lg font-semibold">Screenshot + dictate</h3>
+          <p class="mt-2 text-sm text-ghost/60">Captures your screen alongside your question and stages both, ready to drop into any AI chat that takes images. <em>"Why is this build failing?"</em> — error already attached.</p>
+        </div>
+
+        <div class="feature-card glass rounded-2xl p-6">
+          <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-white/5 text-ghost/80">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold">Voice commands &amp; "scratch that"</h3>
+          <p class="mt-2 text-sm text-ghost/60">Map spoken phrases to keystrokes — <em>"approve"</em> sends <span class="kbd">⏎</span>, <em>"reject"</em> sends <span class="kbd">⎋</span>. Say <em>"scratch that"</em> mid-sentence and everything before it drops.</p>
         </div>
       </div>
+
+      <p class="mx-auto mt-10 max-w-2xl text-center text-sm text-ghost/40">
+        Plus a personal dictionary for the names, products, and jargon it keeps
+        getting wrong — including how they sound versus how they're spelled.
+      </p>
     </section>
 
     <section class="mx-auto max-w-6xl px-6 py-16 md:py-24">
@@ -1455,7 +2502,7 @@
             <span class="font-display">Local-native,</span>
             <span class="text-ghost"> not cloud-first.</span>
           </h2>
-          <p class="mt-4 text-lg text-ghost/60">Most AI dictation tools ship your audio to a server and bill you monthly. Ghostly does neither — on-device transcription, choice of engine, and a one-time price.</p>
+          <p class="mt-4 text-lg text-ghost/60">Most AI dictation tools ship your audio to a server and require a subscription to work at all. Ghostly does neither — transcription runs on your Mac, and every feature works without paying us a cent if you bring your own API key.</p>
         </div>
 
         <p class="mt-10 text-center text-xs text-ghost/40 md:hidden">Scroll horizontally to compare →</p>
@@ -1495,7 +2542,7 @@
                 </tr>
                 <tr>
                   <td class="compare-label">AI cleanup (punctuation, fillers, formatting)</td>
-                  <td class="compare-col-ghostly compare-yes">Yes — BYO key</td>
+                  <td class="compare-col-ghostly compare-yes">Yes — included on Max, or BYO key</td>
                   <td class="compare-meh">Yes — included</td>
                   <td class="compare-meh">Yes — included</td>
                   <td class="compare-meh">Auto punctuation</td>
@@ -1518,6 +2565,22 @@
                   <td class="compare-no">No</td>
                 </tr>
                 <tr>
+                  <td class="compare-label">Live meeting transcription, no bot in the call</td>
+                  <td class="compare-col-ghostly compare-yes">Yes — on-device</td>
+                  <td class="compare-no">No</td>
+                  <td class="compare-no">No</td>
+                  <td class="compare-no">No</td>
+                  <td class="compare-no">No</td>
+                </tr>
+                <tr>
+                  <td class="compare-label">Hands-free mode (no key per sentence)</td>
+                  <td class="compare-col-ghostly compare-yes">Yes — Open Mic</td>
+                  <td class="compare-no">No</td>
+                  <td class="compare-no">No</td>
+                  <td class="compare-no">No</td>
+                  <td class="compare-meh">Until it times out</td>
+                </tr>
+                <tr>
                   <td class="compare-label">Screenshot + ask a vision model</td>
                   <td class="compare-col-ghostly compare-yes">Yes</td>
                   <td class="compare-no">No</td>
@@ -1525,29 +2588,29 @@
                   <td class="compare-no">No</td>
                   <td class="compare-no">No</td>
                 </tr>
-                <tr class="compare-price-row">
-                  <td class="compare-label">Monthly subscription</td>
-                  <td class="compare-col-ghostly compare-price"><span class="compare-price-value">None</span><span class="compare-price-sub">no subscription</span></td>
-                  <td class="compare-price"><span class="compare-price-value">$15</span><span class="compare-price-sub">/ month</span></td>
-                  <td class="compare-price"><span class="compare-price-value">$15</span><span class="compare-price-sub">/ month</span></td>
-                  <td class="compare-price"><span class="compare-price-value">$8.49</span><span class="compare-price-sub">/ month</span></td>
-                  <td class="compare-price"><span class="compare-price-value">Free</span><span class="compare-price-sub">built-in</span></td>
-                </tr>
-                <tr class="compare-price-row">
-                  <td class="compare-label">One-time / lifetime</td>
-                  <td class="compare-col-ghostly compare-price"><span class="compare-price-value compare-price-accent">$39</span><span class="compare-price-sub">one-time</span></td>
-                  <td class="compare-price"><span class="compare-price-value compare-price-muted">—</span><span class="compare-price-sub">not offered</span></td>
-                  <td class="compare-price"><span class="compare-price-value compare-price-muted">—</span><span class="compare-price-sub">not offered</span></td>
-                  <td class="compare-price"><span class="compare-price-value">$220</span><span class="compare-price-sub">lifetime</span></td>
-                  <td class="compare-price"><span class="compare-price-value compare-price-muted">—</span><span class="compare-price-sub">n/a</span></td>
+                <tr>
+                  <td class="compare-label">Fully usable without a subscription</td>
+                  <td class="compare-col-ghostly compare-yes">Yes — bring your own key</td>
+                  <td class="compare-no">No</td>
+                  <td class="compare-no">No</td>
+                  <td class="compare-no">No</td>
+                  <td class="compare-yes">Yes</td>
                 </tr>
                 <tr class="compare-price-row">
                   <td class="compare-label">Free tier</td>
-                  <td class="compare-col-ghostly compare-price"><span class="compare-price-value">30 min / wk</span><span class="compare-price-sub">all features</span></td>
+                  <td class="compare-col-ghostly compare-price"><span class="compare-price-value">Unlimited</span><span class="compare-price-sub">every feature, BYO key</span></td>
                   <td class="compare-price"><span class="compare-price-value">2k words / wk</span><span class="compare-price-sub">capped</span></td>
                   <td class="compare-price"><span class="compare-price-value">2k words / wk</span><span class="compare-price-sub">capped</span></td>
                   <td class="compare-price"><span class="compare-price-value">40 min trial</span><span class="compare-price-sub">one-time</span></td>
                   <td class="compare-price"><span class="compare-price-value">Unlimited</span><span class="compare-price-sub">built-in</span></td>
+                </tr>
+                <tr class="compare-price-row">
+                  <td class="compare-label">Paid plan</td>
+                  <td class="compare-col-ghostly compare-price"><span class="compare-price-value compare-price-accent">$12</span><span class="compare-price-sub">/ month · optional</span></td>
+                  <td class="compare-price"><span class="compare-price-value">$15</span><span class="compare-price-sub">/ month · required</span></td>
+                  <td class="compare-price"><span class="compare-price-value">$15</span><span class="compare-price-sub">/ month · required</span></td>
+                  <td class="compare-price"><span class="compare-price-value">$8.49</span><span class="compare-price-sub">/ month · required</span></td>
+                  <td class="compare-price"><span class="compare-price-value">Free</span><span class="compare-price-sub">built-in</span></td>
                 </tr>
               </tbody>
             </table>
@@ -1631,9 +2694,7 @@
 
           <div class="glass rounded-2xl p-7 reveal" style="--reveal-delay: 120ms">
             <div class="step-vignette">
-              <div class="step-wave flex items-center">
-                <span style="height: 12px"></span><span style="height: 22px"></span><span style="height: 34px"></span><span style="height: 28px"></span><span style="height: 18px"></span><span style="height: 26px"></span><span style="height: 32px"></span><span style="height: 20px"></span><span style="height: 14px"></span><span style="height: 24px"></span>
-              </div>
+              <div class="pill-wave" id="step-wave"></div>
               <span class="absolute inset-x-0 bottom-2 text-center text-[10px] uppercase tracking-wider text-ghost/25">on-device whisper</span>
             </div>
             <div class="mt-5 flex items-baseline gap-3">
@@ -1765,7 +2826,11 @@
     <section class="border-y border-white/5 bg-white/[0.02]">
       <div class="mx-auto max-w-6xl px-6 py-16 md:py-24">
         <div class="grid items-center gap-12 lg:grid-cols-2">
-          <div class="order-2 lg:order-1">
+          <!-- min-w-0: without it the grid item takes its automatic minimum
+               size from the <pre>, so the terminal's longest line widened the
+               whole page on narrow screens instead of scrolling inside its
+               own overflow box. -->
+          <div class="order-2 min-w-0 lg:order-1">
             <div class="glass rounded-2xl p-6">
               <div class="mb-3 flex items-center gap-2">
                 <span class="h-2.5 w-2.5 rounded-full bg-red-400/80"></span>
@@ -1807,10 +2872,14 @@
             <span class="hero-label">Active input</span>
             <div class="hero-text"><span id="hero-typing"></span><span class="hero-caret"></span></div>
           </div>
-          <div class="center-pill">
-            <img src="assets/ghostly-logo.svg" alt="" class="h-5 w-5" />
-            <span class="text-sm font-semibold tracking-tight text-ghost">Ghostly</span>
-            <div id="hero-wave" class="mini-wave ml-1 flex h-5 w-[84px] items-center justify-center"></div>
+          <div class="overlay-pill center-pill">
+            <img src="assets/ghostly-mark.svg" alt="" class="pill-mark" />
+            <div class="pill-middle">
+              <div class="pill-wave" id="hero-wave"></div>
+            </div>
+            <span class="pill-cancel" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><g fill="currentColor"><path d="m14.293 8.29297c.3905-.39052 1.0235-.39052 1.414 0s.3905 1.02354 0 1.41406l-5.99998 5.99997c-.39053.3906-1.02354.3906-1.41407 0-.39052-.3905-.39052-1.0235 0-1.414z"/><path d="m8.29295 8.29297c.39053-.39052 1.02354-.39052 1.41407 0l5.99998 6.00003c.3905.3905.3905 1.0235 0 1.414-.3905.3906-1.0235.3906-1.414 0l-6.00005-5.99997c-.39052-.39052-.39052-1.02354 0-1.41406z"/><path d="m20 12c0-4.41828-3.5817-8-8-8-4.41828 0-8 3.58172-8 8 0 4.4183 3.58172 8 8 8 4.4183 0 8-3.5817 8-8zm2 0c0 5.5228-4.4772 10-10 10-5.52285 0-10-4.4772-10-10 0-5.52285 4.47715-10 10-10 5.5228 0 10 4.47715 10 10z" opacity=".4"/></g></svg>
+            </span>
           </div>
         </div>
 
@@ -1911,8 +2980,8 @@
       <div class="mx-auto max-w-6xl px-6 py-16 md:py-24">
         <div class="text-center">
           <span class="eyebrow" style="color: #c9bfff">Pricing</span>
-          <h2 class="mt-4 text-4xl font-bold tracking-tight md:text-5xl">Generous free. Optional Pro.</h2>
-          <p class="mx-auto mt-4 max-w-2xl text-lg text-ghost/60">Full feature parity on the free tier — every Whisper model, AI cleanup, all of it. Pro uncaps your time and lets you run it across three Macs. One-time purchase, no subscription.</p>
+          <h2 class="mt-4 text-4xl font-bold tracking-tight md:text-5xl">Free, uncapped. Max, optional.</h2>
+          <p class="mx-auto mt-4 max-w-2xl text-lg text-ghost/60">Unlimited dictation on every Mac you own, with every feature unlocked — bring your own API key for the AI parts. Max is for people who&rsquo;d rather it just worked.</p>
         </div>
 
         <div class="mt-14 grid items-stretch gap-6 md:grid-cols-2">
@@ -1920,49 +2989,55 @@
           <div class="glass relative flex flex-col rounded-2xl p-8">
             <div class="flex items-center justify-between">
               <h3 class="text-2xl font-bold">Free</h3>
-              <span class="text-xs uppercase tracking-wider text-ghost/50">Forever</span>
+              <span class="text-xs uppercase tracking-wider text-ghost/50">Forever · uncapped</span>
             </div>
             <div class="mt-6 flex items-baseline gap-2">
               <span class="text-5xl font-extrabold tracking-tight">$0</span>
               <span class="text-sm text-ghost/50">No card required</span>
             </div>
-            <p class="mt-4 text-sm text-ghost/60">Full feature parity, capped at casual-use volume.</p>
+            <p class="mt-4 text-sm text-ghost/60">The whole app, uncapped. Nothing held back.</p>
             <ul class="mt-6 space-y-3 text-sm text-ghost/75">
-              <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b class="text-ghost">30 minutes</b> of transcription per week</span></li>
-              <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Install on 1 Mac</span></li>
-              <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>All Whisper models (Small, Medium, Turbo, Large)</span></li>
-              <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>AI cleanup (Apple Intelligence, OpenAI, Anthropic)</span></li>
-              <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Per-app prompts &amp; screenshot vision</span></li>
+              <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b class="text-ghost">Unlimited</b> dictation — no weekly cap</span></li>
+              <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Install on <b class="text-ghost">every Mac you own</b></span></li>
+              <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>All engines (Whisper, Parakeet, Moonshine)</span></li>
+              <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Meeting Mode, Open Mic, per-app profiles</span></li>
+              <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>AI cleanup &amp; screenshot vision — <b class="text-ghost">bring your own API key</b></span></li>
               <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>100% private — audio never leaves your Mac</span></li>
             </ul>
             <a href="/install/" class="mt-auto pt-8 block"><span class="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/5 px-6 py-3 text-base font-semibold hover:bg-white/10">Download for macOS</span></a>
           </div>
 
-          <!-- Pro -->
+          <!-- Max -->
           <div class="relative flex flex-col rounded-2xl border border-accent/50 bg-gradient-to-b from-accent/10 to-transparent p-8">
-            <span class="absolute -top-3 right-6 rounded-full bg-accent px-3 py-1 text-xs font-semibold text-white">One-time purchase</span>
+            <span class="absolute -top-3 right-6 rounded-full bg-accent px-3 py-1 text-xs font-semibold text-white">Early access</span>
             <div class="flex items-center justify-between">
-              <h3 class="text-2xl font-bold">Pro</h3>
-              <span class="text-xs uppercase tracking-wider text-violet-200">Lifetime access</span>
+              <h3 class="text-2xl font-bold">Max</h3>
+              <span class="text-xs uppercase tracking-wider text-violet-200">Zero setup</span>
             </div>
             <div class="mt-6 flex items-baseline gap-2">
-              <span class="text-5xl font-extrabold tracking-tight">$39</span>
-              <span class="text-sm text-ghost/60">one-time · no subscription</span>
+              <span class="text-5xl font-extrabold tracking-tight">$12</span>
+              <span class="text-sm text-ghost/60">/ month · or $108 a year</span>
             </div>
-            <p class="mt-4 text-sm text-ghost/60">Uncap the limits. Pay once, keep forever.</p>
+            <p class="mt-4 text-sm text-ghost/60">Everything in Free, with the AI already switched on.</p>
             <ul class="mt-6 space-y-3 text-sm text-ghost/80">
-              <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b class="text-ghost">Unlimited</b> transcription time</span></li>
-              <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Install on <b class="text-ghost">up to 3 Macs</b></span></li>
-              <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>All Whisper models (Small, Medium, Turbo, Large)</span></li>
-              <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>AI cleanup (Apple Intelligence, OpenAI, Anthropic)</span></li>
-              <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Per-app prompts &amp; screenshot vision</span></li>
-              <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Free lifetime updates</span></li>
+              <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b class="text-ghost">No API key.</b> Cleanup, voice editing, screenshot vision and meeting summaries work on first launch</span></li>
+              <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Right model for each job, tuned and updated server-side — no config screen</span></li>
+              <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b class="text-ghost">Ask your transcripts</b> — question everything you&rsquo;ve ever dictated <span class="ml-1.5 inline-block whitespace-nowrap rounded-full border border-white/15 px-2 py-0.5 align-middle text-[10px] font-semibold uppercase tracking-wider text-ghost/45">In development</span></span></li>
+              <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b class="text-ghost">Learns your vocabulary</b> from the corrections you make <span class="ml-1.5 inline-block whitespace-nowrap rounded-full border border-white/15 px-2 py-0.5 align-middle text-[10px] font-semibold uppercase tracking-wider text-ghost/45">In development</span></span></li>
+              <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b class="text-ghost">Encrypted sync &amp; restore</b> across your Macs <span class="ml-1.5 inline-block whitespace-nowrap rounded-full border border-white/15 px-2 py-0.5 align-middle text-[10px] font-semibold uppercase tracking-wider text-ghost/45">In development</span></span></li>
+              <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Your voice still never leaves your Mac — only text is sent</span></li>
             </ul>
-            <a id="buy-pro" href="https://buy.stripe.com/bJeaEW52q3ZI14y4j4eME01" class="mt-auto pt-8 block"><span class="btn-primary inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3 text-base font-semibold">Get Ghostly Pro — $39</span></a>
+            <!-- ══════════════════════════════════════════════════════════════════
+                 MAX CTA — currently a waitlist. Do NOT switch to live checkout
+                 until the hosted AI gateway is deployed and serving requests.
+                 To go live, replace the <a> below with:
+                 <a id="buy-max" href="MONTHLY_PAYMENT_LINK" class="mt-auto pt-8 block"><span class="btn-primary inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3 text-base font-semibold">Get Ghostly Max — $12/mo</span></a>
+                 ══════════════════════════════════════════════════════════════ -->
+            <a id="join-max" href="mailto:hello@try-ghostly.com?subject=Ghostly%20Max%20early%20access&amp;body=Count%20me%20in%20for%20Ghostly%20Max%20early%20access." class="mt-auto pt-8 block"><span class="btn-primary inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3 text-base font-semibold">Join the Max early access list</span></a>
           </div>
         </div>
 
-        <p class="mt-10 text-center text-sm text-ghost/50">License key delivered instantly by email. Activates every Mac you own.</p>
+        <p class="mt-10 text-center text-sm text-ghost/50">Max is in development — the list gets first access and founder pricing. Free stays free and uncapped, forever.</p>
       </div>
     </section>
 
@@ -2003,7 +3078,7 @@
       </div>
     </section>
 
-    <section class="border-t border-white/5">
+    <section id="faq" class="border-t border-white/5">
       <div class="mx-auto max-w-3xl px-6 py-16 md:py-24">
         <div class="text-center">
           <span class="eyebrow" style="color: #fcd34d">FAQ</span>
@@ -2016,8 +3091,31 @@
           </details>
           <details class="glass group rounded-xl p-6">
             <summary class="cursor-pointer list-none font-semibold">Is it free?<span class="float-right text-ghost/50 group-open:rotate-180">▾</span></summary>
-            <p class="mt-3 text-sm text-ghost/60">Yes. The free tier has full feature parity — all Whisper models, AI cleanup, per-app prompts, screenshot vision — capped at 30 minutes of transcription per week on one Mac. If you hit that cap, Ghostly Pro is a one-time $39 purchase that removes the time cap and lets you install on up to three Macs. No subscription.</p>
+            <p class="mt-3 text-sm text-ghost/60">Yes, and the free tier is uncapped — unlimited dictation, every engine, Meeting Mode, Open Mic, per-app prompts, screenshot vision, on as many Macs as you own. The AI features run on an API key you supply. <b class="text-ghost">Ghostly Max</b> ($12/month, or $108/year) is the optional paid tier: the same AI with no key and no setup, plus Max-only features. Max is in early access — <a href="#pricing" class="text-violet-300 underline hover:text-violet-200">join the list</a>.</p>
           </details>
+          <details class="glass group rounded-xl p-6">
+            <summary class="cursor-pointer list-none font-semibold">Do I need Max to use the AI features?<span class="float-right text-ghost/50 group-open:rotate-180">▾</span></summary>
+            <p class="mt-3 text-sm text-ghost/60">No. Every AI feature — cleanup, voice editing, screenshot vision, meeting summaries — works on the free tier with your own API key from Anthropic, OpenAI, Groq, or a local model via Ollama. Apple Intelligence runs on-device with no key at all. Max is for people who&rsquo;d rather not manage a key, and it adds features that need a server to exist.</p>
+          </details>
+
+          <details class="glass group rounded-xl p-6">
+            <summary class="cursor-pointer list-none font-semibold">If I subscribe to Max, does my audio get uploaded?<span class="float-right text-ghost/50 group-open:rotate-180">▾</span></summary>
+            <p class="mt-3 text-sm text-ghost/60">No. Transcription always runs on your Mac, on every tier. Max sends the resulting <em>text</em> to a model for cleanup or summarising — the same thing that happens on the free tier with your own key, just without you holding the key. Your microphone audio is never uploaded, and per-app rules let you mark apps as local-only so nothing leaves at all.</p>
+          </details>
+
+          <details class="glass group rounded-xl p-6">
+            <summary class="cursor-pointer list-none font-semibold">Does Ghostly join my meetings like a notetaker bot?<span class="float-right text-ghost/50 group-open:rotate-180">▾</span></summary>
+            <p class="mt-3 text-sm text-ghost/60">No. Meeting Mode captures your microphone and the call&rsquo;s audio locally through a macOS process tap, so nothing joins the call and no bot appears in the participant list. Transcripts stay on your Mac, are never written to logs or diagnostics bundles, and are deleted automatically after the retention period you choose. Capturing the other participants needs macOS 14.2 or later; below that Ghostly transcribes your side only and says so.</p>
+          </details>
+          <details class="glass group rounded-xl p-6">
+            <summary class="cursor-pointer list-none font-semibold">What is &ldquo;Where were we?&rdquo;<span class="float-right text-ghost/50 group-open:rotate-180">▾</span></summary>
+            <p class="mt-3 text-sm text-ghost/60">A shortcut that summarises the meeting you&rsquo;re in: what&rsquo;s being discussed right now, what you missed, the decisions made, anything asked of you, and one line you could say to rejoin the conversation. Summaries can be generated on-device with Apple Intelligence, through your own AI provider, or extractively with no AI at all.</p>
+          </details>
+          <details class="glass group rounded-xl p-6">
+            <summary class="cursor-pointer list-none font-semibold">What is Open Mic?<span class="float-right text-ghost/50 group-open:rotate-180">▾</span></summary>
+            <p class="mt-3 text-sm text-ghost/60">A hands-free mode. Instead of holding a shortcut per sentence, you leave the mic open and Ghostly transcribes each utterance when you pause. End a segment with your submit phrase — &ldquo;send it&rdquo; by default — and Ghostly strips the phrase and presses Enter for you. It&rsquo;s off by default, and the mic stays open only while you have it armed.</p>
+          </details>
+
           <details class="glass group rounded-xl p-6">
             <summary class="cursor-pointer list-none font-semibold">What are the system requirements?<span class="float-right text-ghost/50 group-open:rotate-180">▾</span></summary>
             <p class="mt-3 text-sm text-ghost/60">macOS 12 or later on Apple Silicon — any Mac with an M1 chip or later. Intel Macs are not supported. Microphone and accessibility permissions required.</p>
@@ -2057,7 +3155,7 @@
               <span class="text-sm font-semibold">Ghostly</span>
             </div>
             <p class="mt-3 max-w-xs text-sm text-ghost/55">Your AI ghostwriter for macOS. On-device transcription with optional AI cleanup.</p>
-            <p class="mt-4 font-mono text-xs text-ghost/40" id="footer-version">v0.1.23 · updated Aug 2026</p>
+            <p class="mt-4 font-mono text-xs text-ghost/40" id="footer-version">v0.1.25 · updated Aug 2026</p>
           </div>
 
           <div>
@@ -2100,6 +3198,78 @@
       </div>
     </footer>
 
+    <script>
+      /* Shared level meter for every recorder pill on the site.
+       *
+       * The real overlay gets a `mic-level` array from Rust, smooths it, then
+       * re-orders the values so the loudest sits dead centre and the quietest
+       * at the edges (see RecordingOverlay.tsx). The level stream is
+       * synthesised here, but it runs through the same smoothing filter, the
+       * same peak-in-middle sort, and the same height/opacity/glow curves — so
+       * the motion reads like the product instead of a generic waveform. */
+      window.createPillWave = function (waveEl, pillEl) {
+        const BARS = 14; // matches the overlay
+        const bars = [];
+        for (let i = 0; i < BARS; i++) {
+          const s = document.createElement('span');
+          s.style.height = '3px';
+          waveEl.appendChild(s);
+          bars.push(s);
+        }
+
+        const smoothed = new Array(BARS).fill(0);
+        let energy = 0;
+        let active = false;
+
+        function paint(t) {
+          // Stand-in for the mic stream: two detuned sines per bar, jittered.
+          const target = active ? 0.55 + 0.45 * Math.abs(Math.sin(t * 0.0009)) : 0;
+          energy += (target - energy) * 0.08;
+          for (let i = 0; i < BARS; i++) {
+            const n = Math.abs(
+              Math.sin(t * 0.0026 + i * 0.68) * 0.62 +
+              Math.sin(t * 0.0061 + i * 1.87) * 0.38
+            );
+            const level = active ? n * energy * (0.6 + Math.random() * 0.4) : 0;
+            smoothed[i] = smoothed[i] * 0.7 + level * 0.3; // the app's filter
+          }
+
+          // Peak-in-middle: sort ascending, then read outward from centre.
+          const sorted = smoothed.slice().sort((a, b) => a - b);
+          const centre = (BARS - 1) / 2;
+          for (let i = 0; i < BARS; i++) {
+            const rank = BARS - 1 - Math.round(Math.abs(i - centre) * 2);
+            const v = sorted[Math.max(0, Math.min(BARS - 1, rank))];
+            bars[i].style.height = Math.min(28, 3 + Math.pow(v, 0.65) * 25).toFixed(1) + 'px';
+            bars[i].style.opacity = Math.max(0.35, Math.min(1, v * 2)).toFixed(2);
+          }
+
+          // The overlay brightens its own glow with the peak level.
+          if (pillEl) {
+            let peak = 0;
+            for (let i = 0; i < BARS; i++) peak = Math.max(peak, smoothed[i]);
+            const glow = Math.min(1, peak * 1.5);
+            pillEl.style.boxShadow =
+              '0 0 ' + (20 + glow * 18).toFixed(1) + 'px rgba(124, 58, 237, ' +
+              (0.18 + glow * 0.35).toFixed(3) + '), 0 4px 24px rgba(0, 0, 0, 0.5)';
+          }
+        }
+
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          bars.forEach((b) => { b.style.height = '7px'; b.style.opacity = '0.7'; });
+        } else {
+          requestAnimationFrame(function frame(t) { paint(t); requestAnimationFrame(frame); });
+        }
+
+        return { setActive: function (v) { active = v; } };
+      };
+
+      // "Talk naturally" vignette: the same meter, always running.
+      (function () {
+        const el = document.getElementById('step-wave');
+        if (el) window.createPillWave(el, null).setActive(true);
+      })();
+    </script>
     <script>
       // Hero "typing" typewriter animation
       (function () {
@@ -2208,28 +3378,8 @@
           "log the contract value as twelve thousand ARR in Salesforce"
         ];
 
-        const BARS = 28;
-        const bars = [];
-        for (let i = 0; i < BARS; i++) {
-          const s = document.createElement('span');
-          s.style.height = '3px';
-          waveEl.appendChild(s);
-          bars.push(s);
-        }
-
-        let energy = 0;
+        const wave = window.createPillWave(waveEl, waveEl.closest('.overlay-pill'));
         let lastIdx = -1;
-
-        function tickWave() {
-          for (let i = 0; i < BARS; i++) {
-            const edge = 1 - Math.abs((i - (BARS - 1) / 2) / ((BARS - 1) / 2));
-            const base = 2;
-            const peak = 16 * energy * (0.4 + 0.6 * edge);
-            const h = base + Math.random() * Math.random() * peak;
-            bars[i].style.height = h.toFixed(1) + 'px';
-          }
-        }
-        setInterval(tickWave, 70);
 
         const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -2245,7 +3395,6 @@
           textEl.textContent = '';
           for (let i = 0; i < msg.length; i++) {
             textEl.textContent = msg.slice(0, i + 1);
-            energy = 0.7 + Math.random() * 0.3;
             await sleep(22 + Math.random() * 55);
           }
         }
@@ -2254,20 +3403,20 @@
           const current = textEl.textContent;
           for (let i = current.length; i > 0; i--) {
             textEl.textContent = current.slice(0, i - 1);
-            energy = 0.25 + Math.random() * 0.15;
             await sleep(10 + Math.random() * 18);
           }
         }
 
+        // The meter runs while text is arriving and settles between takes,
+        // the way it does when you release the shortcut.
         async function loop() {
           while (true) {
             const msg = pickMessage();
-            energy = 0.9;
+            wave.setActive(true);
             await typeOut(msg);
-            energy = 0.15;
+            wave.setActive(false);
             await sleep(1600 + Math.random() * 800);
             await clearOut();
-            energy = 0.05;
             await sleep(300);
           }
         }
@@ -2275,177 +3424,688 @@
       })();
     </script>
     <script>
-      (function () {
-        const pill          = document.getElementById('pill');
-        const miniWave      = document.getElementById('mini-wave');
-        const caption       = document.getElementById('caption');
-        const captionStage  = document.getElementById('caption-stage');
-        const captionText   = document.getElementById('caption-text');
-        const composer      = document.getElementById('composer');
-        const sendBtn       = document.getElementById('send-btn');
-        const feed          = document.getElementById('chat-feed');
-        if (!pill || !feed) return;
+      /* ═══════════════════════════════════════════════════════════════════
+         Shared animation primitives for the hero stage and the reel.
 
-        const BARS = 18;
-        const bars = [];
-        for (let i = 0; i < BARS; i++) {
+         Both run long, looping, interruptible sequences. Rather than track
+         timers, each run takes a token from a monotonic counter; every await
+         point checks whether its token is still the current one and bails if
+         a click or a scroll has moved on. Nothing to clear, nothing to leak.
+         ═══════════════════════════════════════════════════════════════ */
+      window.ghostly = window.ghostly || {};
+      window.ghostly.reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.ghostly.sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+      // Sequencer: hands out run tokens and tells a running sequence when it
+      // has been superseded.
+      window.ghostly.sequencer = function () {
+        let seq = 0;
+        return {
+          next() {
+            const id = ++seq;
+            return {
+              get live() { return id === seq; },
+              async wait(ms) { await window.ghostly.sleep(ms); return id === seq; },
+            };
+          },
+          bump() { seq++; },
+        };
+      };
+
+      /* A long pause, sliced. Holding for three seconds with one timer means
+         a click has to wait three seconds to be noticed; slicing it keeps the
+         UI responsive without any cancellation plumbing. */
+      window.ghostly.hold = async function (ctx, ms) {
+        let left = ms;
+        while (left > 0) {
+          if (!(await ctx.wait(Math.min(110, left)))) return false;
+          left -= 110;
+        }
+        return true;
+      };
+
+      /* Types text into a node one character at a time, pausing longer on
+         punctuation so it reads like speech arriving rather than a machine
+         printing. Returns false the moment its run is superseded. */
+      window.ghostly.type = async function (node, text, ctx, perChar) {
+        const base = perChar || 26;
+        for (let i = 0; i <= text.length; i++) {
+          node.textContent = text.slice(0, i);
+          const c = text[i - 1];
+          const extra = c === ',' || c === '—' ? 110 : c === '.' || c === '?' || c === ':' ? 180 : 0;
+          if (!(await ctx.wait(base + Math.random() * 22 + extra))) return false;
+        }
+        return true;
+      };
+
+      /* Small level meter for the reel cards. Same smoothing filter and
+         peak-in-middle ordering as the overlay's, at a size that fits a
+         card footer. */
+      window.ghostly.miniMeter = function (el, bars) {
+        const N = bars || 9;
+        const nodes = [];
+        for (let i = 0; i < N; i++) {
           const s = document.createElement('span');
-          s.style.height = '3px';
-          miniWave.appendChild(s);
-          bars.push(s);
+          s.style.height = '2.5px';
+          el.appendChild(s);
+          nodes.push(s);
+        }
+        const smoothed = new Array(N).fill(0);
+        let energy = 0;
+        let active = false;
+
+        if (window.ghostly.reduced) {
+          nodes.forEach((n) => { n.style.height = '6px'; n.style.opacity = '0.6'; });
+          return { setActive() {} };
         }
 
-        // Conversation: product launch decision, accessible technical topic,
-        // resolves favorably. Value prop: voice-driven Slack replies that
-        // come out polished enough to ship decisions by.
-        const MAYA = 'assets/demo-maya.png';
-        const ME   = 'assets/demo-user.png';
-        const turns = [
-          {
-            reply: {
-              who: 'Maya Chen', img: MAYA, time: '10:14',
-              text: "the onboarding A/B test just wrapped — variant B is up 8% on activation. ship it?"
-            },
-            raw:     "yeah ship variant b, eight percent on activation compounds — lets roll it to twenty five percent first and watch retention for a week",
-            cleaned: "Yeah, ship variant B. 8% on activation compounds. Roll it to 25% first and watch retention for a week."
-          },
-          {
-            reply: {
-              who: 'Maya Chen', img: MAYA, time: '10:15',
-              text: "rolling to 25% now. what should I watch for?"
-            },
-            raw:     "um, mainly day seven retention, if it holds steady we're good, if it dips more than a point we need to dig in",
-            cleaned: "Mainly D7 retention. If it holds steady we're good; if it dips more than a point, we need to dig in."
-          },
-          {
-            reply: {
-              who: 'Maya Chen', img: MAYA, time: '10:22',
-              text: "D7 is up half a point after 3 days. calling it."
-            },
-            raw:     "perfect, push it to a hundred percent on friday and drop a note in hash launches so the team sees it",
-            cleaned: "Perfect. Push to 100% on Friday and drop a note in #launches so the team sees it."
+        requestAnimationFrame(function frame(t) {
+          const target = active ? 0.55 + 0.45 * Math.abs(Math.sin(t * 0.001)) : 0;
+          energy += (target - energy) * 0.09;
+          for (let i = 0; i < N; i++) {
+            const n = Math.abs(Math.sin(t * 0.0029 + i * 0.71) * 0.6 + Math.sin(t * 0.0064 + i * 1.9) * 0.4);
+            smoothed[i] = smoothed[i] * 0.7 + (active ? n * energy * (0.6 + Math.random() * 0.4) : 0) * 0.3;
           }
+          const sorted = smoothed.slice().sort((a, b) => a - b);
+          const centre = (N - 1) / 2;
+          for (let i = 0; i < N; i++) {
+            const rank = N - 1 - Math.round(Math.abs(i - centre) * 2);
+            const v = sorted[Math.max(0, Math.min(N - 1, rank))];
+            nodes[i].style.height = Math.min(20, 2.5 + Math.pow(v, 0.65) * 18).toFixed(1) + 'px';
+            nodes[i].style.opacity = Math.max(0.28, Math.min(1, v * 2)).toFixed(2);
+          }
+          requestAnimationFrame(frame);
+        });
+
+        return { setActive(v) { active = v; } };
+      };
+
+      /* Runs `fn` only while `el` is on screen, so nothing animates in a
+         background tab or three screens down the page. */
+      window.ghostly.whenVisible = function (el, fn) {
+        let started = false;
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting && !started) { started = true; fn(); }
+          });
+        }, { threshold: 0.15 });
+        io.observe(el);
+      };
+    </script>
+    <script>
+      /* ═══════════════════════════════════════════════════════════════════
+         Hero stage — Dictate / Meeting Mode / Open Mic, on a loop.
+
+         Each scene owns its own async sequence and the shared overlay pill.
+         The pill is deliberately absent during the meeting scene: the real
+         app draws a meeting panel there, not the recorder pill, and the
+         demo should not claim otherwise.
+         ═══════════════════════════════════════════════════════════════ */
+      (function () {
+        const root = document.getElementById('hero-stage-root');
+        if (!root) return;
+
+        const tabs   = Array.from(root.querySelectorAll('.mode-tab'));
+        const scenes = Array.from(root.querySelectorAll('.mode-scene'));
+        const pill       = document.getElementById('pill');
+        const miniWave   = document.getElementById('mini-wave');
+        const pillStatus = document.getElementById('pill-status');
+        const wave = window.createPillWave(miniWave, pill);
+
+        const type = window.ghostly.type;
+        const hold = window.ghostly.hold;
+        const seq  = window.ghostly.sequencer();
+
+        // ── Overlay pill, mirroring the app's two states ─────────────────
+        function pillMeter() { miniWave.style.display = 'flex'; pillStatus.style.display = 'none'; }
+        function pillSay(t)  { pillStatus.textContent = t; pillStatus.style.display = 'block'; miniWave.style.display = 'none'; }
+        function showPill()  { pill.classList.remove('overlay-hidden'); }
+        function hidePill()  { pill.classList.add('overlay-hidden'); wave.setActive(false); }
+
+        // ── Scene 1 · Dictate ────────────────────────────────────────────
+        const dRaw   = document.getElementById('d-raw');
+        const dClean = document.getElementById('d-clean');
+        const dStage = document.getElementById('d-stage');
+        const dApp   = document.getElementById('d-app');
+        const dChipImg = document.querySelector('#d-chip img');
+
+        const DICTATIONS = [
+          {
+            app: 'Gmail · Re: intro',
+            icon: 'assets/apps/gmail.png',
+            raw: "um hey Dana, thanks so much for the intro to Priya — uh I'd love to grab like thirty minutes next week, I'm pretty open tuesday and thursday afternoon",
+            clean: "Hi Dana — thanks for the intro to Priya. I'd love to grab 30 minutes next week; I'm fairly open Tuesday and Thursday afternoon.",
+          },
+          {
+            app: 'Linear · ENG-482',
+            icon: 'assets/apps/linear.png',
+            raw: "okay so the bug is uh when you archive a project the sidebar count doesn't update until you hard refresh, feels like a stale cache thing, um medium priority",
+            clean: "Archiving a project doesn't update the sidebar count until a hard refresh — looks like a stale cache. Medium priority.",
+          },
+          {
+            app: 'Slack · #design',
+            icon: 'assets/apps/slack.png',
+            raw: "yeah i think variant b is the one, um it's up eight percent on activation, so like let's roll it to twenty five percent first and watch retention",
+            clean: "variant B is the one — up 8% on activation. rolling to 25% first, watching D7 retention before we go wider.",
+          },
+        ];
+        let dIdx = -1;
+
+        async function playDictate(ctx) {
+          dIdx = (dIdx + 1) % DICTATIONS.length;
+          const d = DICTATIONS[dIdx];
+
+          dRaw.textContent = '';
+          dClean.textContent = '';
+          dRaw.classList.remove('is-spent');
+          dRaw.classList.add('tick');
+          dClean.classList.remove('tick');
+          dStage.textContent = 'Listening';
+          dApp.textContent = d.app;
+          dChipImg.src = d.icon;
+
+          pillMeter();
+          wave.setActive(true);
+          showPill();
+          if (!(await ctx.wait(420))) return;
+
+          if (!(await type(dRaw, d.raw, ctx, 17))) return;
+          if (!(await ctx.wait(340))) return;
+
+          // Key released: the meter gives way to the overlay's own status
+          // text, using the same two strings the app shows.
+          dRaw.classList.remove('tick');
+          wave.setActive(false);
+          dStage.textContent = 'Transcribing';
+          pillSay('Transcribing...');
+          if (!(await ctx.wait(620))) return;
+
+          dStage.textContent = 'Refining';
+          pillSay('Processing...');
+          if (!(await ctx.wait(700))) return;
+
+          dRaw.classList.add('is-spent');
+          dStage.textContent = 'Pasted';
+          dClean.classList.add('tick');
+          hidePill();
+          if (!(await ctx.wait(180))) return;
+
+          if (!(await type(dClean, d.clean, ctx, 12))) return;
+          dClean.classList.remove('tick');
+          await hold(ctx, 1900);
+        }
+
+        // ── Scene 2 · Meeting Mode ───────────────────────────────────────
+        const mLines   = document.getElementById('m-lines');
+        const mAlert   = document.getElementById('m-alert');
+        const mCatchup = document.getElementById('m-catchup');
+
+        const MEETING = [
+          { who: 'Priya Raman', text: "…so the invoice schema change is what's actually blocking dunning, not the payment provider." },
+          { who: 'You', you: true, text: "Wait — blocking it entirely, or just the retry emails?" },
+          { who: 'Marcus Odell', text: "Just the retries. And support is still eating about forty tickets a week off the old flow." },
+          { who: 'Priya Raman', addressed: true, text: "Jason — can design get us the invoice mocks by Friday?" },
         ];
 
-        let state  = 'idle'; // idle | listening | cleaning
-        let energy = 0;
-
-        function renderWave(t) {
-          const target = state === 'listening' ? (0.6 + 0.4 * Math.abs(Math.sin(t * 0.005))) : 0.05;
-          energy += (target - energy) * 0.14;
-          for (let i = 0; i < BARS; i++) {
-            const n = Math.sin(t * 0.014 + i * 0.42) + Math.cos(t * 0.008 + i * 0.22);
-            const jitter = state === 'listening' ? (Math.random() * 0.55 + 0.5) : 0.4;
-            const h = 2 + Math.abs(n) * 16 * energy * jitter;
-            bars[i].style.height = h.toFixed(1) + 'px';
-          }
-        }
-        function frame(t) { renderWave(t); requestAnimationFrame(frame); }
-        requestAnimationFrame(frame);
-
-        const sleep = (ms) => new Promise(r => setTimeout(r, ms));
-
-        async function typeInto(node, text, perChar) {
-          for (let i = 0; i <= text.length; i++) {
-            node.textContent = text.slice(0, i);
-            const c = text[i - 1];
-            const extra = (c === ',' || c === '—') ? 140 : (c === '.' || c === '?') ? 220 : 0;
-            await sleep(perChar + Math.random() * 25 + extra);
-          }
-        }
-
-        function showPill()    { pill.classList.remove('overlay-hidden'); }
-        function hidePill()    { pill.classList.add('overlay-hidden'); }
-        function showCaption() { caption.classList.remove('overlay-hidden'); }
-        function hideCaption() { caption.classList.add('overlay-hidden'); }
-
-        function setComposerPlaceholder() {
-          composer.innerHTML = '<span class="text-ghost/30">Message #design</span>';
-        }
-
-        function appendMessage(who, img, time, text, isYou) {
+        function meetingRow(line) {
           const row = document.createElement('div');
-          row.className = 'flex items-start gap-3 msg-enter' + (isYou ? '' : ' opacity-90');
-          row.innerHTML = `
-            <img src="${img}" alt="" class="h-9 w-9 flex-shrink-0 rounded-md object-cover" />
-            <div class="min-w-0 flex-1">
-              <div class="flex items-baseline gap-2">
-                <span class="text-sm font-semibold text-ghost">${who}</span>
-                <span class="text-[11px] text-ghost/40">${time}</span>
-              </div>
-              <div class="mt-0.5 text-sm leading-relaxed ${isYou ? 'text-ghost/90' : 'text-ghost/75'}"></div>
-            </div>`;
-          row.querySelector('.min-w-0 > div:last-child').textContent = text;
-          feed.appendChild(row);
-          feed.scrollTop = feed.scrollHeight;
+          row.className = 'mt-line' + (line.addressed ? ' addressed' : '');
+          const who = document.createElement('span');
+          who.className = 'mt-who' + (line.you ? ' you' : '');
+          who.textContent = line.who;
+          const txt = document.createElement('span');
+          txt.className = 'mt-text';
+          row.append(who, txt);
+          mLines.appendChild(row);
+          return { row, txt };
         }
 
-        function resetAll() {
-          state = 'idle';
-          hidePill();
-          hideCaption();
-          captionText.textContent = '\u00A0';
-          setComposerPlaceholder();
-          sendBtn.classList.remove('flash', 'text-ghost');
-          sendBtn.classList.add('text-ghost/40');
-          feed.innerHTML = '';
+        async function playMeeting(ctx) {
+          mLines.innerHTML = '';
+          mAlert.classList.remove('in');
+          mCatchup.classList.remove('in');
+          hidePill(); // the app draws a meeting panel here, not the pill
+
+          for (const line of MEETING) {
+            const { row, txt } = meetingRow(line);
+            // Earlier lines are already transcribed; the last one arrives live.
+            if (line.addressed) {
+              row.classList.add('in');
+              txt.classList.add('tick');
+              if (!(await type(txt, line.text, ctx, 26))) return;
+              txt.classList.remove('tick');
+            } else {
+              txt.textContent = line.text;
+              requestAnimationFrame(() => row.classList.add('in'));
+              if (!(await hold(ctx, 950 + line.text.length * 7))) return;
+            }
+          }
+
+          if (!(await ctx.wait(400))) return;
+          mAlert.classList.add('in');
+          if (!(await hold(ctx, 1500))) return;
+          mCatchup.classList.add('in');
+          await hold(ctx, 4400);
         }
 
-        async function runTurn(turn) {
-          // 1. Maya's message appears first
-          appendMessage(turn.reply.who, turn.reply.img, turn.reply.time + ' AM', turn.reply.text, false);
-          await sleep(900);
+        // ── Scene 3 · Open Mic ───────────────────────────────────────────
+        const omSegs   = document.getElementById('om-segs');
+        const omStatus = document.getElementById('om-status');
 
-          // 2. Pill + caption bubble appear below Slack — user holds fn
-          state = 'listening';
-          captionStage.textContent = 'Listening';
-          captionText.textContent  = '\u00A0';
+        const SEGMENTS = [
+          { text: "Pull the last thirty days of failed payments and group them by decline code." },
+          { text: "Ignore anything from the sandbox account." },
+          { text: "Then draft it as a table I can paste into Notion. ", phrase: 'Send it.' },
+        ];
+
+        function segRow() {
+          const row = document.createElement('div');
+          row.className = 'om-seg';
+          row.innerHTML =
+            '<span class="om-tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>' +
+            '<span class="om-seg-text"></span>';
+          omSegs.appendChild(row);
+          return { row, txt: row.querySelector('.om-seg-text') };
+        }
+
+        async function playOpenMic(ctx) {
+          omSegs.innerHTML = '';
+          omStatus.innerHTML = '<span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span> Open — listening';
+          pillMeter();
+          wave.setActive(true);
           showPill();
-          showCaption();
-          await sleep(300);
+          if (!(await ctx.wait(500))) return;
 
-          // 3. Raw transcript streams into caption bubble
-          await typeInto(captionText, turn.raw, 34);
-          await sleep(400);
+          for (const seg of SEGMENTS) {
+            const { row, txt } = segRow();
+            requestAnimationFrame(() => row.classList.add('in'));
+            txt.classList.add('tick');
+            wave.setActive(true);
+            if (!(await type(txt, seg.text, ctx, 25))) return;
+            txt.classList.remove('tick');
 
-          // 4. AI cleanup stage
-          state = 'cleaning';
-          captionStage.textContent = 'Cleaning up';
-          await sleep(750);
+            if (seg.phrase) {
+              // The submit phrase is struck through, stripped, and the key
+              // press it stands in for is shown landing.
+              const strike = document.createElement('span');
+              strike.className = 'om-phrase';
+              txt.appendChild(strike);
+              if (!(await type(strike, seg.phrase, ctx, 46))) return;
+              wave.setActive(false);
+              if (!(await ctx.wait(420))) return;
+              const key = document.createElement('span');
+              key.className = 'om-key';
+              key.textContent = '⏎  sent';
+              txt.appendChild(key);
+              requestAnimationFrame(() => key.classList.add('in'));
+              omStatus.innerHTML = '<span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span> Open — listening';
+            } else {
+              // Between utterances the mic stays open but idle.
+              wave.setActive(false);
+              if (!(await hold(ctx, 680))) return;
+            }
+          }
 
-          // 5. Caption fades; cleaned text is pasted instantly into composer
-          hideCaption();
-          await sleep(220);
-          composer.textContent = turn.cleaned;
-          sendBtn.classList.remove('text-ghost/40');
-          sendBtn.classList.add('text-ghost');
-          await sleep(600);
-
-          // 6. Send — message flushes into the feed
-          sendBtn.classList.add('flash');
-          await sleep(130);
-          sendBtn.classList.remove('flash');
-          setComposerPlaceholder();
-          sendBtn.classList.remove('text-ghost');
-          sendBtn.classList.add('text-ghost/40');
-          appendMessage('You', ME, 'now', turn.cleaned, true);
-
-          state = 'idle';
           hidePill();
+          await hold(ctx, 2900);
         }
 
+        // ── Cycle ────────────────────────────────────────────────────────
+        const PLAY = [playDictate, playMeeting, playOpenMic];
+        // Roughly how long each scene runs; drives the tab's progress sweep.
+        const SPAN = [12800, 13600, 12600];
+        let mode = 0;
+        let auto = true;
+
+        function paintTabs(i) {
+          tabs.forEach((tab, n) => {
+            const on = n === i;
+            tab.classList.toggle('is-active', on);
+            tab.setAttribute('aria-selected', on ? 'true' : 'false');
+            const bar = tab.querySelector('.mode-progress');
+            bar.style.transition = 'none';
+            bar.style.transform = 'scaleX(0)';
+            if (on && !window.ghostly.reduced) {
+              // Force a reflow so the reset lands before the sweep starts.
+              void bar.offsetWidth;
+              bar.style.transition = `transform ${SPAN[i]}ms linear`;
+              bar.style.transform = 'scaleX(1)';
+            }
+          });
+          scenes.forEach((s, n) => {
+            s.classList.toggle('is-active', n === i);
+            s.setAttribute('aria-hidden', n === i ? 'false' : 'true');
+          });
+        }
+
+        tabs.forEach((tab) => {
+          tab.addEventListener('click', () => {
+            auto = false; // a deliberate pick beats the carousel
+            mode = Number(tab.dataset.mode);
+            paintTabs(mode);         // switch instantly…
+            seq.bump();              // …and let the running scene bail out
+          });
+        });
+
+        /* One loop for the life of the page. A click bumps the sequencer,
+           the running scene returns at its next slice, `ctx.live` is false,
+           and the loop restarts on whatever `mode` now says. When `auto` is
+           off the same scene simply replays. */
         async function run() {
           while (true) {
-            resetAll();
-            await sleep(700);
-            for (const turn of turns) {
-              await runTurn(turn);
-              await sleep(1100);
-            }
-            await sleep(3500); // hold on resolution
+            const ctx = seq.next();
+            paintTabs(mode);
+            await PLAY[mode](ctx);
+            if (!ctx.live) continue;
+            if (auto) mode = (mode + 1) % PLAY.length;
           }
         }
-        run();
+
+        if (window.ghostly.reduced) {
+          // Show the finished state of each scene, no motion.
+          const d = DICTATIONS[0];
+          dRaw.textContent = d.raw;
+          dRaw.classList.add('is-spent');
+          dClean.textContent = d.clean;
+          dApp.textContent = d.app;
+          dChipImg.src = d.icon;
+          MEETING.forEach((line) => {
+            const { row, txt } = meetingRow(line);
+            txt.textContent = line.text;
+            row.classList.add('in');
+          });
+          mAlert.classList.add('in');
+          mCatchup.classList.add('in');
+          SEGMENTS.forEach((seg) => {
+            const { row, txt } = segRow();
+            txt.textContent = seg.text;
+            row.classList.add('in');
+            if (seg.phrase) {
+              const strike = document.createElement('span');
+              strike.className = 'om-phrase';
+              strike.textContent = seg.phrase;
+              txt.appendChild(strike);
+            }
+          });
+          tabs.forEach((t) => t.addEventListener('click', () => {
+            mode = Number(t.dataset.mode);
+            paintTabs(mode);
+          }));
+          return;
+        }
+
+        window.ghostly.whenVisible(root, run);
+      })();
+    </script>
+    <script>
+      /* ═══════════════════════════════════════════════════════════════════
+         "In the wild" reel.
+
+         A horizontally scrolling filmstrip that advances itself. The card in
+         the centre plays its own dictation; the others sit dimmed and
+         desaturated. Native scroll-snap means a mouse, trackpad, or arrow
+         key drives it just as well — a user gesture parks the auto-advance
+         for a few seconds rather than fighting it.
+         ═══════════════════════════════════════════════════════════════ */
+      (function () {
+        const reel = document.getElementById('reel');
+        if (!reel) return;
+        const cards = Array.from(reel.querySelectorAll('.reel-card'));
+        const dots  = Array.from(document.querySelectorAll('.reel-dot'));
+        const type = window.ghostly.type;
+        const hold = window.ghostly.hold;
+        const seq  = window.ghostly.sequencer();
+
+        const meters = cards.map((c) => window.ghostly.miniMeter(c.querySelector('[data-meter]')));
+        const $ = (card, key) => card.querySelector(`[data-target="${key}"]`);
+
+        // ── The four scenarios ───────────────────────────────────────────
+
+        // 1 · Claude Code. Agent apps get deterministic local cleanup, so the
+        //     prompt is punctuated but never reworded — the whole point.
+        async function claudeCode(ctx, card) {
+          const said   = $(card, 'cc-said');
+          const prompt = $(card, 'cc-prompt');
+          const rows   = Array.from(card.querySelectorAll('[data-rows="cc"] .term-row'));
+          const chip   = card.querySelector('[data-chip]');
+          said.textContent = '';
+          prompt.textContent = '';
+          rows.forEach((r) => r.classList.remove('in'));
+          chip.classList.remove('in');
+
+          const SPOKEN =
+            "in the checkout flow the retry is firing twice when stripe returns a four oh two — " +
+            "add an idempotency key derived from the payment intent and make sure the retry reuses " +
+            "it instead of minting a new one";
+          const TYPED =
+            "In the checkout flow the retry is firing twice when Stripe returns a 402 — add an " +
+            "idempotency key derived from the payment intent and make sure the retry reuses it " +
+            "instead of minting a new one.";
+
+          meters[0].setActive(true);
+          if (!(await ctx.wait(300))) return;
+          if (!(await type(said, SPOKEN, ctx, 15))) return;
+          meters[0].setActive(false);
+          if (!(await ctx.wait(280))) return;
+
+          chip.classList.add('in');
+          prompt.classList.add('tick');
+          if (!(await type(prompt, TYPED, ctx, 11))) return;
+          prompt.classList.remove('tick');
+          if (!(await ctx.wait(600))) return;
+
+          for (const row of rows) {
+            row.classList.add('in');
+            if (!(await hold(ctx, 520))) return;
+          }
+          await hold(ctx, 2600);
+        }
+
+        // 2 · Gmail. The rambling version and the sendable version.
+        async function gmail(ctx, card) {
+          const said = $(card, 'gm-said');
+          const body = $(card, 'gm-body');
+          const send = card.querySelector('[data-send]');
+          const chip = card.querySelector('[data-chip]');
+          said.textContent = '';
+          body.textContent = '';
+          send.classList.remove('flash');
+          chip.classList.remove('in');
+
+          const SPOKEN =
+            "um hey Kara thanks for sending the redlines over — so I went through section four and " +
+            "I think we're basically aligned, the only real thing is the termination notice, thirty " +
+            "days is way too tight for us, can we do sixty, and uh if that works I can get this signed by friday";
+          const WRITTEN =
+            "Hi Kara,\n\nThanks for sending the redlines over. I went through Section 4 and I think " +
+            "we're aligned on nearly everything.\n\nThe one open item is the termination notice — 30 " +
+            "days is too tight on our side. Could we move it to 60? If that works, I can get this " +
+            "signed by Friday.\n\nBest,\nJason";
+
+          meters[1].setActive(true);
+          if (!(await ctx.wait(300))) return;
+          if (!(await type(said, SPOKEN, ctx, 14))) return;
+          meters[1].setActive(false);
+          if (!(await ctx.wait(280))) return;
+
+          chip.classList.add('in');
+          body.classList.add('tick');
+          if (!(await type(body, WRITTEN, ctx, 9))) return;
+          body.classList.remove('tick');
+          if (!(await ctx.wait(700))) return;
+
+          send.classList.add('flash');
+          if (!(await ctx.wait(260))) return;
+          send.classList.remove('flash');
+          await hold(ctx, 2600);
+        }
+
+        // 3 · Slack. Same voice, but the output stays short and lowercase.
+        async function slack(ctx, card) {
+          const said  = $(card, 'sl-said');
+          const input = $(card, 'sl-input');
+          const sent  = $(card, 'sl-sent');
+          const inputBox = card.querySelector('[data-input]');
+          const sentRow  = card.querySelector('[data-hide]');
+          const chip = card.querySelector('[data-chip]');
+          said.textContent = '';
+          input.textContent = '';
+          sent.textContent = '';
+          sentRow.style.visibility = 'hidden';
+          inputBox.classList.remove('focus');
+          chip.classList.remove('in');
+
+          const SPOKEN =
+            "yeah that's me, um i shipped the connection pool change at like ten forty, i'm rolling " +
+            "it back right now, p99 should settle in about five minutes and uh i'll post here when it's green";
+          const POSTED =
+            "that's me — shipped the connection pool change at 10:40. rolling back now, p99 should " +
+            "settle in ~5 min. i'll post here when it's green.";
+
+          meters[2].setActive(true);
+          if (!(await ctx.wait(300))) return;
+          if (!(await type(said, SPOKEN, ctx, 14))) return;
+          meters[2].setActive(false);
+          if (!(await ctx.wait(260))) return;
+
+          chip.classList.add('in');
+          inputBox.classList.add('focus');
+          input.classList.add('tick');
+          if (!(await type(input, POSTED, ctx, 11))) return;
+          input.classList.remove('tick');
+          if (!(await ctx.wait(650))) return;
+
+          input.textContent = ' ';
+          inputBox.classList.remove('focus');
+          sent.textContent = POSTED;
+          sentRow.style.visibility = 'visible';
+          sentRow.classList.add('msg-enter');
+          await hold(ctx, 2800);
+          sentRow.classList.remove('msg-enter');
+        }
+
+        // 4 · VS Code. A spoken sentence becomes a conventional commit.
+        async function vscode(ctx, card) {
+          const said = $(card, 'vs-said');
+          const msg  = $(card, 'vs-msg');
+          const box  = card.querySelector('[data-input]');
+          const btn  = card.querySelector('[data-send]');
+          const chip = card.querySelector('[data-chip]');
+          said.textContent = '';
+          msg.textContent = '';
+          box.classList.remove('focus');
+          btn.classList.remove('flash');
+          chip.classList.remove('in');
+
+          const SPOKEN =
+            "commit this as a fix for the double charge on retry — we reuse the idempotency key now " +
+            "instead of making a new one, and there's a regression test for the four oh two path";
+          const COMMIT =
+            "fix(payments): reuse the idempotency key on retry\n\nA 402 from Stripe caused the retry " +
+            "to mint a fresh key, capturing the\ncharge twice. The key is now derived from the payment " +
+            "intent.\n\nAdds a regression test covering the 402 path.";
+
+          meters[3].setActive(true);
+          if (!(await ctx.wait(300))) return;
+          if (!(await type(said, SPOKEN, ctx, 15))) return;
+          meters[3].setActive(false);
+          if (!(await ctx.wait(280))) return;
+
+          chip.classList.add('in');
+          box.classList.add('focus');
+          msg.classList.add('tick');
+          if (!(await type(msg, COMMIT, ctx, 10))) return;
+          msg.classList.remove('tick');
+          if (!(await ctx.wait(700))) return;
+
+          btn.classList.add('flash');
+          if (!(await ctx.wait(300))) return;
+          btn.classList.remove('flash');
+          box.classList.remove('focus');
+          await hold(ctx, 2600);
+        }
+
+        const SCENES = [claudeCode, gmail, slack, vscode];
+
+        // ── Scroll plumbing ──────────────────────────────────────────────
+        let index = 0;
+        let userUntil = 0; // programmatic scrolling is suspended until this
+
+        function paint(i) {
+          cards.forEach((c, n) => c.classList.toggle('is-active', n === i));
+          dots.forEach((d, n) => d.classList.toggle('is-active', n === i));
+        }
+
+        function centreOn(i) {
+          const card = cards[i];
+          reel.scrollTo({
+            left: card.offsetLeft - (reel.clientWidth - card.offsetWidth) / 2,
+            behavior: window.ghostly.reduced ? 'auto' : 'smooth',
+          });
+        }
+
+        function nearest() {
+          const mid = reel.scrollLeft + reel.clientWidth / 2;
+          let best = 0;
+          let bestD = Infinity;
+          cards.forEach((c, n) => {
+            const d = Math.abs(c.offsetLeft + c.offsetWidth / 2 - mid);
+            if (d < bestD) { bestD = d; best = n; }
+          });
+          return best;
+        }
+
+        ['pointerdown', 'wheel', 'touchstart', 'keydown'].forEach((ev) =>
+          reel.addEventListener(ev, () => { userUntil = Date.now() + 7000; }, { passive: true })
+        );
+
+        let settle;
+        reel.addEventListener('scroll', () => {
+          clearTimeout(settle);
+          settle = setTimeout(() => {
+            const n = nearest();
+            if (n !== index) { index = n; paint(index); seq.bump(); }
+          }, 130);
+        }, { passive: true });
+
+        dots.forEach((dot) => {
+          dot.addEventListener('click', () => {
+            index = Number(dot.dataset.dot);
+            userUntil = Date.now() + 7000; // respect a deliberate pick
+            paint(index);
+            centreOn(index);
+            seq.bump();
+          });
+        });
+
+        // ── The loop ─────────────────────────────────────────────────────
+        async function loop() {
+          // Land on the first card without animating past the others.
+          centreOn(0);
+          paint(0);
+          while (true) {
+            const ctx = seq.next();
+            paint(index);
+            if (Date.now() >= userUntil) centreOn(index);
+            await SCENES[index](ctx, cards[index]);
+            if (!ctx.live) continue; // a click or scroll moved the strip
+            if (!(await hold(ctx, 900))) continue;
+            index = (index + 1) % cards.length;
+          }
+        }
+
+        if (window.ghostly.reduced) {
+          // No auto-advance: render each card's finished state once and let
+          // the user scroll it themselves.
+          cards.forEach((c) => c.classList.add('is-active'));
+          SCENES.forEach((scene, i) => {
+            const instant = { live: true, wait: async () => true };
+            scene(instant, cards[i]);
+          });
+          return;
+        }
+
+        window.ghostly.whenVisible(reel, loop);
       })();
 
       // Per-app tone demo: type each variant in sequence, loop

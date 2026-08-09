@@ -191,44 +191,124 @@
         filter: blur(40px);
         z-index: 0;
       }
+      /* ── The recorder pill ───────────────────────────────────────────────
+       *
+       * A 1:1 reproduction of the real overlay window — geometry, colours,
+       * bar count, easing and the mask are all lifted from
+       * src/overlay/RecordingOverlay.css in the app. Screenshots of the
+       * shipping product should be indistinguishable from this. If the
+       * overlay changes there, change it here (and in ph/, for/creatives/). */
+      .overlay-pill {
+        box-sizing: border-box;
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        width: 220px;
+        height: 44px;
+        padding: 8px 10px;
+        border-radius: 22px;
+        background: rgba(10, 10, 16, 0.92);
+        border: 1px solid rgba(167, 139, 250, 0.18);
+        backdrop-filter: blur(20px) saturate(1.4);
+        -webkit-backdrop-filter: blur(20px) saturate(1.4);
+        box-shadow:
+          0 1px 0 rgba(255, 255, 255, 0.14) inset,
+          0 0 0 1px rgba(255, 255, 255, 0.03) inset,
+          0 0 22px rgba(124, 58, 237, 0.22),
+          0 8px 28px rgba(0, 0, 0, 0.55);
+        transition:
+          opacity 260ms ease,
+          transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
+          box-shadow 180ms ease-out;
+      }
+      /* The bare mark, floating — not the app-icon tile. */
+      .pill-mark {
+        height: 22px;
+        width: auto;
+        animation: ghost-float 2.4s infinite ease-in-out;
+        filter: drop-shadow(0 0 4px rgba(167, 139, 250, 0.5));
+      }
+      @keyframes ghost-float {
+        0%, 100% { transform: translateY(0); opacity: 0.9; }
+        50%      { transform: translateY(-2px); opacity: 1; }
+      }
+      .pill-middle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 0;
+      }
+      .pill-wave {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 2px;
+        height: 30px;
+        overflow: hidden;
+        -webkit-mask-image: linear-gradient(to right, transparent 0, #000 14%, #000 86%, transparent 100%);
+        mask-image: linear-gradient(to right, transparent 0, #000 14%, #000 86%, transparent 100%);
+      }
+      .pill-wave span {
+        width: 3px;
+        min-height: 3px;
+        max-height: 28px;
+        border-radius: 2px;
+        background: linear-gradient(to top, #7c3aed 0%, #a78bfa 55%, #ddd6fe 100%);
+        box-shadow: 0 0 5px #a78bfa, 0 0 10px rgba(124, 58, 237, 0.38);
+        transition: height 55ms ease-out, opacity 100ms ease-out;
+      }
+      /* Shimmering status text — replaces the bars once you stop talking. */
+      .pill-status {
+        font-size: 12px;
+        white-space: nowrap;
+        background: linear-gradient(
+          100deg,
+          rgba(196, 181, 253, 0.45) 35%,
+          #ede9fe 48%,
+          #c4b5fd 56%,
+          rgba(196, 181, 253, 0.45) 68%
+        );
+        background-size: 200% 100%;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        animation: pill-shimmer 2.2s linear infinite;
+      }
+      @keyframes pill-shimmer {
+        0%   { background-position: 200% 50%; }
+        100% { background-position: -200% 50%; }
+      }
+      .pill-cancel {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        color: #a78bfa;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .pill-mark { animation: none; }
+        .pill-status { animation: none; background: none; color: #c4b5fd; }
+      }
+      /* The hub of the orbit diagram is the real pill — this only places
+       * it. Chrome comes from .overlay-pill above. */
       .orbit-center {
         position: absolute; left: 50%; top: 50%;
         transform: translate(-50%, -50%);
         z-index: 3;
-        display: inline-flex; align-items: center; gap: 10px;
-        padding: 12px 20px;
-        border-radius: 999px;
-        background: rgba(10, 10, 16, 0.92);
-        border: 1px solid rgba(124, 92, 255, 0.4);
-        color: #fff;
-        box-shadow: 0 0 0 6px rgba(124, 92, 255, 0.08), 0 30px 60px -15px rgba(124, 92, 255, 0.35);
-      }
-      .orbit-center-label {
-        font-size: 14px; font-weight: 600; letter-spacing: -0.005em;
       }
       .orbit-center::before {
         content: ''; position: absolute; inset: -14px;
         border-radius: 999px;
-        border: 1px solid rgba(124, 92, 255, 0.25);
+        border: 1px solid rgba(124, 58, 237, 0.28);
         animation: orbit-ring 2.6s ease-out infinite;
         pointer-events: none;
       }
       @keyframes orbit-ring {
         0%   { transform: scale(0.95); opacity: 0.7; }
         100% { transform: scale(1.25); opacity: 0; }
-      }
-      .orbit-wave {
-        display: inline-flex; align-items: center;
-        height: 20px; width: 70px;
-        margin-left: 2px;
-      }
-      .orbit-wave span {
-        display: inline-block;
-        width: 2px;
-        margin: 0 1px;
-        border-radius: 2px;
-        background: linear-gradient(to top, #7c5cff, #f472b6);
-        transition: height 70ms ease-out;
       }
       .orbit-item {
         position: absolute;
@@ -509,24 +589,31 @@
           <div class="reveal" style="--reveal-delay: 180ms">
             <div class="orbit-wrap">
               <svg class="orbit-svg" viewBox="0 0 400 400" preserveAspectRatio="none">
-                <!-- Center at (200,200). Each path terminates near its item's center. -->
+                <!-- Center at (200,200). Each path terminates near its item's
+                     center. The middle pair sits above the hub's band rather
+                     than level with it — the hub is a real 220px pill and the
+                     labels would collide at that width. -->
                 <path d="M 200 200 Q 130 120, 72 76" />
                 <path d="M 200 200 Q 270 120, 328 76" />
-                <path d="M 200 200 Q 110 200, 54 200" />
-                <path d="M 200 200 Q 290 200, 346 200" />
+                <path d="M 200 200 Q 130 176, 72 152" />
+                <path d="M 200 200 Q 270 176, 332 152" />
                 <path d="M 200 200 Q 150 290, 84 330" />
                 <path d="M 200 200 Q 250 290, 316 330" />
               </svg>
-              <div class="orbit-center">
-                <img src="/assets/ghostly-logo.svg" alt="" class="h-5 w-5" />
-                <span class="orbit-center-label">Ghostly</span>
-                <div class="orbit-wave" id="orbit-wave" aria-hidden="true"></div>
+              <div class="overlay-pill orbit-center">
+                <img src="/assets/ghostly-mark.svg" alt="" class="pill-mark" />
+                <div class="pill-middle">
+                  <div class="pill-wave" id="orbit-wave" aria-hidden="true"></div>
+                </div>
+                <span class="pill-cancel" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><g fill="currentColor"><path d="m14.293 8.29297c.3905-.39052 1.0235-.39052 1.414 0s.3905 1.02354 0 1.41406l-5.99998 5.99997c-.39053.3906-1.02354.3906-1.41407 0-.39052-.3905-.39052-1.0235 0-1.414z"/><path d="m8.29295 8.29297c.39053-.39052 1.02354-.39052 1.41407 0l5.99998 6.00003c.3905.3905.3905 1.0235 0 1.414-.3905.3906-1.0235.3906-1.414 0l-6.00005-5.99997c-.39052-.39052-.39052-1.02354 0-1.41406z"/><path d="m20 12c0-4.41828-3.5817-8-8-8-4.41828 0-8 3.58172-8 8 0 4.4183 3.58172 8 8 8 4.4183 0 8-3.5817 8-8zm2 0c0 5.5228-4.4772 10-10 10-5.52285 0-10-4.4772-10-10 0-5.52285 4.47715-10 10-10 5.5228 0 10 4.47715 10 10z" opacity=".4"/></g></svg>
+              </span>
               </div>
               <div class="orbit-items-grid">
                 <div class="orbit-item" style="left:3%; top:8%; --delay:0s"><img src="/assets/apps/substack.png" alt=""/>Newsletter draft</div>
                 <div class="orbit-item" style="right:3%; top:8%; --delay:0.4s"><img src="/assets/apps/instagram.png" alt=""/>Caption idea</div>
-                <div class="orbit-item" style="left:2%; top:46%; --delay:0.8s"><img src="/assets/apps/figma.png" alt=""/>Figma comment</div>
-                <div class="orbit-item" style="right:2%; top:46%; --delay:1.2s"><img src="/assets/apps/canva.png" alt=""/>Canva caption</div>
+                <div class="orbit-item" style="left:2%; top:34%; --delay:0.8s"><img src="/assets/apps/figma.png" alt=""/>Figma comment</div>
+                <div class="orbit-item" style="right:2%; top:34%; --delay:1.2s"><img src="/assets/apps/canva.png" alt=""/>Canva caption</div>
                 <div class="orbit-item" style="left:5%; bottom:8%; --delay:1.6s"><img src="/assets/apps/youtube.png" alt=""/>Video script</div>
                 <div class="orbit-item" style="right:5%; bottom:8%; --delay:2s"><img src="/assets/apps/google-docs.png" alt=""/>Essay draft</div>
               </div>
@@ -655,7 +742,7 @@
     <section class="cta-block">
       <div class="mx-auto max-w-4xl px-6 py-20 md:py-28 text-center">
         <h2 class="text-4xl font-extrabold tracking-tight md:text-6xl">Make more.<br /><span class="font-display text-pink-200">Type less.</span></h2>
-        <p class="mx-auto mt-5 max-w-lg text-lg text-ghost/60">Free forever for 30 min/week. Pro removes the cap — $39, one time.</p>
+        <p class="mx-auto mt-5 max-w-lg text-lg text-ghost/60">Free forever and uncapped. Max adds hosted AI with no API key — $12/month.</p>
         <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
           <a href="/install/" class="btn-primary inline-flex items-center gap-2 rounded-xl px-8 py-4 text-lg font-semibold">
             <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
@@ -766,33 +853,76 @@
         io.observe(blocks[0].parentElement);
       })();
 
-      // Orbit center waveform
-      (function () {
-        const el = document.getElementById('orbit-wave');
-        if (!el) return;
-        const prm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        const BARS = 20;
+      /* Shared level meter for every recorder pill on the site.
+       *
+       * The real overlay gets a `mic-level` array from Rust, smooths it, then
+       * re-orders the values so the loudest sits dead centre and the quietest
+       * at the edges (see RecordingOverlay.tsx). The level stream is
+       * synthesised here, but it runs through the same smoothing filter, the
+       * same peak-in-middle sort, and the same height/opacity/glow curves — so
+       * the motion reads like the product instead of a generic waveform. */
+      window.createPillWave = function (waveEl, pillEl) {
+        const BARS = 14; // matches the overlay
         const bars = [];
         for (let i = 0; i < BARS; i++) {
           const s = document.createElement('span');
           s.style.height = '3px';
-          el.appendChild(s);
+          waveEl.appendChild(s);
           bars.push(s);
         }
-        if (prm) { bars.forEach((b) => b.style.height = '4px'); return; }
-        let energy = 0.75;
-        function tick() {
+
+        const smoothed = new Array(BARS).fill(0);
+        let energy = 0;
+        let active = false;
+
+        function paint(t) {
+          // Stand-in for the mic stream: two detuned sines per bar, jittered.
+          const target = active ? 0.55 + 0.45 * Math.abs(Math.sin(t * 0.0009)) : 0;
+          energy += (target - energy) * 0.08;
           for (let i = 0; i < BARS; i++) {
-            const edge = 1 - Math.abs((i - (BARS - 1) / 2) / ((BARS - 1) / 2));
-            const base = 2;
-            const peak = 14 * energy * (0.4 + 0.6 * edge);
-            const h = base + Math.random() * Math.random() * peak;
-            bars[i].style.height = h.toFixed(1) + 'px';
+            const n = Math.abs(
+              Math.sin(t * 0.0026 + i * 0.68) * 0.62 +
+              Math.sin(t * 0.0061 + i * 1.87) * 0.38
+            );
+            const level = active ? n * energy * (0.6 + Math.random() * 0.4) : 0;
+            smoothed[i] = smoothed[i] * 0.7 + level * 0.3; // the app's filter
           }
-          // slowly breathe the energy so it looks alive
-          energy = 0.5 + Math.abs(Math.sin(Date.now() / 900)) * 0.5;
+
+          // Peak-in-middle: sort ascending, then read outward from centre.
+          const sorted = smoothed.slice().sort((a, b) => a - b);
+          const centre = (BARS - 1) / 2;
+          for (let i = 0; i < BARS; i++) {
+            const rank = BARS - 1 - Math.round(Math.abs(i - centre) * 2);
+            const v = sorted[Math.max(0, Math.min(BARS - 1, rank))];
+            bars[i].style.height = Math.min(28, 3 + Math.pow(v, 0.65) * 25).toFixed(1) + 'px';
+            bars[i].style.opacity = Math.max(0.35, Math.min(1, v * 2)).toFixed(2);
+          }
+
+          // The overlay brightens its own glow with the peak level.
+          if (pillEl) {
+            let peak = 0;
+            for (let i = 0; i < BARS; i++) peak = Math.max(peak, smoothed[i]);
+            const glow = Math.min(1, peak * 1.5);
+            pillEl.style.boxShadow =
+              '0 0 ' + (20 + glow * 18).toFixed(1) + 'px rgba(124, 58, 237, ' +
+              (0.18 + glow * 0.35).toFixed(3) + '), 0 4px 24px rgba(0, 0, 0, 0.5)';
+          }
         }
-        setInterval(tick, 75);
+
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          bars.forEach((b) => { b.style.height = '7px'; b.style.opacity = '0.7'; });
+        } else {
+          requestAnimationFrame(function frame(t) { paint(t); requestAnimationFrame(frame); });
+        }
+
+        return { setActive: function (v) { active = v; } };
+      };
+
+      // Orbit hub: the same meter the overlay draws, always running.
+      (function () {
+        const el = document.getElementById('orbit-wave');
+        if (!el) return;
+        window.createPillWave(el, el.closest('.overlay-pill')).setActive(true);
       })();
 
       // Tone-shift switcher
