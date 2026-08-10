@@ -93,10 +93,11 @@
             {
               "@type": "Offer",
               "name": "Ghostly Max",
-              "description": "Everything in Free plus hosted AI with no API key required. Early access.",
+              "description": "Everything in Free plus hosted AI with no API key required.",
               "price": "12",
               "priceCurrency": "USD",
-              "availability": "https://schema.org/PreOrder",
+              "availability": "https://schema.org/InStock",
+              "url": "https://try-ghostly.com/#pricing",
               "priceSpecification": {
                 "@type": "UnitPriceSpecification",
                 "price": "12",
@@ -166,7 +167,7 @@
               "name": "Is Ghostly free?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Yes, and the free tier is uncapped — unlimited dictation, every Whisper model, per-app prompts, screenshot vision, Meeting Mode, on as many Macs as you own. The AI features run on your own API key. Ghostly Max ($12/month) is the optional paid tier: the same AI features with no API key and no setup, plus Max-only features. Max is in early access."
+                "text": "Yes, and the free tier is uncapped — unlimited dictation, every Whisper model, per-app prompts, screenshot vision, Meeting Mode, on as many Macs as you own. The AI features run on your own API key. Ghostly Max ($12/month, or $108/year) is the optional paid tier: the same AI features with no API key and no setup, plus Max-only features as they ship."
               }
             },
             {
@@ -3028,16 +3029,19 @@
               <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Your voice still never leaves your Mac — only text is sent</span></li>
             </ul>
             <!-- ══════════════════════════════════════════════════════════════════
-                 MAX CTA — currently a waitlist. Do NOT switch to live checkout
-                 until the hosted AI gateway is deployed and serving requests.
-                 To go live, replace the <a> below with:
-                 <a id="buy-max" href="MONTHLY_PAYMENT_LINK" class="mt-auto pt-8 block"><span class="btn-primary inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3 text-base font-semibold">Get Ghostly Max — $12/mo</span></a>
+                 MAX CTA — live checkout. The hosted AI gateway is deployed and
+                 serving; the three roadmap items above keep their "In
+                 development" badges until they actually ship. Do not remove
+                 those badges to make the card look fuller.
                  ══════════════════════════════════════════════════════════════ -->
-            <a id="join-max" href="mailto:hello@try-ghostly.com?subject=Ghostly%20Max%20early%20access&amp;body=Count%20me%20in%20for%20Ghostly%20Max%20early%20access." class="mt-auto pt-8 block"><span class="btn-primary inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3 text-base font-semibold">Join the Max early access list</span></a>
+            <div class="mt-auto pt-8">
+              <a id="buy-max" href="https://buy.stripe.com/8x26oGcuSdAi6oS9DoeME02" class="block"><span class="btn-primary inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3 text-base font-semibold">Get Ghostly Max — $12/mo</span></a>
+              <p class="mt-3 text-center text-xs text-ghost/50">or <a id="buy-max-yearly" href="https://buy.stripe.com/14A3cu3Ym1RA6oS3f0eME03" class="text-violet-300 underline hover:text-violet-200">pay yearly for $108</a> — two months free. Cancel any time.</p>
+            </div>
           </div>
         </div>
 
-        <p class="mt-10 text-center text-sm text-ghost/50">Max is in development — the list gets first access and founder pricing. Free stays free and uncapped, forever.</p>
+        <p class="mt-10 text-center text-sm text-ghost/50">Max is live today: cleanup, voice editing, screenshot vision and meeting summaries with no API key. The three items marked <span class="whitespace-nowrap">in development</span> are on the roadmap and arrive as they ship, at no extra cost. Free stays free and uncapped, forever.</p>
       </div>
     </section>
 
@@ -3091,7 +3095,7 @@
           </details>
           <details class="glass group rounded-xl p-6">
             <summary class="cursor-pointer list-none font-semibold">Is it free?<span class="float-right text-ghost/50 group-open:rotate-180">▾</span></summary>
-            <p class="mt-3 text-sm text-ghost/60">Yes, and the free tier is uncapped — unlimited dictation, every engine, Meeting Mode, Open Mic, per-app prompts, screenshot vision, on as many Macs as you own. The AI features run on an API key you supply. <b class="text-ghost">Ghostly Max</b> ($12/month, or $108/year) is the optional paid tier: the same AI with no key and no setup, plus Max-only features. Max is in early access — <a href="#pricing" class="text-violet-300 underline hover:text-violet-200">join the list</a>.</p>
+            <p class="mt-3 text-sm text-ghost/60">Yes, and the free tier is uncapped — unlimited dictation, every engine, Meeting Mode, Open Mic, per-app prompts, screenshot vision, on as many Macs as you own. The AI features run on an API key you supply. <b class="text-ghost">Ghostly Max</b> ($12/month, or $108/year) is the optional paid tier: the same AI with no key and no setup, plus Max-only features as they ship. <a href="#pricing" class="text-violet-300 underline hover:text-violet-200">See what's included</a>.</p>
           </details>
           <details class="glass group rounded-xl p-6">
             <summary class="cursor-pointer list-none font-semibold">Do I need Max to use the AI features?<span class="float-right text-ghost/50 group-open:rotate-180">▾</span></summary>
