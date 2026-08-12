@@ -64,7 +64,7 @@
           "url": "https://try-ghostly.com/",
           "downloadUrl": "https://downloads.try-ghostly.com/Ghostly-latest.dmg",
           "installUrl": "https://downloads.try-ghostly.com/Ghostly-latest.dmg",
-          "softwareVersion": "0.1.32",
+          "softwareVersion": "0.1.33",
           "fileFormat": "application/x-apple-diskimage",
           "image": "https://try-ghostly.com/assets/og-image.png",
           "description": "Menu-bar dictation for macOS. Press a shortcut, talk, and your words land in the active app. Transcription runs on-device with Whisper — audio never leaves your Mac. Also transcribes your calls live without joining them, and runs hands-free with Open Mic.",
@@ -72,10 +72,10 @@
             "On-device Whisper transcription",
             "Global push-to-talk shortcut",
             "Pastes into the active app",
-            "Meeting Mode — live call transcripts with no bot in the participant list",
-            "\"Where were we?\" — instant catch-up summary of what you missed",
+            "Meeting Mode (Ghostly Max) — live call transcripts with no bot in the participant list",
+            "\"Where were we?\" (Ghostly Max) — instant catch-up summary of what you missed",
             "Open Mic — hands-free dictation with a spoken submit phrase",
-            "Searchable notes and meeting library, stored on-device",
+            "Searchable notes stored on-device",
             "Works offline after first-run model download",
             "Built-in AI cleanup on Apple Intelligence — on-device, no API key required",
             "Optional cloud AI with your own key (OpenAI, Anthropic, Groq, OpenRouter, Ollama)",
@@ -87,7 +87,7 @@
             {
               "@type": "Offer",
               "name": "Ghostly Free",
-              "description": "Unlimited on-device dictation, uncapped and forever. AI cleanup, voice editing and meeting summaries are built in via Apple Intelligence with no API key required, or use your own key for a cloud model.",
+              "description": "Unlimited on-device dictation, uncapped and forever. AI cleanup and voice editing are built in via Apple Intelligence with no API key required, or use your own key for a cloud model.",
               "price": "0",
               "priceCurrency": "USD",
               "availability": "https://schema.org/InStock"
@@ -95,7 +95,7 @@
             {
               "@type": "Offer",
               "name": "Ghostly Max",
-              "description": "Everything in Free plus hosted AI with no API key required.",
+              "description": "Everything in Free, plus Meeting Mode, Ask your transcripts, vocabulary learning and encrypted sync — powered by the latest Anthropic models with no API key required.",
               "price": "12",
               "priceCurrency": "USD",
               "availability": "https://schema.org/InStock",
@@ -169,7 +169,7 @@
               "name": "Is Ghostly free?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Yes, and the free tier is uncapped — unlimited dictation, all 16 transcription models, per-app profiles, custom vocabulary, screenshot capture, Meeting Mode and Open Mic, on as many Macs as you own. The AI features work out of the box on Apple Intelligence, on-device with no API key, and you can point them at your own OpenAI, Anthropic, Groq or Ollama key instead. Ghostly Max ($12/month, or $108/year) is the optional paid tier: a stronger cloud model picked per job with no key to manage, plus Ask your transcripts, vocabulary learning and encrypted sync."
+                "text": "Yes, and the free tier is uncapped — unlimited dictation, all 16 transcription models, per-app profiles, custom vocabulary, screenshot capture and Open Mic, on as many Macs as you own. Cleanup and voice editing work out of the box on Apple Intelligence, on-device with no API key, and you can point them at your own OpenAI, Anthropic, Groq or Ollama key instead. Ghostly Max ($12/month, or $108/year) is the optional paid tier: the latest Anthropic models picked per job with no key to manage, plus Meeting Mode, Ask your transcripts, vocabulary learning and encrypted sync."
               }
             },
             {
@@ -2077,6 +2077,9 @@
             microphone and the call's audio — through a macOS process tap on
             your own machine. No bot, no invite, no screen recording permission.
           </p>
+          <a href="#pricing" class="mt-6 inline-flex items-center gap-2 rounded-full border border-accent/50 bg-accent/15 px-3.5 py-1.5 text-xs font-semibold text-violet-200 hover:bg-accent/25">
+            Part of Ghostly Max — $12/month
+          </a>
         </div>
 
         <div class="mt-16 grid items-start gap-14 md:grid-cols-2">
@@ -2322,7 +2325,7 @@
           <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/15 text-violet-300">
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h3l-.5 8H17M4 6h13v12H4z"/><circle cx="10.5" cy="11" r="2" stroke-width="2"/></svg>
           </div>
-          <h3 class="text-lg font-semibold">Meeting Mode</h3>
+          <h3 class="flex items-center gap-2 text-lg font-semibold">Meeting Mode <span class="rounded-full border border-accent/50 bg-accent/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-violet-200">Max</span></h3>
           <p class="mt-2 text-sm text-ghost/60">Live transcripts of your calls in a floating panel — your mic and the call's audio, on one timeline, with a notepad underneath. Nothing joins the meeting; no screen recording permission needed.</p>
         </div>
 
@@ -2507,7 +2510,7 @@
             <span class="font-display">Local-native,</span>
             <span class="text-ghost"> not cloud-first.</span>
           </h2>
-          <p class="mt-4 text-lg text-ghost/60">Most AI dictation tools ship your audio to a server and require a subscription to work at all. Ghostly does neither — transcription runs on your Mac, and every feature works without paying us a cent if you bring your own API key.</p>
+          <p class="mt-4 text-lg text-ghost/60">Most AI dictation tools ship your audio to a server and require a subscription to work at all. Ghostly does neither — transcription runs on your Mac, and dictation works uncapped without paying us a cent — with the AI included, or on your own API key.</p>
         </div>
 
         <p class="mt-10 text-center text-xs text-ghost/40 md:hidden">Scroll horizontally to compare →</p>
@@ -2571,7 +2574,7 @@
                 </tr>
                 <tr>
                   <td class="compare-label">Live meeting transcription, no bot in the call</td>
-                  <td class="compare-col-ghostly compare-yes">Yes — on-device</td>
+                  <td class="compare-col-ghostly compare-yes">Yes — on Max</td>
                   <td class="compare-no">No</td>
                   <td class="compare-no">No</td>
                   <td class="compare-no">No</td>
@@ -2603,7 +2606,7 @@
                 </tr>
                 <tr class="compare-price-row">
                   <td class="compare-label">Free tier</td>
-                  <td class="compare-col-ghostly compare-price"><span class="compare-price-value">Unlimited</span><span class="compare-price-sub">every feature, AI included</span></td>
+                  <td class="compare-col-ghostly compare-price"><span class="compare-price-value">Unlimited</span><span class="compare-price-sub">uncapped dictation, AI included</span></td>
                   <td class="compare-price"><span class="compare-price-value">2k words / wk</span><span class="compare-price-sub">capped</span></td>
                   <td class="compare-price"><span class="compare-price-value">2k words / wk</span><span class="compare-price-sub">capped</span></td>
                   <td class="compare-price"><span class="compare-price-value">40 min trial</span><span class="compare-price-sub">one-time</span></td>
@@ -2986,13 +2989,13 @@
         <div class="text-center">
           <span class="eyebrow" style="color: #c9bfff">Pricing</span>
           <h2 class="mt-4 text-4xl font-bold tracking-tight md:text-5xl">Free, uncapped. Max, optional.</h2>
-          <p class="mx-auto mt-4 max-w-2xl text-lg text-ghost/60">Unlimited dictation on every Mac you own, every feature unlocked, and the AI works out of the box on Apple Intelligence &mdash; no key, no account, nothing to configure. Max is for people who&rsquo;d rather have a stronger cloud model do it.</p>
+          <p class="mx-auto mt-4 max-w-2xl text-lg text-ghost/60">Unlimited dictation on every Mac you own, and the AI works out of the box on Apple Intelligence &mdash; no key, no account, nothing to configure. Max adds Meeting Mode and hands the AI to the latest Anthropic models, with nothing to set up.</p>
         </div>
 
         <div class="mt-14 grid items-stretch gap-6 md:grid-cols-2">
           <!-- Free -->
           <div class="glass relative flex flex-col rounded-2xl p-8">
-            <span class="absolute -top-3 left-6 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold text-ghost">Most complete free tier on the Mac</span>
+            <span class="absolute -top-3 left-6 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold text-ghost">Uncapped free tier — no word count</span>
             <div class="flex items-center justify-between">
               <h3 class="text-2xl font-bold">Free</h3>
               <span class="text-xs uppercase tracking-wider text-ghost/50">Forever · uncapped</span>
@@ -3001,12 +3004,12 @@
               <span class="text-5xl font-extrabold tracking-tight">$0</span>
               <span class="text-sm text-ghost/50">No card required</span>
             </div>
-            <p class="mt-4 text-sm text-ghost/60">Not a trial, not a teaser, not a word count. The whole app — including the AI — with nothing held back.</p>
+            <p class="mt-4 text-sm text-ghost/60">Not a trial, not a teaser, not a word count. Unlimited dictation — with the AI included, and no key to go and find.</p>
             <ul class="mt-6 space-y-3 text-sm text-ghost/75">
-              <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b class="text-ghost">AI with no API key.</b> Apple Intelligence is built in and runs on the Neural Engine — cleanup, voice editing and meeting summaries, on-device, no account, no network</span></li>
+              <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b class="text-ghost">AI with no API key.</b> Apple Intelligence is built in and runs on the Neural Engine — cleanup and voice editing, on-device, no account, no network</span></li>
               <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b class="text-ghost">Unlimited</b> dictation — no weekly cap, no word count, no trial clock</span></li>
               <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b class="text-ghost">16 transcription models</b>, eight engines — Whisper, Parakeet, Canary, Moonshine, SenseVoice and more</span></li>
-              <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Meeting Mode, Open Mic, per-app profiles, custom vocabulary</span></li>
+              <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Open Mic, per-app profiles, custom vocabulary</span></li>
               <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Screenshot + dictate into any AI chat — no key needed</span></li>
               <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Install on <b class="text-ghost">every Mac you own</b></span></li>
               <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>100% private — audio never leaves your Mac</span></li>
@@ -3026,10 +3029,11 @@
               <span class="text-5xl font-extrabold tracking-tight">$12</span>
               <span class="text-sm text-ghost/60">/ month · or $108 a year</span>
             </div>
-            <p class="mt-4 text-sm text-ghost/60">Everything in Free, with the AI already switched on.</p>
+            <p class="mt-4 text-sm text-ghost/60">Everything in Free, plus the AI already switched on.</p>
             <ul class="mt-6 space-y-3 text-sm text-ghost/80">
-              <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b class="text-ghost">No API key.</b> Cleanup, voice editing and meeting summaries work on first launch</span></li>
-              <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Right model for each job, tuned and updated server-side — no config screen</span></li>
+              <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b class="text-ghost">Nothing to set up.</b> Cleanup, voice editing, meetings and summaries all work on first launch</span></li>
+              <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b class="text-ghost">The latest Anthropic models</b>, picked per job and updated server-side — no config screen</span></li>
+              <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b class="text-ghost">Meeting Mode</b> — live transcripts of both sides of a call, a searchable library, and a wrap-up written for you. No bot joins the call</span></li>
               <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b class="text-ghost">Ask your transcripts</b> — question everything you&rsquo;ve ever dictated</span></li>
               <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b class="text-ghost">Learns your vocabulary</b> from the corrections you make</span></li>
               <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b class="text-ghost">Encrypted sync &amp; restore</b> across your Macs</span></li>
@@ -3049,7 +3053,7 @@
           </div>
         </div>
 
-        <p class="mt-10 text-center text-sm text-ghost/50">Max is live today, all of it: cleanup, voice editing, meeting summaries, Ask your transcripts, vocabulary learning, and encrypted sync — with no API key. Free stays free and uncapped, forever.</p>
+        <p class="mt-10 text-center text-sm text-ghost/50">Max is live today, all of it: cleanup, voice editing, Meeting Mode, Ask your transcripts, vocabulary learning, and encrypted sync — with nothing to set up. Free stays free and uncapped, forever.</p>
       </div>
     </section>
 
@@ -3103,11 +3107,11 @@
           </details>
           <details class="glass group rounded-xl p-6">
             <summary class="cursor-pointer list-none font-semibold">Is it free?<span class="float-right text-ghost/50 group-open:rotate-180">▾</span></summary>
-            <p class="mt-3 text-sm text-ghost/60">Yes, and the free tier is uncapped — unlimited dictation, all 16 transcription models, Meeting Mode, Open Mic, per-app profiles, custom vocabulary, screenshot capture, on as many Macs as you own. The AI features work out of the box on <b class="text-ghost">Apple Intelligence</b>, on-device and with no key, and you can point them at your own OpenAI, Anthropic, Groq or Ollama key instead. <b class="text-ghost">Ghostly Max</b> ($12/month, or $108/year) is the optional paid tier: a stronger cloud model chosen per job with no key to manage, plus Ask, vocabulary learning and encrypted sync. <a href="#pricing" class="text-violet-300 underline hover:text-violet-200">See what's included</a>.</p>
+            <p class="mt-3 text-sm text-ghost/60">Yes, and the free tier is uncapped — unlimited dictation, all 16 transcription models, Open Mic, per-app profiles, custom vocabulary, screenshot capture, on as many Macs as you own. Cleanup and voice editing work out of the box on <b class="text-ghost">Apple Intelligence</b>, on-device and with no key, and you can point them at your own OpenAI, Anthropic, Groq or Ollama key instead. <b class="text-ghost">Ghostly Max</b> ($12/month, or $108/year) is the optional paid tier: the latest Anthropic models picked per job with no key to manage, plus <b class="text-ghost">Meeting Mode</b>, Ask, vocabulary learning and encrypted sync. <a href="#pricing" class="text-violet-300 underline hover:text-violet-200">See what's included</a>.</p>
           </details>
           <details class="glass group rounded-xl p-6">
             <summary class="cursor-pointer list-none font-semibold">Do I need Max to use the AI features?<span class="float-right text-ghost/50 group-open:rotate-180">▾</span></summary>
-            <p class="mt-3 text-sm text-ghost/60">No. Cleanup, voice editing and meeting summaries all work on the free tier, and on Apple Silicon they need no key and no network at all — <b class="text-ghost">Apple Intelligence is built in</b> and runs on the Neural Engine. If you would rather use a cloud model, bring a key from Anthropic, OpenAI, Groq or OpenRouter, or point it at Ollama. Max is for people who want a stronger model picked per job without holding a key, and it adds Ask, vocabulary learning and encrypted sync, which need a server to exist.</p>
+            <p class="mt-3 text-sm text-ghost/60">Not for dictation. Cleanup and voice editing both work on the free tier, and on Apple Silicon they need no key and no network at all — <b class="text-ghost">Apple Intelligence is built in</b> and runs on the Neural Engine. If you would rather use a cloud model, bring a key from Anthropic, OpenAI, Groq or OpenRouter, or point it at Ollama. <b class="text-ghost">Meeting Mode is part of Max</b>, along with Ask, vocabulary learning and encrypted sync.</p>
           </details>
 
           <details class="glass group rounded-xl p-6">
