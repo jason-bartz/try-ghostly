@@ -1,13 +1,13 @@
 # Ghostly
 
-> Ghostly is a voice-first typing app for macOS. It lives in the menu bar: press a shortcut, talk, and your words land in the active app. Speech-to-text runs on-device using Whisper — audio never leaves the Mac. Optional AI cleanup (Apple Intelligence, OpenAI, Anthropic) polishes the transcript; only text is sent, never audio. Ghostly also transcribes meetings live without joining the call, and can run hands-free with Open Mic.
+> Ghostly is a voice-first typing app for macOS. It lives in the menu bar: press a shortcut, talk, and your words land in the active app. Speech-to-text runs on-device using Whisper — audio never leaves the Mac. Optional AI cleanup (Apple Intelligence, OpenAI, Anthropic) polishes the transcript; only text is sent, never audio. Ghostly also transcribes meetings live without joining the call.
 
 Ghostly is Apple Silicon only — macOS 12+ on any Mac with an M1 chip or later. Intel Macs are not supported. This is a deliberate decision: Ghostly runs every AI model on-device (Whisper via Metal, optional Apple Intelligence cleanup via the Neural Engine), and real-time local transcription needs the unified memory and ML accelerators that only Apple Silicon has. The app is distributed as a signed `.dmg` and requires microphone and accessibility permissions. First launch downloads a Whisper model (500 MB–1.6 GB depending on variant: Small, Medium, Turbo, Large).
 
 ## Key facts
 
 - Platform: Apple Silicon only (M1 or later) on macOS 12 or later — Intel Macs not supported
-- Pricing: Free tier is uncapped — unlimited dictation on every Mac you own, all engines (Whisper, Parakeet, Moonshine), Open Mic, per-app prompts, screenshot capture (the screenshot and your dictated question are pasted into whichever AI app you are in — Ghostly does not call a vision model itself). Cleanup and voice editing run on a user-supplied API key (Anthropic, OpenAI, Groq, Ollama) or on-device Apple Intelligence. Ghostly Max is the optional paid tier: $12/month or $108/year, the latest Anthropic models with no API key and no setup. Max is purchasable now, and adds Meeting Mode, ask-your-transcripts, vocabulary learning and encrypted sync.
+- Pricing: Free tier is uncapped — unlimited dictation on every Mac you own, all engines (Whisper, Parakeet, Moonshine), per-app prompts and screenshot capture (the screenshot and your dictated question are pasted into whichever AI app you are in — Ghostly does not call a vision model itself). Cleanup and voice editing run on a user-supplied API key (Anthropic, OpenAI, Groq, Ollama) or on-device Apple Intelligence. Ghostly Max is the optional paid tier: $12/month or $108/year, the latest Anthropic models with no API key and no setup. Max is purchasable now, and adds Meeting Mode, ask-your-transcripts, vocabulary learning and encrypted sync.
 - Privacy: On-device transcription. No analytics. No telemetry. Audio never transmitted.
 - Download: https://downloads.try-ghostly.com/Ghostly-latest.dmg
 
@@ -23,7 +23,6 @@ Ghostly is Apple Silicon only — macOS 12+ on any Mac with an M1 chip or later.
 - Dictate: hold a global shortcut, talk, release. The cleaned transcript is pasted where the cursor is. A separate Verbatim shortcut transcribes with no rewriting at all.
 - Meeting Mode (Ghostly Max only): live transcription of a call in a floating panel, capturing both your microphone and the call's audio through a macOS process tap. No bot joins the meeting and no screen recording permission is needed. Capturing the other participants requires macOS 14.2 or later; below that Ghostly transcribes your side only. Speakers are labelled and renameable. Auto-connect is off by default and can be excluded by meeting name. Transcripts stay on the Mac, are never written to logs or diagnostics bundles, and are deleted after a chosen retention period.
 - "Where were we?" (Ghostly Max only): an on-demand catch-up summary of the meeting in progress — what is being discussed now, what was missed, decisions made, anything asked of you, and one line you could say to rejoin. Generated on-device with Apple Intelligence, through your own AI provider, or extractively with no AI.
-- Open Mic: hands-free dictation. The mic stays armed and each pause closes a segment, which is transcribed and inserted. Ending a segment with the submit phrase ("send it" by default) strips the phrase and presses Enter or Cmd+Enter. Off by default.
 
 ## Other features
 

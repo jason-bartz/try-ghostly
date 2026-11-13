@@ -6,9 +6,9 @@
     <title>Ghostly — Your AI ghostwriter for macOS | Private, on-device dictation</title>
     <meta
       name="description"
-      content="Ghostly is your AI ghostwriter for macOS. Speak, and polished text lands wherever your cursor is — punctuated, formatted, and shaped to the app you're writing in. Live meeting transcripts, hands-free Open Mic, and a &quot;Where were we?&quot; catch-up — all on-device."
+      content="Ghostly is your AI ghostwriter for macOS. Speak, and polished text lands wherever your cursor is — punctuated, formatted, and shaped to the app you're writing in. Live meeting transcripts, searchable notes, and a &quot;Where were we?&quot; catch-up — all on-device."
     />
-    <meta name="keywords" content="AI ghostwriter, macOS dictation, voice typing, speech to text Mac, on-device transcription, meeting transcription without a bot, live meeting transcript Mac, hands-free dictation, dictate to Claude Code, voice for AI agents, Cursor dictation, menu bar dictation, push to talk, Apple Silicon, privacy-first transcription" />
+    <meta name="keywords" content="AI ghostwriter, macOS dictation, voice typing, speech to text Mac, on-device transcription, meeting transcription without a bot, live meeting transcript Mac, dictate to Claude Code, voice for AI agents, Cursor dictation, menu bar dictation, push to talk, Apple Silicon, privacy-first transcription" />
     <meta name="author" content="Jason Bartz" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <link rel="canonical" href="https://try-ghostly.com/" />
@@ -67,14 +67,13 @@
           "softwareVersion": "0.1.33",
           "fileFormat": "application/x-apple-diskimage",
           "image": "https://try-ghostly.com/assets/og-image.png",
-          "description": "Menu-bar dictation for macOS. Press a shortcut, talk, and your words land in the active app. Transcription runs on-device with Whisper — audio never leaves your Mac. Also transcribes your calls live without joining them, and runs hands-free with Open Mic.",
+          "description": "Menu-bar dictation for macOS. Press a shortcut, talk, and your words land in the active app. Transcription runs on-device with Whisper — audio never leaves your Mac. Also transcribes your calls live without joining them.",
           "featureList": [
             "On-device Whisper transcription",
             "Global push-to-talk shortcut",
             "Pastes into the active app",
             "Meeting Mode (Ghostly Max) — live call transcripts with no bot in the participant list",
             "\"Where were we?\" (Ghostly Max) — instant catch-up summary of what you missed",
-            "Open Mic — hands-free dictation with a spoken submit phrase",
             "Searchable notes stored on-device",
             "Works offline after first-run model download",
             "Built-in AI cleanup on Apple Intelligence — on-device, no API key required",
@@ -158,18 +157,10 @@
             },
             {
               "@type": "Question",
-              "name": "What is Open Mic?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "A hands-free mode. Instead of holding a shortcut per sentence, you leave the mic open and Ghostly transcribes each utterance when you pause. End a segment with your submit phrase — \"send it\" by default — and Ghostly strips the phrase and presses Enter for you. It's off by default, and the mic stays open only while you have it armed."
-              }
-            },
-            {
-              "@type": "Question",
               "name": "Is Ghostly free?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Yes, and the free tier is uncapped — unlimited dictation, all 16 transcription models, per-app profiles, custom vocabulary, screenshot capture and Open Mic, on as many Macs as you own. Cleanup and voice editing work out of the box on Apple Intelligence, on-device with no API key, and you can point them at your own OpenAI, Anthropic, Groq or Ollama key instead. Ghostly Max ($12/month, or $108/year) is the optional paid tier: the latest Anthropic models picked per job with no key to manage, plus Meeting Mode, Ask your transcripts, vocabulary learning and encrypted sync."
+                "text": "Yes, and the free tier is uncapped — unlimited dictation, all 16 transcription models, per-app profiles, custom vocabulary and screenshot capture, on as many Macs as you own. Cleanup and voice editing work out of the box on Apple Intelligence, on-device with no API key, and you can point them at your own OpenAI, Anthropic, Groq or Ollama key instead. Ghostly Max ($12/month, or $108/year) is the optional paid tier: the latest Anthropic models picked per job with no key to manage, plus Meeting Mode, Ask your transcripts, vocabulary learning and encrypted sync."
               }
             },
             {
@@ -1095,7 +1086,7 @@
       .win-title span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
       /* ═══════════════════════════════════════════════════════════════════
-         Hero stage — three modes, cross-faded on a loop
+         Hero stage — two modes, cross-faded on a loop
          ═══════════════════════════════════════════════════════════════ */
       .mode-tabs {
         display: flex;
@@ -1121,7 +1112,7 @@
         transition: color 220ms ease, border-color 220ms ease, background 220ms ease;
       }
       .mode-tab svg { width: 13px; height: 13px; opacity: 0.75; }
-      /* Keep all three on one row on a phone — a wrapped tab strip reads as
+      /* Keep both tabs on one row on a phone — a wrapped tab strip reads as
          a layout accident rather than a control. */
       @media (max-width: 420px) {
         .mode-tabs { gap: 4px; }
@@ -1269,64 +1260,6 @@
       }
       .catchup-val { color: rgba(240, 238, 255, 0.9); }
       .catchup-val em { color: #ddd6fe; font-style: normal; font-weight: 500; }
-
-      /* — Scene 3: Open Mic — */
-      .om-status {
-        display: inline-flex;
-        align-items: center;
-        gap: 7px;
-        padding: 4px 11px;
-        border-radius: 999px;
-        border: 1px solid rgba(52, 211, 153, 0.3);
-        background: rgba(52, 211, 153, 0.1);
-        font-size: 11px;
-        font-weight: 600;
-        letter-spacing: 0.01em;
-        color: #6ee7b7;
-      }
-      .om-seg {
-        display: flex;
-        align-items: flex-start;
-        gap: 9px;
-        padding: 7px 0;
-        opacity: 0;
-        transform: translateY(6px);
-        transition: opacity 300ms ease, transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
-      }
-      .om-seg.in { opacity: 1; transform: none; }
-      .om-tick {
-        flex-shrink: 0;
-        width: 16px; height: 16px;
-        margin-top: 2px;
-        border-radius: 50%;
-        background: rgba(52, 211, 153, 0.16);
-        color: #6ee7b7;
-        display: inline-flex; align-items: center; justify-content: center;
-      }
-      .om-tick svg { width: 9px; height: 9px; }
-      .om-seg-text { font-size: 13.5px; line-height: 1.55; color: rgba(232, 233, 239, 0.85); }
-      .om-phrase {
-        color: #fcd34d;
-        text-decoration: line-through;
-        text-decoration-color: rgba(252, 211, 77, 0.5);
-      }
-      .om-key {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        margin-left: 8px;
-        padding: 1px 7px;
-        border-radius: 5px;
-        border: 1px solid rgba(124, 92, 255, 0.35);
-        background: rgba(124, 92, 255, 0.14);
-        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-        font-size: 10px;
-        color: #c9bfff;
-        opacity: 0;
-        transform: scale(0.9);
-        transition: opacity 200ms ease, transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
-      }
-      .om-key.in { opacity: 1; transform: none; }
 
       /* ═══════════════════════════════════════════════════════════════════
          "In the wild" reel — horizontally scrolling, auto-advancing scenes
@@ -1623,8 +1556,8 @@
           </h1>
           <p class="mx-auto mt-7 max-w-xl text-lg leading-relaxed text-ghost/60 md:text-xl">
             Talk, and polished text lands wherever your cursor is. Ghostly also
-            sits in on your calls without joining them, and will run hands-free
-            when you'd rather not touch a key at all.
+            sits in on your calls without joining them, and catches you up the
+            moment your attention drifts.
           </p>
           <div class="mt-8 flex flex-wrap items-center justify-center gap-3 md:mt-10">
             <a href="/install/" class="btn-primary inline-flex items-center gap-2 rounded-xl px-6 py-3 text-base font-semibold">
@@ -1636,10 +1569,10 @@
 
         <!-- ═══════════════════════════════════════════════════════════════
              Hero stage.
-             Three modes on a loop, because Ghostly is no longer one thing:
-             press-and-talk dictation, live meeting capture, and hands-free
-             Open Mic. Every scene lives in the same grid cell, so the stage
-             is as tall as the tallest one and never jumps mid-cycle.
+             Two modes on a loop, because Ghostly is no longer one thing:
+             press-and-talk dictation and live meeting capture. Both scenes
+             live in the same grid cell, so the stage is as tall as the
+             taller one and never jumps mid-cycle.
              ════════════════════════════════════════════════════════════ -->
         <div class="relative mx-auto mt-12 max-w-3xl md:mt-16" id="hero-stage-root">
           <div class="mode-tabs" role="tablist" aria-label="Ghostly modes">
@@ -1651,11 +1584,6 @@
             <button class="mode-tab" role="tab" data-mode="1" aria-selected="false">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h3l-.5 8H17M4 6h13v12H4z"/><circle cx="10.5" cy="11" r="2"/></svg>
               Meeting Mode
-              <span class="mode-progress"></span>
-            </button>
-            <button class="mode-tab" role="tab" data-mode="2" aria-selected="false">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h2m3 0h2m3 0h2m3 0h3"/><path d="M6.5 8v8M11 6v12M15.5 9v6"/></svg>
-              Open Mic
               <span class="mode-progress"></span>
             </button>
           </div>
@@ -1731,33 +1659,6 @@
                     <div class="catchup-row"><span class="catchup-key">Asked of you</span><span class="catchup-val">Confirm whether design can have the invoice mocks by Friday.</span></div>
                     <div class="catchup-row"><span class="catchup-key">Say next</span><span class="catchup-val"><em>"Friday works for the mocks — I'll have design send them over before standup."</em></span></div>
                   </div>
-                </div>
-              </div>
-            </section>
-
-            <!-- ── Scene 3 · Open Mic ────────────────────────────────── -->
-            <section class="mode-scene" data-scene="2" aria-label="Open Mic">
-              <div class="win">
-                <div class="win-bar">
-                  <span class="win-dot bg-red-400/70"></span>
-                  <span class="win-dot bg-yellow-400/70"></span>
-                  <span class="win-dot bg-green-400/70"></span>
-                  <span class="win-title"><img src="assets/apps/claude.png" alt="" /><span>Claude — ~/acme/billing</span></span>
-                  <span class="ml-auto om-status" id="om-status">
-                    <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span> Open — listening
-                  </span>
-                </div>
-                <div class="scene-body">
-                  <p class="text-[11.5px] leading-relaxed text-ghost/40">
-                    No key held, no shortcut per sentence. Every pause closes a segment
-                    and sends it. Your submit phrase presses the key.
-                  </p>
-                  <div class="mt-3" id="om-segs"></div>
-                </div>
-                <div class="mt-auto flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-white/[0.06] bg-black/25 px-[18px] py-3 text-[11px] text-ghost/35 md:px-[22px]">
-                  <span class="inline-flex items-center gap-1.5"><span class="h-1 w-1 rounded-full bg-emerald-400/70"></span>Silence closes a segment after 700&nbsp;ms</span>
-                  <span class="inline-flex items-center gap-1.5"><span class="h-1 w-1 rounded-full bg-amber-400/70"></span>Submit phrase: <span class="font-mono">"send it"</span></span>
-                  <span class="ml-auto hidden md:inline">Close the mic with <span class="kbd" style="font-size: 10px">⌘⌥K</span></span>
                 </div>
               </div>
             </section>
@@ -2058,11 +1959,10 @@
     </section>
 
     <!-- =====================================================================
-         Beyond dictation: Meeting Mode and Open Mic.
-         The hero already animates both; this section carries the argument.
-         The visuals here are deliberately different from the hero's — a
-         participant list with no bot in it, and the two settings that make
-         hands-free actually usable.
+         Beyond dictation: Meeting Mode.
+         The hero already animates it; this section carries the argument.
+         The visual here is deliberately different from the hero's — a
+         participant list with no bot in it.
          ================================================================== -->
     <section id="meetings" class="border-y border-white/5 bg-white/[0.02]">
       <div class="mx-auto max-w-6xl px-6 py-20 md:py-28">
@@ -2189,65 +2089,6 @@
       </div>
     </section>
 
-    <section class="mx-auto max-w-6xl px-6 py-20 md:py-28">
-      <div class="grid items-center gap-14 md:grid-cols-2">
-        <div class="reveal">
-          <span class="eyebrow" style="color: #fcd34d">Open Mic</span>
-          <h2 class="display mt-4 text-[2.6rem] md:text-[3.4rem]">
-            <span class="font-display">Stop pressing keys</span>
-            <span class="text-ghost"> altogether.</span>
-          </h2>
-          <p class="mt-5 max-w-md text-lg leading-relaxed text-ghost/60">
-            Arm the mic once and it stays open. Every pause closes a segment,
-            transcribes it, and drops it where your cursor is — no shortcut per
-            sentence, no reaching back to the keyboard between thoughts.
-          </p>
-          <p class="mt-4 max-w-md text-lg leading-relaxed text-ghost/60">
-            End a segment with your submit phrase and Ghostly strips the phrase
-            and presses the key for you. Say <em class="text-ghost/85">"send
-            it"</em> and the message is gone.
-          </p>
-          <p class="mt-6 max-w-md text-sm leading-relaxed text-ghost/40">
-            Off by default. An open microphone is a real trade, so it's yours to
-            make — close it with the shortcut or the menu bar whenever you step
-            away.
-          </p>
-        </div>
-
-        <div class="reveal" style="--reveal-delay: 120ms">
-          <div class="glass rounded-2xl p-6">
-            <div class="mb-5 flex items-center justify-between">
-              <span class="text-xs font-semibold uppercase tracking-wider text-ghost/45">Open Mic</span>
-              <span class="om-status"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span> Open — listening</span>
-            </div>
-            <div class="space-y-4">
-              <div class="rounded-xl border border-white/[0.07] bg-black/25 p-4">
-                <div class="flex items-baseline justify-between">
-                  <span class="text-[13px] font-medium text-ghost/80">Silence to end a segment</span>
-                  <span class="font-mono text-[13px] text-violet-200">700 ms</span>
-                </div>
-                <p class="mt-1.5 text-[12.5px] leading-relaxed text-ghost/45">Shorter is snappier; longer keeps a thought in one piece.</p>
-              </div>
-              <div class="rounded-xl border border-white/[0.07] bg-black/25 p-4">
-                <div class="flex items-baseline justify-between">
-                  <span class="text-[13px] font-medium text-ghost/80">Submit phrase</span>
-                  <span class="font-mono text-[13px] text-violet-200">"send it"</span>
-                </div>
-                <p class="mt-1.5 text-[12.5px] leading-relaxed text-ghost/45">Stripped from the text, then <span class="kbd" style="font-size: 10px">⏎</span> or <span class="kbd" style="font-size: 10px">⌘⏎</span> is pressed.</p>
-              </div>
-              <div class="rounded-xl border border-white/[0.07] bg-black/25 p-4">
-                <div class="flex items-baseline justify-between">
-                  <span class="text-[13px] font-medium text-ghost/80">Minimum segment</span>
-                  <span class="font-mono text-[13px] text-violet-200">300 ms</span>
-                </div>
-                <p class="mt-1.5 text-[12.5px] leading-relaxed text-ghost/45">Coughs, clicks and chair creaks get dropped as noise.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- Notes / timeline + appearance -->
     <section class="mx-auto max-w-6xl px-6 py-20 md:py-28">
       <div class="mx-auto max-w-2xl text-center reveal">
@@ -2339,10 +2180,10 @@
 
         <div class="feature-card glass rounded-2xl p-6">
           <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/15 text-violet-300">
-            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6.5 8v8M11 5v14M15.5 9v6M20 11v2M2 11v2"/></svg>
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M11 18a7 7 0 100-14 7 7 0 000 14z"/></svg>
           </div>
-          <h3 class="text-lg font-semibold">Open Mic</h3>
-          <p class="mt-2 text-sm text-ghost/60">Hands-free dictation. Leave the mic armed and every pause closes a segment. Finish with <em>"send it"</em> and Ghostly strips the phrase and presses <span class="kbd">⏎</span>.</p>
+          <h3 class="flex items-center gap-2 text-lg font-semibold">Ask your transcripts <span class="rounded-full border border-accent/50 bg-accent/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-violet-200">Max</span></h3>
+          <p class="mt-2 text-sm text-ghost/60">Question everything you've dictated or recorded — <em>"what did we decide about the invoice mocks?"</em> — and open the note or meeting behind every citation. Only the matching passages are sent, never your whole history.</p>
         </div>
 
         <div class="feature-card glass rounded-2xl p-6">
@@ -2579,14 +2420,6 @@
                   <td class="compare-no">No</td>
                   <td class="compare-no">No</td>
                   <td class="compare-no">No</td>
-                </tr>
-                <tr>
-                  <td class="compare-label">Hands-free mode (no key per sentence)</td>
-                  <td class="compare-col-ghostly compare-yes">Yes — Open Mic</td>
-                  <td class="compare-no">No</td>
-                  <td class="compare-no">No</td>
-                  <td class="compare-no">No</td>
-                  <td class="compare-meh">Until it times out</td>
                 </tr>
                 <tr>
                   <td class="compare-label">Screenshot + dictate into any AI chat</td>
@@ -3009,7 +2842,7 @@
               <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b class="text-ghost">AI with no API key.</b> Apple Intelligence is built in and runs on the Neural Engine — cleanup and voice editing, on-device, no account, no network</span></li>
               <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b class="text-ghost">Unlimited</b> dictation — no weekly cap, no word count, no trial clock</span></li>
               <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b class="text-ghost">16 transcription models</b>, eight engines — Whisper, Parakeet, Canary, Moonshine, SenseVoice and more</span></li>
-              <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Open Mic, per-app profiles, custom vocabulary</span></li>
+              <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Per-app profiles and custom vocabulary</span></li>
               <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Screenshot + dictate into any AI chat — no key needed</span></li>
               <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Install on <b class="text-ghost">every Mac you own</b></span></li>
               <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>100% private — audio never leaves your Mac</span></li>
@@ -3107,7 +2940,7 @@
           </details>
           <details class="glass group rounded-xl p-6">
             <summary class="cursor-pointer list-none font-semibold">Is it free?<span class="float-right text-ghost/50 group-open:rotate-180">▾</span></summary>
-            <p class="mt-3 text-sm text-ghost/60">Yes, and the free tier is uncapped — unlimited dictation, all 16 transcription models, Open Mic, per-app profiles, custom vocabulary, screenshot capture, on as many Macs as you own. Cleanup and voice editing work out of the box on <b class="text-ghost">Apple Intelligence</b>, on-device and with no key, and you can point them at your own OpenAI, Anthropic, Groq or Ollama key instead. <b class="text-ghost">Ghostly Max</b> ($12/month, or $108/year) is the optional paid tier: the latest Anthropic models picked per job with no key to manage, plus <b class="text-ghost">Meeting Mode</b>, Ask, vocabulary learning and encrypted sync. <a href="#pricing" class="text-violet-300 underline hover:text-violet-200">See what's included</a>.</p>
+            <p class="mt-3 text-sm text-ghost/60">Yes, and the free tier is uncapped — unlimited dictation, all 16 transcription models, per-app profiles, custom vocabulary and screenshot capture, on as many Macs as you own. Cleanup and voice editing work out of the box on <b class="text-ghost">Apple Intelligence</b>, on-device and with no key, and you can point them at your own OpenAI, Anthropic, Groq or Ollama key instead. <b class="text-ghost">Ghostly Max</b> ($12/month, or $108/year) is the optional paid tier: the latest Anthropic models picked per job with no key to manage, plus <b class="text-ghost">Meeting Mode</b>, Ask, vocabulary learning and encrypted sync. <a href="#pricing" class="text-violet-300 underline hover:text-violet-200">See what's included</a>.</p>
           </details>
           <details class="glass group rounded-xl p-6">
             <summary class="cursor-pointer list-none font-semibold">Do I need Max to use the AI features?<span class="float-right text-ghost/50 group-open:rotate-180">▾</span></summary>
@@ -3126,10 +2959,6 @@
           <details class="glass group rounded-xl p-6">
             <summary class="cursor-pointer list-none font-semibold">What is &ldquo;Where were we?&rdquo;<span class="float-right text-ghost/50 group-open:rotate-180">▾</span></summary>
             <p class="mt-3 text-sm text-ghost/60">A shortcut that summarises the meeting you&rsquo;re in: what&rsquo;s being discussed right now, what you missed, the decisions made, anything asked of you, and one line you could say to rejoin the conversation. Summaries can be generated on-device with Apple Intelligence, through your own AI provider, or extractively with no AI at all.</p>
-          </details>
-          <details class="glass group rounded-xl p-6">
-            <summary class="cursor-pointer list-none font-semibold">What is Open Mic?<span class="float-right text-ghost/50 group-open:rotate-180">▾</span></summary>
-            <p class="mt-3 text-sm text-ghost/60">A hands-free mode. Instead of holding a shortcut per sentence, you leave the mic open and Ghostly transcribes each utterance when you pause. End a segment with your submit phrase — &ldquo;send it&rdquo; by default — and Ghostly strips the phrase and presses Enter for you. It&rsquo;s off by default, and the mic stays open only while you have it armed.</p>
           </details>
 
           <details class="glass group rounded-xl p-6">
@@ -3550,7 +3379,7 @@
     </script>
     <script>
       /* ═══════════════════════════════════════════════════════════════════
-         Hero stage — Dictate / Meeting Mode / Open Mic, on a loop.
+         Hero stage — Dictate / Meeting Mode, on a loop.
 
          Each scene owns its own async sequence and the shared overlay pill.
          The pill is deliberately absent during the meeting scene: the real
@@ -3704,72 +3533,10 @@
           await hold(ctx, 4400);
         }
 
-        // ── Scene 3 · Open Mic ───────────────────────────────────────────
-        const omSegs   = document.getElementById('om-segs');
-        const omStatus = document.getElementById('om-status');
-
-        const SEGMENTS = [
-          { text: "Pull the last thirty days of failed payments and group them by decline code." },
-          { text: "Ignore anything from the sandbox account." },
-          { text: "Then draft it as a table I can paste into Notion. ", phrase: 'Send it.' },
-        ];
-
-        function segRow() {
-          const row = document.createElement('div');
-          row.className = 'om-seg';
-          row.innerHTML =
-            '<span class="om-tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>' +
-            '<span class="om-seg-text"></span>';
-          omSegs.appendChild(row);
-          return { row, txt: row.querySelector('.om-seg-text') };
-        }
-
-        async function playOpenMic(ctx) {
-          omSegs.innerHTML = '';
-          omStatus.innerHTML = '<span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span> Open — listening';
-          pillMeter();
-          wave.setActive(true);
-          showPill();
-          if (!(await ctx.wait(500))) return;
-
-          for (const seg of SEGMENTS) {
-            const { row, txt } = segRow();
-            requestAnimationFrame(() => row.classList.add('in'));
-            txt.classList.add('tick');
-            wave.setActive(true);
-            if (!(await type(txt, seg.text, ctx, 25))) return;
-            txt.classList.remove('tick');
-
-            if (seg.phrase) {
-              // The submit phrase is struck through, stripped, and the key
-              // press it stands in for is shown landing.
-              const strike = document.createElement('span');
-              strike.className = 'om-phrase';
-              txt.appendChild(strike);
-              if (!(await type(strike, seg.phrase, ctx, 46))) return;
-              wave.setActive(false);
-              if (!(await ctx.wait(420))) return;
-              const key = document.createElement('span');
-              key.className = 'om-key';
-              key.textContent = '⏎  sent';
-              txt.appendChild(key);
-              requestAnimationFrame(() => key.classList.add('in'));
-              omStatus.innerHTML = '<span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span> Open — listening';
-            } else {
-              // Between utterances the mic stays open but idle.
-              wave.setActive(false);
-              if (!(await hold(ctx, 680))) return;
-            }
-          }
-
-          hidePill();
-          await hold(ctx, 2900);
-        }
-
         // ── Cycle ────────────────────────────────────────────────────────
-        const PLAY = [playDictate, playMeeting, playOpenMic];
+        const PLAY = [playDictate, playMeeting];
         // Roughly how long each scene runs; drives the tab's progress sweep.
-        const SPAN = [12800, 13600, 12600];
+        const SPAN = [12800, 13600];
         let mode = 0;
         let auto = true;
 
@@ -3832,17 +3599,6 @@
           });
           mAlert.classList.add('in');
           mCatchup.classList.add('in');
-          SEGMENTS.forEach((seg) => {
-            const { row, txt } = segRow();
-            txt.textContent = seg.text;
-            row.classList.add('in');
-            if (seg.phrase) {
-              const strike = document.createElement('span');
-              strike.className = 'om-phrase';
-              strike.textContent = seg.phrase;
-              txt.appendChild(strike);
-            }
-          });
           tabs.forEach((t) => t.addEventListener('click', () => {
             mode = Number(t.dataset.mode);
             paintTabs(mode);
