@@ -688,6 +688,8 @@
         animation: aeStrike 11s cubic-bezier(0.4, 0, 0.2, 1) infinite;
         animation-delay: calc(var(--order, 1) * 0.55s + 0.8s);
       }
+      /* Full-width state, used only to measure the paragraph's tallest height. */
+      .auto-edit.is-measuring .hl { animation: none; max-width: none; padding: 0 2px; opacity: 1; }
       @keyframes aeStrike {
         0%, 1%   { transform: scaleX(0); opacity: 1; }
         5%       { transform: scaleX(1); }
@@ -1100,29 +1102,28 @@
         display: inline-flex;
         align-items: center;
         gap: 7px;
-        padding: 7px 14px;
+        padding: 8px 15px;
         border-radius: 999px;
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        background: rgba(255, 255, 255, 0.03);
+        border: 0;
+        background: rgba(255, 255, 255, 0.04);
         font-size: 12.5px;
         font-weight: 500;
         letter-spacing: -0.005em;
         color: rgba(232, 233, 239, 0.5);
         cursor: pointer;
-        transition: color 220ms ease, border-color 220ms ease, background 220ms ease;
+        transition: color 220ms ease, background 220ms ease;
       }
       .mode-tab svg { width: 13px; height: 13px; opacity: 0.75; }
       /* Keep both tabs on one row on a phone — a wrapped tab strip reads as
          a layout accident rather than a control. */
       @media (max-width: 420px) {
         .mode-tabs { gap: 4px; }
-        .mode-tab { padding: 6px 10px; font-size: 11.5px; gap: 5px; }
+        .mode-tab { padding: 7px 11px; font-size: 11.5px; gap: 5px; }
         .mode-tab svg { display: none; }
       }
       .mode-tab.is-active {
         color: #e8e2ff;
-        border-color: rgba(124, 92, 255, 0.45);
-        background: rgba(124, 92, 255, 0.12);
+        background: rgba(124, 92, 255, 0.2);
       }
       /* Progress sweep — shows how long the current mode has left. */
       .mode-tab .mode-progress {
@@ -1181,10 +1182,9 @@
         display: inline-flex;
         align-items: center;
         gap: 7px;
-        padding: 4px 10px 4px 5px;
+        padding: 5px 11px 5px 6px;
         border-radius: 999px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.07);
+        background: rgba(255, 255, 255, 0.07);
         font-size: 11px;
         color: rgba(232, 233, 239, 0.6);
       }
@@ -1213,8 +1213,7 @@
       .mt-who.you { color: #c4b5fd; }
       .mt-text { font-size: 13.5px; line-height: 1.55; color: rgba(232, 233, 239, 0.82); }
       .mt-line.addressed .mt-text {
-        background: rgba(251, 191, 36, 0.09);
-        box-shadow: 0 0 0 1px rgba(251, 191, 36, 0.22) inset;
+        background: rgba(251, 191, 36, 0.12);
         border-radius: 8px;
         padding: 3px 8px;
         margin: -3px -8px;
@@ -1224,10 +1223,9 @@
         align-items: center;
         gap: 8px;
         margin-top: 10px;
-        padding: 7px 11px;
+        padding: 8px 12px;
         border-radius: 10px;
-        background: rgba(251, 191, 36, 0.1);
-        border: 1px solid rgba(251, 191, 36, 0.28);
+        background: rgba(251, 191, 36, 0.13);
         font-size: 11.5px;
         font-weight: 500;
         color: #fcd34d;
@@ -1239,9 +1237,8 @@
       .catchup {
         margin-top: 12px;
         border-radius: 12px;
-        border: 1px solid rgba(124, 92, 255, 0.3);
-        background: linear-gradient(180deg, rgba(124, 92, 255, 0.11), rgba(124, 92, 255, 0.03));
-        padding: 13px 15px;
+        background: rgba(124, 92, 255, 0.1);
+        padding: 14px 16px;
         opacity: 0;
         transform: translateY(8px);
         transition: opacity 420ms ease, transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -1653,7 +1650,7 @@
                            affordance to show. -->
                       <span class="ml-auto text-[10px] text-ghost/30">panel button, or a shortcut you assign</span>
                     </div>
-                    <div class="catchup-row"><span class="catchup-key">Now</span><span class="catchup-val">Priya is walking through why the Q3 billing migration slipped two weeks.</span></div>
+                    <div class="catchup-row"><span class="catchup-key">Now</span><span class="catchup-val">Lauren is walking through why the Q3 billing migration slipped two weeks.</span></div>
                     <div class="catchup-row"><span class="catchup-key">Missed</span><span class="catchup-val">Dunning is blocked on the invoice schema · ~40 support tickets a week from the old flow.</span></div>
                     <div class="catchup-row"><span class="catchup-key">Decisions</span><span class="catchup-val">Migration moves to the Aug 22 release train; the dunning fix ships ahead of it.</span></div>
                     <div class="catchup-row"><span class="catchup-key">Asked of you</span><span class="catchup-val">Confirm whether design can have the invoice mocks by Friday.</span></div>
@@ -1775,7 +1772,7 @@
                 <span class="win-title"><img src="assets/apps/gmail.png" alt="" /><span>New Message — Gmail</span></span>
               </div>
               <div class="px-4 py-3" style="min-height: 238px">
-                <div class="gm-head"><span class="k">To</span><span class="v">kara.velez@northwind.io</span></div>
+                <div class="gm-head"><span class="k">To</span><span class="v">amy.barnes@northwind.io</span></div>
                 <div class="gm-head"><span class="k">Subject</span><span class="v">Re: MSA redlines — section 4</span></div>
                 <div class="gm-body" data-target="gm-body">&nbsp;</div>
                 <div class="mt-3 flex items-center gap-3">
@@ -1813,7 +1810,7 @@
                 <div class="sl-msg">
                   <img src="assets/demo-maya.png" alt="" class="sl-av" />
                   <div class="min-w-0">
-                    <div class="flex items-baseline gap-2"><span class="sl-name">Priya Raman</span><span class="sl-time">10:47</span></div>
+                    <div class="flex items-baseline gap-2"><span class="sl-name">Lauren Kelly</span><span class="sl-time">10:47</span></div>
                     <p class="sl-text">api p99 just jumped to 4.2s, started ~10 min ago. anyone shipping right now?</p>
                   </div>
                 </div>
@@ -1997,16 +1994,16 @@
                   <span class="text-sm text-ghost/85">You <span class="text-ghost/35">(host)</span></span>
                 </div>
                 <div class="flex items-center gap-3 rounded-lg bg-white/[0.03] px-3 py-2.5">
-                  <span class="avatar" style="width: 28px; height: 28px; border-radius: 7px; font-size: 11px; background: linear-gradient(135deg,#f472b6,#a78bfa)">PR</span>
-                  <span class="text-sm text-ghost/85">Priya Raman</span>
+                  <span class="avatar" style="width: 28px; height: 28px; border-radius: 7px; font-size: 11px; background: linear-gradient(135deg,#f472b6,#a78bfa)">LK</span>
+                  <span class="text-sm text-ghost/85">Lauren Kelly</span>
                 </div>
                 <div class="flex items-center gap-3 rounded-lg bg-white/[0.03] px-3 py-2.5">
-                  <span class="avatar" style="width: 28px; height: 28px; border-radius: 7px; font-size: 11px; background: linear-gradient(135deg,#38bdf8,#34d399)">MO</span>
-                  <span class="text-sm text-ghost/85">Marcus Odell</span>
+                  <span class="avatar" style="width: 28px; height: 28px; border-radius: 7px; font-size: 11px; background: linear-gradient(135deg,#38bdf8,#34d399)">MR</span>
+                  <span class="text-sm text-ghost/85">Mike Russo</span>
                 </div>
                 <div class="flex items-center gap-3 rounded-lg bg-white/[0.03] px-3 py-2.5">
-                  <span class="avatar" style="width: 28px; height: 28px; border-radius: 7px; font-size: 11px; background: linear-gradient(135deg,#fbbf24,#f472b6)">TL</span>
-                  <span class="text-sm text-ghost/85">Tomás Lima</span>
+                  <span class="avatar" style="width: 28px; height: 28px; border-radius: 7px; font-size: 11px; background: linear-gradient(135deg,#fbbf24,#f472b6)">BC</span>
+                  <span class="text-sm text-ghost/85">Brian Cole</span>
                 </div>
                 <!-- The point of the whole graphic: there is no fifth row. -->
                 <div class="flex items-center gap-3 rounded-lg border border-dashed border-white/10 px-3 py-2.5">
@@ -2416,7 +2413,7 @@
                 <tr>
                   <td class="compare-label">Live meeting transcription, no bot in the call</td>
                   <td class="compare-col-ghostly compare-yes">Yes — on Max</td>
-                  <td class="compare-no">No</td>
+                  <td class="compare-yes">Yes — Notetaker</td>
                   <td class="compare-no">No</td>
                   <td class="compare-no">No</td>
                   <td class="compare-no">No</td>
@@ -2440,7 +2437,7 @@
                 <tr class="compare-price-row">
                   <td class="compare-label">Free tier</td>
                   <td class="compare-col-ghostly compare-price"><span class="compare-price-value">Unlimited</span><span class="compare-price-sub">uncapped dictation, AI included</span></td>
-                  <td class="compare-price"><span class="compare-price-value">2k words / wk</span><span class="compare-price-sub">capped</span></td>
+                  <td class="compare-price"><span class="compare-price-value">Limited</span><span class="compare-price-sub">weekly word cap</span></td>
                   <td class="compare-price"><span class="compare-price-value">2k words / wk</span><span class="compare-price-sub">capped</span></td>
                   <td class="compare-price"><span class="compare-price-value">40 min trial</span><span class="compare-price-sub">one-time</span></td>
                   <td class="compare-price"><span class="compare-price-value">Unlimited</span><span class="compare-price-sub">built-in</span></td>
@@ -2448,7 +2445,7 @@
                 <tr class="compare-price-row">
                   <td class="compare-label">Paid plan</td>
                   <td class="compare-col-ghostly compare-price"><span class="compare-price-value compare-price-accent">$12</span><span class="compare-price-sub">/ month · optional</span></td>
-                  <td class="compare-price"><span class="compare-price-value">$15</span><span class="compare-price-sub">/ month · required</span></td>
+                  <td class="compare-price"><span class="compare-price-value">$15</span><span class="compare-price-sub">/ month · unlimited</span></td>
                   <td class="compare-price"><span class="compare-price-value">$15</span><span class="compare-price-sub">/ month · required</span></td>
                   <td class="compare-price"><span class="compare-price-value">$8.49</span><span class="compare-price-sub">/ month · required</span></td>
                   <td class="compare-price"><span class="compare-price-value">Free</span><span class="compare-price-sub">built-in</span></td>
@@ -3044,6 +3041,63 @@
     </footer>
 
     <script>
+      /* Holds a node at the height of the tallest state it will pass through,
+       * so text typing in (or filler words collapsing out) never pushes the
+       * sections below it up and down the page while someone is reading.
+       *
+       * `states` is either a list of strings the node — or `target` inside it,
+       * when the text lives in an inline child — will show, or a function that
+       * returns the node's tallest height itself.
+       * Re-measured whenever the node's width changes and once fonts land. */
+      window.ghostly = window.ghostly || {};
+      window.ghostly.reserve = function (node, states, target) {
+        if (!node) return;
+        const into = target || node;
+        function measure() {
+          node.style.minHeight = '';
+          let tallest = 0;
+          if (typeof states === 'function') {
+            tallest = states(node);
+          } else {
+            const keep = into.innerHTML; // keeps a placeholder or caret span intact
+            const ticking = into.classList.contains('tick');
+            into.classList.add('tick'); // a live caret can force one more wrap
+            states.forEach((s) => {
+              into.textContent = s;
+              tallest = Math.max(tallest, node.offsetHeight);
+            });
+            into.innerHTML = keep;
+            into.classList.toggle('tick', ticking);
+          }
+          // +1 covers the sub-pixel offsetHeight rounds away.
+          node.style.minHeight = tallest + 1 + 'px';
+        }
+        measure();
+        let width = node.clientWidth;
+        new ResizeObserver(() => {
+          if (node.clientWidth !== width) { width = node.clientWidth; measure(); }
+        }).observe(node);
+        if (document.fonts) document.fonts.ready.then(measure);
+      };
+
+      // "Live cleanup" panel: the paragraph keeps the height it has with every
+      // filler word still in place, so the collapse doesn't shorten the page.
+      // Measured on a hidden copy: pausing the real one would restart its
+      // animation out of step with the strike-through and badge.
+      (function () {
+        const p = document.querySelector('.auto-edit');
+        window.ghostly.reserve(p, (node) => {
+          const copy = node.cloneNode(true);
+          copy.classList.add('is-measuring');
+          copy.setAttribute('aria-hidden', 'true');
+          copy.style.cssText = 'position:absolute;top:0;left:0;visibility:hidden;width:' + node.clientWidth + 'px';
+          node.parentNode.appendChild(copy);
+          const h = copy.offsetHeight;
+          copy.remove();
+          return h;
+        });
+      })();
+
       /* Shared level meter for every recorder pill on the site.
        *
        * The real overlay gets a `mic-level` array from Rust, smooths it, then
@@ -3222,6 +3276,10 @@
           "the bug repros on Safari only, check the IntersectionObserver polyfill",
           "log the contract value as twelve thousand ARR in Salesforce"
         ];
+
+        // Size the input for the longest message, so the box (and everything
+        // below it) stays put as messages of different lengths cycle through.
+        window.ghostly.reserve(textEl.parentElement, messages, textEl);
 
         const wave = window.createPillWave(waveEl, waveEl.closest('.overlay-pill'));
         let lastIdx = -1;
@@ -3418,8 +3476,8 @@
           {
             app: 'Gmail · Re: intro',
             icon: 'assets/apps/gmail.png',
-            raw: "um hey Dana, thanks so much for the intro to Priya — uh I'd love to grab like thirty minutes next week, I'm pretty open tuesday and thursday afternoon",
-            clean: "Hi Dana — thanks for the intro to Priya. I'd love to grab 30 minutes next week; I'm fairly open Tuesday and Thursday afternoon.",
+            raw: "um hey Steve, thanks so much for the intro to Rachel — uh I'd love to grab like thirty minutes next week, I'm pretty open tuesday and thursday afternoon",
+            clean: "Hi Steve — thanks for the intro to Rachel. I'd love to grab 30 minutes next week; I'm fairly open Tuesday and Thursday afternoon.",
           },
           {
             app: 'Linear · ENG-482',
@@ -3435,6 +3493,10 @@
           },
         ];
         let dIdx = -1;
+        // Both text blocks hold the height of their longest take, so the
+        // window doesn't grow and shrink as the three dictations rotate.
+        window.ghostly.reserve(dRaw, DICTATIONS.map((d) => d.raw));
+        window.ghostly.reserve(dClean, DICTATIONS.map((d) => d.clean));
 
         async function playDictate(ctx) {
           dIdx = (dIdx + 1) % DICTATIONS.length;
@@ -3486,10 +3548,10 @@
         const mCatchup = document.getElementById('m-catchup');
 
         const MEETING = [
-          { who: 'Priya Raman', text: "…so the invoice schema change is what's actually blocking dunning, not the payment provider." },
+          { who: 'Lauren Kelly', text: "…so the invoice schema change is what's actually blocking dunning, not the payment provider." },
           { who: 'You', you: true, text: "Wait — blocking it entirely, or just the retry emails?" },
-          { who: 'Marcus Odell', text: "Just the retries. And support is still eating about forty tickets a week off the old flow." },
-          { who: 'Priya Raman', addressed: true, text: "Jason — can design get us the invoice mocks by Friday?" },
+          { who: 'Mike Russo', text: "Just the retries. And support is still eating about forty tickets a week off the old flow." },
+          { who: 'Lauren Kelly', addressed: true, text: "Jason — can design get us the invoice mocks by Friday?" },
         ];
 
         function meetingRow(line) {
@@ -3505,22 +3567,40 @@
           return { row, txt };
         }
 
+        // Every line is laid out up front and only fades in on its turn, so
+        // the transcript fills in place instead of growing the window (and
+        // shoving the page below it) one row at a time.
+        const mRows = MEETING.map((line) => {
+          const r = meetingRow(line);
+          if (line.addressed) window.ghostly.reserve(r.txt, [line.text]);
+          else r.txt.textContent = line.text;
+          return r;
+        });
+
         async function playMeeting(ctx) {
-          mLines.innerHTML = '';
+          // Clear last run's lines instantly, not with a fade the returning
+          // scene would show.
+          mRows.forEach(({ row }) => {
+            row.style.transition = 'none';
+            row.classList.remove('in');
+            void row.offsetWidth;
+            row.style.transition = '';
+          });
           mAlert.classList.remove('in');
           mCatchup.classList.remove('in');
           hidePill(); // the app draws a meeting panel here, not the pill
 
-          for (const line of MEETING) {
-            const { row, txt } = meetingRow(line);
+          for (let i = 0; i < MEETING.length; i++) {
+            const line = MEETING[i];
+            const { row, txt } = mRows[i];
             // Earlier lines are already transcribed; the last one arrives live.
             if (line.addressed) {
+              txt.textContent = '';
               row.classList.add('in');
               txt.classList.add('tick');
               if (!(await type(txt, line.text, ctx, 26))) return;
               txt.classList.remove('tick');
             } else {
-              txt.textContent = line.text;
               requestAnimationFrame(() => row.classList.add('in'));
               if (!(await hold(ctx, 950 + line.text.length * 7))) return;
             }
@@ -3592,9 +3672,8 @@
           dClean.textContent = d.clean;
           dApp.textContent = d.app;
           dChipImg.src = d.icon;
-          MEETING.forEach((line) => {
-            const { row, txt } = meetingRow(line);
-            txt.textContent = line.text;
+          mRows.forEach(({ row, txt }, i) => {
+            txt.textContent = MEETING[i].text;
             row.classList.add('in');
           });
           mAlert.classList.add('in');
@@ -3631,6 +3710,49 @@
         const meters = cards.map((c) => window.ghostly.miniMeter(c.querySelector('[data-meter]')));
         const $ = (card, key) => card.querySelector(`[data-target="${key}"]`);
 
+        // What each card hears and writes. Kept up here so every card can be
+        // sized for its finished text before the reel starts moving.
+        const TEXT = {
+          cc: {
+            SPOKEN:
+              "in the checkout flow the retry is firing twice when stripe returns a four oh two — " +
+              "add an idempotency key derived from the payment intent and make sure the retry reuses " +
+              "it instead of minting a new one",
+            TYPED:
+              "In the checkout flow the retry is firing twice when Stripe returns a 402 — add an " +
+              "idempotency key derived from the payment intent and make sure the retry reuses it " +
+              "instead of minting a new one.",
+          },
+          gm: {
+            SPOKEN:
+              "um hey Amy thanks for sending the redlines over — so I went through section four and " +
+              "I think we're basically aligned, the only real thing is the termination notice, thirty " +
+              "days is way too tight for us, can we do sixty, and uh if that works I can get this signed by friday",
+            WRITTEN:
+              "Hi Amy,\n\nThanks for sending the redlines over. I went through Section 4 and I think " +
+              "we're aligned on nearly everything.\n\nThe one open item is the termination notice — 30 " +
+              "days is too tight on our side. Could we move it to 60? If that works, I can get this " +
+              "signed by Friday.\n\nBest,\nJason",
+          },
+          sl: {
+            SPOKEN:
+              "yeah that's me, um i shipped the connection pool change at like ten forty, i'm rolling " +
+              "it back right now, p99 should settle in about five minutes and uh i'll post here when it's green",
+            POSTED:
+              "that's me — shipped the connection pool change at 10:40. rolling back now, p99 should " +
+              "settle in ~5 min. i'll post here when it's green.",
+          },
+          vs: {
+            SPOKEN:
+              "commit this as a fix for the double charge on retry — we reuse the idempotency key now " +
+              "instead of making a new one, and there's a regression test for the four oh two path",
+            COMMIT:
+              "fix(payments): reuse the idempotency key on retry\n\nA 402 from Stripe caused the retry " +
+              "to mint a fresh key, capturing the\ncharge twice. The key is now derived from the payment " +
+              "intent.\n\nAdds a regression test covering the 402 path.",
+          },
+        };
+
         // ── The four scenarios ───────────────────────────────────────────
 
         // 1 · Claude Code. Agent apps get deterministic local cleanup, so the
@@ -3645,14 +3767,7 @@
           rows.forEach((r) => r.classList.remove('in'));
           chip.classList.remove('in');
 
-          const SPOKEN =
-            "in the checkout flow the retry is firing twice when stripe returns a four oh two — " +
-            "add an idempotency key derived from the payment intent and make sure the retry reuses " +
-            "it instead of minting a new one";
-          const TYPED =
-            "In the checkout flow the retry is firing twice when Stripe returns a 402 — add an " +
-            "idempotency key derived from the payment intent and make sure the retry reuses it " +
-            "instead of minting a new one.";
+          const { SPOKEN, TYPED } = TEXT.cc;
 
           meters[0].setActive(true);
           if (!(await ctx.wait(300))) return;
@@ -3684,15 +3799,7 @@
           send.classList.remove('flash');
           chip.classList.remove('in');
 
-          const SPOKEN =
-            "um hey Kara thanks for sending the redlines over — so I went through section four and " +
-            "I think we're basically aligned, the only real thing is the termination notice, thirty " +
-            "days is way too tight for us, can we do sixty, and uh if that works I can get this signed by friday";
-          const WRITTEN =
-            "Hi Kara,\n\nThanks for sending the redlines over. I went through Section 4 and I think " +
-            "we're aligned on nearly everything.\n\nThe one open item is the termination notice — 30 " +
-            "days is too tight on our side. Could we move it to 60? If that works, I can get this " +
-            "signed by Friday.\n\nBest,\nJason";
+          const { SPOKEN, WRITTEN } = TEXT.gm;
 
           meters[1].setActive(true);
           if (!(await ctx.wait(300))) return;
@@ -3727,12 +3834,7 @@
           inputBox.classList.remove('focus');
           chip.classList.remove('in');
 
-          const SPOKEN =
-            "yeah that's me, um i shipped the connection pool change at like ten forty, i'm rolling " +
-            "it back right now, p99 should settle in about five minutes and uh i'll post here when it's green";
-          const POSTED =
-            "that's me — shipped the connection pool change at 10:40. rolling back now, p99 should " +
-            "settle in ~5 min. i'll post here when it's green.";
+          const { SPOKEN, POSTED } = TEXT.sl;
 
           meters[2].setActive(true);
           if (!(await ctx.wait(300))) return;
@@ -3769,13 +3871,7 @@
           btn.classList.remove('flash');
           chip.classList.remove('in');
 
-          const SPOKEN =
-            "commit this as a fix for the double charge on retry — we reuse the idempotency key now " +
-            "instead of making a new one, and there's a regression test for the four oh two path";
-          const COMMIT =
-            "fix(payments): reuse the idempotency key on retry\n\nA 402 from Stripe caused the retry " +
-            "to mint a fresh key, capturing the\ncharge twice. The key is now derived from the payment " +
-            "intent.\n\nAdds a regression test covering the 402 path.";
+          const { SPOKEN, COMMIT } = TEXT.vs;
 
           meters[3].setActive(true);
           if (!(await ctx.wait(300))) return;
@@ -3798,6 +3894,23 @@
         }
 
         const SCENES = [claudeCode, gmail, slack, vscode];
+
+        // Size every typed field for its finished text now. Otherwise each
+        // card grows as it types, and the strip (and the page under it)
+        // jumps whenever a taller card takes its turn.
+        (function () {
+          const r = window.ghostly.reserve;
+          const [cc, gm, sl, vs] = cards;
+          r($(cc, 'cc-said'), [TEXT.cc.SPOKEN]);
+          r($(cc, 'cc-prompt'), [TEXT.cc.TYPED]);
+          r($(gm, 'gm-said'), [TEXT.gm.SPOKEN]);
+          r($(gm, 'gm-body'), [TEXT.gm.WRITTEN]);
+          r($(sl, 'sl-said'), [TEXT.sl.SPOKEN]);
+          r($(sl, 'sl-sent'), [TEXT.sl.POSTED]);
+          r(sl.querySelector('[data-input]'), [TEXT.sl.POSTED], $(sl, 'sl-input'));
+          r($(vs, 'vs-said'), [TEXT.vs.SPOKEN]);
+          r(vs.querySelector('[data-input]'), [TEXT.vs.COMMIT], $(vs, 'vs-msg'));
+        })();
 
         // ── Scroll plumbing ──────────────────────────────────────────────
         let index = 0;

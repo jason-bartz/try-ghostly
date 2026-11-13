@@ -348,7 +348,7 @@
                   <div class="inbox-item" data-idx="0">
                     <span class="inbox-ava" style="background: linear-gradient(135deg, #f87171, #fb923c)">CM</span>
                     <div class="inbox-meta">
-                      <div class="inbox-from">Caty Moore <span class="inbox-unread"></span></div>
+                      <div class="inbox-from">Katie Moore <span class="inbox-unread"></span></div>
                       <div class="inbox-subj">Re: Thursday 1:1 — can we push to 4pm?</div>
                       <div class="inbox-app">gmail · 2m</div>
                     </div>
@@ -356,7 +356,7 @@
                   <div class="inbox-item" data-idx="1">
                     <span class="inbox-ava" style="background: linear-gradient(135deg, #a78bfa, #7c3aed)">RP</span>
                     <div class="inbox-meta">
-                      <div class="inbox-from">Reid P. <span class="inbox-unread"></span></div>
+                      <div class="inbox-from">Greg P. <span class="inbox-unread"></span></div>
                       <div class="inbox-subj">Q2 goals draft — two small asks before we send</div>
                       <div class="inbox-app">slack · #leadership</div>
                     </div>
@@ -364,7 +364,7 @@
                   <div class="inbox-item" data-idx="2">
                     <span class="inbox-ava" style="background: linear-gradient(135deg, #34d399, #10b981)">KL</span>
                     <div class="inbox-meta">
-                      <div class="inbox-from">Kim Ly <span class="inbox-unread"></span></div>
+                      <div class="inbox-from">Kim Lawson <span class="inbox-unread"></span></div>
                       <div class="inbox-subj">Board readout draft — your comments?</div>
                       <div class="inbox-app">gmail · 12m</div>
                     </div>
@@ -380,7 +380,7 @@
                 </div>
                 <div class="inbox-preview">
                   <div class="inbox-preview-label">Replying · per-app style: Gmail</div>
-                  <div class="inbox-preview-from" id="prv-from">Caty Moore</div>
+                  <div class="inbox-preview-from" id="prv-from">Katie Moore</div>
                   <div class="inbox-preview-subj" id="prv-subj">Re: Thursday 1:1 — can we push to 4pm?</div>
                   <div class="inbox-preview-body" id="prv-body">Hey — something came up on my end. Any chance we could push to 4? Totally fine to keep it at 2 if that's easier, just let me know. Thanks!</div>
                   <div class="inbox-reply is-listening" id="inbox-reply">
@@ -487,7 +487,7 @@
 
           <div class="reveal memo-stack" style="--reveal-delay: 180ms">
             <div class="memo-card memo-raw">
-              ok so the Q2 pricing thing — I don't think we ship the 20% bump in May, too close to the enterprise renewal cycle, but we should move the self-serve tier to the new structure now since that's a different buyer. Caty thinks we can still hit the annual target if we tighten discount approvals. Legal hasn't weighed in on the grandfathering yet. I want a decision by Thursday.
+              ok so the Q2 pricing thing — I don't think we ship the 20% bump in May, too close to the enterprise renewal cycle, but we should move the self-serve tier to the new structure now since that's a different buyer. Katie thinks we can still hit the annual target if we tighten discount approvals. Legal hasn't weighed in on the grandfathering yet. I want a decision by Thursday.
             </div>
             <div class="memo-arrow">
               <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
@@ -497,7 +497,7 @@
               <ul>
                 <li><strong>Enterprise 20% bump:</strong> delay past May due to renewal cycle proximity.</li>
                 <li><strong>Self-serve tier:</strong> move to new structure now — distinct buyer persona.</li>
-                <li><strong>Annual target:</strong> protected if we tighten discount approvals (Caty leading).</li>
+                <li><strong>Annual target:</strong> protected if we tighten discount approvals (Katie leading).</li>
                 <li><strong>Open:</strong> Legal review on grandfathering — needed by Thursday.</li>
               </ul>
               <p style="margin-top: 10px; font-size: 12px; color: rgba(232,233,239,0.55);"><strong style="color:#fcd34d">Asks:</strong> decision by EOD Thu · Legal to confirm grandfathering language · Kim to draft comms.</p>
@@ -520,7 +520,7 @@
               <span class="text-[11px] text-ghost/40 font-mono" id="showcase-style">formal · paragraph</span>
             </div>
             <div class="space-y-2">
-              <div class="text-[13px] font-semibold text-ghost/80" id="showcase-from">To: Caty Moore</div>
+              <div class="text-[13px] font-semibold text-ghost/80" id="showcase-from">To: Katie Moore</div>
               <div class="text-[13px] text-ghost/55" id="showcase-subject">Re: Thursday 1:1 — can we push to 4pm?</div>
               <div class="mt-4 text-[14px] leading-relaxed text-ghost/90" id="showcase-body" style="min-height: 120px;"></div>
             </div>
@@ -735,6 +735,45 @@
         document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
       })();
 
+      /* Holds a node at the height of the tallest state it will pass through,
+       * so text typing in (or filler words collapsing out) never pushes the
+       * sections below it up and down the page while someone is reading.
+       *
+       * `states` is either a list of strings the node — or `target` inside it,
+       * when the text lives in an inline child — will show, or a function that
+       * returns the node's tallest height itself.
+       * Re-measured whenever the node's width changes and once fonts land. */
+      window.ghostly = window.ghostly || {};
+      window.ghostly.reserve = function (node, states, target) {
+        if (!node) return;
+        const into = target || node;
+        function measure() {
+          node.style.minHeight = '';
+          let tallest = 0;
+          if (typeof states === 'function') {
+            tallest = states(node);
+          } else {
+            const keep = into.innerHTML; // keeps a placeholder or caret span intact
+            const ticking = into.classList.contains('tick');
+            into.classList.add('tick'); // a live caret can force one more wrap
+            states.forEach((s) => {
+              into.textContent = s;
+              tallest = Math.max(tallest, node.offsetHeight);
+            });
+            into.innerHTML = keep;
+            into.classList.toggle('tick', ticking);
+          }
+          // +1 covers the sub-pixel offsetHeight rounds away.
+          node.style.minHeight = tallest + 1 + 'px';
+        }
+        measure();
+        let width = node.clientWidth;
+        new ResizeObserver(() => {
+          if (node.clientWidth !== width) { width = node.clientWidth; measure(); }
+        }).observe(node);
+        if (document.fonts) document.fonts.ready.then(measure);
+      };
+
       // Hero: burn-down inbox with dictated replies
       (function () {
         const prm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -751,19 +790,19 @@
 
         const emails = [
           {
-            from: 'Caty Moore',
+            from: 'Katie Moore',
             subj: 'Re: Thursday 1:1 — can we push to 4pm?',
             body: 'Hey — something came up on my end. Any chance we could push to 4? Totally fine to keep it at 2 if that\'s easier, just let me know. Thanks!',
             reply: 'Works for me — let\'s lock 4pm. I\'ll send a fresh invite. Want to start with the hiring update or the pricing decision?'
           },
           {
-            from: 'Reid P.',
+            from: 'Greg P.',
             subj: 'Q2 goals draft — two small asks',
             body: 'Put the goals doc in #leadership. Two small asks before we send: can we quantify the "velocity" target, and do we want Marketing on the distribution list for the board version?',
-            reply: '1) Use shipped-PRs-per-week, baseline 34 → target 48 by end of Q2.\n2) Yes — add Marketing to the board distribution. Caty can take the quick pass.'
+            reply: '1) Use shipped-PRs-per-week, baseline 34 → target 48 by end of Q2.\n2) Yes — add Marketing to the board distribution. Katie can take the quick pass.'
           },
           {
-            from: 'Kim Ly',
+            from: 'Kim Lawson',
             subj: 'Board readout draft — your comments?',
             body: 'Draft attached. Focus areas: NRR narrative, the platform bet, and the hiring slowdown. Anything missing before Friday?',
             reply: 'Strong. Two edits: lead with NRR (not the platform bet), and push the hiring slowdown into the appendix — the board wants conviction on the bet, not a caveat.'
@@ -775,6 +814,13 @@
             reply: 'Go with (a). Simpler story, fewer pricing-page questions, and we can always migrate to seats later with data. Kim to own the rollout comms.'
           }
         ];
+
+        // Preview and reply hold the height of their longest email, so the
+        // inbox doesn't resize (and nudge the page) as it works through them.
+        window.ghostly.reserve(prvFrom, emails.map((e) => e.from));
+        window.ghostly.reserve(prvSubj, emails.map((e) => e.subj));
+        window.ghostly.reserve(prvBody, emails.map((e) => e.body));
+        window.ghostly.reserve(replyText, emails.map((e) => e.reply));
 
         if (prm) {
           replyText.innerHTML = emails[0].reply.replace(/\n/g, '<br/>');
@@ -869,8 +915,8 @@
         const variants = [
           {
             logo: '/assets/apps/gmail.png', name: 'Gmail reply', style: 'formal · paragraph',
-            from: 'To: Caty Moore', subj: 'Re: Thursday 1:1 — can we push to 4pm?',
-            body: 'Hi Caty,\n\n4pm works — I\'ll send a fresh invite. On the agenda, I\'d like to lead with the hiring update so we have time to get into the pricing decision afterwards.\n\nThanks,\nJ'
+            from: 'To: Katie Moore', subj: 'Re: Thursday 1:1 — can we push to 4pm?',
+            body: 'Hi Katie,\n\n4pm works — I\'ll send a fresh invite. On the agenda, I\'d like to lead with the hiring update so we have time to get into the pricing decision afterwards.\n\nThanks,\nJ'
           },
           {
             logo: '/assets/apps/slack.png', name: 'Slack reply', style: 'short · no greeting',
@@ -879,15 +925,30 @@
           },
           {
             logo: '/assets/apps/notion.png', name: 'Notion note', style: 'headings · bullets',
-            from: 'Doc: Leadership sync — Apr 16', subj: 'Owner: J · Attendees: Caty, Reid, Kim',
-            body: 'Reschedule\n · Moving 1:1 with Caty to 4pm Thursday.\nAgenda\n · Hiring update (lead)\n · Pricing decision (follow)'
+            from: 'Doc: Leadership sync — Apr 16', subj: 'Owner: J · Attendees: Katie, Greg, Kim',
+            body: 'Reschedule\n · Moving 1:1 with Katie to 4pm Thursday.\nAgenda\n · Hiring update (lead)\n · Pricing decision (follow)'
           },
           {
             logo: '/assets/apps/messages.png', name: 'Messages reply', style: 'one line · casual',
-            from: 'To: Caty', subj: 'iMessage',
+            from: 'To: Katie', subj: 'iMessage',
             body: '4 works — sending a new invite now. Want to start with hiring?'
           }
         ];
+
+        // The card holds the height of its longest variant, so cycling apps
+        // doesn't resize it and push the rest of the page around.
+        window.ghostly.reserve(fromEl, variants.map((v) => v.from));
+        window.ghostly.reserve(subjEl, variants.map((v) => v.subj));
+        window.ghostly.reserve(bodyEl, (node) => {
+          const keep = node.innerHTML;
+          let tallest = 0;
+          variants.forEach((v) => {
+            node.innerHTML = v.body.replace(/\n/g, '<br/>');
+            tallest = Math.max(tallest, node.offsetHeight);
+          });
+          node.innerHTML = keep;
+          return tallest;
+        });
 
         if (prm) {
           const v = variants[0];

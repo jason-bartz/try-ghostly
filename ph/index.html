@@ -569,6 +569,8 @@
         animation: aeStrike 11s cubic-bezier(0.4, 0, 0.2, 1) infinite;
         animation-delay: calc(var(--order, 1) * 0.55s + 0.8s);
       }
+      /* Full-width state, used only to measure the paragraph's tallest height. */
+      .auto-edit.is-measuring .hl { animation: none; max-width: none; padding: 0 2px; opacity: 1; }
       @keyframes aeStrike {
         0%, 1%   { transform: scaleX(0); opacity: 1; }
         5%       { transform: scaleX(1); }
@@ -1066,8 +1068,8 @@
                 </div>
                 <div class="mt-5 mb-2 px-2 text-xs font-semibold uppercase tracking-wider text-ghost/40">Direct messages</div>
                 <div class="space-y-0.5">
-                  <div class="slack-channel"><span class="h-2 w-2 rounded-full bg-emerald-400"></span> Maya Chen</div>
-                  <div class="slack-channel"><span class="h-2 w-2 rounded-full bg-ghost/30"></span> Jordan Lee</div>
+                  <div class="slack-channel"><span class="h-2 w-2 rounded-full bg-emerald-400"></span> Jessica Hall</div>
+                  <div class="slack-channel"><span class="h-2 w-2 rounded-full bg-ghost/30"></span> Chris Taylor</div>
                 </div>
               </aside>
               <div class="relative flex flex-col">
@@ -1078,7 +1080,7 @@
                   </div>
                 </div>
 
-                <div id="chat-feed" class="flex-1 space-y-3 overflow-y-auto px-4 py-4 md:px-5 md:py-5" style="max-height: 280px"></div>
+                <div id="chat-feed" class="space-y-3 overflow-y-auto px-4 py-4 md:px-5 md:py-5" style="height: 280px; flex: none"></div>
 
                 <div id="caption" class="caption-bubble overlay-hidden absolute left-1/2 z-10 w-[86%] max-w-md -translate-x-1/2 px-4 py-3" style="top: 42%; transform: translate(-50%, -50%)">
                   <div class="flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-wider text-ghost/40">
@@ -1407,7 +1409,7 @@
                 <tr class="compare-price-row">
                   <td class="compare-label">Free tier</td>
                   <td class="compare-col-ghostly compare-price"><span class="compare-price-value">Unlimited</span><span class="compare-price-sub">uncapped dictation, AI included</span></td>
-                  <td class="compare-price"><span class="compare-price-value">2k words / wk</span><span class="compare-price-sub">capped</span></td>
+                  <td class="compare-price"><span class="compare-price-value">Limited</span><span class="compare-price-sub">weekly word cap</span></td>
                   <td class="compare-price"><span class="compare-price-value">2k words / wk</span><span class="compare-price-sub">capped</span></td>
                   <td class="compare-price"><span class="compare-price-value">40 min trial</span><span class="compare-price-sub">one-time</span></td>
                   <td class="compare-price"><span class="compare-price-value">Unlimited</span><span class="compare-price-sub">built-in</span></td>
@@ -1415,7 +1417,7 @@
                 <tr class="compare-price-row">
                   <td class="compare-label">Paid plan</td>
                   <td class="compare-col-ghostly compare-price"><span class="compare-price-value compare-price-accent">$12</span><span class="compare-price-sub">/ month · optional</span></td>
-                  <td class="compare-price"><span class="compare-price-value">$15</span><span class="compare-price-sub">/ month · required</span></td>
+                  <td class="compare-price"><span class="compare-price-value">$15</span><span class="compare-price-sub">/ month · unlimited</span></td>
                   <td class="compare-price"><span class="compare-price-value">$15</span><span class="compare-price-sub">/ month · required</span></td>
                   <td class="compare-price"><span class="compare-price-value">$8.49</span><span class="compare-price-sub">/ month · required</span></td>
                   <td class="compare-price"><span class="compare-price-value">Free</span><span class="compare-price-sub">built-in</span></td>
@@ -1987,6 +1989,63 @@
     </footer>
 
     <script>
+      /* Holds a node at the height of the tallest state it will pass through,
+       * so text typing in (or filler words collapsing out) never pushes the
+       * sections below it up and down the page while someone is reading.
+       *
+       * `states` is either a list of strings the node — or `target` inside it,
+       * when the text lives in an inline child — will show, or a function that
+       * returns the node's tallest height itself.
+       * Re-measured whenever the node's width changes and once fonts land. */
+      window.ghostly = window.ghostly || {};
+      window.ghostly.reserve = function (node, states, target) {
+        if (!node) return;
+        const into = target || node;
+        function measure() {
+          node.style.minHeight = '';
+          let tallest = 0;
+          if (typeof states === 'function') {
+            tallest = states(node);
+          } else {
+            const keep = into.innerHTML; // keeps a placeholder or caret span intact
+            const ticking = into.classList.contains('tick');
+            into.classList.add('tick'); // a live caret can force one more wrap
+            states.forEach((s) => {
+              into.textContent = s;
+              tallest = Math.max(tallest, node.offsetHeight);
+            });
+            into.innerHTML = keep;
+            into.classList.toggle('tick', ticking);
+          }
+          // +1 covers the sub-pixel offsetHeight rounds away.
+          node.style.minHeight = tallest + 1 + 'px';
+        }
+        measure();
+        let width = node.clientWidth;
+        new ResizeObserver(() => {
+          if (node.clientWidth !== width) { width = node.clientWidth; measure(); }
+        }).observe(node);
+        if (document.fonts) document.fonts.ready.then(measure);
+      };
+
+      // "Live cleanup" panel: the paragraph keeps the height it has with every
+      // filler word still in place, so the collapse doesn't shorten the page.
+      // Measured on a hidden copy: pausing the real one would restart its
+      // animation out of step with the strike-through and badge.
+      (function () {
+        const p = document.querySelector('.auto-edit');
+        window.ghostly.reserve(p, (node) => {
+          const copy = node.cloneNode(true);
+          copy.classList.add('is-measuring');
+          copy.setAttribute('aria-hidden', 'true');
+          copy.style.cssText = 'position:absolute;top:0;left:0;visibility:hidden;width:' + node.clientWidth + 'px';
+          node.parentNode.appendChild(copy);
+          const h = copy.offsetHeight;
+          copy.remove();
+          return h;
+        });
+      })();
+
       /* Shared level meter for every recorder pill on the site.
        *
        * The real overlay gets a `mic-level` array from Rust, smooths it, then
@@ -2166,6 +2225,10 @@
           "log the contract value as twelve thousand ARR in Salesforce"
         ];
 
+        // Size the input for the longest message, so the box (and everything
+        // below it) stays put as messages of different lengths cycle through.
+        window.ghostly.reserve(textEl.parentElement, messages, textEl);
+
         const wave = window.createPillWave(waveEl, waveEl.closest('.overlay-pill'));
         let lastIdx = -1;
 
@@ -2246,7 +2309,7 @@
         const turns = [
           {
             reply: {
-              who: 'Maya Chen', img: MAYA, time: '10:14',
+              who: 'Jessica Hall', img: MAYA, time: '10:14',
               text: "the onboarding A/B test just wrapped — variant B is up 8% on activation. ship it?"
             },
             raw:     "yeah ship variant b, eight percent on activation compounds — lets roll it to twenty five percent first and watch retention for a week",
@@ -2254,7 +2317,7 @@
           },
           {
             reply: {
-              who: 'Maya Chen', img: MAYA, time: '10:15',
+              who: 'Jessica Hall', img: MAYA, time: '10:15',
               text: "rolling to 25% now. what should I watch for?"
             },
             raw:     "um, mainly day seven retention, if it holds steady we're good, if it dips more than a point we need to dig in",
@@ -2262,13 +2325,17 @@
           },
           {
             reply: {
-              who: 'Maya Chen', img: MAYA, time: '10:22',
+              who: 'Jessica Hall', img: MAYA, time: '10:22',
               text: "D7 is up half a point after 3 days. calling it."
             },
             raw:     "perfect, push it to a hundred percent on friday and drop a note in hash launches so the team sees it",
             cleaned: "Perfect. Push to 100% on Friday and drop a note in #launches so the team sees it."
           }
         ];
+
+        // The composer holds the height of the longest reply, so a two-line
+        // paste doesn't grow the window.
+        window.ghostly.reserve(composer, turns.map((t) => t.cleaned));
 
         const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
@@ -2319,7 +2386,7 @@
         }
 
         async function runTurn(turn) {
-          // 1. Maya's message appears first
+          // 1. Jessica's message appears first
           appendMessage(turn.reply.who, turn.reply.img, turn.reply.time + ' AM', turn.reply.text, false);
           await sleep(900);
 

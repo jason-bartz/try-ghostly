@@ -342,7 +342,7 @@
                     <div class="crm-logo">A</div>
                     <div>
                       <div class="crm-deal-title">Acme · Platform expansion</div>
-                      <div class="crm-deal-sub">Vanessa Cai · Head of CRM · $184K ARR</div>
+                      <div class="crm-deal-sub">Vanessa Hughes · Head of CRM · $184K ARR</div>
                       <div class="crm-stage">
                         <div class="crm-stage-step done"></div>
                         <div class="crm-stage-step done"></div>
@@ -493,8 +493,8 @@
                 <span class="ml-auto font-mono text-[10px] text-ghost/30">fn ✕ 2</span>
               </div>
               <div class="email-body">
-                <div class="text-ghost/55 text-xs mb-3">To: sahaj@acme.co · Subject: Following up on our 10am</div>
-                <p>Hi <span class="hi-name">Sahaj</span>,</p>
+                <div class="text-ghost/55 text-xs mb-3">To: jon@acme.co · Subject: Following up on our 10am</div>
+                <p>Hi <span class="hi-name">Jon</span>,</p>
                 <p>Really enjoyed the call this morning — the bit about your CRM updates pushing to midnight because reps are context-switching between five tools landed hard. That's exactly the workflow we've seen shift for teams like Lighthouse.</p>
                 <p>Per your ask, I'll send over the <em id="email-dynamic-1">ROI breakdown with Q2 pilot numbers</em> by end of day. If it's useful, I can also include the <em id="email-dynamic-2">LinkedIn intro template my AEs use post-demo</em> — it's the single highest-converting asset we ship.</p>
                 <p>Proposal on its way for Thursday 4pm. Looking forward.</p>
@@ -519,7 +519,7 @@
             <span class="font-display text-emerald-200">Gets names right.</span><br />
             <span class="font-bold">Every time.</span>
           </h2>
-          <p class="mt-4 max-w-md text-lg text-ghost/65">The prospect's name is spelled "Niamh," not "Neve." Your personal dictionary learns it the first time — and the next 40 emails, RFPs, and CRM notes get it right.</p>
+          <p class="mt-4 max-w-md text-lg text-ghost/65">The prospect's name is spelled "Kathryn," not "Catherine." Your personal dictionary learns it the first time — and the next 40 emails, RFPs, and CRM notes get it right.</p>
           <p class="mt-3 max-w-md text-sm text-ghost/50">Ghostly tags, unit-corrects, and formats automatically: ARR, MRR, seat counts, dollar values, and renewal dates come through cleanly.</p>
         </div>
 
@@ -528,8 +528,8 @@
             <div class="flex items-center gap-3">
               <img src="/assets/apps/messages.png" alt="" class="h-8 w-8 rounded-lg flex-shrink-0" />
               <div class="text-sm">
-                <span class="text-emerald-300 font-mono">"tell niamh we close tuesday"</span>
-                <div class="text-ghost/50 text-xs mt-0.5">→ "Tell Niamh we close Tuesday." <span class="text-emerald-400 ml-2">✓ spelled correctly</span></div>
+                <span class="text-emerald-300 font-mono">"tell kathryn we close tuesday"</span>
+                <div class="text-ghost/50 text-xs mt-0.5">→ "Tell Kathryn we close Tuesday." <span class="text-emerald-400 ml-2">✓ spelled correctly</span></div>
               </div>
             </div>
             <div class="flex items-center gap-3">
@@ -549,8 +549,8 @@
             <div class="flex items-center gap-3">
               <img src="/assets/apps/linkedin.png" alt="" class="h-8 w-8 rounded-lg flex-shrink-0" />
               <div class="text-sm">
-                <span class="text-emerald-300 font-mono">"loop in sahaj and reid on next steps"</span>
-                <div class="text-ghost/50 text-xs mt-0.5">→ "Loop in Sahaj and Reid on next steps." <span class="text-emerald-400 ml-2">✓ names learned</span></div>
+                <span class="text-emerald-300 font-mono">"loop in jon and kristen on next steps"</span>
+                <div class="text-ghost/50 text-xs mt-0.5">→ "Loop in Jon and Kristen on next steps." <span class="text-emerald-400 ml-2">✓ names learned</span></div>
               </div>
             </div>
           </div>
@@ -597,7 +597,7 @@
             </div>
             <div class="flex-1">
               <div class="text-base font-semibold">Prompt ChatGPT and Claude for outreach at talking speed</div>
-              <div class="mt-1 text-sm text-ghost/55">"Draft an email to Niamh at Acme that references the CFO's pricing ask" — done.</div>
+              <div class="mt-1 text-sm text-ghost/55">"Draft an email to Kathryn at Acme that references the CFO's pricing ask" — done.</div>
             </div>
           </div>
           <div class="usecase-row">
@@ -729,6 +729,45 @@
         document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
       })();
 
+      /* Holds a node at the height of the tallest state it will pass through,
+       * so text typing in (or filler words collapsing out) never pushes the
+       * sections below it up and down the page while someone is reading.
+       *
+       * `states` is either a list of strings the node — or `target` inside it,
+       * when the text lives in an inline child — will show, or a function that
+       * returns the node's tallest height itself.
+       * Re-measured whenever the node's width changes and once fonts land. */
+      window.ghostly = window.ghostly || {};
+      window.ghostly.reserve = function (node, states, target) {
+        if (!node) return;
+        const into = target || node;
+        function measure() {
+          node.style.minHeight = '';
+          let tallest = 0;
+          if (typeof states === 'function') {
+            tallest = states(node);
+          } else {
+            const keep = into.innerHTML; // keeps a placeholder or caret span intact
+            const ticking = into.classList.contains('tick');
+            into.classList.add('tick'); // a live caret can force one more wrap
+            states.forEach((s) => {
+              into.textContent = s;
+              tallest = Math.max(tallest, node.offsetHeight);
+            });
+            into.innerHTML = keep;
+            into.classList.toggle('tick', ticking);
+          }
+          // +1 covers the sub-pixel offsetHeight rounds away.
+          node.style.minHeight = tallest + 1 + 'px';
+        }
+        measure();
+        let width = node.clientWidth;
+        new ResizeObserver(() => {
+          if (node.clientWidth !== width) { width = node.clientWidth; measure(); }
+        }).observe(node);
+        if (document.fonts) document.fonts.ready.then(measure);
+      };
+
       // Hero: dictate CRM call recap → fields populate
       (function () {
         const prm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -738,6 +777,8 @@
         const fields = [document.getElementById('fld-1'), document.getElementById('fld-2'), document.getElementById('fld-3'), document.getElementById('fld-4')];
 
         const recap = "Just wrapped with Vanessa — her team is catching up on CRM updates past midnight because context lives across five tools. She's our champion. Big ask: ROI deck with Q2 pilot numbers. Close date is tight, she wants it faster than May 30 — targeting mid-May.";
+        // Hold the note at its finished height so the page doesn't grow as it types.
+        window.ghostly.reserve(textEl, [recap]);
 
         if (prm) {
           textEl.textContent = recap;
